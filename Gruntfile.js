@@ -3,12 +3,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     jshint: {
-      files: ['Gruntfile.js', 'dist/**/*.js', 'test/**/*.js'],
-      options: {
-        globals: {
-          jQuery: true
-        }
-      }
+      files: ['Gruntfile.js'],
+      // options: {
+      //   globals: {
+      //     jQuery: true
+      //   }
+      // }
     },
 
     haml: {
@@ -78,10 +78,10 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      // lint: {
-      //   files: ['<%= jshint.files %>'],
-      //   tasks: ['jshint']
-      // },
+      lint: {
+        files: ['<%= jshint.files %>'],
+        tasks: ['jshint']
+      },
       templates: {
         files: ['src/**/*.haml'],
         tasks: ['haml']
@@ -105,6 +105,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['haml', 'coffee', 'sass', 'watch']);
+  grunt.registerTask('default', ['lint', 'haml', 'coffee', 'sass', 'watch']);
 
 };
