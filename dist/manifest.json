@@ -3,6 +3,6 @@
   "name": "My Extension",
   "version": "0.0",
 	 "chrome_url_overrides" : {
-	    "newtab": "foo.html"
+	    "newtab": "start.html"
 	  }
 }
