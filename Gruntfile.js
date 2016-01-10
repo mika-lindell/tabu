@@ -74,11 +74,18 @@ module.exports = function(grunt) {
       }
     },
 
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        browsers: ['Chrome']
+      }
+    },
+
     watch: {
-      lint: {
-        files: ['<%= jshint.files %>'],
-        tasks: ['jshint']
-      },
+      // lint: {
+      //   files: ['<%= jshint.files %>'],
+      //   tasks: ['jshint']
+      // },
       templates: {
         files: ['src/**/*.haml'],
         tasks: ['haml']
@@ -104,6 +111,6 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['jshint', 'haml', 'coffee', 'sass', 'watch']);
+  grunt.registerTask('default', ['haml', 'coffee', 'sass', 'karma', 'watch']);
 
 };
