@@ -1,10 +1,9 @@
-(function() {
-  var app;
+var app, foobar;
 
-  app = function() {
-    return console.log('Hello World!');
-  };
+app = function() {
+  return console.log('Hello World!');
+};
 
-  app();
+app();
 
-}).call(this);
+foobar = 'foobar';

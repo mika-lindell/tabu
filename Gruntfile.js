@@ -46,6 +46,9 @@ module.exports = function(grunt) {
 
     coffee: {
       dist: {
+        options: {
+                bare: true
+              },
         files: [
           {                         
             expand: true,       // Enable dynamic expansion.
@@ -71,13 +74,6 @@ module.exports = function(grunt) {
             extDot: 'first'     // Extensions in filenames begin after the first dot
           }
         ] 
-      }
-    },
-
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        browsers: ['Chrome']
       }
     },
 
@@ -109,8 +105,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.loadNpmTasks('grunt-karma');
-
-  grunt.registerTask('default', ['haml', 'coffee', 'sass', 'karma', 'watch']);
+  grunt.registerTask('default', ['haml', 'coffee', 'sass', 'watch']);
 
 };
