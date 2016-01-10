@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     jshint: {
-      files: ['Gruntfile.js'],
+      files: ['Gruntfile.js', 'karma.conf.js'],
       // options: {
       //   globals: {
       //     jQuery: true
@@ -105,6 +105,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['lint', 'haml', 'coffee', 'sass', 'watch']);
+  grunt.registerTask('default', ['jshint', 'haml', 'coffee', 'sass', 'watch']);
 
 };

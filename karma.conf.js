@@ -39,7 +39,7 @@ module.exports = function(config) {
       },
       // transforming the filenames
       transformPath: function(path) {
-        return path.replace(/\.coffee$/, '.js')
+        return path.replace(/\.coffee$/, '.js');
       }
     },
 
@@ -78,5 +78,5 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};
