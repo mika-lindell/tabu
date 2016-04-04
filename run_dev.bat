@@ -1,2 +1,2 @@
-start cmd.exe /K run_karma.bat
-start cmd.exe /K run_grunt.bat
+start cmd.exe
+start cmd.exe /K grunt

@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
+    // Linting
     jshint: {
       files: ['Gruntfile.js', 'karma.conf.js'],
       // options: {
@@ -11,6 +12,7 @@ module.exports = function(grunt) {
       // }
     },
 
+    // Haml compiler, requires Ruby with HAML to be installed.
     haml: {
       dist: {
         files: [
@@ -44,24 +46,7 @@ module.exports = function(grunt) {
       //  }
     },
 
-    coffee: {
-      dist: {
-        options: {
-                bare: true
-              },
-        files: [
-          {                         
-            expand: true,       // Enable dynamic expansion.
-            cwd: 'src/',        // Src matches are relative to this path.
-            src: ['**/*.coffee'], // Actual pattern(s) to match.
-            dest: 'dist/',      // Destination path prefix.
-            ext: '.js',       // Dest filepaths will have this extension.
-            extDot: 'first'     // Extensions in filenames begin after the first dot
-          }
-        ] 
-      }
-    },
-
+    // Sass compiler, requires Ruby with SASS to be installed.
     sass: {
       dist: {
         files: [
@@ -77,6 +62,74 @@ module.exports = function(grunt) {
       }
     },
 
+    // Coffeescript compiler.
+    coffee: {
+
+      dist: {
+        options: {
+                bare: true
+              },
+        files: [
+          {                         
+            expand: true,       // Enable dynamic expansion.
+            cwd: 'src/',        // Src matches are relative to this path.
+            src: ['**/*.coffee'], // Actual pattern(s) to match.
+            dest: 'dist/',      // Destination path prefix.
+            ext: '.js',       // Dest filepaths will have this extension.
+            extDot: 'first'     // Extensions in filenames begin after the first dot
+          }
+        ] 
+      },
+
+      tests: {
+        options: {
+                bare: true
+              },
+        files: [
+          {                         
+            expand: true,       // Enable dynamic expansion.
+            cwd: 'tests/',        // Src matches are relative to this path.
+            src: ['**/*.coffee'], // Actual pattern(s) to match.
+            dest: 'tests/js',      // Destination path prefix.
+            ext: '.js',       // Dest filepaths will have this extension.
+            extDot: 'first'     // Extensions in filenames begin after the first dot
+          }
+        ] 
+      }
+    },
+
+    // E2E-tests runner
+    nightwatch: {
+      options: {
+        // task options
+        standalone: false,
+        workers: true,
+
+        // download settings
+        jar_version: '2.53.0',
+        jar_path: 'lib/selenium-server-standalone-2.53.0.jar',
+        //jar_url: 'http://domain.com/files/selenium-server-standalone-1.2.3.jar',
+
+        // nightwatch settings
+        //globals: { foo: 'bar' },
+        //globals_path: 'custom_tests/globals',
+        //custom_commands_path: 'custom_tests/helpers',
+        //custom_assertions_path: 'custom_tests/asserts',
+        src_folders: ['tests/'],
+        output_folder: 'report',
+        test_settings: {
+          end_session_on_fail: false
+        },
+        selenium: {}
+      },
+      custom: {
+        // custom target + overrides
+        //config_path: '/path/to/file.json',
+        //src_folders: ['other_tests/nightwatch']
+      }
+    },
+
+    // File watch for lint, compilers and nightwatch e2e -tests
     watch: {
       lint: {
         files: ['<%= jshint.files %>'],
@@ -84,16 +137,20 @@ module.exports = function(grunt) {
       },
       templates: {
         files: ['src/**/*.haml'],
-        tasks: ['haml']
-      },
-      scripts: {
-        files: ['src/**/*.coffee'],
-        tasks: ['coffee']
+        tasks: ['haml', 'nightwatch']
       },
       styles: {
         files: ['src/**/*.scss'],
-        tasks: ['sass']
-      }
+        tasks: ['sass', 'nightwatch']
+      },
+      scripts: {
+        files: ['src/**/*.coffee'],
+        tasks: ['coffee:dist', 'nightwatch']
+      },
+      tests: {
+        files: ['tests/**/*.coffee'],
+        tasks: ['coffee:tests', 'nightwatch']
+      }      
     }
 
   });
@@ -105,6 +162,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['jshint', 'haml', 'coffee', 'sass', 'watch']);
+  grunt.loadNpmTasks('grunt-nightwatch');
+
+  // This will enable forcing tasks (to not exit on warnings) with 'force:' -prefix
+  grunt.loadNpmTasks('grunt-force-task');
+
+  grunt.registerTask('default', ['jshint', 'haml', 'coffee', 'sass', 'force:nightwatch', 'watch']);
 
 };

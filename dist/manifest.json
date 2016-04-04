@@ -1,8 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
+  "name": "NewTab",
   "version": "0.0",
-	 "chrome_url_overrides" : {
-	    "newtab": "start.html"
-	  }
+  "permissions": [
+          "topSites"
+        ],
+	"chrome_url_overrides" : {
+	  "newtab": "start.html"
+	}
 }

@@ -1,5 +1,8 @@
 app = ()->
-	console.log 'Hello World!'
+	walker = (sites)->
+		console.log site for site in sites
+
+	chrome.topSites.get(walker)
 
 app()
 
