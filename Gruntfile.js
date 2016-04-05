@@ -5,11 +5,6 @@ module.exports = function(grunt) {
     // Linting
     jshint: {
       files: ['Gruntfile.js', 'karma.conf.js'],
-      // options: {
-      //   globals: {
-      //     jQuery: true
-      //   }
-      // }
     },
 
     // Haml compiler, requires Ruby with HAML to be installed.
@@ -26,24 +21,6 @@ module.exports = function(grunt) {
           }
         ] 
       }
-      //,
-      // dev: {                             // Another target
-      //   options: {                       // Target options
-      //     //bundleExec: true,
-      //     style: 'expanded'
-      //   },
-      //   files: [ 
-      //     {
-      //       expand: true,       // Enable dynamic expansion.
-      //       cwd: 'src/',        // Src matches are relative to this path.
-      //       src: ['**/*.haml'], // Actual pattern(s) to match.
-      //       dest: 'dev/',      // Destination path prefix.
-      //       ext: '.html',       // Dest filepaths will have this extension.
-      //       extDot: 'first'     // Extensions in filenames begin after the first dot
-
-      //     }
-      //   ] 
-      //  }
     },
 
     // Sass compiler, requires Ruby with SASS to be installed.
@@ -104,13 +81,7 @@ module.exports = function(grunt) {
         // download settings
         jar_version: '2.53.0',
         jar_path: 'lib/selenium-server-standalone-2.53.0.jar',
-        //jar_url: 'http://domain.com/files/selenium-server-standalone-1.2.3.jar',
 
-        // nightwatch settings
-        //globals: { foo: 'bar' },
-        //globals_path: 'custom_tests/globals',
-        //custom_commands_path: 'custom_tests/helpers',
-        //custom_assertions_path: 'custom_tests/asserts',
         src_folders: ['tests/'],
         output_folder: 'report',
         test_settings: {
@@ -119,9 +90,6 @@ module.exports = function(grunt) {
         selenium: {}
       },
       custom: {
-        // custom target + overrides
-        //config_path: '/path/to/file.json',
-        //src_folders: ['other_tests/nightwatch']
       }
     },
 
