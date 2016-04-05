@@ -1,9 +1,11 @@
-app = ()->
-	walker = (sites)->
-		console.log site for site in sites
+class Animal
+  constructor: (@name) ->
 
-	chrome.topSites.get(walker)
+  move: (meters) ->
+    alert @name + " moved #{meters}m."
 
-app()
+sam = new Snake "Sammy the Python"
+tom = new Horse "Tommy the Palomino"
 
-foobar = 'foobar'
+sam.move()
+tom.move()

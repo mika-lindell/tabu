@@ -1,0 +1,37 @@
+/*
+*
+* Materialize settings & components
+*
+**/
+@import url("../../node_modules/materialize-css/sasscomponents/mixins");
+@import url("../../node_modules/materialize-css/sasscomponents/color");
+@import url("../../node_modules/materialize-css/sasscomponents/variables");
+@import url("../../node_modules/materialize-css/sasscomponents/normalize");
+@import url("../../node_modules/materialize-css/sasscomponents/global");
+@import url("../../node_modules/materialize-css/sasscomponents/icons-material-design");
+@import url("../../node_modules/materialize-css/sasscomponents/grid");
+@import url("../../node_modules/materialize-css/sasscomponents/navbar");
+@import url("../../node_modules/materialize-css/sasscomponents/roboto");
+@import url("../../node_modules/materialize-css/sasscomponents/typography");
+@import url("../../node_modules/materialize-css/sasscomponents/cards");
+@import url("../../node_modules/materialize-css/sasscomponents/toast");
+@import url("../../node_modules/materialize-css/sasscomponents/tabs");
+@import url("../../node_modules/materialize-css/sasscomponents/tooltip");
+@import url("../../node_modules/materialize-css/sasscomponents/buttons");
+@import url("../../node_modules/materialize-css/sasscomponents/dropdown");
+@import url("../../node_modules/materialize-css/sasscomponents/waves");
+@import url("../../node_modules/materialize-css/sasscomponents/modal");
+@import url("../../node_modules/materialize-css/sasscomponents/collapsible");
+@import url("../../node_modules/materialize-css/sasscomponents/chips");
+@import url("../../node_modules/materialize-css/sasscomponents/materialbox");
+@import url("../../node_modules/materialize-css/sasscomponents/forms/forms");
+@import url("../../node_modules/materialize-css/sasscomponents/table_of_contents");
+@import url("../../node_modules/materialize-css/sasscomponents/sideNav");
+@import url("../../node_modules/materialize-css/sasscomponents/preloader");
+@import url("../../node_modules/materialize-css/sasscomponents/slider");
+@import url("../../node_modules/materialize-css/sasscomponents/carousel");
+@import url("../../node_modules/materialize-css/sasscomponents/date_picker/default");
+@import url("../../node_modules/materialize-css/sasscomponents/date_picker/default.date");
+@import url("../../node_modules/materialize-css/sasscomponents/date_picker/default.time");
+
+/*# sourceMappingURL=app.css.map */

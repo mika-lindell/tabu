@@ -53,7 +53,7 @@ module.exports = function(grunt) {
           {                         
             expand: true,       // Enable dynamic expansion.
             cwd: 'src/',        // Src matches are relative to this path.
-            src: ['**/*.scss'], // Actual pattern(s) to match.
+            src: ['**/app.scss'], // Actual pattern(s) to match.
             dest: 'dist/',      // Destination path prefix.
             ext: '.css',       // Dest filepaths will have this extension.
             extDot: 'first'     // Extensions in filenames begin after the first dot
@@ -67,16 +67,12 @@ module.exports = function(grunt) {
 
       dist: {
         options: {
-                bare: true
+                bare: true,
+                join: true // This will make sure you can create class structure in different files
               },
         files: [
           {                         
-            expand: true,       // Enable dynamic expansion.
-            cwd: 'src/',        // Src matches are relative to this path.
-            src: ['**/*.coffee'], // Actual pattern(s) to match.
-            dest: 'dist/',      // Destination path prefix.
-            ext: '.js',       // Dest filepaths will have this extension.
-            extDot: 'first'     // Extensions in filenames begin after the first dot
+            'dist/scripts/app.js': ['src/**/*.coffee'] // concat then compile into single file 
           }
         ] 
       },
@@ -129,6 +125,16 @@ module.exports = function(grunt) {
       }
     },
 
+    // Copy some assets from npm_modules to dist
+    copy: {
+      assets: {
+        files: [
+          // includes files within path
+          {expand: true, cwd:'./node_modules/materialize-css/dist/font/', src: ['**'], dest: './dist/styles/assets/'},
+        ],
+      },
+    },
+
     // File watch for lint, compilers and nightwatch e2e -tests
     watch: {
       lint: {
@@ -157,6 +163,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.loadNpmTasks('grunt-haml2html');
   grunt.loadNpmTasks('grunt-contrib-coffee');
@@ -167,6 +174,14 @@ module.exports = function(grunt) {
   // This will enable forcing tasks (to not exit on warnings) with 'force:' -prefix
   grunt.loadNpmTasks('grunt-force-task');
 
-  grunt.registerTask('default', ['jshint', 'haml', 'coffee', 'sass', 'force:nightwatch', 'watch']);
+  grunt.registerTask('default', [
+    'copy:assets', 
+    'jshint', 
+    'haml', 
+    'coffee', 
+    'sass', 
+    'force:nightwatch', 
+    'watch'
+    ]);
 
 };
