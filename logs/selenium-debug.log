@@ -1,39 +1,38 @@
-21:21:08.416 INFO - Launching a standalone Selenium Server
-21:21:08.476 INFO - Java: Oracle Corporation 25.66-b18
-21:21:08.476 INFO - OS: Windows 10 10.0 x86
-21:21:08.483 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-21:21:08.526 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-21:21:08.526 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-21:21:08.531 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+19:51:22.547 INFO - Launching a standalone Selenium Server
+Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
+19:51:22.604 INFO - Java: Oracle Corporation 25.66-b18
+19:51:22.604 INFO - OS: Windows 10 10.0 x86
+19:51:22.610 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+19:51:22.651 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+19:51:22.651 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+19:51:22.656 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-21:21:08.531 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-21:21:08.531 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-21:21:08.613 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-21:21:08.613 INFO - Selenium Server is up and running
-21:21:08.829 INFO - Executing: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=firefox, javascriptEnabled=true, platform=ANY}]])
-21:21:08.842 INFO - Creating a new session for Capabilities [{acceptSslCerts=true, name=\js\test, browserName=firefox, javascriptEnabled=true, platform=ANY}]
-21:21:13.517 INFO - Done: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=firefox, javascriptEnabled=true, platform=ANY}]]
-21:21:13.528 INFO - Executing: [get: http://www.google.com])
-21:21:13.546 INFO - Done: [get: http://www.google.com]
-21:21:13.552 INFO - Executing: [find elements: By.cssSelector: body])
-21:21:15.710 INFO - Done: [find elements: By.cssSelector: body]
-21:21:15.714 INFO - Executing: [is displayed: 0 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: body]])
-21:21:15.822 INFO - Done: [is displayed: 0 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: body]]
-21:21:15.828 INFO - Executing: [find element: By.cssSelector: input[type=text]])
-21:21:15.835 INFO - Done: [find element: By.cssSelector: input[type=text]]
-21:21:15.843 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: input[type=text]], [n, o, d, e, j, s]])
-21:21:15.939 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: input[type=text]], [n, o, d, e, j, s]]
-21:21:15.946 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
-21:21:15.953 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
-21:21:15.955 INFO - Executing: [is displayed: 2 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: button[name=btnG]]])
-21:21:15.965 INFO - Done: [is displayed: 2 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: button[name=btnG]]]
-21:21:15.970 INFO - Executing: [find element: By.cssSelector: button[name=btnG]])
-21:21:15.977 INFO - Done: [find element: By.cssSelector: button[name=btnG]]
-21:21:15.980 INFO - Executing: [click: 2 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: button[name=btnG]]])
-21:21:16.092 INFO - Done: [click: 2 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: button[name=btnG]]]
-21:21:17.098 INFO - Executing: [find element: By.cssSelector: #ires])
-21:21:17.333 INFO - Done: [find element: By.cssSelector: #ires]
-21:21:17.336 INFO - Executing: [get text: 3 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: #ires]])
-21:21:18.075 INFO - Done: [get text: 3 [[FirefoxDriver: firefox on WINDOWS (4b2d03ba-593d-4198-8250-b218769d2188)] -> css selector: #ires]]
-21:21:18.164 INFO - Executing: [delete session: 7c9d3ee1-7d37-4299-a60c-1b803ae1d8f9])
-21:21:18.663 INFO - Done: [delete session: 7c9d3ee1-7d37-4299-a60c-1b803ae1d8f9]
+19:51:22.657 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+19:51:22.657 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+19:51:22.733 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+19:51:22.733 INFO - Selenium Server is up and running
+19:51:22.951 INFO - Executing: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+19:51:22.965 INFO - Creating a new session for Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 25655
+Only local connections are allowed.
+19:51:24.757 INFO - Done: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+19:51:24.766 INFO - Executing: [get: http://www.google.com])
+19:51:28.022 INFO - Done: [get: http://www.google.com]
+19:51:28.029 INFO - Executing: [find elements: By.cssSelector: body])
+19:51:28.061 INFO - Done: [find elements: By.cssSelector: body]
+19:51:28.066 INFO - Executing: [is displayed: 0 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: body]])
+19:51:28.079 INFO - Done: [is displayed: 0 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: body]]
+19:51:28.086 INFO - Executing: [find element: By.cssSelector: input[type=text]])
+19:51:28.104 INFO - Done: [find element: By.cssSelector: input[type=text]]
+19:51:28.108 INFO - Executing: [send keys: 1 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: input[type=text]], [n, o, d, e, j, s]])
+19:51:28.183 INFO - Done: [send keys: 1 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: input[type=text]], [n, o, d, e, j, s]]
+19:51:28.191 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+19:51:28.205 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+19:51:28.208 INFO - Executing: [is displayed: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]])
+19:51:28.219 INFO - Done: [is displayed: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]]
+19:51:28.223 INFO - Executing: [find element: By.cssSelector: button[name=btnG]])
+19:51:28.239 INFO - Done: [find element: By.cssSelector: button[name=btnG]]
+19:51:28.242 INFO - Executing: [click: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]])
+19:51:28.300 INFO - Done: [click: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]]
+19:51:29.304 INFO - Executing: [delete session: c2caf56c-8673-4439-8a24-bbc2f4f33443])
+19:51:30.124 INFO - Done: [delete session: c2caf56c-8673-4439-8a24-bbc2f4f33443]

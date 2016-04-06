@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-
+grunt.log.ok(process.cwd());
   grunt.initConfig({
 
     // Linting
@@ -85,9 +85,24 @@ module.exports = function(grunt) {
         src_folders: ['tests/'],
         output_folder: 'report',
         test_settings: {
-          end_session_on_fail: false
+          default: {
+            desiredCapabilities: {
+              'browserName': "chrome",
+              'chromeOptions' : {
+                'args': ['load-extension=' + process.cwd() + '/dist/']
+              }
+            }
+          }
         },
-        selenium: {}
+        selenium: {
+          start_process : true,
+          log_path : "logs/",
+          host : "127.0.0.1",
+          port : 4444,
+          cli_args : {
+            'webdriver.chrome.driver' : "node_modules/chromedriver/lib/chromedriver/chromedriver.exe",
+          }
+        }
       },
       custom: {
       }
@@ -98,7 +113,12 @@ module.exports = function(grunt) {
       assets: {
         files: [
           // includes files within path
-          {expand: true, cwd:'./node_modules/materialize-css/dist/font/', src: ['**'], dest: './dist/styles/assets/'},
+          {
+            expand: true,
+            cwd:'./node_modules/materialize-css/dist/font/',
+            src: ['**'],
+            dest: './dist/styles/assets/'
+          },
         ],
       },
     },
@@ -151,5 +171,7 @@ module.exports = function(grunt) {
     'force:nightwatch', 
     'watch'
     ]);
+
+
 
 };
