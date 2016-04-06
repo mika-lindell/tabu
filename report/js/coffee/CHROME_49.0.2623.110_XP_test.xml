@@ -4,12 +4,12 @@
             tests="1">
 
   <testsuite name="test"
-    errors="0" failures="1" hostname="" id="" package="js" skipped="0"
-    tests="1" time="3.740" timestamp="Wed, 06 Apr 2016 18:37:50 GMT">
+    errors="0" failures="1" hostname="" id="" package="coffee" skipped="0"
+    tests="1" time="3.815" timestamp="Wed, 06 Apr 2016 18:24:09 GMT">
   
-    <testcase name="it should display custom new tab" time="3.740" assertions="2">
+    <testcase name="it should display custom new tab" time="3.815" assertions="2">
 
-      <failure message="Testing if element &lt;#message&gt; contains text: &quot;undefined&quot;.">  at Object.module.exports.it should display custom new tab (D:\Dev\newtab\tests\js\test.js:3:86)
+      <failure message="Testing if element &lt;#message&gt; contains text: &quot;undefined&quot;.">  at Object.module.exports.it should display custom new tab (D:\Dev\newtab\tests\js\coffee\test.js:3:86)
   at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
   at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
   at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)

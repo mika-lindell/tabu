@@ -1,38 +1,40 @@
-19:51:22.547 INFO - Launching a standalone Selenium Server
+23:48:06.301 INFO - Launching a standalone Selenium Server
 Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
-19:51:22.604 INFO - Java: Oracle Corporation 25.66-b18
-19:51:22.604 INFO - OS: Windows 10 10.0 x86
-19:51:22.610 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-19:51:22.651 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-19:51:22.651 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-19:51:22.656 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+23:48:06.362 INFO - Java: Oracle Corporation 25.66-b18
+23:48:06.362 INFO - OS: Windows 10 10.0 x86
+23:48:06.368 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+23:48:06.411 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+23:48:06.411 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+23:48:06.417 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-19:51:22.657 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-19:51:22.657 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-19:51:22.733 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-19:51:22.733 INFO - Selenium Server is up and running
-19:51:22.951 INFO - Executing: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
-19:51:22.965 INFO - Creating a new session for Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
-Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 25655
+23:48:06.417 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+23:48:06.417 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+23:48:06.495 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+23:48:06.495 INFO - Selenium Server is up and running
+23:48:06.817 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+23:48:06.829 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 13188
 Only local connections are allowed.
-19:51:24.757 INFO - Done: [new session: Capabilities [{acceptSslCerts=true, name=\js\test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
-19:51:24.766 INFO - Executing: [get: http://www.google.com])
-19:51:28.022 INFO - Done: [get: http://www.google.com]
-19:51:28.029 INFO - Executing: [find elements: By.cssSelector: body])
-19:51:28.061 INFO - Done: [find elements: By.cssSelector: body]
-19:51:28.066 INFO - Executing: [is displayed: 0 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: body]])
-19:51:28.079 INFO - Done: [is displayed: 0 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: body]]
-19:51:28.086 INFO - Executing: [find element: By.cssSelector: input[type=text]])
-19:51:28.104 INFO - Done: [find element: By.cssSelector: input[type=text]]
-19:51:28.108 INFO - Executing: [send keys: 1 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: input[type=text]], [n, o, d, e, j, s]])
-19:51:28.183 INFO - Done: [send keys: 1 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: input[type=text]], [n, o, d, e, j, s]]
-19:51:28.191 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
-19:51:28.205 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
-19:51:28.208 INFO - Executing: [is displayed: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]])
-19:51:28.219 INFO - Done: [is displayed: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]]
-19:51:28.223 INFO - Executing: [find element: By.cssSelector: button[name=btnG]])
-19:51:28.239 INFO - Done: [find element: By.cssSelector: button[name=btnG]]
-19:51:28.242 INFO - Executing: [click: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]])
-19:51:28.300 INFO - Done: [click: 2 [[ChromeDriver: chrome on XP (c3a484bc6e5a4e86d48eb023595d6f53)] -> css selector: button[name=btnG]]]
-19:51:29.304 INFO - Executing: [delete session: c2caf56c-8673-4439-8a24-bbc2f4f33443])
-19:51:30.124 INFO - Done: [delete session: c2caf56c-8673-4439-8a24-bbc2f4f33443]
+23:48:08.570 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+23:48:08.580 INFO - Executing: [get: chrome://newtab])
+23:48:09.384 INFO - Done: [get: chrome://newtab]
+23:48:09.390 INFO - Executing: [find elements: By.cssSelector: body])
+23:48:09.418 INFO - Done: [find elements: By.cssSelector: body]
+23:48:09.423 INFO - Executing: [find elements: By.cssSelector: body])
+23:48:09.439 INFO - Done: [find elements: By.cssSelector: body]
+23:48:09.443 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: body], data-app])
+23:48:09.454 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: body], data-app]
+23:48:09.473 INFO - Executing: [find elements: By.cssSelector: a])
+23:48:09.489 INFO - Done: [find elements: By.cssSelector: a]
+23:48:09.492 INFO - Executing: [get text: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a]])
+23:48:09.511 INFO - Done: [get text: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a]]
+23:48:09.516 INFO - Executing: [find elements: By.cssSelector: a])
+23:48:09.532 INFO - Done: [find elements: By.cssSelector: a]
+23:48:09.535 INFO - Executing: [get element attribute: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a], href])
+23:48:09.545 INFO - Done: [get element attribute: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a], href]
+23:48:09.549 INFO - Executing: [find elements: By.cssSelector: a])
+23:48:09.556 INFO - Done: [find elements: By.cssSelector: a]
+23:48:09.559 INFO - Executing: [get text: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a]])
+23:48:09.576 INFO - Done: [get text: 1 [[ChromeDriver: chrome on XP (5783ed8e253004668eb3685eaedf0cde)] -> css selector: a]]
+23:48:09.593 INFO - Executing: [delete session: b6130590-75e9-4c26-81de-60a1fca8cae9])
+23:48:10.478 INFO - Done: [delete session: b6130590-75e9-4c26-81de-60a1fca8cae9]

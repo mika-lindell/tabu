@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="1"
-            tests="1">
+            tests="2">
 
   <testsuite name="test"
-    errors="0" failures="1" hostname="" id="" package="js" skipped="0"
-    tests="1" time="3.740" timestamp="Wed, 06 Apr 2016 18:37:50 GMT">
+    errors="0" failures="1" hostname="" id="" package="test" skipped="0"
+    tests="2" time="3.799" timestamp="Wed, 06 Apr 2016 20:48:06 GMT">
   
-    <testcase name="it should display custom new tab" time="3.740" assertions="2">
+    <testcase name="it should display custom new tab" time="2.777" assertions="2">
 
-      <failure message="Testing if element &lt;#message&gt; contains text: &quot;undefined&quot;.">  at Object.module.exports.it should display custom new tab (D:\Dev\newtab\tests\js\test.js:3:86)
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should display links to all top sites" time="1.022" assertions="3">
+
+    
+
+      <failure message="Expected element &lt;a&gt; text to equal: &quot;Henkilöasiakkaat | Nordea.fi&quot;">  at Object.module.exports.it should display links to all top sites (D:\Dev\newtab\tests\js\test.js:18:22)
   at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
   at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
   at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)

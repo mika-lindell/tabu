@@ -1,11 +1,14 @@
-class Animal
-  constructor: (@name) ->
+#walker = (sites)->
+#	console.log sites #site for site in sites
 
-  move: (meters) ->
-    alert @name + " moved #{meters}m."
+#chrome.topSites.get(walker)
 
-sam = new Snake "Sammy the Python"
-tom = new Horse "Tommy the Palomino"
 
-sam.move()
-tom.move()
+Class Element
+	
+	constructor: (tagName)->
+		@fragment = document.createDocumentFragment()
+		@DOMElement = @fragment.createElement(tagName)
+
+
+

@@ -44,7 +44,7 @@ grunt.log.ok(process.cwd());
 
       dist: {
         options: {
-                bare: true,
+                bare: false,
                 join: true // This will make sure you can create class structure in different files
               },
         files: [
@@ -61,7 +61,7 @@ grunt.log.ok(process.cwd());
         files: [
           {                         
             expand: true,       // Enable dynamic expansion.
-            cwd: 'tests/',        // Src matches are relative to this path.
+            cwd: 'tests/coffee',        // Src matches are relative to this path.
             src: ['**/*.coffee'], // Actual pattern(s) to match.
             dest: 'tests/js',      // Destination path prefix.
             ext: '.js',       // Dest filepaths will have this extension.
@@ -82,14 +82,18 @@ grunt.log.ok(process.cwd());
         jar_version: '2.53.0',
         jar_path: 'lib/selenium-server-standalone-2.53.0.jar',
 
-        src_folders: ['tests/'],
+        src_folders: ['tests/js'],
         output_folder: 'report',
+        globals_path: 'tests/js/globals.js', 
+
+
         test_settings: {
           default: {
             desiredCapabilities: {
               'browserName': "chrome",
+              'silent': true,
               'chromeOptions' : {
-                'args': ['load-extension=' + process.cwd() + '/dist/']
+                'args': ['start-maximized', 'load-extension=' + process.cwd() + '/dist/']
               }
             }
           }
