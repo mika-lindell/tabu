@@ -5,29 +5,31 @@
 
   <testsuite name="test"
     errors="0" failures="1" hostname="" id="" package="test" skipped="0"
-    tests="2" time="3.799" timestamp="Wed, 06 Apr 2016 20:48:06 GMT">
+    tests="2" time="3.872" timestamp="Thu, 07 Apr 2016 20:38:18 GMT">
   
-    <testcase name="it should display custom new tab" time="2.777" assertions="2">
+    <testcase name="it should display custom new tab" time="2.785" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display links to all top sites" time="1.022" assertions="3">
+    <testcase name="it should display links to all most visited sites" time="1.087" assertions="3">
 
     
 
-      <failure message="Expected element &lt;a&gt; text to equal: &quot;Henkilöasiakkaat | Nordea.fi&quot;">  at Object.module.exports.it should display links to all top sites (D:\Dev\newtab\tests\js\test.js:18:22)
-  at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
-  at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
-  at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)
-  at self.promiseDispatch.done (D:\Dev\newtab\node_modules\q\q.js:863:30)
-  at Promise.promise.promiseDispatch (D:\Dev\newtab\node_modules\q\q.js:796:13)
-  at D:\Dev\newtab\node_modules\q\q.js:556:49
-  at runSingle (D:\Dev\newtab\node_modules\q\q.js:137:13)
-  at flush (D:\Dev\newtab\node_modules\q\q.js:125:13)
-  at _combinedTickCallback (node.js:370:9)
+      <failure message="Expected element &lt;#most-visited-0&gt; text to equal: &quot;Tervetuloa Google Chromeen&quot;">  at Object.testMostVisited (D:\Dev\newtab\tests\js\test.js:25:24)
+  at HttpRequest.&lt;anonymous&gt; (D:\Dev\newtab\node_modules\nightwatch\lib\index.js:339:20)
+  at emitTwo (events.js:100:13)
+  at HttpRequest.emit (events.js:185:7)
+  at HttpRequest.&lt;anonymous&gt; (D:\Dev\newtab\node_modules\nightwatch\lib\index.js:367:15)
+  at emitThree (events.js:110:13)
+  at HttpRequest.emit (events.js:188:7)
+  at IncomingMessage.&lt;anonymous&gt; (D:\Dev\newtab\node_modules\nightwatch\lib\http\request.js:155:16)
+  at emitNone (events.js:85:20)
+  at IncomingMessage.emit (events.js:179:7)
+  at endReadableNT (_stream_readable.js:913:12)
+  at _combinedTickCallback (node.js:377:13)
   at process._tickCallback (node.js:401:11)
 </failure>
 

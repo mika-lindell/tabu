@@ -44,7 +44,7 @@ grunt.log.ok(process.cwd());
 
       dist: {
         options: {
-                bare: false,
+                bare: true,
                 join: true // This will make sure you can create class structure in different files
               },
         files: [
@@ -119,7 +119,7 @@ grunt.log.ok(process.cwd());
           // includes files within path
           {
             expand: true,
-            cwd:'./node_modules/materialize-css/dist/font/',
+            cwd:'node_modules/materialize-css/dist/font/',
             src: ['**'],
             dest: './dist/styles/assets/'
           },

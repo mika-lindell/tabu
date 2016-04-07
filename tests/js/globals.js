@@ -1,5 +1,5 @@
 module.exports = {
-  topSites: [
+  mostVisited: [
     {
       "title": "Ilta-Sanomat - IS - Suomen suurin uutismedia",
       "url": "http://www.iltasanomat.fi/"

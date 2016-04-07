@@ -13,10 +13,24 @@ module.exports =
 			.to.have.attribute("data-app").which.equals('newtab')
 
 
-	'it should display links to all top sites': (browser)->
-		for site in browser.globals.topSites
-			browser.expect.element('a').text.to.equal(site.title)
-			browser.expect.element('a').to.have.attribute("href").which.equals(site.url)
+	'it should display links to all most visited sites': (browser)->
+		browser.expect.element("#most-visited").to.be.present
+		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
+
+		getMostVisited = (data)->
+			return app.mostVisited.items
+
+		testMostVisited = (result)->
+			for site, i in result.value
+				browser.expect.element("#most-visited-#{ i }").text.to.equal(site.title)
+				browser.expect.element("#most-visited-#{ i }").to.have.attribute("href").which.equals(site.url)
+		
+		browser.execute(getMostVisited, [], testMostVisited)
+
+
+
+
+	
 					
 			
 		
