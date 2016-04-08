@@ -1,4 +1,4 @@
-var $newTab, App, DataGetter, DataStore, HTMLElement, ItemCard, ItemCardList, Render,
+var $newTab, App, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardList, Render,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -86,25 +86,25 @@ DataGetter = (function() {
 
 })();
 
-DataStore = (function() {
-  function DataStore() {}
+DataStorage = (function() {
+  function DataStorage() {}
 
-  DataStore.prototype.mostVisited = new DataGetter(chrome.topSites.get);
+  DataStorage.prototype.mostVisited = new DataGetter(chrome.topSites.get);
 
-  DataStore.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
+  DataStorage.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
 
-  DataStore.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
+  DataStorage.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
 
-  DataStore.prototype.recentBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
+  DataStorage.prototype.recentBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
 
-  DataStore.prototype.fetchAll = function() {
+  DataStorage.prototype.fetchAll = function() {
     this.mostVisited.fetch();
     this.recentlyClosed.fetch();
     this.otherDevices.fetch();
     return this.recentBookmarks.fetch();
   };
 
-  return DataStore;
+  return DataStorage;
 
 })();
 
@@ -168,14 +168,14 @@ App = (function() {
   function App() {
     var root;
     root = this;
-    this.dataStore = new DataStore;
-    this.dataStore.mostVisited.done = function() {
+    this.DataStorage = new DataStorage;
+    this.DataStorage.mostVisited.done = function() {
       var container, list;
       container = new HTMLElement('#most-visited');
-      list = new ItemCardList(root.dataStore.mostVisited.data);
+      list = new ItemCardList(root.DataStorage.mostVisited.data);
       return container.push(list);
     };
-    this.dataStore.fetchAll();
+    this.DataStorage.fetchAll();
   }
 
   return App;

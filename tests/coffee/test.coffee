@@ -17,7 +17,7 @@ module.exports =
 		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
 
 		getMostVisited = (data)->
-			return $newTab.dataStore.mostVisited
+			return $newTab.DataStorage.mostVisited
 
 		testMostVisited = (result)->
 

@@ -14,7 +14,7 @@ module.exports = {
     browser.expect.element("#most-visited").to.be.present;
     browser.expect.element("#most-visited-0").to.be.present.after(1000);
     getMostVisited = function(data) {
-      return $newTab.dataStore.mostVisited;
+      return $newTab.DataStorage.mostVisited;
     };
     testMostVisited = function(result) {
       var i, j, len, ref, results, site;

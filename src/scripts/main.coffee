@@ -95,7 +95,7 @@ class DataGetter
 
 # Store the data retrieved from chrome API
 #
-class DataStore
+class DataStorage
 
 	constructor: ()->
 
@@ -165,12 +165,12 @@ class App
 	#
 	constructor: ()->
 		root = @
-		@dataStore = new DataStore
-		@dataStore.mostVisited.done = ()->
+		@DataStorage = new DataStorage
+		@DataStorage.mostVisited.done = ()->
 			container = new HTMLElement ('#most-visited')
-			list = new ItemCardList(root.dataStore.mostVisited.data)
+			list = new ItemCardList(root.DataStorage.mostVisited.data)
 			container.push list
-		@dataStore.fetchAll() 
+		@DataStorage.fetchAll() 
 
 	# Manage the display of most visited sites
 ###	mostVisited:

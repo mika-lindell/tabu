@@ -5,16 +5,16 @@
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="2" time="2.965" timestamp="Fri, 08 Apr 2016 17:53:17 GMT">
+    tests="2" time="3.035" timestamp="Fri, 08 Apr 2016 17:54:59 GMT">
   
-    <testcase name="it should display custom new tab" time="2.767" assertions="2">
+    <testcase name="it should display custom new tab" time="2.835" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display links to all most visited sites" time="0.1980" assertions="6">
+    <testcase name="it should display links to all most visited sites" time="0.2000" assertions="6">
 
     
 
