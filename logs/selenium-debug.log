@@ -1,36 +1,54 @@
-18:32:14.407 INFO - Launching a standalone Selenium Server
+20:53:17.011 INFO - Launching a standalone Selenium Server
 Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
-18:32:14.464 INFO - Java: Oracle Corporation 25.66-b18
-18:32:14.464 INFO - OS: Windows 10 10.0 x86
-18:32:14.470 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-18:32:14.513 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-18:32:14.513 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-18:32:14.518 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+20:53:17.068 INFO - Java: Oracle Corporation 25.66-b18
+20:53:17.069 INFO - OS: Windows 10 10.0 x86
+20:53:17.074 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+20:53:17.115 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+20:53:17.116 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+20:53:17.121 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-18:32:14.518 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-18:32:14.518 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-18:32:14.596 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-18:32:14.596 INFO - Selenium Server is up and running
-18:32:14.915 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
-18:32:14.928 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
-Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 38749
+20:53:17.121 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+20:53:17.121 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+20:53:17.197 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+20:53:17.197 INFO - Selenium Server is up and running
+20:53:17.516 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+20:53:17.530 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 26097
 Only local connections are allowed.
-18:32:16.691 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
-18:32:16.703 INFO - Executing: [get: chrome://newtab])
-18:32:17.515 INFO - Done: [get: chrome://newtab]
-18:32:17.520 INFO - Executing: [find elements: By.cssSelector: body])
-18:32:17.547 INFO - Done: [find elements: By.cssSelector: body]
-18:32:17.552 INFO - Executing: [find elements: By.cssSelector: body])
-18:32:17.567 INFO - Done: [find elements: By.cssSelector: body]
-18:32:17.570 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (2d1eb260ae2449b4d491f86521e0f3ae)] -> css selector: body], data-app])
-18:32:17.582 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (2d1eb260ae2449b4d491f86521e0f3ae)] -> css selector: body], data-app]
-18:32:17.591 INFO - Executing: [find elements: By.cssSelector: #most-visited])
-18:32:17.607 INFO - Done: [find elements: By.cssSelector: #most-visited]
-18:32:17.611 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-18:32:17.626 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-18:32:18.131 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-18:32:18.147 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-18:32:18.651 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-18:32:18.658 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-18:32:18.678 INFO - Executing: [delete session: 9cb4c9aa-4cf3-4b7e-bd4b-b5719f599a2a])
-18:32:19.525 INFO - Done: [delete session: 9cb4c9aa-4cf3-4b7e-bd4b-b5719f599a2a]
+20:53:19.252 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+20:53:19.262 INFO - Executing: [get: chrome://newtab])
+20:53:20.080 INFO - Done: [get: chrome://newtab]
+20:53:20.085 INFO - Executing: [find elements: By.cssSelector: body])
+20:53:20.112 INFO - Done: [find elements: By.cssSelector: body]
+20:53:20.118 INFO - Executing: [find elements: By.cssSelector: body])
+20:53:20.133 INFO - Done: [find elements: By.cssSelector: body]
+20:53:20.137 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: body], data-app])
+20:53:20.147 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: body], data-app]
+20:53:20.155 INFO - Executing: [find elements: By.cssSelector: #most-visited])
+20:53:20.171 INFO - Done: [find elements: By.cssSelector: #most-visited]
+20:53:20.174 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+20:53:20.189 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+20:53:20.195 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+      return $newTab.dataStore.mostVisited;
+    }.apply(window, passedArgs);, []])
+20:53:20.201 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+      return $newTab.dataStore.mostVisited;
+    }.apply(window, passedArgs);, []]
+20:53:20.206 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+20:53:20.221 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+20:53:20.224 INFO - Executing: [get text: 2 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-0]])
+20:53:20.242 INFO - Done: [get text: 2 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-0]]
+20:53:20.247 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+20:53:20.256 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+20:53:20.259 INFO - Executing: [get element attribute: 2 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-0], href])
+20:53:20.269 INFO - Done: [get element attribute: 2 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-0], href]
+20:53:20.273 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
+20:53:20.289 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
+20:53:20.291 INFO - Executing: [get text: 3 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-1]])
+20:53:20.310 INFO - Done: [get text: 3 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-1]]
+20:53:20.315 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
+20:53:20.331 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
+20:53:20.333 INFO - Executing: [get element attribute: 3 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-1], href])
+20:53:20.345 INFO - Done: [get element attribute: 3 [[ChromeDriver: chrome on XP (26369cadd88d3899b0a5a5921ab02756)] -> css selector: #most-visited-1], href]
+20:53:20.353 INFO - Executing: [delete session: 15963061-9741-431c-aad5-78802e1bbf17])
+20:53:21.231 INFO - Done: [delete session: 15963061-9741-431c-aad5-78802e1bbf17]

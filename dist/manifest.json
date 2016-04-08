@@ -6,6 +6,7 @@
   "permissions": [
           "sessions",
           "tabs",
+          "bookmarks",
           "topSites"
         ],
 	"chrome_url_overrides" : {

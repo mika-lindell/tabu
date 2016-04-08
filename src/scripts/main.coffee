@@ -51,6 +51,65 @@ class HTMLElement
 		if element?
 			return @DOMElement.appendChild(element.DOMElement)
 
+# Used to retrieve data from async chrome API
+#
+class DataGetter
+
+	# Construct new datablock
+	#
+	# @param [fn] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
+	#
+	constructor: (api, dataType = 'links')->
+		@api = api
+		@limit = 20
+		@dataType = dataType
+
+	# Status of the operation.
+	# Can be empty, loading or ready
+	#	
+	status: 'empty'
+
+	# Retrieved data is stored in this variable
+	#
+	data: null
+
+	# Get the data from chrome API
+	#
+	fetch: (api)->
+		@status = 'loading'
+		root = @ # Reference the class so we can access it in getter-function
+
+		getter = (result)->
+			root.data = result
+			root.status = 'ready'
+			root.done()
+
+		if @dataType is 'bookmarks'
+			@api(@limit, getter)
+		else
+			@api(getter) # Call the api referenced in constructor
+
+	# The callback evoked when operation status changes to 'ready'
+	done: ()->
+
+
+# Store the data retrieved from chrome API
+#
+class DataStore
+
+	constructor: ()->
+
+	mostVisited: new DataGetter(chrome.topSites.get)
+	recentlyClosed: new DataGetter(chrome.sessions.getRecentlyClosed)
+	otherDevices: new DataGetter(chrome.sessions.getDevices)
+	recentBookmarks: new DataGetter(chrome.bookmarks.getRecent, 'bookmarks')
+
+	fetchAll: ()->
+		@mostVisited.fetch()
+		@recentlyClosed.fetch()
+		@otherDevices.fetch()
+		@recentBookmarks.fetch()
+
 # Creates special list item containing a link.
 #
 class ItemCard extends HTMLElement
@@ -69,61 +128,34 @@ class ItemCard extends HTMLElement
 		if id?
 			link.attr('id', id)
 
-		@.push link
+		@push link
 
-# Used to retrieve data from async chrome API
+# Generate list of itemCards from DataGetter
 #
-#
-class DataGetter
+class ItemCardList extends HTMLElement
 
-	# Construct new datablock
-	#
-	# @param [fn] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
-	#
-	constructor: (api)->
-		@api = api
+	constructor: (data)->
+		super('ul')
+		@data = data
+		@update()
 
-	# Status of the operation.
-	# Can be empty, loading or ready
-	#	
-	status: 'empty'
+	update: ()->	
+		@fragment = document.createDocumentFragment()
 
-	# Retrieved data is stored in this variable
-	#
-	data: null
+		for item, i in @data
+			card = new ItemCard(item.title, item.url, "most-visited-#{ i }")
+			@fragment.appendChild(card.DOMElement)
 
-	# Get the data from chrome API
-	#
-	fetch: (api)->
-		@.status = 'loading'
-		root = @ # Reference the class so we can access it in getter-function
-
-		getter = (result)->
-			root.items = result
-			root.status = 'ready'
-
-		@api(getter) # Call the api referenced in constructor
-
-
-# Store the data retrieved from chrome API
-#
-class DataStore
-
-	constructor: ()->
-
-	mostVisited: new DataGetter (chrome.topSites.get)
-	recentlyClosed: new DataGetter (chrome.sessions.getRecentlyClosed)
-	otherDevices: new DataGetter (chrome.sessions.getDevices)
-
-	fetchAll: ()->
-		@mostVisited.fetch()
-		@recentlyClosed.fetch()
-		@otherDevices.fetch()
+		@DOMElement.appendChild(@fragment) 
 
 
 # Append UI elements
 #
 class Render 
+
+	constructor: ()->
+
+	itemCardList: ()->
 
 # Responsible of generating content for this app and keeping it up-to-date
 #
@@ -132,8 +164,12 @@ class App
 	# Construct new app
 	#
 	constructor: ()->
-
+		root = @
 		@dataStore = new DataStore
+		@dataStore.mostVisited.done = ()->
+			container = new HTMLElement ('#most-visited')
+			list = new ItemCardList(root.dataStore.mostVisited.data)
+			container.push list
 		@dataStore.fetchAll() 
 
 	# Manage the display of most visited sites
@@ -151,6 +187,6 @@ class App
 			chrome.topSites.get(walker)###
 
 
-newtab = new App
+$newTab = new App
 
 #newtab.mostVisited.update()

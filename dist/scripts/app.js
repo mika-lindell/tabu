@@ -1,4 +1,4 @@
-var App, DataGetter, DataStore, HTMLElement, ItemCard, Render, newtab,
+var $newTab, App, DataGetter, DataStore, HTMLElement, ItemCard, ItemCardList, Render,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -50,6 +50,64 @@ HTMLElement = (function() {
 
 })();
 
+DataGetter = (function() {
+  function DataGetter(api, dataType) {
+    if (dataType == null) {
+      dataType = 'links';
+    }
+    this.api = api;
+    this.limit = 20;
+    this.dataType = dataType;
+  }
+
+  DataGetter.prototype.status = 'empty';
+
+  DataGetter.prototype.data = null;
+
+  DataGetter.prototype.fetch = function(api) {
+    var getter, root;
+    this.status = 'loading';
+    root = this;
+    getter = function(result) {
+      root.data = result;
+      root.status = 'ready';
+      return root.done();
+    };
+    if (this.dataType === 'bookmarks') {
+      return this.api(this.limit, getter);
+    } else {
+      return this.api(getter);
+    }
+  };
+
+  DataGetter.prototype.done = function() {};
+
+  return DataGetter;
+
+})();
+
+DataStore = (function() {
+  function DataStore() {}
+
+  DataStore.prototype.mostVisited = new DataGetter(chrome.topSites.get);
+
+  DataStore.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
+
+  DataStore.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
+
+  DataStore.prototype.recentBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
+
+  DataStore.prototype.fetchAll = function() {
+    this.mostVisited.fetch();
+    this.recentlyClosed.fetch();
+    this.otherDevices.fetch();
+    return this.recentBookmarks.fetch();
+  };
+
+  return DataStore;
+
+})();
+
 ItemCard = (function(superClass) {
   extend(ItemCard, superClass);
 
@@ -72,51 +130,35 @@ ItemCard = (function(superClass) {
 
 })(HTMLElement);
 
-DataGetter = (function() {
-  function DataGetter(api) {
-    this.api = api;
+ItemCardList = (function(superClass) {
+  extend(ItemCardList, superClass);
+
+  function ItemCardList(data) {
+    ItemCardList.__super__.constructor.call(this, 'ul');
+    this.data = data;
+    this.update();
   }
 
-  DataGetter.prototype.status = 'empty';
-
-  DataGetter.prototype.data = null;
-
-  DataGetter.prototype.fetch = function(api) {
-    var getter, root;
-    this.status = 'loading';
-    root = this;
-    getter = function(result) {
-      root.items = result;
-      return root.status = 'ready';
-    };
-    return this.api(getter);
+  ItemCardList.prototype.update = function() {
+    var card, i, item, j, len, ref;
+    this.fragment = document.createDocumentFragment();
+    ref = this.data;
+    for (i = j = 0, len = ref.length; j < len; i = ++j) {
+      item = ref[i];
+      card = new ItemCard(item.title, item.url, "most-visited-" + i);
+      this.fragment.appendChild(card.DOMElement);
+    }
+    return this.DOMElement.appendChild(this.fragment);
   };
 
-  return DataGetter;
+  return ItemCardList;
 
-})();
-
-DataStore = (function() {
-  function DataStore() {}
-
-  DataStore.prototype.mostVisited = new DataGetter(chrome.topSites.get);
-
-  DataStore.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
-
-  DataStore.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
-
-  DataStore.prototype.fetchAll = function() {
-    this.mostVisited.fetch();
-    this.recentlyClosed.fetch();
-    return this.otherDevices.fetch();
-  };
-
-  return DataStore;
-
-})();
+})(HTMLElement);
 
 Render = (function() {
   function Render() {}
+
+  Render.prototype.itemCardList = function() {};
 
   return Render;
 
@@ -124,7 +166,15 @@ Render = (function() {
 
 App = (function() {
   function App() {
+    var root;
+    root = this;
     this.dataStore = new DataStore;
+    this.dataStore.mostVisited.done = function() {
+      var container, list;
+      container = new HTMLElement('#most-visited');
+      list = new ItemCardList(root.dataStore.mostVisited.data);
+      return container.push(list);
+    };
     this.dataStore.fetchAll();
   }
 
@@ -147,4 +197,4 @@ App = (function() {
 			chrome.topSites.get(walker)
  */
 
-newtab = new App;
+$newTab = new App;
