@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="2">
+            tests="5">
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="2" time="3.035" timestamp="Fri, 08 Apr 2016 17:54:59 GMT">
+    tests="5" time="8.221" timestamp="Fri, 08 Apr 2016 22:12:13 GMT">
   
-    <testcase name="it should display custom new tab" time="2.835" assertions="2">
+    <testcase name="it should display custom new tab" time="6.432" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display links to all most visited sites" time="0.2000" assertions="6">
+    <testcase name="it should display most visited sites" time="0.2050" assertions="6">
 
     
 
@@ -25,6 +25,103 @@
     
 
     
+
+    
+    </testcase>
+  
+    <testcase name="it should display recent bookmarks" time="1.544" assertions="42">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should display recently closed items" time="0.02000" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="it should display items from other devices" time="0.02000" assertions="1">
 
     
     </testcase>

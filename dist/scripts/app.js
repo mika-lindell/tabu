@@ -1,4 +1,4 @@
-var $newTab, App, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardList, Render,
+var $newTab, App, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardHeading, ItemCardList, Render,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -42,7 +42,11 @@ HTMLElement = (function() {
       element = null;
     }
     if (element != null) {
-      return this.DOMElement.appendChild(element.DOMElement);
+      if (element instanceof HTMLElement) {
+        return this.DOMElement.appendChild(element.DOMElement);
+      } else {
+        return this.DOMElement.appendChild(element);
+      }
     }
   };
 
@@ -69,7 +73,11 @@ DataGetter = (function() {
     this.status = 'loading';
     root = this;
     getter = function(result) {
-      root.data = result;
+      if (root.dataType === 'devices' || root.dataType === 'history') {
+        root.data = root.flatten(result);
+      } else {
+        root.data = result;
+      }
       root.status = 'ready';
       return root.done();
     };
@@ -82,6 +90,38 @@ DataGetter = (function() {
 
   DataGetter.prototype.done = function() {};
 
+  DataGetter.prototype.flatten = function(source) {
+    var addItems, i, item, j, k, l, len, len1, len2, ref, result, root, tab;
+    root = this;
+    result = [];
+    addItems = function(tabs) {};
+    if (root.dataType === 'devices') {
+      for (i = j = 0, len = source.length; j < len; i = ++j) {
+        item = source[i];
+        result.push({
+          'heading': item.deviceName
+        });
+        ref = item.sessions[0].window.tabs;
+        for (k = 0, len1 = ref.length; k < len1; k++) {
+          tab = ref[k];
+          result.push({
+            'title': tab.title,
+            'url': tab.url
+          });
+        }
+      }
+    } else if (root.dataType === 'history') {
+      for (l = 0, len2 = source.length; l < len2; l++) {
+        item = source[l];
+        result.push({
+          'title': item.tab.title,
+          'url': item.tab.url
+        });
+      }
+    }
+    return result;
+  };
+
   return DataGetter;
 
 })();
@@ -91,9 +131,9 @@ DataStorage = (function() {
 
   DataStorage.prototype.mostVisited = new DataGetter(chrome.topSites.get);
 
-  DataStorage.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
+  DataStorage.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'history');
 
-  DataStorage.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
+  DataStorage.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices, 'devices');
 
   DataStorage.prototype.recentBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
 
@@ -130,25 +170,56 @@ ItemCard = (function(superClass) {
 
 })(HTMLElement);
 
+ItemCardHeading = (function(superClass) {
+  extend(ItemCardHeading, superClass);
+
+  function ItemCardHeading(title, id) {
+    var heading;
+    if (id == null) {
+      id = null;
+    }
+    ItemCardHeading.__super__.constructor.call(this, 'li');
+    heading = new HTMLElement('h5');
+    heading.text(title);
+    if (id != null) {
+      heading.attr('id', id);
+    }
+    this.push(heading);
+  }
+
+  return ItemCardHeading;
+
+})(HTMLElement);
+
 ItemCardList = (function(superClass) {
   extend(ItemCardList, superClass);
 
-  function ItemCardList(data) {
+  function ItemCardList(dataGetter, baseId) {
+    if (baseId == null) {
+      baseId = 'card';
+    }
     ItemCardList.__super__.constructor.call(this, 'ul');
-    this.data = data;
+    this.dataGetter = dataGetter;
+    this.baseId = baseId;
+    this.attr('id', this.baseId + "-list");
     this.update();
   }
 
   ItemCardList.prototype.update = function() {
-    var card, i, item, j, len, ref;
+    var card, cardId, i, item, j, len, ref;
     this.fragment = document.createDocumentFragment();
-    ref = this.data;
+    ref = this.dataGetter.data;
     for (i = j = 0, len = ref.length; j < len; i = ++j) {
       item = ref[i];
-      card = new ItemCard(item.title, item.url, "most-visited-" + i);
+      cardId = this.baseId + "-" + i;
+      if (item.heading != null) {
+        card = new ItemCardHeading(item.heading, cardId);
+      } else {
+        card = new ItemCard(item.title, item.url, cardId);
+      }
       this.fragment.appendChild(card.DOMElement);
     }
-    return this.DOMElement.appendChild(this.fragment);
+    return this.push(this.fragment);
   };
 
   return ItemCardList;
@@ -168,14 +239,32 @@ App = (function() {
   function App() {
     var root;
     root = this;
-    this.DataStorage = new DataStorage;
-    this.DataStorage.mostVisited.done = function() {
+    this.dataStorage = new DataStorage;
+    this.dataStorage.mostVisited.done = function() {
       var container, list;
       container = new HTMLElement('#most-visited');
-      list = new ItemCardList(root.DataStorage.mostVisited.data);
+      list = new ItemCardList(root.dataStorage.mostVisited, 'most-visited');
       return container.push(list);
     };
-    this.DataStorage.fetchAll();
+    this.dataStorage.recentBookmarks.done = function() {
+      var container, list;
+      container = new HTMLElement('#recent-bookmarks');
+      list = new ItemCardList(root.dataStorage.recentBookmarks, 'recent-bookmarks');
+      return container.push(list);
+    };
+    this.dataStorage.otherDevices.done = function() {
+      var container, list;
+      container = new HTMLElement('#other-devices');
+      list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
+      return container.push(list);
+    };
+    this.dataStorage.recentlyClosed.done = function() {
+      var container, list;
+      container = new HTMLElement('#recently-closed');
+      list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed');
+      return container.push(list);
+    };
+    this.dataStorage.fetchAll();
   }
 
   return App;

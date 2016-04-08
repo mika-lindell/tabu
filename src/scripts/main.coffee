@@ -49,7 +49,10 @@ class HTMLElement
 	#
 	push: (element = null)->
 		if element?
-			return @DOMElement.appendChild(element.DOMElement)
+			if element instanceof HTMLElement
+				return @DOMElement.appendChild(element.DOMElement)
+			else
+				return @DOMElement.appendChild(element)
 
 # Used to retrieve data from async chrome API
 #
@@ -57,7 +60,8 @@ class DataGetter
 
 	# Construct new datablock
 	#
-	# @param [fn] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
+	# @param [Function] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
+	# @param [String] The structure type of this data. Can be links, bookmarks, devices or history
 	#
 	constructor: (api, dataType = 'links')->
 		@api = api
@@ -80,18 +84,51 @@ class DataGetter
 		root = @ # Reference the class so we can access it in getter-function
 
 		getter = (result)->
-			root.data = result
+
+			if root.dataType is 'devices' or root.dataType is 'history' # If we are getting tabs, we need to flatten the object first
+				root.data = root.flatten(result)
+			else
+				root.data = result
+
 			root.status = 'ready'
 			root.done()
 
-		if @dataType is 'bookmarks'
+		if @dataType is 'bookmarks' # If we are getting bookmarks, use limit
 			@api(@limit, getter)
 		else
 			@api(getter) # Call the api referenced in constructor
 
 	# The callback evoked when operation status changes to 'ready'
+	#
 	done: ()->
 
+	# Flatten multidimensional devices and 'tabs'-array
+	#
+	# @param [array] The multidimensional array to be flattened
+	#
+	flatten: (source)->
+		root = @
+		result = []
+
+		# Add items from array containing tabs
+		addItems = (tabs)->
+		if root.dataType is 'devices'
+			for item, i in source
+				result.push({ 'heading': item.deviceName }) # Add the device as heading
+				for tab in item.sessions[0].window.tabs
+					result.push({ 
+						'title': tab.title
+						'url': tab.url 
+						}) # Add tabs from this session
+
+		else if root.dataType is 'history'
+			for item in source
+				result.push({ 
+					'title': item.tab.title
+					'url': item.tab.url 
+					}) # Add tabs from this session # Add tabs from this session
+
+		return result
 
 # Store the data retrieved from chrome API
 #
@@ -100,8 +137,8 @@ class DataStorage
 	constructor: ()->
 
 	mostVisited: new DataGetter(chrome.topSites.get)
-	recentlyClosed: new DataGetter(chrome.sessions.getRecentlyClosed)
-	otherDevices: new DataGetter(chrome.sessions.getDevices)
+	recentlyClosed: new DataGetter(chrome.sessions.getRecentlyClosed, 'history')
+	otherDevices: new DataGetter(chrome.sessions.getDevices, 'devices')
 	recentBookmarks: new DataGetter(chrome.bookmarks.getRecent, 'bookmarks')
 
 	fetchAll: ()->
@@ -128,25 +165,54 @@ class ItemCard extends HTMLElement
 		if id?
 			link.attr('id', id)
 
-		@push link
+		@push(link)
+
+# Creates special list item containing a link.
+#
+class ItemCardHeading extends HTMLElement
+
+	# Construct new card heading.
+	#
+	# @param [String] Title of the card
+	#
+	constructor: (title, id = null)->
+		super('li')
+
+		heading = new HTMLElement('h5')
+		heading.text(title)
+		if id?
+			heading.attr('id', id)
+
+		@push(heading)
 
 # Generate list of itemCards from DataGetter
 #
 class ItemCardList extends HTMLElement
 
-	constructor: (data)->
+	constructor: (dataGetter, baseId = 'card')->
 		super('ul')
-		@data = data
+
+		@dataGetter = dataGetter
+		@baseId = baseId
+
+		@attr('id', "#{ @baseId }-list")
 		@update()
 
 	update: ()->	
 		@fragment = document.createDocumentFragment()
 
-		for item, i in @data
-			card = new ItemCard(item.title, item.url, "most-visited-#{ i }")
+		for item, i in @dataGetter.data
+
+			cardId = "#{ @baseId }-#{ i }"
+
+			if item.heading?
+				card = new ItemCardHeading(item.heading, cardId)
+			else
+				card = new ItemCard(item.title, item.url, cardId)
+
 			@fragment.appendChild(card.DOMElement)
 
-		@DOMElement.appendChild(@fragment) 
+		@push(@fragment) 
 
 
 # Append UI elements
@@ -165,12 +231,24 @@ class App
 	#
 	constructor: ()->
 		root = @
-		@DataStorage = new DataStorage
-		@DataStorage.mostVisited.done = ()->
+		@dataStorage = new DataStorage
+		@dataStorage.mostVisited.done = ()->
 			container = new HTMLElement ('#most-visited')
-			list = new ItemCardList(root.DataStorage.mostVisited.data)
+			list = new ItemCardList(root.dataStorage.mostVisited, 'most-visited')
 			container.push list
-		@DataStorage.fetchAll() 
+		@dataStorage.recentBookmarks.done = ()->
+			container = new HTMLElement ('#recent-bookmarks')
+			list = new ItemCardList(root.dataStorage.recentBookmarks, 'recent-bookmarks')
+			container.push list
+		@dataStorage.otherDevices.done = ()->
+			container = new HTMLElement ('#other-devices')
+			list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices')
+			container.push list
+		@dataStorage.recentlyClosed.done = ()->
+			container = new HTMLElement ('#recently-closed')
+			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
+			container.push list
+		@dataStorage.fetchAll() 
 
 	# Manage the display of most visited sites
 ###	mostVisited:
