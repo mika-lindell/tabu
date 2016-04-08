@@ -1,4 +1,4 @@
-var App, HTMLElement, ItemCard, app,
+var App, DataGetter, DataStore, HTMLElement, ItemCard, Render, newtab,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -17,7 +17,7 @@ HTMLElement = (function() {
     if (text == null) {
       text = null;
     }
-    if (typeof replace !== "undefined" && replace !== null) {
+    if (text != null) {
       if (this.DOMElement) {
         return this.DOMElement.textContent = text;
       }
@@ -72,34 +72,79 @@ ItemCard = (function(superClass) {
 
 })(HTMLElement);
 
-App = (function() {
-  function App() {}
+DataGetter = (function() {
+  function DataGetter(api) {
+    this.api = api;
+  }
 
-  App.prototype.mostVisited = {
-    items: [],
-    update: function() {
-      var list, parent, walker;
-      parent = this;
-      list = new HTMLElement('#most-visited');
-      walker = function(topSites) {
-        var card, i, j, len, results, site;
-        parent.items = topSites;
-        results = [];
-        for (i = j = 0, len = topSites.length; j < len; i = ++j) {
-          site = topSites[i];
-          card = new ItemCard(site.title, site.url, "most-visited-" + i);
-          results.push(list.push(card));
-        }
-        return results;
-      };
-      return chrome.topSites.get(walker);
-    }
+  DataGetter.prototype.status = 'empty';
+
+  DataGetter.prototype.data = null;
+
+  DataGetter.prototype.fetch = function(api) {
+    var getter, root;
+    this.status = 'loading';
+    root = this;
+    getter = function(result) {
+      root.items = result;
+      return root.status = 'ready';
+    };
+    return this.api(getter);
   };
+
+  return DataGetter;
+
+})();
+
+DataStore = (function() {
+  function DataStore() {}
+
+  DataStore.prototype.mostVisited = new DataGetter(chrome.topSites.get);
+
+  DataStore.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed);
+
+  DataStore.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices);
+
+  DataStore.prototype.fetchAll = function() {
+    this.mostVisited.fetch();
+    this.recentlyClosed.fetch();
+    return this.otherDevices.fetch();
+  };
+
+  return DataStore;
+
+})();
+
+Render = (function() {
+  function Render() {}
+
+  return Render;
+
+})();
+
+App = (function() {
+  function App() {
+    this.dataStore = new DataStore;
+    this.dataStore.fetchAll();
+  }
 
   return App;
 
 })();
 
-app = new App;
 
-app.mostVisited.update();
+/*	mostVisited:
+		items: []
+		update: ()->
+			parent = @
+			list = new HTMLElement ('#most-visited')
+			walker = (topSites)->
+				parent.items = topSites
+				for site, i in topSites
+					card = new ItemCard(site.title, site.url, "most-visited-#{ i }")
+					list.push(card) 
+
+			chrome.topSites.get(walker)
+ */
+
+newtab = new App;

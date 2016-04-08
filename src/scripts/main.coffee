@@ -24,7 +24,7 @@ class HTMLElement
 	# @return [String]
 	#
 	text: (text = null)->
-		if replace?
+		if text?
 			if @DOMElement
 				return @DOMElement.textContent = text
 		else
@@ -71,6 +71,60 @@ class ItemCard extends HTMLElement
 
 		@.push link
 
+# Used to retrieve data from async chrome API
+#
+#
+class DataGetter
+
+	# Construct new datablock
+	#
+	# @param [fn] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
+	#
+	constructor: (api)->
+		@api = api
+
+	# Status of the operation.
+	# Can be empty, loading or ready
+	#	
+	status: 'empty'
+
+	# Retrieved data is stored in this variable
+	#
+	data: null
+
+	# Get the data from chrome API
+	#
+	fetch: (api)->
+		@.status = 'loading'
+		root = @ # Reference the class so we can access it in getter-function
+
+		getter = (result)->
+			root.items = result
+			root.status = 'ready'
+
+		@api(getter) # Call the api referenced in constructor
+
+
+# Store the data retrieved from chrome API
+#
+class DataStore
+
+	constructor: ()->
+
+	mostVisited: new DataGetter (chrome.topSites.get)
+	recentlyClosed: new DataGetter (chrome.sessions.getRecentlyClosed)
+	otherDevices: new DataGetter (chrome.sessions.getDevices)
+
+	fetchAll: ()->
+		@mostVisited.fetch()
+		@recentlyClosed.fetch()
+		@otherDevices.fetch()
+
+
+# Append UI elements
+#
+class Render 
+
 # Responsible of generating content for this app and keeping it up-to-date
 #
 class App
@@ -79,8 +133,11 @@ class App
 	#
 	constructor: ()->
 
+		@dataStore = new DataStore
+		@dataStore.fetchAll() 
+
 	# Manage the display of most visited sites
-	mostVisited:
+###	mostVisited:
 		items: []
 		update: ()->
 			parent = @
@@ -91,9 +148,9 @@ class App
 					card = new ItemCard(site.title, site.url, "most-visited-#{ i }")
 					list.push(card) 
 
-			chrome.topSites.get(walker)
+			chrome.topSites.get(walker)###
 
 
-app = new App
+newtab = new App
 
-app.mostVisited.update()
+#newtab.mostVisited.update()
