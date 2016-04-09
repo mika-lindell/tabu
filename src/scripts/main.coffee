@@ -5,6 +5,8 @@
 #
 class HTMLElement
 
+	@DOMElement
+
 	# Construct new element.
 	#
 	# @param [mixed] HTML tag name as string to create new element or standard element object to be wrapped. 
@@ -58,6 +60,19 @@ class HTMLElement
 #
 class DataGetter
 
+	@api
+	@limit
+	@dataType
+
+	# Status of the operation.
+	# Can be empty, loading or ready
+	#	
+	@status = 'empty'
+
+	# Retrieved data is stored in this variable
+	#
+	@data = null
+
 	# Construct new datablock
 	#
 	# @param [Function] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
@@ -67,15 +82,6 @@ class DataGetter
 		@api = api
 		@limit = 20
 		@dataType = dataType
-
-	# Status of the operation.
-	# Can be empty, loading or ready
-	#	
-	status: 'empty'
-
-	# Retrieved data is stored in this variable
-	#
-	data: null
 
 	# Get the data from chrome API
 	#
@@ -167,7 +173,7 @@ class ItemCard extends HTMLElement
 
 		@push(link)
 
-# Creates special list item containing a link.
+# Creates special list item containing a heading.
 #
 class ItemCardHeading extends HTMLElement
 
@@ -188,6 +194,10 @@ class ItemCardHeading extends HTMLElement
 # Generate list of itemCards from DataGetter
 #
 class ItemCardList extends HTMLElement
+
+	@dataGetter
+	@baseId
+	@fragment
 
 	constructor: (dataGetter, baseId = 'card')->
 		super('ul')
@@ -226,6 +236,8 @@ class Render
 # Responsible of generating content for this app and keeping it up-to-date
 #
 class App
+	
+	@dataStorage
 	
 	# Construct new app
 	#

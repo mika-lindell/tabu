@@ -3,6 +3,8 @@ var $newTab, App, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardHeadin
   hasProp = {}.hasOwnProperty;
 
 HTMLElement = (function() {
+  HTMLElement.DOMElement;
+
   function HTMLElement(element) {
     if (element instanceof Element) {
       this.DOMElement = element;
@@ -55,6 +57,16 @@ HTMLElement = (function() {
 })();
 
 DataGetter = (function() {
+  DataGetter.api;
+
+  DataGetter.limit;
+
+  DataGetter.dataType;
+
+  DataGetter.status = 'empty';
+
+  DataGetter.data = null;
+
   function DataGetter(api, dataType) {
     if (dataType == null) {
       dataType = 'links';
@@ -63,10 +75,6 @@ DataGetter = (function() {
     this.limit = 20;
     this.dataType = dataType;
   }
-
-  DataGetter.prototype.status = 'empty';
-
-  DataGetter.prototype.data = null;
 
   DataGetter.prototype.fetch = function(api) {
     var getter, root;
@@ -194,6 +202,12 @@ ItemCardHeading = (function(superClass) {
 ItemCardList = (function(superClass) {
   extend(ItemCardList, superClass);
 
+  ItemCardList.dataGetter;
+
+  ItemCardList.baseId;
+
+  ItemCardList.fragment;
+
   function ItemCardList(dataGetter, baseId) {
     if (baseId == null) {
       baseId = 'card';
@@ -236,6 +250,8 @@ Render = (function() {
 })();
 
 App = (function() {
+  App.dataStorage;
+
   function App() {
     var root;
     root = this;

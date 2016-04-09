@@ -1,24 +1,24 @@
-01:12:12.716 INFO - Launching a standalone Selenium Server
+12:31:42.339 INFO - Launching a standalone Selenium Server
 Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
-01:12:12.777 INFO - Java: Oracle Corporation 25.66-b18
-01:12:12.777 INFO - OS: Windows 10 10.0 x86
-01:12:12.783 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-01:12:12.825 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-01:12:12.825 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-01:12:12.830 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+12:31:42.398 INFO - Java: Oracle Corporation 25.66-b18
+12:31:42.398 INFO - OS: Windows 10 10.0 x86
+12:31:42.404 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+12:31:42.447 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+12:31:42.448 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+12:31:42.453 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-01:12:12.830 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-01:12:12.831 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-01:12:12.909 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-01:12:12.909 INFO - Selenium Server is up and running
-01:12:13.233 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
-01:12:13.246 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
-Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 8177
+12:31:42.453 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+12:31:42.453 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+12:31:42.533 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+12:31:42.533 INFO - Selenium Server is up and running
+12:31:42.866 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+12:31:42.879 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 17973
 Only local connections are allowed.
-01:12:18.089 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
-01:12:18.099 INFO - Executing: [get: chrome://newtab])
-01:12:19.365 INFO - Done: [get: chrome://newtab]
-01:12:19.373 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:53.526 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+12:31:53.536 INFO - Executing: [get: chrome://newtab])
+12:31:54.674 INFO - Done: [get: chrome://newtab]
+12:31:54.681 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       var item, j, len, results;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
@@ -27,7 +27,7 @@ Only local connections are allowed.
       }
       return results;
     }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]])
-01:12:19.393 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:54.768 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       var item, j, len, results;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
@@ -36,213 +36,213 @@ Only local connections are allowed.
       }
       return results;
     }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]]
-01:12:19.397 INFO - Executing: [get: chrome://newtab])
-01:12:19.435 INFO - Done: [get: chrome://newtab]
-01:12:19.439 INFO - Executing: [find elements: By.cssSelector: body])
-01:12:19.483 INFO - Done: [find elements: By.cssSelector: body]
-01:12:19.488 INFO - Executing: [find elements: By.cssSelector: body])
-01:12:19.504 INFO - Done: [find elements: By.cssSelector: body]
-01:12:19.509 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: body], data-app])
-01:12:19.519 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: body], data-app]
-01:12:19.528 INFO - Executing: [find elements: By.cssSelector: #most-visited])
-01:12:19.543 INFO - Done: [find elements: By.cssSelector: #most-visited]
-01:12:19.549 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-01:12:19.565 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-01:12:19.570 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:54.771 INFO - Executing: [get: chrome://newtab])
+12:31:54.831 INFO - Done: [get: chrome://newtab]
+12:31:54.835 INFO - Executing: [find elements: By.cssSelector: body])
+12:31:55.104 INFO - Done: [find elements: By.cssSelector: body]
+12:31:55.109 INFO - Executing: [find elements: By.cssSelector: body])
+12:31:55.125 INFO - Done: [find elements: By.cssSelector: body]
+12:31:55.129 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: body], data-app])
+12:31:55.141 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: body], data-app]
+12:31:55.150 INFO - Executing: [find elements: By.cssSelector: #most-visited])
+12:31:55.166 INFO - Done: [find elements: By.cssSelector: #most-visited]
+12:31:55.172 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+12:31:55.192 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+12:31:55.197 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       return $newTab.dataStorage.mostVisited;
     }.apply(window, passedArgs);, []])
-01:12:19.578 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:55.204 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       return $newTab.dataStorage.mostVisited;
     }.apply(window, passedArgs);, []]
-01:12:19.583 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-01:12:19.599 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-01:12:19.603 INFO - Executing: [get text: 2 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-0]])
-01:12:19.621 INFO - Done: [get text: 2 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-0]]
-01:12:19.627 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-01:12:19.640 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-01:12:19.643 INFO - Executing: [get element attribute: 2 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-0], href])
-01:12:19.652 INFO - Done: [get element attribute: 2 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-0], href]
-01:12:19.657 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
-01:12:19.672 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
-01:12:19.676 INFO - Executing: [get text: 3 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-1]])
-01:12:19.693 INFO - Done: [get text: 3 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-1]]
-01:12:19.698 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
-01:12:19.714 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
-01:12:19.718 INFO - Executing: [get element attribute: 3 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-1], href])
-01:12:19.727 INFO - Done: [get element attribute: 3 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #most-visited-1], href]
-01:12:19.734 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
-01:12:19.749 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
-01:12:19.754 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-01:12:19.770 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-01:12:19.775 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:55.211 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+12:31:55.226 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+12:31:55.229 INFO - Executing: [get text: 2 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-0]])
+12:31:55.249 INFO - Done: [get text: 2 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-0]]
+12:31:55.254 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+12:31:55.262 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+12:31:55.267 INFO - Executing: [get element attribute: 2 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-0], href])
+12:31:55.276 INFO - Done: [get element attribute: 2 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-0], href]
+12:31:55.281 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
+12:31:55.296 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
+12:31:55.300 INFO - Executing: [get text: 3 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-1]])
+12:31:55.318 INFO - Done: [get text: 3 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-1]]
+12:31:55.323 INFO - Executing: [find elements: By.cssSelector: #most-visited-1])
+12:31:55.340 INFO - Done: [find elements: By.cssSelector: #most-visited-1]
+12:31:55.342 INFO - Executing: [get element attribute: 3 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-1], href])
+12:31:55.351 INFO - Done: [get element attribute: 3 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #most-visited-1], href]
+12:31:55.361 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
+12:31:55.378 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
+12:31:55.383 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+12:31:55.399 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+12:31:55.404 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       return $newTab.dataStorage.recentBookmarks;
     }.apply(window, passedArgs);, []])
-01:12:19.784 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+12:31:55.413 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       return $newTab.dataStorage.recentBookmarks;
     }.apply(window, passedArgs);, []]
-01:12:19.801 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-01:12:19.816 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-01:12:19.820 INFO - Executing: [get text: 5 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-0]])
-01:12:19.838 INFO - Done: [get text: 5 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-0]]
-01:12:19.842 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-01:12:19.850 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-01:12:19.854 INFO - Executing: [get element attribute: 5 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-0], href])
-01:12:19.863 INFO - Done: [get element attribute: 5 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-0], href]
-01:12:19.868 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-1])
-01:12:19.883 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-1]
-01:12:19.886 INFO - Executing: [get text: 6 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-1]])
-01:12:19.904 INFO - Done: [get text: 6 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-1]]
-01:12:19.908 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-1])
-01:12:19.924 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-1]
-01:12:19.927 INFO - Executing: [get element attribute: 6 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-1], href])
-01:12:19.936 INFO - Done: [get element attribute: 6 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-1], href]
-01:12:19.942 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-2])
-01:12:19.956 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-2]
-01:12:19.959 INFO - Executing: [get text: 7 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-2]])
-01:12:19.977 INFO - Done: [get text: 7 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-2]]
-01:12:19.981 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-2])
-01:12:19.997 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-2]
-01:12:20.001 INFO - Executing: [get element attribute: 7 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-2], href])
-01:12:20.011 INFO - Done: [get element attribute: 7 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-2], href]
-01:12:20.016 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-3])
-01:12:20.032 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-3]
-01:12:20.035 INFO - Executing: [get text: 8 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-3]])
-01:12:20.053 INFO - Done: [get text: 8 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-3]]
-01:12:20.058 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-3])
-01:12:20.074 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-3]
-01:12:20.078 INFO - Executing: [get element attribute: 8 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-3], href])
-01:12:20.088 INFO - Done: [get element attribute: 8 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-3], href]
-01:12:20.092 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-4])
-01:12:20.107 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-4]
-01:12:20.110 INFO - Executing: [get text: 9 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-4]])
-01:12:20.128 INFO - Done: [get text: 9 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-4]]
-01:12:20.132 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-4])
-01:12:20.149 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-4]
-01:12:20.152 INFO - Executing: [get element attribute: 9 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-4], href])
-01:12:20.162 INFO - Done: [get element attribute: 9 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-4], href]
-01:12:20.167 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-5])
-01:12:20.184 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-5]
-01:12:20.187 INFO - Executing: [get text: 10 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-5]])
-01:12:20.204 INFO - Done: [get text: 10 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-5]]
-01:12:20.208 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-5])
-01:12:20.224 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-5]
-01:12:20.228 INFO - Executing: [get element attribute: 10 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-5], href])
-01:12:20.236 INFO - Done: [get element attribute: 10 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-5], href]
-01:12:20.241 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-6])
-01:12:20.256 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-6]
-01:12:20.259 INFO - Executing: [get text: 11 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-6]])
-01:12:20.278 INFO - Done: [get text: 11 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-6]]
-01:12:20.282 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-6])
-01:12:20.297 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-6]
-01:12:20.299 INFO - Executing: [get element attribute: 11 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-6], href])
-01:12:20.309 INFO - Done: [get element attribute: 11 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-6], href]
-01:12:20.313 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-7])
-01:12:20.329 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-7]
-01:12:20.332 INFO - Executing: [get text: 12 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-7]])
-01:12:20.351 INFO - Done: [get text: 12 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-7]]
-01:12:20.356 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-7])
-01:12:20.371 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-7]
-01:12:20.375 INFO - Executing: [get element attribute: 12 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-7], href])
-01:12:20.384 INFO - Done: [get element attribute: 12 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-7], href]
-01:12:20.388 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-8])
-01:12:20.405 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-8]
-01:12:20.406 INFO - Executing: [get text: 13 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-8]])
-01:12:20.425 INFO - Done: [get text: 13 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-8]]
-01:12:20.430 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-8])
-01:12:20.446 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-8]
-01:12:20.449 INFO - Executing: [get element attribute: 13 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-8], href])
-01:12:20.459 INFO - Done: [get element attribute: 13 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-8], href]
-01:12:20.464 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-9])
-01:12:20.479 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-9]
-01:12:20.482 INFO - Executing: [get text: 14 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-9]])
-01:12:20.499 INFO - Done: [get text: 14 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-9]]
-01:12:20.503 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-9])
-01:12:20.519 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-9]
-01:12:20.522 INFO - Executing: [get element attribute: 14 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-9], href])
-01:12:20.531 INFO - Done: [get element attribute: 14 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-9], href]
-01:12:20.535 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-10])
-01:12:20.551 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-10]
-01:12:20.553 INFO - Executing: [get text: 15 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-10]])
-01:12:20.574 INFO - Done: [get text: 15 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-10]]
-01:12:20.578 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-10])
-01:12:20.594 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-10]
-01:12:20.597 INFO - Executing: [get element attribute: 15 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-10], href])
-01:12:20.606 INFO - Done: [get element attribute: 15 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-10], href]
-01:12:20.611 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-11])
-01:12:20.627 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-11]
-01:12:20.630 INFO - Executing: [get text: 16 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-11]])
-01:12:20.649 INFO - Done: [get text: 16 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-11]]
-01:12:20.653 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-11])
-01:12:20.669 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-11]
-01:12:20.672 INFO - Executing: [get element attribute: 16 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-11], href])
-01:12:20.682 INFO - Done: [get element attribute: 16 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-11], href]
-01:12:20.687 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-12])
-01:12:20.702 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-12]
-01:12:20.705 INFO - Executing: [get text: 17 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-12]])
-01:12:20.723 INFO - Done: [get text: 17 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-12]]
-01:12:20.727 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-12])
-01:12:20.742 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-12]
-01:12:20.746 INFO - Executing: [get element attribute: 17 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-12], href])
-01:12:20.755 INFO - Done: [get element attribute: 17 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-12], href]
-01:12:20.760 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-13])
-01:12:20.777 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-13]
-01:12:20.780 INFO - Executing: [get text: 18 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-13]])
-01:12:20.797 INFO - Done: [get text: 18 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-13]]
-01:12:20.803 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-13])
-01:12:20.819 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-13]
-01:12:20.822 INFO - Executing: [get element attribute: 18 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-13], href])
-01:12:20.831 INFO - Done: [get element attribute: 18 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-13], href]
-01:12:20.836 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-14])
-01:12:20.853 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-14]
-01:12:20.856 INFO - Executing: [get text: 19 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-14]])
-01:12:20.874 INFO - Done: [get text: 19 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-14]]
-01:12:20.879 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-14])
-01:12:20.894 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-14]
-01:12:20.897 INFO - Executing: [get element attribute: 19 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-14], href])
-01:12:20.906 INFO - Done: [get element attribute: 19 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-14], href]
-01:12:20.911 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-15])
-01:12:20.927 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-15]
-01:12:20.929 INFO - Executing: [get text: 20 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-15]])
-01:12:20.947 INFO - Done: [get text: 20 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-15]]
-01:12:20.952 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-15])
-01:12:20.968 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-15]
-01:12:20.971 INFO - Executing: [get element attribute: 20 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-15], href])
-01:12:20.981 INFO - Done: [get element attribute: 20 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-15], href]
-01:12:20.986 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-16])
-01:12:21.001 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-16]
-01:12:21.004 INFO - Executing: [get text: 21 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-16]])
-01:12:21.022 INFO - Done: [get text: 21 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-16]]
-01:12:21.026 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-16])
-01:12:21.042 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-16]
-01:12:21.045 INFO - Executing: [get element attribute: 21 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-16], href])
-01:12:21.054 INFO - Done: [get element attribute: 21 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-16], href]
-01:12:21.059 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-17])
-01:12:21.076 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-17]
-01:12:21.079 INFO - Executing: [get text: 22 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-17]])
-01:12:21.096 INFO - Done: [get text: 22 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-17]]
-01:12:21.101 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-17])
-01:12:21.116 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-17]
-01:12:21.119 INFO - Executing: [get element attribute: 22 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-17], href])
-01:12:21.129 INFO - Done: [get element attribute: 22 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-17], href]
-01:12:21.133 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-18])
-01:12:21.148 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-18]
-01:12:21.151 INFO - Executing: [get text: 23 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-18]])
-01:12:21.169 INFO - Done: [get text: 23 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-18]]
-01:12:21.173 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-18])
-01:12:21.190 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-18]
-01:12:21.192 INFO - Executing: [get element attribute: 23 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-18], href])
-01:12:21.202 INFO - Done: [get element attribute: 23 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-18], href]
-01:12:21.206 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-19])
-01:12:21.221 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-19]
-01:12:21.224 INFO - Executing: [get text: 24 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-19]])
-01:12:21.242 INFO - Done: [get text: 24 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-19]]
-01:12:21.245 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-19])
-01:12:21.260 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-19]
-01:12:21.263 INFO - Executing: [get element attribute: 24 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-19], href])
-01:12:21.272 INFO - Done: [get element attribute: 24 [[ChromeDriver: chrome on XP (38b25613b1dc71846a3a8341e9a3a8e9)] -> css selector: #recent-bookmarks-19], href]
-01:12:21.279 INFO - Executing: [find elements: By.cssSelector: #recently-closed])
-01:12:21.294 INFO - Done: [find elements: By.cssSelector: #recently-closed]
-01:12:21.301 INFO - Executing: [find elements: By.cssSelector: #other-devices])
-01:12:21.316 INFO - Done: [find elements: By.cssSelector: #other-devices]
-01:12:21.322 INFO - Executing: [delete session: 81bd15c9-e83e-45ea-97ac-99e20082b4bb])
-01:12:22.235 INFO - Done: [delete session: 81bd15c9-e83e-45ea-97ac-99e20082b4bb]
+12:31:55.433 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+12:31:55.448 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+12:31:55.452 INFO - Executing: [get text: 5 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-0]])
+12:31:55.470 INFO - Done: [get text: 5 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-0]]
+12:31:55.475 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+12:31:55.482 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+12:31:55.485 INFO - Executing: [get element attribute: 5 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-0], href])
+12:31:55.494 INFO - Done: [get element attribute: 5 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-0], href]
+12:31:55.499 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-1])
+12:31:55.514 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-1]
+12:31:55.517 INFO - Executing: [get text: 6 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-1]])
+12:31:55.536 INFO - Done: [get text: 6 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-1]]
+12:31:55.541 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-1])
+12:31:55.557 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-1]
+12:31:55.560 INFO - Executing: [get element attribute: 6 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-1], href])
+12:31:55.570 INFO - Done: [get element attribute: 6 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-1], href]
+12:31:55.576 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-2])
+12:31:55.594 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-2]
+12:31:55.597 INFO - Executing: [get text: 7 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-2]])
+12:31:55.618 INFO - Done: [get text: 7 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-2]]
+12:31:55.623 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-2])
+12:31:55.639 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-2]
+12:31:55.643 INFO - Executing: [get element attribute: 7 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-2], href])
+12:31:55.653 INFO - Done: [get element attribute: 7 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-2], href]
+12:31:55.658 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-3])
+12:31:55.676 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-3]
+12:31:55.679 INFO - Executing: [get text: 8 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-3]])
+12:31:55.697 INFO - Done: [get text: 8 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-3]]
+12:31:55.701 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-3])
+12:31:55.717 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-3]
+12:31:55.720 INFO - Executing: [get element attribute: 8 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-3], href])
+12:31:55.734 INFO - Done: [get element attribute: 8 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-3], href]
+12:31:55.739 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-4])
+12:31:55.755 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-4]
+12:31:55.758 INFO - Executing: [get text: 9 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-4]])
+12:31:55.777 INFO - Done: [get text: 9 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-4]]
+12:31:55.782 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-4])
+12:31:55.798 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-4]
+12:31:55.800 INFO - Executing: [get element attribute: 9 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-4], href])
+12:31:55.810 INFO - Done: [get element attribute: 9 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-4], href]
+12:31:55.816 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-5])
+12:31:55.832 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-5]
+12:31:55.836 INFO - Executing: [get text: 10 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-5]])
+12:31:55.856 INFO - Done: [get text: 10 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-5]]
+12:31:55.863 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-5])
+12:31:55.887 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-5]
+12:31:55.892 INFO - Executing: [get element attribute: 10 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-5], href])
+12:31:55.906 INFO - Done: [get element attribute: 10 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-5], href]
+12:31:55.910 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-6])
+12:31:55.933 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-6]
+12:31:55.938 INFO - Executing: [get text: 11 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-6]])
+12:31:55.956 INFO - Done: [get text: 11 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-6]]
+12:31:55.961 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-6])
+12:31:55.978 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-6]
+12:31:55.981 INFO - Executing: [get element attribute: 11 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-6], href])
+12:31:55.991 INFO - Done: [get element attribute: 11 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-6], href]
+12:31:55.995 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-7])
+12:31:56.011 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-7]
+12:31:56.015 INFO - Executing: [get text: 12 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-7]])
+12:31:56.035 INFO - Done: [get text: 12 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-7]]
+12:31:56.040 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-7])
+12:31:56.056 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-7]
+12:31:56.059 INFO - Executing: [get element attribute: 12 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-7], href])
+12:31:56.068 INFO - Done: [get element attribute: 12 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-7], href]
+12:31:56.073 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-8])
+12:31:56.092 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-8]
+12:31:56.096 INFO - Executing: [get text: 13 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-8]])
+12:31:56.120 INFO - Done: [get text: 13 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-8]]
+12:31:56.125 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-8])
+12:31:56.142 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-8]
+12:31:56.145 INFO - Executing: [get element attribute: 13 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-8], href])
+12:31:56.154 INFO - Done: [get element attribute: 13 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-8], href]
+12:31:56.159 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-9])
+12:31:56.175 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-9]
+12:31:56.177 INFO - Executing: [get text: 14 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-9]])
+12:31:56.195 INFO - Done: [get text: 14 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-9]]
+12:31:56.199 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-9])
+12:31:56.215 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-9]
+12:31:56.218 INFO - Executing: [get element attribute: 14 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-9], href])
+12:31:56.228 INFO - Done: [get element attribute: 14 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-9], href]
+12:31:56.233 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-10])
+12:31:56.249 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-10]
+12:31:56.252 INFO - Executing: [get text: 15 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-10]])
+12:31:56.270 INFO - Done: [get text: 15 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-10]]
+12:31:56.276 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-10])
+12:31:56.292 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-10]
+12:31:56.295 INFO - Executing: [get element attribute: 15 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-10], href])
+12:31:56.304 INFO - Done: [get element attribute: 15 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-10], href]
+12:31:56.308 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-11])
+12:31:56.327 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-11]
+12:31:56.331 INFO - Executing: [get text: 16 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-11]])
+12:31:56.351 INFO - Done: [get text: 16 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-11]]
+12:31:56.355 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-11])
+12:31:56.373 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-11]
+12:31:56.376 INFO - Executing: [get element attribute: 16 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-11], href])
+12:31:56.385 INFO - Done: [get element attribute: 16 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-11], href]
+12:31:56.389 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-12])
+12:31:56.404 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-12]
+12:31:56.408 INFO - Executing: [get text: 17 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-12]])
+12:31:56.428 INFO - Done: [get text: 17 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-12]]
+12:31:56.433 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-12])
+12:31:56.448 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-12]
+12:31:56.450 INFO - Executing: [get element attribute: 17 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-12], href])
+12:31:56.459 INFO - Done: [get element attribute: 17 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-12], href]
+12:31:56.463 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-13])
+12:31:56.480 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-13]
+12:31:56.482 INFO - Executing: [get text: 18 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-13]])
+12:31:56.501 INFO - Done: [get text: 18 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-13]]
+12:31:56.505 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-13])
+12:31:56.520 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-13]
+12:31:56.524 INFO - Executing: [get element attribute: 18 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-13], href])
+12:31:56.533 INFO - Done: [get element attribute: 18 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-13], href]
+12:31:56.537 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-14])
+12:31:56.554 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-14]
+12:31:56.557 INFO - Executing: [get text: 19 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-14]])
+12:31:56.581 INFO - Done: [get text: 19 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-14]]
+12:31:56.585 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-14])
+12:31:56.606 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-14]
+12:31:56.608 INFO - Executing: [get element attribute: 19 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-14], href])
+12:31:56.622 INFO - Done: [get element attribute: 19 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-14], href]
+12:31:56.627 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-15])
+12:31:56.650 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-15]
+12:31:56.653 INFO - Executing: [get text: 20 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-15]])
+12:31:56.678 INFO - Done: [get text: 20 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-15]]
+12:31:56.683 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-15])
+12:31:56.706 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-15]
+12:31:56.711 INFO - Executing: [get element attribute: 20 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-15], href])
+12:31:56.725 INFO - Done: [get element attribute: 20 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-15], href]
+12:31:56.755 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-16])
+12:31:56.781 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-16]
+12:31:56.783 INFO - Executing: [get text: 21 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-16]])
+12:31:56.805 INFO - Done: [get text: 21 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-16]]
+12:31:56.810 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-16])
+12:31:56.828 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-16]
+12:31:56.831 INFO - Executing: [get element attribute: 21 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-16], href])
+12:31:56.840 INFO - Done: [get element attribute: 21 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-16], href]
+12:31:56.844 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-17])
+12:31:56.860 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-17]
+12:31:56.864 INFO - Executing: [get text: 22 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-17]])
+12:31:56.887 INFO - Done: [get text: 22 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-17]]
+12:31:56.892 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-17])
+12:31:56.912 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-17]
+12:31:56.915 INFO - Executing: [get element attribute: 22 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-17], href])
+12:31:56.926 INFO - Done: [get element attribute: 22 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-17], href]
+12:31:56.931 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-18])
+12:31:56.949 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-18]
+12:31:56.952 INFO - Executing: [get text: 23 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-18]])
+12:31:56.973 INFO - Done: [get text: 23 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-18]]
+12:31:56.978 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-18])
+12:31:56.996 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-18]
+12:31:56.999 INFO - Executing: [get element attribute: 23 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-18], href])
+12:31:57.011 INFO - Done: [get element attribute: 23 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-18], href]
+12:31:57.016 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-19])
+12:31:57.033 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-19]
+12:31:57.037 INFO - Executing: [get text: 24 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-19]])
+12:31:57.057 INFO - Done: [get text: 24 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-19]]
+12:31:57.062 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-19])
+12:31:57.084 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-19]
+12:31:57.088 INFO - Executing: [get element attribute: 24 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-19], href])
+12:31:57.100 INFO - Done: [get element attribute: 24 [[ChromeDriver: chrome on XP (f619425be433ed14dfe190737b8d40bd)] -> css selector: #recent-bookmarks-19], href]
+12:31:57.111 INFO - Executing: [find elements: By.cssSelector: #recently-closed])
+12:31:57.131 INFO - Done: [find elements: By.cssSelector: #recently-closed]
+12:31:57.140 INFO - Executing: [find elements: By.cssSelector: #other-devices])
+12:31:57.164 INFO - Done: [find elements: By.cssSelector: #other-devices]
+12:31:57.172 INFO - Executing: [delete session: 0ec45aaf-10ea-400b-992c-f2475f4557a0])
+12:31:59.255 INFO - Done: [delete session: 0ec45aaf-10ea-400b-992c-f2475f4557a0]
