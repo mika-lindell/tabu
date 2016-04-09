@@ -287,19 +287,4 @@ App = (function() {
 
 })();
 
-
-/*	mostVisited:
-		items: []
-		update: ()->
-			parent = @
-			list = new HTMLElement ('#most-visited')
-			walker = (topSites)->
-				parent.items = topSites
-				for site, i in topSites
-					card = new ItemCard(site.title, site.url, "most-visited-#{ i }")
-					list.push(card) 
-
-			chrome.topSites.get(walker)
- */
-
 $newTab = new App;

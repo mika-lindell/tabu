@@ -5,103 +5,16 @@
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="5" time="14.44" timestamp="Sat, 09 Apr 2016 09:31:42 GMT">
+    tests="5" time="11.06" timestamp="Sat, 09 Apr 2016 16:59:43 GMT">
   
-    <testcase name="it should display custom new tab" time="12.43" assertions="2">
+    <testcase name="it should display custom new tab" time="9.260" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.2090" assertions="6">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should display recent bookmarks" time="1.747" assertions="42">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
+    <testcase name="it should display most visited sites" time="0.2220" assertions="6">
 
     
 
@@ -116,12 +29,99 @@
     
     </testcase>
   
-    <testcase name="it should display recently closed items" time="0.02600" assertions="1">
+    <testcase name="it should display recent bookmarks" time="1.539" assertions="42">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
     </testcase>
   
-    <testcase name="it should display items from other devices" time="0.03000" assertions="1">
+    <testcase name="it should display recently closed items" time="0.02000" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="it should display items from other devices" time="0.02100" assertions="1">
 
     
     </testcase>

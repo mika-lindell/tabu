@@ -49,7 +49,18 @@ grunt.log.ok(process.cwd());
               },
         files: [
           {                         
-            'dist/scripts/app.js': ['src/**/*.coffee'] // concat then compile into single file 
+            'dist/scripts/app.js': [
+              'src/**/HTMLElement.coffee',
+              'src/**/DataGetter.coffee',
+              'src/**/DataStorage.coffee',
+              'src/**/ItemCard.coffee',
+              'src/**/ItemCardHeading.coffee',
+              'src/**/ItemCardList.coffee',
+              'src/**/Render.coffee',
+              'src/**/App.coffee',
+              'src/**/Main.coffee',
+
+            ] // concat then compile into single file 
           }
         ] 
       },
