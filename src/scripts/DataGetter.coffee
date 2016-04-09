@@ -29,6 +29,8 @@ class DataGetter
 	#
 	fetch: (api)->
 		@status = 'loading'
+		console.log "DataGetter: Calling to chrome API for", @dataType
+
 		root = @ # Reference the class so we can access it in getter-function
 
 		getter = (result)->
@@ -40,6 +42,7 @@ class DataGetter
 
 			root.status = 'ready'
 			root.done()
+			console.log "DataGetter: Got #{root.dataType} \\o/ - ", root.data
 
 		if @dataType is 'bookmarks' # If we are getting bookmarks, use limit
 			@api(@limit, getter)
@@ -58,22 +61,28 @@ class DataGetter
 		root = @
 		result = []
 
-		# Add items from array containing tabs
-		addItems = (tabs)->
+		# Adds item to array to be returned
+		addToResult = (title, url, result)->
+			if url.indexOf('chrome://') is -1 # Exclude system urls
+				result.push({ 
+					'title': title
+					'url': url 
+					})
+
 		if root.dataType is 'devices'
 			for item, i in source
+
 				result.push({ 'heading': item.deviceName }) # Add the device as heading
+
 				for tab in item.sessions[0].window.tabs
-					result.push({ 
-						'title': tab.title
-						'url': tab.url 
-						}) # Add tabs from this session
+					addToResult tab.title, tab.url, result  # Add tabs from this session
 
 		else if root.dataType is 'history'
 			for item in source
-				result.push({ 
-					'title': item.tab.title
-					'url': item.tab.url 
-					}) # Add tabs from this session # Add tabs from this session
+				if item.window? # There are two kinds of objects in recentlyClosed: full sessions with multiple tabs and wiondows with single tab
+					for tab in item.window.tabs # Handle multiple tabs
+						addToResult tab.title, tab.url, result  # Add tabs from this session
+				else # Handle single tab
+					addToResult item.tab.title, item.tab.url, result
 
 		return result

@@ -18,7 +18,7 @@ module.exports =
 	after: (browser)->
 		browser.end()
 
-	'it should display custom new tab': (browser)->
+	'it should display the extension': (browser)->
 		browser
 			.expect.element('body')
 			.to.have.attribute("data-app").which.equals('newTab')
@@ -27,6 +27,7 @@ module.exports =
 		browser.expect.element("#most-visited").to.be.present
 		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
 
+		###
 		get = (data)->
 			return $newTab.dataStorage.mostVisited
 
@@ -40,24 +41,25 @@ module.exports =
 				browser.expect.element("#most-visited-#{ i }").to.have.attribute("href").which.equals(site.url)
 		
 		browser.execute( get, [], test)
+		###
 
 	'it should display recent bookmarks': (browser)->
 		browser.expect.element("#recent-bookmarks").to.be.present
 		browser.expect.element("#recent-bookmarks-0").to.be.present.after(1000) # Wait for page to load
 
-		get = (data)->
-			return $newTab.dataStorage.recentBookmarks
+		#get = (data)->
+		#	return $newTab.dataStorage.recentBookmarks
 
-		test = (result)->
+		#test = (result)->
 
-			if !result.value.data?
-				throw new Error('Test failed: no array.') 
+		if !browser.globals.sites?
+			throw new Error('Test failed: no array.') 
 
-			for site, i in result.value.data
-				browser.expect.element("#recent-bookmarks-#{ i }").text.to.equal(site.title)
-				browser.expect.element("#recent-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)
+		for site, i in browser.globals.sites.slice(0).reverse() # Create reversed copy of data, as it will be in reversed order in recent list!
+			browser.expect.element("#recent-bookmarks-#{ i }").text.to.equal(site.title)
+			browser.expect.element("#recent-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)
 		
-		browser.execute( get, [], test)
+		#browser.execute( get, [], test)
 
 	'it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
@@ -68,6 +70,7 @@ module.exports =
 		browser.expect.element("#other-devices").to.be.present
 
 
+	'it should not display system url': (browser)->
 
 	
 					

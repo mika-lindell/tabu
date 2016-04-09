@@ -2,6 +2,8 @@
 #
 class App
 	
+	console.log "App: Starting up..."
+
 	@dataStorage
 	
 	# Construct new app
@@ -26,3 +28,4 @@ class App
 			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
 			container.push list
 		@dataStorage.fetchAll() 
+		console.log "App: Ready <3"

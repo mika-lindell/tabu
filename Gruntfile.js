@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-grunt.log.ok(process.cwd());
+
   grunt.initConfig({
 
     // Linting
@@ -44,7 +44,7 @@ grunt.log.ok(process.cwd());
 
       dist: {
         options: {
-                bare: true,
+                bare: false,
                 join: true // This will make sure you can create class structure in different files
               },
         files: [

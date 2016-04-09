@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="5">
+            tests="6">
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="5" time="11.06" timestamp="Sat, 09 Apr 2016 16:59:43 GMT">
+    tests="6" time="4.493" timestamp="Sat, 09 Apr 2016 18:11:26 GMT">
   
-    <testcase name="it should display custom new tab" time="9.260" assertions="2">
+    <testcase name="it should display the extension" time="2.939" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.2220" assertions="6">
-
-    
-
-    
-
-    
-
-    
+    <testcase name="it should display most visited sites" time="0.04400" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display recent bookmarks" time="1.539" assertions="42">
+    <testcase name="it should display recent bookmarks" time="1.470" assertions="42">
 
     
 
@@ -121,9 +113,12 @@
     
     </testcase>
   
-    <testcase name="it should display items from other devices" time="0.02100" assertions="1">
+    <testcase name="it should display items from other devices" time="0.02000" assertions="1">
 
     
+    </testcase>
+  
+    <testcase name="it should not display system url" time="0.000" assertions="0">
     </testcase>
   
   
