@@ -50,12 +50,15 @@ module.exports = function(grunt) {
         files: [
           {                         
             'dist/scripts/app.js': [
+
+              'src/**/Binding.coffee',
               'src/**/HTMLElement.coffee',
               'src/**/DataGetter.coffee',
               'src/**/DataStorage.coffee',
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
+              'src/**/BrowserApi.coffee',
               'src/**/Render.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee',

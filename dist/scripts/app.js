@@ -1,10 +1,19 @@
 (function() {
-  var $newTab, App, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardHeading, ItemCardList, Render,
+  var $newTab, App, Binding, ChromeApiFunctions, DataGetter, DataStorage, HTMLElement, ItemCard, ItemCardHeading, ItemCardList, Render,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Binding = (function() {
+    function Binding() {}
+
+    return Binding;
+
+  })();
+
   HTMLElement = (function() {
     HTMLElement.DOMElement;
+
+    HTMLElement.bound = false;
 
     function HTMLElement(element) {
       if (element instanceof Element) {
@@ -40,6 +49,12 @@
       }
     };
 
+    HTMLElement.prototype.on = function(name, listener) {
+      if ((name != null) && (listener != null)) {
+        return this.DOMElement.addEventListener(name, listener);
+      }
+    };
+
     HTMLElement.prototype.push = function(element) {
       if (element == null) {
         element = null;
@@ -52,6 +67,10 @@
         }
       }
     };
+
+    HTMLElement.prototype.bind = function(variable) {};
+
+    HTMLElement.prototype.unbind = function() {};
 
     return HTMLElement;
 
@@ -252,6 +271,41 @@
 
   })(HTMLElement);
 
+  ChromeApiFunctions = (function() {
+    function ChromeApiFunctions() {
+      this.bindClick('#go-incognito', this.goIncognito);
+      this.bindClick('#view-bookmarks', this.viewBookmarks);
+      this.bindClick('#view-history', this.viewHistory);
+    }
+
+    ChromeApiFunctions.prototype.bindClick = function(id, listener) {
+      var elem;
+      elem = new HTMLElement(id, listener);
+      return elem.on('click', listener);
+    };
+
+    ChromeApiFunctions.prototype.viewBookmarks = function() {
+      return chrome.tabs.update({
+        url: 'chrome://bookmarks/'
+      });
+    };
+
+    ChromeApiFunctions.prototype.viewHistory = function() {
+      return chrome.tabs.update({
+        url: 'chrome://history/'
+      });
+    };
+
+    ChromeApiFunctions.prototype.goIncognito = function() {
+      return chrome.windows.create({
+        'incognito': true
+      });
+    };
+
+    return ChromeApiFunctions;
+
+  })();
+
   Render = (function() {
     function Render() {}
 
@@ -267,7 +321,7 @@
     App.dataStorage;
 
     function App() {
-      var root;
+      var foo, root;
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.mostVisited.done = function() {
@@ -295,6 +349,7 @@
         return container.push(list);
       };
       this.dataStorage.fetchAll();
+      foo = new ChromeApiFunctions;
       console.log("App: Ready <3");
     }
 

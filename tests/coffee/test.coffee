@@ -24,8 +24,11 @@ module.exports =
 			.to.have.attribute("data-app").which.equals('newTab')
 
 	'it should display most visited sites': (browser)->
-		browser.expect.element("#most-visited").to.be.present
-		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
+
+		# TODO: create bs for this and other data - see bookmarks BS for example
+
+		#browser.expect.element("#most-visited").to.be.present
+		#browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
 
 		###
 		get = (data)->
@@ -44,6 +47,7 @@ module.exports =
 		###
 
 	'it should display recent bookmarks': (browser)->
+		# TODO: on click -tests
 		browser.expect.element("#recent-bookmarks").to.be.present
 		browser.expect.element("#recent-bookmarks-0").to.be.present.after(1000) # Wait for page to load
 
@@ -71,6 +75,34 @@ module.exports =
 
 
 	'it should not display system url': (browser)->
+
+	'it should have button to view bookmarks': (browser)->
+		browser.expect.element("#view-bookmarks").to.be.present
+		browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks')
+		browser.click("#view-bookmarks")
+
+		browser.pause(1000)
+
+		browser.assert.urlEquals('chrome://bookmarks/*')
+
+		browser.url('chrome://newtab') # This is done to load the generated content
+		browser.expect.element('body').to.be.present.after(1000)
+
+	'it should have button to view history': (browser)->
+		browser.expect.element("#view-history").to.be.present
+		browser.expect.element("#view-history").text.to.equal('View History')
+		browser.click("#view-history")
+		browser.assert.urlEquals('chrome://history/*')
+
+		browser.url('chrome://newtab') # This is done to load the generated content
+		browser.expect.element('body').to.be.present.after(1000)
+
+	'it should have button to open incognito-window': (browser)->
+		browser.expect.element("#go-incognito").to.be.present
+		browser.expect.element("#go-incognito").text.to.equal('Go Incognito')
+		#browser.click("#go-incognito")
+
+
 
 	
 					

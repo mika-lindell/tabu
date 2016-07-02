@@ -27,5 +27,11 @@ class App
 			container = new HTMLElement ('#recently-closed')
 			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
 			container.push list
-		@dataStorage.fetchAll() 
+			
+		@dataStorage.fetchAll()
+
+		foo = new ChromeApiFunctions
+
+		
+
 		console.log "App: Ready <3"

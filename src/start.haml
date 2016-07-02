@@ -3,7 +3,13 @@
 	%head
 		%title
 	%body(data-app="newTab")
-
+		- # This should be done in element creation with coffeescript 
+		%button#view-bookmarks
+			View Bookmarks
+		%button#view-history
+			View History
+		%button#go-incognito
+			Go Incognito
 		#most-visited
 			%h2 Top
 

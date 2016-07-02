@@ -17,7 +17,7 @@ class DataGetter
 
 	# Construct new datablock
 	#
-	# @param [Function] The chrome API function´to be executed to get the data. E.g. chrome.topSites.get
+	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
 	# @param [String] The structure type of this data. Can be links, bookmarks, devices or history
 	#
 	constructor: (api, dataType = 'links')->

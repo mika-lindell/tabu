@@ -22,8 +22,6 @@ module.exports = {
     return browser.expect.element('body').to.have.attribute("data-app").which.equals('newTab');
   },
   'it should display most visited sites': function(browser) {
-    browser.expect.element("#most-visited").to.be.present;
-    return browser.expect.element("#most-visited-0").to.be.present.after(1000);
 
     /*
     		get = (data)->
@@ -63,5 +61,26 @@ module.exports = {
   'it should display items from other devices': function(browser) {
     return browser.expect.element("#other-devices").to.be.present;
   },
-  'it should not display system url': function(browser) {}
+  'it should not display system url': function(browser) {},
+  'it should have button to view bookmarks': function(browser) {
+    browser.expect.element("#view-bookmarks").to.be.present;
+    browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks');
+    browser.click("#view-bookmarks");
+    browser.pause(1000);
+    browser.assert.urlEquals('chrome://bookmarks/*');
+    browser.url('chrome://newtab');
+    return browser.expect.element('body').to.be.present.after(1000);
+  },
+  'it should have button to view history': function(browser) {
+    browser.expect.element("#view-history").to.be.present;
+    browser.expect.element("#view-history").text.to.equal('View History');
+    browser.click("#view-history");
+    browser.assert.urlEquals('chrome://history/*');
+    browser.url('chrome://newtab');
+    return browser.expect.element('body').to.be.present.after(1000);
+  },
+  'it should have button to open incognito-window': function(browser) {
+    browser.expect.element("#go-incognito").to.be.present;
+    return browser.expect.element("#go-incognito").text.to.equal('Go Incognito');
+  }
 };
