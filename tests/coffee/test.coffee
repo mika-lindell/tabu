@@ -7,16 +7,16 @@ module.exports =
 		# Create some bookmarks
 		# TODO: Can't test recentlyClosed and otherDevices, because I can't generate the data and the loading of profile seems bugged :(
 		createBS = (data)->
-			for item in data
-				chrome.bookmarks.create(item)
+			for site in data
+				chrome.bookmarks.create(site)
 
 		browser.execute(createBS, [browser.globals.sites])
 
-		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element('body').to.be.present.after(1000)
+		browser.url("chrome://newtab") # This is done to load the generated content
+		browser.expect.element("#app").to.be.present.after(1000)
 
 	after: (browser)->
-		browser.end()
+		#browser.end()
 
 	'it should display the extension': (browser)->
 		browser
@@ -25,12 +25,9 @@ module.exports =
 
 	'it should display most visited sites': (browser)->
 
-		# TODO: create bs for this and other data - see bookmarks BS for example
+		browser.expect.element("#most-visited").to.be.present
+		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
 
-		#browser.expect.element("#most-visited").to.be.present
-		#browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
-
-		###
 		get = (data)->
 			return $newTab.dataStorage.mostVisited
 
@@ -44,17 +41,11 @@ module.exports =
 				browser.expect.element("#most-visited-#{ i }").to.have.attribute("href").which.equals(site.url)
 		
 		browser.execute( get, [], test)
-		###
 
 	'it should display recent bookmarks': (browser)->
-		# TODO: on click -tests
+
 		browser.expect.element("#recent-bookmarks").to.be.present
 		browser.expect.element("#recent-bookmarks-0").to.be.present.after(1000) # Wait for page to load
-
-		#get = (data)->
-		#	return $newTab.dataStorage.recentBookmarks
-
-		#test = (result)->
 
 		if !browser.globals.sites?
 			throw new Error('Test failed: no array.') 
@@ -63,8 +54,6 @@ module.exports =
 			browser.expect.element("#recent-bookmarks-#{ i }").text.to.equal(site.title)
 			browser.expect.element("#recent-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)
 		
-		#browser.execute( get, [], test)
-
 	'it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
 		browser.expect.element("#recently-closed").to.be.present
@@ -79,23 +68,24 @@ module.exports =
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
 		browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks')
+
+	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
+		browser.expect.element("#add-new-bookmark-command").to.be.present.after(1000)
 
-		browser.pause(1000)
-
-		browser.assert.urlEquals('chrome://bookmarks/*')
-
-		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element('body').to.be.present.after(1000)
+		browser.url('chrome://newtab')
+		browser.expect.element('#app').to.be.present.after(1000)
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
 		browser.expect.element("#view-history").text.to.equal('View History')
+
+	'clicking history button should take to history-page': (browser)->		
 		browser.click("#view-history")
-		browser.assert.urlEquals('chrome://history/*')
+		browser.expect.element("#history").to.be.present.after(1000)
 
 		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element('body').to.be.present.after(1000)
+		browser.expect.element("#app").to.be.present.after(1000)
 
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present

@@ -3,41 +3,44 @@ module.exports = {
     var createBS;
     browser.url('chrome://newtab');
     createBS = function(data) {
-      var item, j, len, results;
+      var j, len, results, site;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
-        item = data[j];
-        results.push(chrome.bookmarks.create(item));
+        site = data[j];
+        results.push(chrome.bookmarks.create(site));
       }
       return results;
     };
     browser.execute(createBS, [browser.globals.sites]);
-    browser.url('chrome://newtab');
-    return browser.expect.element('body').to.be.present.after(1000);
+    browser.url("chrome://newtab");
+    return browser.expect.element("#app").to.be.present.after(1000);
   },
-  after: function(browser) {
-    return browser.end();
-  },
+  after: function(browser) {},
   'it should display the extension': function(browser) {
     return browser.expect.element('body').to.have.attribute("data-app").which.equals('newTab');
   },
   'it should display most visited sites': function(browser) {
-
-    /*
-    		get = (data)->
-    			return $newTab.dataStorage.mostVisited
-    
-    		test = (result)->
-    
-    			if !result.value.data?
-    				throw new Error('Test failed: no items in array.') 
-    
-    			for site, i in result.value.data
-    				browser.expect.element("#most-visited-#{ i }").text.to.equal(site.title)
-    				browser.expect.element("#most-visited-#{ i }").to.have.attribute("href").which.equals(site.url)
-    		
-    		browser.execute( get, [], test)
-     */
+    var get, test;
+    browser.expect.element("#most-visited").to.be.present;
+    browser.expect.element("#most-visited-0").to.be.present.after(1000);
+    get = function(data) {
+      return $newTab.dataStorage.mostVisited;
+    };
+    test = function(result) {
+      var i, j, len, ref, results, site;
+      if (result.value.data == null) {
+        throw new Error('Test failed: no items in array.');
+      }
+      ref = result.value.data;
+      results = [];
+      for (i = j = 0, len = ref.length; j < len; i = ++j) {
+        site = ref[i];
+        browser.expect.element("#most-visited-" + i).text.to.equal(site.title);
+        results.push(browser.expect.element("#most-visited-" + i).to.have.attribute("href").which.equals(site.url));
+      }
+      return results;
+    };
+    return browser.execute(get, [], test);
   },
   'it should display recent bookmarks': function(browser) {
     var i, j, len, ref, results, site;
@@ -64,20 +67,23 @@ module.exports = {
   'it should not display system url': function(browser) {},
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
-    browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks');
+    return browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks');
+  },
+  'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
-    browser.pause(1000);
-    browser.assert.urlEquals('chrome://bookmarks/*');
+    browser.expect.element("#add-new-bookmark-command").to.be.present.after(1000);
     browser.url('chrome://newtab');
-    return browser.expect.element('body').to.be.present.after(1000);
+    return browser.expect.element('#app').to.be.present.after(1000);
   },
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
-    browser.expect.element("#view-history").text.to.equal('View History');
+    return browser.expect.element("#view-history").text.to.equal('View History');
+  },
+  'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
-    browser.assert.urlEquals('chrome://history/*');
+    browser.expect.element("#history").to.be.present.after(1000);
     browser.url('chrome://newtab');
-    return browser.expect.element('body').to.be.present.after(1000);
+    return browser.expect.element("#app").to.be.present.after(1000);
   },
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;

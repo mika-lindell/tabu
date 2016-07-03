@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
       dist: {
         options: {
-                bare: false,
+                bare: true,
                 join: true // This will make sure you can create class structure in different files
               },
         files: [
