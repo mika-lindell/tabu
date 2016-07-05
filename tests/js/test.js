@@ -15,32 +15,31 @@ module.exports = {
     browser.url("chrome://newtab");
     return browser.expect.element("#app").to.be.present.after(1000);
   },
-  after: function(browser) {},
+  after: function(browser) {
+    return browser.end();
+  },
   'it should display the extension': function(browser) {
     return browser.expect.element('body').to.have.attribute("data-app").which.equals('newTab');
   },
   'it should display most visited sites': function(browser) {
-    var get, test;
     browser.expect.element("#most-visited").to.be.present;
-    browser.expect.element("#most-visited-0").to.be.present.after(1000);
-    get = function(data) {
-      return $newTab.dataStorage.mostVisited;
-    };
-    test = function(result) {
-      var i, j, len, ref, results, site;
-      if (result.value.data == null) {
-        throw new Error('Test failed: no items in array.');
-      }
-      ref = result.value.data;
-      results = [];
-      for (i = j = 0, len = ref.length; j < len; i = ++j) {
-        site = ref[i];
-        browser.expect.element("#most-visited-" + i).text.to.equal(site.title);
-        results.push(browser.expect.element("#most-visited-" + i).to.have.attribute("href").which.equals(site.url));
-      }
-      return results;
-    };
-    return browser.execute(get, [], test);
+    return browser.expect.element("#most-visited-0").to.be.present.after(1000);
+
+    /*
+    		get = (data)->
+    			return window.newTab.dataStorage.mostVisited
+    
+    		test = (result)->
+    
+    			if !result.value.data?
+    				throw new Error('Test failed: no items in array.') 
+    
+    			for site, i in result.value.data
+    				browser.expect.element("#most-visited-#{ i }").text.to.equal(site.title)
+    				browser.expect.element("#most-visited-#{ i }").to.have.attribute("href").which.equals(site.url)
+    		
+    		browser.execute( get, [], test)
+     */
   },
   'it should display recent bookmarks': function(browser) {
     var i, j, len, ref, results, site;

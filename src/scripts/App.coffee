@@ -30,7 +30,7 @@ class App
 			
 		@dataStorage.fetchAll()
 
-		foo = new ChromeApiFunctions
+		helpers = new Helpers #This will run the init script for helper functions
 
 		
 

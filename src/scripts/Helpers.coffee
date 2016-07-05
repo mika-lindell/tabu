@@ -1,6 +1,6 @@
 # Class to make miscellanious calls to browser api
 #
-class ChromeApiFunctions
+class Helpers
 
 	constructor: ()->
 		
@@ -18,13 +18,17 @@ class ChromeApiFunctions
 		elem = new HTMLElement(id, listener)
 		elem.on('click', listener)
 
+	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.
+	#
 	viewBookmarks: ()->
-		chrome.tabs.update { url: 'chrome://bookmarks/' }
+		chrome.tabs.update { url: 'chrome://bookmarks/#1' }
 
+	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.
+	#	
 	viewHistory: ()->
 		chrome.tabs.update { url: 'chrome://history/' }
 
-	# Open window in Incognito-mode
+	# Open new window in Incognito-mode
 	#
 	goIncognito: ()->
 		chrome.windows.create {'incognito': true}

@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     // Linting
     jshint: {
-      files: ['Gruntfile.js', 'karma.conf.js'],
+      files: ['Gruntfile.js'],
     },
 
     // Haml compiler, requires Ruby with HAML to be installed.
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
       dist: {
         options: {
-                bare: true,
+                bare: false,
                 join: true // This will make sure you can create class structure in different files
               },
         files: [
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
-              'src/**/BrowserApi.coffee',
+              'src/**/Helpers.coffee',
               'src/**/Render.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee',
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // E2E-tests runner
+    // test runner
     nightwatch: {
       options: {
         // task options
