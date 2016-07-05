@@ -5,23 +5,23 @@
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="11" time="12.31" timestamp="Tue, 05 Jul 2016 20:34:37 GMT">
+    tests="11" time="5.508" timestamp="Tue, 05 Jul 2016 20:57:39 GMT">
   
-    <testcase name="it should display the extension" time="8.522" assertions="2">
+    <testcase name="it should display the extension" time="1.886" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.04800" assertions="2">
+    <testcase name="it should display most visited sites" time="0.04500" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display recent bookmarks" time="1.723" assertions="42">
+    <testcase name="it should display recent bookmarks" time="1.762" assertions="42">
 
     
 
@@ -108,48 +108,48 @@
     
     </testcase>
   
-    <testcase name="it should display recently closed items" time="0.02500" assertions="1">
+    <testcase name="it should display recently closed items" time="0.02400" assertions="1">
 
     
     </testcase>
   
-    <testcase name="it should display items from other devices" time="0.02300" assertions="1">
+    <testcase name="it should display items from other devices" time="0.02500" assertions="1">
 
     
     </testcase>
   
-    <testcase name="it should not display system url" time="0.001000" assertions="0">
+    <testcase name="it should not display system url" time="0.000" assertions="0">
     </testcase>
   
-    <testcase name="it should have button to view bookmarks" time="0.06000" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="clicking bookmark button should take to bookmark-page" time="0.8200" assertions="2">
+    <testcase name="it should have button to view bookmarks" time="0.06200" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to view history" time="0.07400" assertions="2">
+    <testcase name="clicking bookmark button should take to bookmark-page" time="0.8030" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="clicking history button should take to history-page" time="0.9390" assertions="2">
+    <testcase name="it should have button to view history" time="0.07500" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to open incognito-window" time="0.07500" assertions="2">
+    <testcase name="clicking history button should take to history-page" time="0.7460" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to open incognito-window" time="0.08000" assertions="2">
 
     
 

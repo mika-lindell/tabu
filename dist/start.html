@@ -2,28 +2,47 @@
 <html>
   <head>
     <title></title>
+    <link href='styles/app.css' rel='stylesheet'>
   </head>
   <body data-app='newTab' id='app'>
-    <button id='view-bookmarks'>
-      View Bookmarks
-    </button>
-    <button id='view-history'>
-      View History
-    </button>
-    <button id='go-incognito'>
-      Go Incognito
-    </button>
-    <div id='most-visited'>
-      <h2>Top</h2>
-    </div>
-    <div id='recently-closed'>
-      <h2>Closed</h2>
-    </div>
-    <div id='other-devices'>
-      <h2>Devices</h2>
-    </div>
-    <div id='recent-bookmarks'>
-      <h2>Marks</h2>
+    <div class='container'>
+      <div class='row'>
+        <div class='col s12'>
+          <div id='most-visited'>
+            <h2>Top</h2>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col s12'>
+          <button id='view-bookmarks'>
+            View Bookmarks
+          </button>
+          <button id='view-history'>
+            View History
+          </button>
+          <button id='go-incognito'>
+            Go Incognito
+          </button>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col s4'>
+          <div id='recent-bookmarks'>
+            <h2>Marks</h2>
+          </div>
+        </div>
+        <div class='col s4'>
+          <div id='recently-closed'>
+            <h2>Closed</h2>
+          </div>
+        </div>
+        <div class='col s4'>
+          <div id='other-devices'>
+            <h2>Devices</h2>
+          </div>
+        </div>
+      </div>
     </div>
     <script src='./scripts/app.js'></script>
   </body>

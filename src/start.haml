@@ -2,25 +2,31 @@
 %html
 	%head
 		%title
+		%link(href="styles/app.css" rel="stylesheet")
 	%body(data-app="newTab" id="app")
-		- # This should be done in element creation with coffeescript 
-		%button#view-bookmarks
-			View Bookmarks
-		%button#view-history
-			View History
-		%button#go-incognito
-			Go Incognito
-		#most-visited
-			%h2 Top
-
-		#recently-closed
-			%h2 Closed
-
-		#other-devices
-			%h2 Devices
-
-		#recent-bookmarks
-			%h2 Marks
-
+		.container
+			.row
+				.col.s12
+					#most-visited
+						%h2 Top
+			.row
+				.col.s12
+					%button#view-bookmarks
+						View Bookmarks
+					%button#view-history
+						View History
+					%button#go-incognito
+						Go Incognito
+			.row
+				.col.s4
+					#recent-bookmarks
+						%h2 Marks
+				.col.s4
+					#recently-closed
+						%h2 Closed
+				.col.s4
+					#other-devices
+						%h2 Devices
+						
 		%script(src="./scripts/app.js")
 	

@@ -30,7 +30,7 @@ module.exports = function(grunt) {
           {                         
             expand: true,       // Enable dynamic expansion.
             cwd: 'src/',        // Src matches are relative to this path.
-            src: ['**/app.scss'], // Actual pattern(s) to match.
+            src: ['**/*.scss'], // Actual pattern(s) to match.
             dest: 'dist/',      // Destination path prefix.
             ext: '.css',       // Dest filepaths will have this extension.
             extDot: 'first'     // Extensions in filenames begin after the first dot
