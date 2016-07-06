@@ -3040,20 +3040,20 @@ input[type=range] + .thumb {
         left: 100%; } }
 
 nav {
-  color: #fff;
+  color: #5a5a5a;
   background-color: #ee6e73;
   width: 100%;
-  height: 56px;
-  line-height: 56px; }
+  height: 50px;
+  line-height: 50px; }
   nav a {
-    color: #fff; }
+    color: #5a5a5a; }
   nav i,
   nav [class^="mdi-"], nav [class*="mdi-"],
   nav i.material-icons {
     display: block;
     font-size: 2rem;
-    height: 56px;
-    line-height: 56px; }
+    height: 50px;
+    line-height: 50px; }
   nav .nav-wrapper {
     position: relative;
     height: 100%; }
@@ -3064,14 +3064,14 @@ nav {
     float: left;
     position: relative;
     z-index: 1;
-    height: 56px; }
+    height: 50px; }
     nav .button-collapse i {
       font-size: 2.7rem;
-      height: 56px;
-      line-height: 56px; }
+      height: 50px;
+      line-height: 50px; }
   nav .brand-logo {
     position: absolute;
-    color: #fff;
+    color: #5a5a5a;
     display: inline-block;
     font-size: 2.1rem;
     padding: 0;
@@ -3105,7 +3105,7 @@ nav {
     nav ul a {
       transition: background-color .3s;
       font-size: 1rem;
-      color: #fff;
+      color: #5a5a5a;
       display: inline-block;
       padding: 0 15px;
       cursor: pointer; }
@@ -3134,24 +3134,24 @@ nav {
         color: rgba(255, 255, 255, 0.7);
         transition: color .3s; }
       nav .input-field label.active i {
-        color: #fff; }
+        color: #5a5a5a; }
       nav .input-field label.active {
         transform: translateY(0); }
 
 .navbar-fixed {
   position: relative;
-  height: 56px;
+  height: 50px;
   z-index: 998; }
   .navbar-fixed nav {
     position: fixed; }
 
 @media only screen and (min-width: 601px) {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
-    height: 64px;
-    line-height: 64px; }
+    height: 50px;
+    line-height: 50px; }
 
   .navbar-fixed {
-    height: 64px; } }
+    height: 50px; } }
 @font-face {
   font-family: "Roboto";
   src: local(Roboto Thin), url("./assets/roboto/Roboto-Thin.eot");
@@ -6186,6 +6186,11 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
+nav i.material-icons {
+  font-size: 1.5rem; }
+  nav i.material-icons.left {
+    margin-right: 8px; }
+
 /***
 
 Colors
@@ -6232,7 +6237,7 @@ Helpers
   color: #000; }
 
 .color-dark-grey, .item-card-label-secondary {
-  color: #484848; }
+  color: #5a5a5a; }
 
 .btn-with-margin {
   margin: 0 0.5rem; }

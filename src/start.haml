@@ -5,6 +5,19 @@
 		%link(href="styles/app.css" rel="stylesheet")
 		%link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 	%body(data-app="newTab" id="app")
+		%nav
+			.nav-wrapper.white
+				%ul.right
+					%li
+						%a#visibility-mode(href="#")
+							%i.material-icons.left visibility_off
+							%span.font-size-small.color-dark-grey.uppercase
+								Hide me
+					%li
+						%a#settings(href="#")
+							%i.material-icons.left settings
+							%span.font-size-small.color-dark-grey.uppercase
+								Settings
 		.container
 			.row.section
 				.col.s12
@@ -18,8 +31,7 @@
 						%button.btn-large.btn-with-margin#view-history
 							View History
 						%button.btn-large#go-incognito
-							%i.material-icons.right
-								open_in_new
+							%i.material-icons.right open_in_new
 							Go Incognito
 			.row.section
 				.col.s4

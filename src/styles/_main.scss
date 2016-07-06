@@ -38,6 +38,17 @@ Material icons
   -webkit-font-smoothing: antialiased;
 }
 
+// Override the font size and icon space for navigation
+nav i.material-icons{
+	font-size: 1.5rem;
+
+	&.left{
+		margin-right: 8px;
+	}
+}
+
+
+
 /***
 
 Colors
@@ -45,7 +56,7 @@ Colors
 ***/
 
 $black: #000;
-$dark-grey: #484848;
+$dark-grey: #5a5a5a;
 
 /***
 

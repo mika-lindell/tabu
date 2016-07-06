@@ -6,6 +6,28 @@
     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
   </head>
   <body data-app='newTab' id='app'>
+    <nav>
+      <div class='nav-wrapper white'>
+        <ul class='right'>
+          <li>
+            <a href='#' id='visibility-mode'>
+              <i class='material-icons left'>visibility_off</i>
+              <span class='font-size-small color-dark-grey uppercase'>
+                Hide me
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href='#' id='settings'>
+              <i class='material-icons left'>settings</i>
+              <span class='font-size-small color-dark-grey uppercase'>
+                Settings
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div class='container'>
       <div class='row section'>
         <div class='col s12'>
@@ -24,9 +46,7 @@
               View History
             </button>
             <button class='btn-large' id='go-incognito'>
-              <i class='material-icons right'>
-                open_in_new
-              </i>
+              <i class='material-icons right'>open_in_new</i>
               Go Incognito
             </button>
           </div>

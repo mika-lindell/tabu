@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="1"
-            tests="12">
+            tests="13">
 
   <testsuite name="test"
-    errors="0" failures="1" hostname="" id="" package="test" skipped="9"
-    tests="12" time="6.549" timestamp="Wed, 06 Jul 2016 14:48:48 GMT">
+    errors="0" failures="1" hostname="" id="" package="test" skipped="10"
+    tests="13" time="6.171" timestamp="Wed, 06 Jul 2016 15:47:09 GMT">
   
-    <testcase name="it should display the extension" time="4.481" assertions="2">
+    <testcase name="it should display the extension" time="5.061" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.04800" assertions="2">
+    <testcase name="it should display most visited sites" time="0.04900" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display recent bookmarks" time="2.020" assertions="2">
+    <testcase name="it should display recent bookmarks" time="1.061" assertions="3">
 
-      <failure message="Expected element &lt;#recent-bookmarks-0&gt; to be present after 1000ms - element was not found">    at Object.module.exports.it should display recent bookmarks (D:\Dev\newtab\tests\js\test.js:47:20)
+    
+
+      <failure message="Expected element &lt;#recent-bookmarks-0&gt; text to equal: &quot;Foundation for Sites 6 Docs&quot;">    at Object.module.exports.it should display recent bookmarks (D:\Dev\newtab\tests\js\test.js:55:22)
     at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
     at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
     at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)
@@ -40,7 +42,12 @@
   
     
     <testcase
-      name="it should not have titles longer than 3 characters">
+      name="TODO: it should not have titles longer than 3 characters">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="TODO: tests for top bar">
       <skipped />
     </testcase>
     
