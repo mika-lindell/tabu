@@ -166,6 +166,9 @@ a.item-card-link{
 .item-card-label-container{
 	display: inline-block;
 	vertical-align: middle;
+	width: 80%; // For truncate to work (with text-overflow: ellipsis;)
+
+	@extend .truncate;
 }
 
 .item-card-label{

@@ -14,15 +14,20 @@ class App
 
 		@dataStorage = new DataStorage
 
-		@dataStorage.mostVisited.done = ()->
-			container = new HTMLElement ('#most-visited')
+		@dataStorage.topSites.done = ()->
+			container = new HTMLElement ('#top-sites')
 			container.addClass('horizontal-list')
-			list = new ItemCardList(root.dataStorage.mostVisited, 'most-visited')
+			list = new ItemCardList(root.dataStorage.topSites, 'top-sites')
 			container.push list
 
-		@dataStorage.recentBookmarks.done = ()->
-			container = new HTMLElement ('#recent-bookmarks')
-			list = new ItemCardList(root.dataStorage.recentBookmarks, 'recent-bookmarks')
+		@dataStorage.latestBookmarks.done = ()->
+			container = new HTMLElement ('#latest-bookmarks')
+			list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks')
+			container.push list
+
+		@dataStorage.recentlyClosed.done = ()->
+			container = new HTMLElement ('#recently-closed')
+			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
 			container.push list
 
 		@dataStorage.otherDevices.done = ()->
@@ -30,11 +35,6 @@ class App
 			list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices')
 			container.push list
 
-		@dataStorage.recentlyClosed.done = ()->
-			container = new HTMLElement ('#recently-closed')
-			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
-			container.push list
-			
 		@dataStorage.fetchAll()
 
 		new Init # This will make some startup time initializations

@@ -23,10 +23,17 @@ module.exports =
 			.expect.element('body')
 			.to.have.attribute("data-app").which.equals('newTab')
 
+	'it should have section headings': (browser)->
+		browser.expect.element("#top-sites").text.to.contain('Top Sites')
+		browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks')
+		browser.expect.element("#recently-closed").text.to.contain('Recently Closed')
+		browser.expect.element("#other-devices").text.to.contain('Other Devices')
+
+
 	'it should display most visited sites': (browser)->
 
-		browser.expect.element("#most-visited").to.be.present
-		browser.expect.element("#most-visited-0").to.be.present.after(1000) # Wait for page to load
+		browser.expect.element("#top-sites").to.be.present
+		browser.expect.element("#top-sites-0").to.be.present.after(1000) # Wait for page to load
 
 		# TODO: Can't run these tests because the code cannot reach this data (don't want to expose extension to window-scope), and can't create dummy data
 		###
@@ -45,36 +52,30 @@ module.exports =
 		browser.execute( get, [], test)
 		###
 
-	'it should display recent bookmarks': (browser)->
+	'it should display latest bookmarks and not have titles longer than 33 chars': (browser)->
 
-		browser.expect.element("#recent-bookmarks").to.be.present
-		browser.expect.element("#recent-bookmarks-0").to.be.present.after(1000) # Wait for page to load
+		browser.expect.element("#latest-bookmarks").to.be.present
+		browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000) # Wait for page to load
 
 		if !browser.globals.sites?
 			throw new Error('Test failed: no array.') 
 
 		for site, i in browser.globals.sites.slice(0).reverse() # Create reversed copy of data, as it will be in reversed order in recent list!
-			browser.expect.element("#recent-bookmarks-#{ i }").text.to.equal(site.title)
-			browser.expect.element("#recent-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)
-	
-	'TODO: it should not have titles longer than 3 characters': (browser)->		
 
-	'TODO: tests for top bar': (browser)->
+			browser.expect.element("#latest-bookmarks-#{ i }").text.to.contain(site.title)
+			browser.expect.element("#latest-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)	
 
 	'it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
 		browser.expect.element("#recently-closed").to.be.present
 
-	'it should display items from other devices': (browser)->
-		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
-		browser.expect.element("#other-devices").to.be.present
-
-
-	'it should not display system url': (browser)->
-
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
 		browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS')
+
+	'it should display items from other devices': (browser)->
+		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
+		browser.expect.element("#other-devices").to.be.present
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
@@ -98,6 +99,16 @@ module.exports =
 		browser.expect.element("#go-incognito").to.be.present
 		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
 		#browser.click("#go-incognito")
+
+	'it should have navbar': (browser)->
+		browser.expect.element(".nav-wrapper").to.be.present
+
+	'navbar should have Hide & Settings -buttons': (browser)->
+		browser.expect.element("#visibility-mode").to.be.present
+		browser.expect.element("#visibility-mode").text.to.contain('Hide Me')
+
+		browser.expect.element("#settings").to.be.present
+		browser.expect.element("#settings").text.to.contain('Settings')
 
 
 

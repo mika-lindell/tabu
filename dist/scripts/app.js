@@ -260,19 +260,19 @@
   DataStorage = (function() {
     function DataStorage() {}
 
-    DataStorage.prototype.mostVisited = new DataGetter(chrome.topSites.get);
+    DataStorage.prototype.topSites = new DataGetter(chrome.topSites.get);
 
     DataStorage.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'history');
 
     DataStorage.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices, 'devices');
 
-    DataStorage.prototype.recentBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
+    DataStorage.prototype.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
 
     DataStorage.prototype.fetchAll = function() {
-      this.mostVisited.fetch();
+      this.topSites.fetch();
       this.recentlyClosed.fetch();
       this.otherDevices.fetch();
-      return this.recentBookmarks.fetch();
+      return this.latestBookmarks.fetch();
     };
 
     return DataStorage;
@@ -308,16 +308,10 @@
       labelContainer = new HTMLElement('div');
       labelContainer.addClass('item-card-label-container');
       label = new HTMLElement('span');
-      if (title.length > 30) {
-        title = title.substring(0, 30) + '...';
-      }
       label.text(title);
       label.addClass('item-card-label');
       lineBreak = new HTMLElement('br');
       labelUrl = new HTMLElement('span');
-      if (hostname.length > 30) {
-        hostname = hostname.substring(0, 40) + '...';
-      }
       labelUrl.text(hostname);
       labelUrl.addClass('item-card-label-secondary');
       link.push(badge);
@@ -449,29 +443,29 @@
       var root;
       root = this;
       this.dataStorage = new DataStorage;
-      this.dataStorage.mostVisited.done = function() {
+      this.dataStorage.topSites.done = function() {
         var container, list;
-        container = new HTMLElement('#most-visited');
+        container = new HTMLElement('#top-sites');
         container.addClass('horizontal-list');
-        list = new ItemCardList(root.dataStorage.mostVisited, 'most-visited');
+        list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
         return container.push(list);
       };
-      this.dataStorage.recentBookmarks.done = function() {
+      this.dataStorage.latestBookmarks.done = function() {
         var container, list;
-        container = new HTMLElement('#recent-bookmarks');
-        list = new ItemCardList(root.dataStorage.recentBookmarks, 'recent-bookmarks');
-        return container.push(list);
-      };
-      this.dataStorage.otherDevices.done = function() {
-        var container, list;
-        container = new HTMLElement('#other-devices');
-        list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
+        container = new HTMLElement('#latest-bookmarks');
+        list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
         return container.push(list);
       };
       this.dataStorage.recentlyClosed.done = function() {
         var container, list;
         container = new HTMLElement('#recently-closed');
         list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed');
+        return container.push(list);
+      };
+      this.dataStorage.otherDevices.done = function() {
+        var container, list;
+        container = new HTMLElement('#other-devices');
+        list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
         return container.push(list);
       };
       this.dataStorage.fetchAll();

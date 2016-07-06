@@ -21,9 +21,15 @@ module.exports = {
   'it should display the extension': function(browser) {
     return browser.expect.element('body').to.have.attribute("data-app").which.equals('newTab');
   },
+  'it should have section headings': function(browser) {
+    browser.expect.element("#top-sites").text.to.contain('Top Sites');
+    browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks');
+    browser.expect.element("#recently-closed").text.to.contain('Recently Closed');
+    return browser.expect.element("#other-devices").text.to.contain('Other Devices');
+  },
   'it should display most visited sites': function(browser) {
-    browser.expect.element("#most-visited").to.be.present;
-    return browser.expect.element("#most-visited-0").to.be.present.after(1000);
+    browser.expect.element("#top-sites").to.be.present;
+    return browser.expect.element("#top-sites-0").to.be.present.after(1000);
 
     /*
     		get = (data)->
@@ -41,10 +47,10 @@ module.exports = {
     		browser.execute( get, [], test)
      */
   },
-  'it should display recent bookmarks': function(browser) {
+  'it should display latest bookmarks and not have titles longer than 33 chars': function(browser) {
     var i, j, len, ref, results, site;
-    browser.expect.element("#recent-bookmarks").to.be.present;
-    browser.expect.element("#recent-bookmarks-0").to.be.present.after(1000);
+    browser.expect.element("#latest-bookmarks").to.be.present;
+    browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000);
     if (browser.globals.sites == null) {
       throw new Error('Test failed: no array.');
     }
@@ -52,23 +58,20 @@ module.exports = {
     results = [];
     for (i = j = 0, len = ref.length; j < len; i = ++j) {
       site = ref[i];
-      browser.expect.element("#recent-bookmarks-" + i).text.to.equal(site.title);
-      results.push(browser.expect.element("#recent-bookmarks-" + i).to.have.attribute("href").which.equals(site.url));
+      browser.expect.element("#latest-bookmarks-" + i).text.to.contain(site.title);
+      results.push(browser.expect.element("#latest-bookmarks-" + i).to.have.attribute("href").which.equals(site.url));
     }
     return results;
   },
-  'TODO: it should not have titles longer than 3 characters': function(browser) {},
-  'TODO: tests for top bar': function(browser) {},
   'it should display recently closed items': function(browser) {
     return browser.expect.element("#recently-closed").to.be.present;
   },
-  'it should display items from other devices': function(browser) {
-    return browser.expect.element("#other-devices").to.be.present;
-  },
-  'it should not display system url': function(browser) {},
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
     return browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS');
+  },
+  'it should display items from other devices': function(browser) {
+    return browser.expect.element("#other-devices").to.be.present;
   },
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
@@ -89,5 +92,14 @@ module.exports = {
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;
     return browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
+  },
+  'it should have navbar': function(browser) {
+    return browser.expect.element(".nav-wrapper").to.be.present;
+  },
+  'navbar should have Hide & Settings -buttons': function(browser) {
+    browser.expect.element("#visibility-mode").to.be.present;
+    browser.expect.element("#visibility-mode").text.to.contain('Hide Me');
+    browser.expect.element("#settings").to.be.present;
+    return browser.expect.element("#settings").text.to.contain('Settings');
   }
 };

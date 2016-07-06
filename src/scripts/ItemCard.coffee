@@ -35,16 +35,12 @@ class ItemCard extends HTMLElement
 		labelContainer.addClass('item-card-label-container')
 
 		label = new HTMLElement('span')
-		# TODO: Make truncate as a method
-		if title.length > 30 then title = title.substring(0, 30) + '...'
 		label.text(title)
 		label.addClass('item-card-label')
 
 		lineBreak = new HTMLElement('br')
 
 		labelUrl = new HTMLElement('span')
-		# TODO: Make truncate as a method
-		if hostname.length > 30 then hostname = hostname.substring(0, 40) + '...'
 		labelUrl.text(hostname)
 		labelUrl.addClass('item-card-label-secondary')
 

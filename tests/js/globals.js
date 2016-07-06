@@ -8,23 +8,31 @@ module.exports = {
       "url": "https://chrome.google.com/webstore?hl=fi"
     }
   ],
+
+  /*
+   {
+     "title": "Ilta-Sanomat - IS - Suomen suurin uutismedia"
+     "url": "http://www.iltasanomat.fi/"
+   },
+   {
+     "title": "Henkilöasiakkaat | Nordea.fi"
+     "url": "http://www.nordea.fi/"
+   },
+   {
+     "title": "TMTurbo - Tracks"
+     "url": "https://players.turbo.trackmania.com/pc/maps"
+   },
+   {
+     "title": "Dark Souls II Wiki - DarkSouls II Wiki"
+     "url": "http://darksouls2.wikidot.com/"
+   },
+   {
+     "title": "Battlelog / Battlefield Hardline"
+     "url": "http://battlelog.battlefield.com/"
+   },
+   */
   sites: [
     {
-      "title": "Ilta-Sanomat - IS - Suomen suurin uutismedia",
-      "url": "http://www.iltasanomat.fi/"
-    }, {
-      "title": "Henkilöasiakkaat | Nordea.fi",
-      "url": "http://www.nordea.fi/"
-    }, {
-      "title": "TMTurbo - Tracks",
-      "url": "https://players.turbo.trackmania.com/pc/maps"
-    }, {
-      "title": "Dark Souls II Wiki - DarkSouls II Wiki",
-      "url": "http://darksouls2.wikidot.com/"
-    }, {
-      "title": "Battlelog / Battlefield Hardline",
-      "url": "http://battlelog.battlefield.com/"
-    }, {
       "title": "Documentation - Materialize",
       "url": "http://materializecss.com/"
     }, {

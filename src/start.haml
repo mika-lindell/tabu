@@ -1,5 +1,5 @@
 !!! 5
-%html
+%html(lang="en")
 	%head
 		%title
 		%link(href="styles/app.css" rel="stylesheet")
@@ -9,20 +9,18 @@
 			.nav-wrapper.white
 				%ul.right
 					%li
-						%a#visibility-mode(href="#")
+						%a#visibility-mode.font-size-small.color-dark-grey(href="#")
 							%i.material-icons.left visibility_off
-							%span.font-size-small.color-dark-grey.uppercase
-								Hide me
+							Hide me
 					%li
-						%a#settings(href="#")
+						%a#settings.font-size-small.color-dark-grey(href="#")
 							%i.material-icons.left settings
-							%span.font-size-small.color-dark-grey.uppercase
-								Settings
+							Settings
 		.container
 			.row.section
 				.col.s12
-					#most-visited
-						%h4 Top
+					#top-sites
+						%h4 Top Sites
 			.row.section
 				.col.s12.center
 					#actions
@@ -35,14 +33,14 @@
 							Go Incognito
 			.row.section
 				.col.s4
-					#recent-bookmarks
-						%h4 Marks
+					#latest-bookmarks
+						%h4 Latest Bookmarks
 				.col.s4
 					#recently-closed
-						%h4 Closed
+						%h4 Recently Closed
 				.col.s4
 					#other-devices
-						%h4 Devices
+						%h4 Other Devices
 
 		%script(src="./scripts/app.js")
 	
