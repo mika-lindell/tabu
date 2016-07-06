@@ -73,7 +73,7 @@ module.exports =
 
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
-		browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks')
+		browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS')
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
@@ -84,7 +84,7 @@ module.exports =
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
-		browser.expect.element("#view-history").text.to.equal('View History')
+		browser.expect.element("#view-history").text.to.equal('VIEW HISTORY')
 
 	'clicking history button should take to history-page': (browser)->		
 		browser.click("#view-history")
@@ -95,7 +95,7 @@ module.exports =
 
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present
-		browser.expect.element("#go-incognito").text.to.equal('Go Incognito')
+		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
 		#browser.click("#go-incognito")
 
 

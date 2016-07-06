@@ -1,24 +1,24 @@
-17:26:56.744 INFO - Launching a standalone Selenium Server
+17:44:16.285 INFO - Launching a standalone Selenium Server
 Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
-17:26:56.803 INFO - Java: Oracle Corporation 25.66-b18
-17:26:56.803 INFO - OS: Windows 10 10.0 x86
-17:26:56.809 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-17:26:56.854 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-17:26:56.854 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-17:26:56.859 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+17:44:16.345 INFO - Java: Oracle Corporation 25.66-b18
+17:44:16.345 INFO - OS: Windows 10 10.0 x86
+17:44:16.352 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+17:44:16.395 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+17:44:16.395 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+17:44:16.400 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-17:26:56.860 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-17:26:56.860 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-17:26:56.941 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-17:26:56.941 INFO - Selenium Server is up and running
-17:26:57.275 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
-17:26:57.289 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
-Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 22689
+17:44:16.401 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+17:44:16.401 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+17:44:16.483 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+17:44:16.483 INFO - Selenium Server is up and running
+17:44:16.809 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+17:44:16.822 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 15181
 Only local connections are allowed.
-17:26:59.339 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
-17:26:59.350 INFO - Executing: [get: chrome://newtab])
-17:27:01.419 INFO - Done: [get: chrome://newtab]
-17:27:01.430 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+17:44:17.999 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+17:44:18.011 INFO - Executing: [get: chrome://newtab])
+17:44:19.870 INFO - Done: [get: chrome://newtab]
+17:44:19.880 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       var j, len, results, site;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
@@ -27,7 +27,7 @@ Only local connections are allowed.
       }
       return results;
     }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]])
-17:27:01.450 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+17:44:19.900 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       var j, len, results, site;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
@@ -36,25 +36,25 @@ Only local connections are allowed.
       }
       return results;
     }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]]
-17:27:01.456 INFO - Executing: [get: chrome://newtab])
-17:27:01.553 INFO - Done: [get: chrome://newtab]
-17:27:01.561 INFO - Executing: [find elements: By.cssSelector: #app])
-17:27:01.589 INFO - Done: [find elements: By.cssSelector: #app]
-17:27:01.596 INFO - Executing: [find elements: By.cssSelector: body])
-17:27:01.612 INFO - Done: [find elements: By.cssSelector: body]
-17:27:01.618 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (7c4b7fc8734649defbbb6f726107a31f)] -> css selector: #app], data-app])
-17:27:01.630 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (7c4b7fc8734649defbbb6f726107a31f)] -> css selector: #app], data-app]
-17:27:01.641 INFO - Executing: [find elements: By.cssSelector: #most-visited])
-17:27:01.657 INFO - Done: [find elements: By.cssSelector: #most-visited]
-17:27:01.663 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-17:27:01.681 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-17:27:01.701 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
-17:27:01.718 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
-17:27:01.725 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-17:27:01.742 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-17:27:01.751 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-17:27:01.768 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-17:27:01.773 INFO - Executing: [get text: 4 [[ChromeDriver: chrome on XP (7c4b7fc8734649defbbb6f726107a31f)] -> css selector: #recent-bookmarks-0]])
-17:27:01.797 INFO - Done: [get text: 4 [[ChromeDriver: chrome on XP (7c4b7fc8734649defbbb6f726107a31f)] -> css selector: #recent-bookmarks-0]]
-17:27:01.815 INFO - Executing: [delete session: 07130619-6cb6-46d1-bfc7-480c39235336])
-17:27:02.769 INFO - Done: [delete session: 07130619-6cb6-46d1-bfc7-480c39235336]
+17:44:19.906 INFO - Executing: [get: chrome://newtab])
+17:44:20.000 INFO - Done: [get: chrome://newtab]
+17:44:20.006 INFO - Executing: [find elements: By.cssSelector: #app])
+17:44:20.035 INFO - Done: [find elements: By.cssSelector: #app]
+17:44:20.042 INFO - Executing: [find elements: By.cssSelector: body])
+17:44:20.059 INFO - Done: [find elements: By.cssSelector: body]
+17:44:20.064 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #app], data-app])
+17:44:20.076 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #app], data-app]
+17:44:20.087 INFO - Executing: [find elements: By.cssSelector: #most-visited])
+17:44:20.104 INFO - Done: [find elements: By.cssSelector: #most-visited]
+17:44:20.112 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+17:44:20.129 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+17:44:20.148 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
+17:44:20.165 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
+17:44:20.171 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+17:44:20.188 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+17:44:20.195 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+17:44:20.210 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+17:44:20.215 INFO - Executing: [get text: 4 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #recent-bookmarks-0]])
+17:44:20.239 INFO - Done: [get text: 4 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #recent-bookmarks-0]]
+17:44:20.258 INFO - Executing: [delete session: 035438ec-80df-4472-ab44-1c9e2d6be8f5])
+17:44:21.138 INFO - Done: [delete session: 035438ec-80df-4472-ab44-1c9e2d6be8f5]

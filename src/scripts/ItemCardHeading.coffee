@@ -10,7 +10,7 @@ class ItemCardHeading extends HTMLElement
 		super('li')
 		@addClass('item-card-heading')
 
-		heading = new HTMLElement('h5')
+		heading = new HTMLElement('h6')
 		heading.text(title)
 		if id?
 			heading.attr('id', id)

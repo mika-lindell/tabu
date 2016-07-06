@@ -45,6 +45,7 @@ Colors
 ***/
 
 $black: #000;
+$dark-grey: #484848;
 
 /***
 
@@ -96,6 +97,10 @@ Helpers
 
 .color-black{
 	color: $black;
+}
+
+.color-dark-grey{
+	color: $dark-grey;
 }
 
 /***
@@ -153,8 +158,8 @@ a.item-card-link{
 }
 
 .item-card-label-secondary{
-	opacity: 0.75;
 	@extend .font-size-small;
+	@extend .color-dark-grey;
 }
 
 

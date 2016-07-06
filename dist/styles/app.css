@@ -6231,6 +6231,9 @@ Helpers
 .color-black, a.item-card-link {
   color: #000; }
 
+.color-dark-grey, .item-card-label-secondary {
+  color: #484848; }
+
 /***
 
 Structure
@@ -6264,9 +6267,6 @@ a.item-card-link {
 .item-card-label-container {
   display: inline-block;
   vertical-align: middle; }
-
-.item-card-label-secondary {
-  opacity: 0.75; }
 
 .horizontal-list li {
   display: inline-block;

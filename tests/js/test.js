@@ -67,7 +67,7 @@ module.exports = {
   'it should not display system url': function(browser) {},
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
-    return browser.expect.element("#view-bookmarks").text.to.equal('View Bookmarks');
+    return browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS');
   },
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
@@ -77,7 +77,7 @@ module.exports = {
   },
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
-    return browser.expect.element("#view-history").text.to.equal('View History');
+    return browser.expect.element("#view-history").text.to.equal('VIEW HISTORY');
   },
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
@@ -87,6 +87,6 @@ module.exports = {
   },
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;
-    return browser.expect.element("#go-incognito").text.to.equal('Go Incognito');
+    return browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
   }
 };
