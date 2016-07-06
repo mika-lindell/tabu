@@ -14,6 +14,9 @@
 // Variables;
 @import "../../node_modules/materialize-css/sass/components/variables";
 
+// Override som vars
+$roboto-font-path: "./assets/roboto/";
+
 // Reset
 @import "../../node_modules/materialize-css/sass/components/normalize";
 

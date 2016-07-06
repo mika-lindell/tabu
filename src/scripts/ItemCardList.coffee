@@ -16,6 +16,7 @@ class ItemCardList extends HTMLElement
 		@update()
 
 	update: ()->	
+		# Create document fragment for not to reflow when appending elements (better performance)
 		@fragment = document.createDocumentFragment()
 
 		for item, i in @dataGetter.data

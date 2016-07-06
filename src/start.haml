@@ -3,6 +3,7 @@
 	%head
 		%title
 		%link(href="styles/app.css" rel="stylesheet")
+		%link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 	%body(data-app="newTab" id="app")
 		.container
 			.row
@@ -10,12 +11,14 @@
 					#most-visited
 						%h2 Top
 			.row
-				.col.s12
-					%button#view-bookmarks
+				.col.s12.center
+					%button.btn-large#view-bookmarks
 						View Bookmarks
-					%button#view-history
+					%button.btn-large#view-history
 						View History
-					%button#go-incognito
+					%button.btn-large#go-incognito
+						%i.material-icons.right
+							open_in_new
 						Go Incognito
 			.row
 				.col.s4
@@ -27,6 +30,6 @@
 				.col.s4
 					#other-devices
 						%h2 Devices
-						
+
 		%script(src="./scripts/app.js")
 	

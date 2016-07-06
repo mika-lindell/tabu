@@ -47,11 +47,13 @@ module.exports = function(grunt) {
                 bare: false,
                 join: true // This will make sure you can create class structure in different files
               },
+        // These are coffeescript classes compiled to one js file.
+        // The order in which these are compiled matters, as there are dependencies.
         files: [
           {                         
             'dist/scripts/app.js': [
-
               'src/**/Binding.coffee',
+              'src/**/HexColor.coffee',
               'src/**/HTMLElement.coffee',
               'src/**/DataGetter.coffee',
               'src/**/DataStorage.coffee',
@@ -61,7 +63,7 @@ module.exports = function(grunt) {
               'src/**/Helpers.coffee',
               'src/**/Render.coffee',
               'src/**/App.coffee',
-              'src/**/Main.coffee',
+              'src/**/Main.coffee'
 
             ] // concat then compile into single file 
           }

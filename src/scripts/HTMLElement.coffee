@@ -34,10 +34,10 @@ class HTMLElement
 		else
 			return @DOMElement.textContent
 
-	# Gets/sets an attribute of element
+	# Gets/sets an attribute of an element
 	#
 	# @param [String] Attribute to be targeted
-	# @param [String] New value for specified param
+	# @param [String] New value for specified attribute
 	#
 	# @return [String]
 	#
@@ -46,7 +46,20 @@ class HTMLElement
 			return @DOMElement.setAttribute(attrName, newValue)
 		else
 			return @DOMElement.getAttribute(attrName)
-	
+
+	# Gets/sets a style rule of an element
+	#
+	# @param [String] Rule to be targeted
+	# @param [String] New value for specified rule
+	#
+	# @return [String]
+	#
+	css: (ruleName, newValue = null)->
+		if newValue?
+			return @DOMElement.style[ruleName] = newValue
+		else
+			return @DOMElement.style[ruleName]
+
 	# Set event listener to an event
 	#
 	# @param [String] Name of the event

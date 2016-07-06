@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, Helpers, ItemCard, ItemCardHeading, ItemCardList, Render,
+  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Render,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -7,6 +7,48 @@
     function Binding() {}
 
     return Binding;
+
+  })();
+
+  HexColor = (function() {
+    HexColor.parser;
+
+    HexColor.url;
+
+    HexColor.string;
+
+    function HexColor(string) {
+      this.url = this.fromUrl(string);
+      this.string = this.fromString(string);
+    }
+
+    HexColor.prototype.fromUrl = function(url) {
+      this.parser = document.createElement('a');
+      this.parser.href = url;
+      return this.fromString(this.parser.hostname);
+    };
+
+    HexColor.prototype.fromString = function(string) {
+      var colour, hash, i, x;
+      i = 0;
+      hash = 0;
+      while (i < string.length) {
+        hash = string.charCodeAt(i++) + (hash << 5) - hash;
+      }
+      x = 0;
+      colour = '#';
+      while (x < 3) {
+        colour += ('00' + (hash >> x++ * 8 & 0xFF).toString(16)).slice(-2);
+      }
+
+      /*  
+      	  for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash)); 
+      	  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+       */
+      return colour;
+    };
+
+    return HexColor;
 
   })();
 
@@ -46,6 +88,17 @@
         return this.DOMElement.setAttribute(attrName, newValue);
       } else {
         return this.DOMElement.getAttribute(attrName);
+      }
+    };
+
+    HTMLElement.prototype.css = function(ruleName, newValue) {
+      if (newValue == null) {
+        newValue = null;
+      }
+      if (newValue != null) {
+        return this.DOMElement.style[ruleName] = newValue;
+      } else {
+        return this.DOMElement.style[ruleName];
       }
     };
 
@@ -191,12 +244,14 @@
     extend(ItemCard, superClass);
 
     function ItemCard(title, url, id) {
-      var link;
+      var color, link;
       if (id == null) {
         id = null;
       }
       ItemCard.__super__.constructor.call(this, 'li');
+      color = new HexColor(url);
       link = new HTMLElement('a');
+      link.css('backgroundColor', color.url);
       link.text(title);
       link.attr('href', url);
       if (id != null) {

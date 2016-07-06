@@ -10,7 +10,10 @@ class ItemCard extends HTMLElement
 	constructor: (title, url, id = null)->
 		super('li')
 
+		color = new HexColor(url)
+
 		link = new HTMLElement('a')
+		link.css('backgroundColor', color.url)
 		link.text(title)
 		link.attr('href', url)
 		if id?

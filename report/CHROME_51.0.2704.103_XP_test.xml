@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="0"
+            failures="1"
             tests="11">
 
   <testsuite name="test"
-    errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="11" time="5.508" timestamp="Tue, 05 Jul 2016 20:57:39 GMT">
+    errors="0" failures="1" hostname="" id="" package="test" skipped="4"
+    tests="11" time="5.976" timestamp="Wed, 06 Jul 2016 10:12:15 GMT">
   
-    <testcase name="it should display the extension" time="1.886" assertions="2">
+    <testcase name="it should display the extension" time="3.159" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.04500" assertions="2">
+    <testcase name="it should display most visited sites" time="0.04800" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display recent bookmarks" time="1.762" assertions="42">
+    <testcase name="it should display recent bookmarks" time="1.801" assertions="42">
 
     
 
@@ -113,49 +113,54 @@
     
     </testcase>
   
-    <testcase name="it should display items from other devices" time="0.02500" assertions="1">
+    <testcase name="it should display items from other devices" time="0.02300" assertions="1">
 
     
     </testcase>
   
-    <testcase name="it should not display system url" time="0.000" assertions="0">
+    <testcase name="it should not display system url" time="0.001000" assertions="0">
     </testcase>
   
-    <testcase name="it should have button to view bookmarks" time="0.06200" assertions="2">
+    <testcase name="it should have button to view bookmarks" time="0.9200" assertions="2">
 
-    
-
-    
-    </testcase>
-  
-    <testcase name="clicking bookmark button should take to bookmark-page" time="0.8030" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should have button to view history" time="0.07500" assertions="2">
-
-    
+      <failure message="Expected element &lt;#view-bookmarks&gt; text to equal: &quot;View Bookmarks&quot;">  at Object.module.exports.it should have button to view bookmarks (D:\Dev\newtab\tests\js\test.js:69:27)
+  at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
+  at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
+  at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)
+  at self.promiseDispatch.done (D:\Dev\newtab\node_modules\q\q.js:863:30)
+  at Promise.promise.promiseDispatch (D:\Dev\newtab\node_modules\q\q.js:796:13)
+  at D:\Dev\newtab\node_modules\q\q.js:556:49
+  at runSingle (D:\Dev\newtab\node_modules\q\q.js:137:13)
+  at flush (D:\Dev\newtab\node_modules\q\q.js:125:13)
+  at _combinedTickCallback (node.js:370:9)
+  at process._tickCallback (node.js:401:11)
+</failure>
 
     
     </testcase>
   
-    <testcase name="clicking history button should take to history-page" time="0.7460" assertions="2">
-
-    
-
-    
-    </testcase>
   
-    <testcase name="it should have button to open incognito-window" time="0.08000" assertions="2">
-
     
-
-    
+    <testcase
+      name="clicking bookmark button should take to bookmark-page">
+      <skipped />
     </testcase>
-  
+    
+    <testcase
+      name="it should have button to view history">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="clicking history button should take to history-page">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="it should have button to open incognito-window">
+      <skipped />
+    </testcase>
+    
   
   </testsuite>
 </testsuites>

@@ -1,3 +1,8 @@
+/*
+*
+* Materialize settings & components
+*
+**/
 .materialize-red {
   background-color: #e51c23 !important; }
 
@@ -3149,28 +3154,28 @@ nav {
     height: 64px; } }
 @font-face {
   font-family: "Roboto";
-  src: local(Roboto Thin), url("../fonts/roboto/Roboto-Thin.eot");
-  src: url("../fonts/roboto/Roboto-Thin.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Thin.woff2") format("woff2"), url("../fonts/roboto/Roboto-Thin.woff") format("woff"), url("../fonts/roboto/Roboto-Thin.ttf") format("truetype");
+  src: local(Roboto Thin), url("./assets/roboto/Roboto-Thin.eot");
+  src: url("./assets/roboto/Roboto-Thin.eot?#iefix") format("embedded-opentype"), url("./assets/roboto/Roboto-Thin.woff2") format("woff2"), url("./assets/roboto/Roboto-Thin.woff") format("woff"), url("./assets/roboto/Roboto-Thin.ttf") format("truetype");
   font-weight: 200; }
 @font-face {
   font-family: "Roboto";
-  src: local(Roboto Light), url("../fonts/roboto/Roboto-Light.eot");
-  src: url("../fonts/roboto/Roboto-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Light.woff2") format("woff2"), url("../fonts/roboto/Roboto-Light.woff") format("woff"), url("../fonts/roboto/Roboto-Light.ttf") format("truetype");
+  src: local(Roboto Light), url("./assets/roboto/Roboto-Light.eot");
+  src: url("./assets/roboto/Roboto-Light.eot?#iefix") format("embedded-opentype"), url("./assets/roboto/Roboto-Light.woff2") format("woff2"), url("./assets/roboto/Roboto-Light.woff") format("woff"), url("./assets/roboto/Roboto-Light.ttf") format("truetype");
   font-weight: 300; }
 @font-face {
   font-family: "Roboto";
-  src: local(Roboto Regular), url("../fonts/roboto/Roboto-Regular.eot");
-  src: url("../fonts/roboto/Roboto-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Regular.woff2") format("woff2"), url("../fonts/roboto/Roboto-Regular.woff") format("woff"), url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
+  src: local(Roboto Regular), url("./assets/roboto/Roboto-Regular.eot");
+  src: url("./assets/roboto/Roboto-Regular.eot?#iefix") format("embedded-opentype"), url("./assets/roboto/Roboto-Regular.woff2") format("woff2"), url("./assets/roboto/Roboto-Regular.woff") format("woff"), url("./assets/roboto/Roboto-Regular.ttf") format("truetype");
   font-weight: 400; }
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/roboto/Roboto-Medium.eot");
-  src: url("../fonts/roboto/Roboto-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Medium.woff2") format("woff2"), url("../fonts/roboto/Roboto-Medium.woff") format("woff"), url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
+  src: url("./assets/roboto/Roboto-Medium.eot");
+  src: url("./assets/roboto/Roboto-Medium.eot?#iefix") format("embedded-opentype"), url("./assets/roboto/Roboto-Medium.woff2") format("woff2"), url("./assets/roboto/Roboto-Medium.woff") format("woff"), url("./assets/roboto/Roboto-Medium.ttf") format("truetype");
   font-weight: 500; }
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/roboto/Roboto-Bold.eot");
-  src: url("../fonts/roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Bold.woff2") format("woff2"), url("../fonts/roboto/Roboto-Bold.woff") format("woff"), url("../fonts/roboto/Roboto-Bold.ttf") format("truetype");
+  src: url("./assets/roboto/Roboto-Bold.eot");
+  src: url("./assets/roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("./assets/roboto/Roboto-Bold.woff2") format("woff2"), url("./assets/roboto/Roboto-Bold.woff") format("woff"), url("./assets/roboto/Roboto-Bold.ttf") format("truetype");
   font-weight: 700; }
 a {
   text-decoration: none; }
@@ -6147,5 +6152,28 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 @media (min-height: 40.125em) {
   .picker--time .picker__box {
     margin-bottom: 5em; } }
+body {
+  font-family: Roboto;
+  font-size: 100%; }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url(./assets/material-design-icons/Material-Design-Icons.woff2) format("woff2"); }
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased; }
 
 /*# sourceMappingURL=app.css.map */

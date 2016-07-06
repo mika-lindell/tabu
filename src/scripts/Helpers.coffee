@@ -32,5 +32,3 @@ class Helpers
 	#
 	goIncognito: ()->
 		chrome.windows.create {'incognito': true}
-
-
