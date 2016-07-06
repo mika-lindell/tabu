@@ -1,24 +1,24 @@
-17:44:16.285 INFO - Launching a standalone Selenium Server
+17:48:48.042 INFO - Launching a standalone Selenium Server
 Setting system property webdriver.chrome.driver to node_modules/chromedriver/lib/chromedriver/chromedriver.exe
-17:44:16.345 INFO - Java: Oracle Corporation 25.66-b18
-17:44:16.345 INFO - OS: Windows 10 10.0 x86
-17:44:16.352 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
-17:44:16.395 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-17:44:16.395 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-17:44:16.400 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+17:48:48.110 INFO - Java: Oracle Corporation 25.66-b18
+17:48:48.110 INFO - OS: Windows 10 10.0 x86
+17:48:48.117 INFO - v2.53.0, with Core v2.53.0. Built from revision 35ae25b
+17:48:48.163 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+17:48:48.163 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+17:48:48.169 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
 registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN10
-17:44:16.401 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
-17:44:16.401 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
-17:44:16.483 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-17:44:16.483 INFO - Selenium Server is up and running
-17:44:16.809 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
-17:44:16.822 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
-Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 15181
+17:48:48.169 INFO - Driver class not found: org.openqa.selenium.htmlunit.HtmlUnitDriver
+17:48:48.169 INFO - Driver provider org.openqa.selenium.htmlunit.HtmlUnitDriver is not registered
+17:48:48.252 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+17:48:48.252 INFO - Selenium Server is up and running
+17:48:48.572 INFO - Executing: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]])
+17:48:48.585 INFO - Creating a new session for Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]
+Starting ChromeDriver 2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4) on port 25937
 Only local connections are allowed.
-17:44:17.999 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
-17:44:18.011 INFO - Executing: [get: chrome://newtab])
-17:44:19.870 INFO - Done: [get: chrome://newtab]
-17:44:19.880 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
+17:48:49.747 INFO - Done: [new session: Capabilities [{silent=true, acceptSslCerts=true, name=Test, browserName=chrome, javascriptEnabled=true, chromeOptions={args=[start-maximized, load-extension=D:\Dev\newtab/dist/]}, platform=ANY}]]
+17:48:49.759 INFO - Executing: [get: chrome://newtab])
+17:48:49.943 INFO - Done: [get: chrome://newtab]
+17:48:49.952 INFO - Executing: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
       var j, len, results, site;
       results = [];
       for (j = 0, len = data.length; j < len; j++) {
@@ -27,34 +27,65 @@ Only local connections are allowed.
       }
       return results;
     }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]])
-17:44:19.900 INFO - Done: [execute script: var passedArgs = Array.prototype.slice.call(arguments,0); return function (data) {
-      var j, len, results, site;
-      results = [];
-      for (j = 0, len = data.length; j < len; j++) {
-        site = data[j];
-        results.push(chrome.bookmarks.create(site));
-      }
-      return results;
-    }.apply(window, passedArgs);, [[{title=Ilta-Sanomat - IS - Suomen suurin uutismedia, url=http://www.iltasanomat.fi/}, {title=Henkil�asiakkaat | Nordea.fi, url=http://www.nordea.fi/}, {title=TMTurbo - Tracks, url=https://players.turbo.trackmania.com/pc/maps}, {title=Dark Souls II Wiki - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/}, {title=Battlelog / Battlefield Hardline, url=http://battlelog.battlefield.com/}, {title=Documentation - Materialize, url=http://materializecss.com/}, {title=YouTube, url=https://www.youtube.com/}, {title=Oma Elisa, url=https://oma.elisa.fi/}, {title=VALUEFRAME PSA, url=http://both.valueframe.com/}, {title=Iltalehti.fi | IL - Suomen suurin uutispalvelu, url=http://www.iltalehti.fi/}, {title=Prisma -- Hyv� mutta halpa, url=http://www.prisma.fi/}, {title=GitHub, url=https://github.com/}, {title=Weapons - DarkSouls II Wiki, url=http://darksouls2.wikidot.com/weapons}, {title=Angular 2 QuickStart, url=http://localhost:3000/}, {title=Google-k��nt�j�, url=https://translate.google.com/}, {title=Prosessit, paketit ja henkil�st�hallinto � Google Drive, url=https://drive.google.com/drive/folders/0B09ab7xtyzTkOEkwa0h3Z2pKcUU}, {title=Redirecting..., url=https://drive.google.com/}, {title=Shaping up with Angular.js, url=http://campus.codeschool.com/courses/shaping-up-with-angular-js/level/3/section/1/video/1}, {title=Transformers Generations - TG11 Ultra Magnus: Amazon.co.uk: Toys & Games, url=http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113}, {title=Foundation for Sites 6 Docs, url=http://foundation.zurb.com/docs/}]]]
-17:44:19.906 INFO - Executing: [get: chrome://newtab])
-17:44:20.000 INFO - Done: [get: chrome://newtab]
-17:44:20.006 INFO - Executing: [find elements: By.cssSelector: #app])
-17:44:20.035 INFO - Done: [find elements: By.cssSelector: #app]
-17:44:20.042 INFO - Executing: [find elements: By.cssSelector: body])
-17:44:20.059 INFO - Done: [find elements: By.cssSelector: body]
-17:44:20.064 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #app], data-app])
-17:44:20.076 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #app], data-app]
-17:44:20.087 INFO - Executing: [find elements: By.cssSelector: #most-visited])
-17:44:20.104 INFO - Done: [find elements: By.cssSelector: #most-visited]
-17:44:20.112 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
-17:44:20.129 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
-17:44:20.148 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
-17:44:20.165 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
-17:44:20.171 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-17:44:20.188 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-17:44:20.195 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
-17:44:20.210 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
-17:44:20.215 INFO - Executing: [get text: 4 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #recent-bookmarks-0]])
-17:44:20.239 INFO - Done: [get text: 4 [[ChromeDriver: chrome on XP (6d1243d5aeea74be0654336d9fb81346)] -> css selector: #recent-bookmarks-0]]
-17:44:20.258 INFO - Executing: [delete session: 035438ec-80df-4472-ab44-1c9e2d6be8f5])
-17:44:21.138 INFO - Done: [delete session: 035438ec-80df-4472-ab44-1c9e2d6be8f5]
+17:48:50.351 WARN - Exception thrown
+org.openqa.selenium.WebDriverException: unknown error: Cannot read property 'create' of undefined
+  (Session info: chrome=51.0.2704.103)
+  (Driver info: chromedriver=2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4),platform=Windows NT 10.0 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
+Build info: version: '2.53.0', revision: '35ae25b', time: '2016-03-15 17:00:58'
+System info: host: 'MikaG750', ip: '192.168.0.104', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_66'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, chrome={chromedriverVersion=2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4), userDataDir=C:\Users\Mika\AppData\Local\Temp\scoped_dir9772_7695}, takesHeapSnapshot=true, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=51.0.2704.103, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: f507918c432325b65bdc8505a31ab137
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.executeScript(RemoteWebDriver.java:577)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy1.executeScript(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.executeScript(EventFiringWebDriver.java:217)
+	at org.openqa.selenium.remote.server.handler.ExecuteScript.call(ExecuteScript.java:54)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:176)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+17:48:50.353 WARN - Exception: unknown error: Cannot read property 'create' of undefined
+  (Session info: chrome=51.0.2704.103)
+  (Driver info: chromedriver=2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4),platform=Windows NT 10.0 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
+Build info: version: '2.53.0', revision: '35ae25b', time: '2016-03-15 17:00:58'
+System info: host: 'MikaG750', ip: '192.168.0.104', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_66'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, chrome={chromedriverVersion=2.21.371459 (36d3d07f660ff2bc1bf28a75d1cdabed0983e7c4), userDataDir=C:\Users\Mika\AppData\Local\Temp\scoped_dir9772_7695}, takesHeapSnapshot=true, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=51.0.2704.103, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: f507918c432325b65bdc8505a31ab137
+17:48:50.370 INFO - Executing: [get: chrome://newtab])
+17:48:52.823 INFO - Done: [get: chrome://newtab]
+17:48:52.833 INFO - Executing: [find elements: By.cssSelector: #app])
+17:48:52.866 INFO - Done: [find elements: By.cssSelector: #app]
+17:48:52.874 INFO - Executing: [find elements: By.cssSelector: body])
+17:48:52.891 INFO - Done: [find elements: By.cssSelector: body]
+17:48:52.896 INFO - Executing: [get element attribute: 0 [[ChromeDriver: chrome on XP (f507918c432325b65bdc8505a31ab137)] -> css selector: #app], data-app])
+17:48:52.908 INFO - Done: [get element attribute: 0 [[ChromeDriver: chrome on XP (f507918c432325b65bdc8505a31ab137)] -> css selector: #app], data-app]
+17:48:52.919 INFO - Executing: [find elements: By.cssSelector: #most-visited])
+17:48:52.936 INFO - Done: [find elements: By.cssSelector: #most-visited]
+17:48:52.943 INFO - Executing: [find elements: By.cssSelector: #most-visited-0])
+17:48:52.959 INFO - Done: [find elements: By.cssSelector: #most-visited-0]
+17:48:52.979 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks])
+17:48:52.995 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks]
+17:48:53.004 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+17:48:53.022 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+17:48:53.528 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+17:48:53.545 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+17:48:54.053 INFO - Executing: [find elements: By.cssSelector: #recent-bookmarks-0])
+17:48:54.063 INFO - Done: [find elements: By.cssSelector: #recent-bookmarks-0]
+17:48:54.081 INFO - Executing: [delete session: 13f46110-8528-443c-a269-7069814cc464])
+17:48:54.979 INFO - Done: [delete session: 13f46110-8528-443c-a269-7069814cc464]

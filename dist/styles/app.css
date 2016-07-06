@@ -6234,6 +6234,9 @@ Helpers
 .color-dark-grey, .item-card-label-secondary {
   color: #484848; }
 
+.btn-with-margin {
+  margin: 0 0.5rem; }
+
 /***
 
 Structure
