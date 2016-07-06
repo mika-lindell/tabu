@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Render,
+  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Render,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -23,9 +23,15 @@
     }
 
     HexColor.prototype.fromUrl = function(url) {
+      var hostname, parsedHostname, replacePattern, rx, searchPattern;
       this.parser = document.createElement('a');
       this.parser.href = url;
-      return this.fromString(this.parser.hostname);
+      hostname = this.parser.hostname;
+      searchPattern = '^w+\\d*\\.';
+      rx = new RegExp(searchPattern, 'gim');
+      replacePattern = '';
+      parsedHostname = hostname.replace(rx, replacePattern);
+      return this.fromString(parsedHostname);
     };
 
     HexColor.prototype.fromString = function(string) {
@@ -80,6 +86,19 @@
       }
     };
 
+    HTMLElement.prototype.html = function(html) {
+      if (html == null) {
+        html = null;
+      }
+      if (html != null) {
+        if (this.DOMElement) {
+          return this.DOMElement.innerHTML = html;
+        }
+      } else {
+        return this.DOMElement.innerHTML;
+      }
+    };
+
     HTMLElement.prototype.attr = function(attrName, newValue) {
       if (newValue == null) {
         newValue = null;
@@ -102,7 +121,22 @@
       }
     };
 
+    HTMLElement.prototype.addClass = function(className) {
+      if (className == null) {
+        className = null;
+      }
+      if (className != null) {
+        return this.DOMElement.className += " " + className;
+      }
+    };
+
     HTMLElement.prototype.on = function(name, listener) {
+      if (name == null) {
+        name = null;
+      }
+      if (listener == null) {
+        listener = null;
+      }
       if ((name != null) && (listener != null)) {
         return this.DOMElement.addEventListener(name, listener);
       }
@@ -140,12 +174,15 @@
 
     DataGetter.data = null;
 
-    function DataGetter(api, dataType) {
+    function DataGetter(api, dataType, limit) {
       if (dataType == null) {
         dataType = 'links';
       }
+      if (limit == null) {
+        limit = 15;
+      }
       this.api = api;
-      this.limit = 20;
+      this.limit = limit;
       this.dataType = dataType;
     }
 
@@ -155,10 +192,12 @@
       console.log("DataGetter: Calling to chrome API for", this.dataType);
       root = this;
       getter = function(result) {
+        var limited_result;
+        limited_result = result.slice(0, root.limit);
         if (root.dataType === 'devices' || root.dataType === 'history') {
-          root.data = root.flatten(result);
+          root.data = root.flatten(limited_result);
         } else {
-          root.data = result;
+          root.data = limited_result;
         }
         root.status = 'ready';
         root.done();
@@ -198,8 +237,8 @@
           }
         }
       } else if (root.dataType === 'history') {
-        for (l = 0, len2 = source.length; l < len2; l++) {
-          item = source[l];
+        for (i = l = 0, len2 = source.length; l < len2; i = ++l) {
+          item = source[i];
           if (item.window != null) {
             ref1 = item.window.tabs;
             for (m = 0, len3 = ref1.length; m < len3; m++) {
@@ -244,19 +283,48 @@
     extend(ItemCard, superClass);
 
     function ItemCard(title, url, id) {
-      var color, link;
+      var badge, color, hostname, label, labelContainer, labelUrl, lineBreak, link, parsedHostname, replacePattern, rx, searchPattern;
       if (id == null) {
         id = null;
       }
       ItemCard.__super__.constructor.call(this, 'li');
+      this.addClass('item-card');
       color = new HexColor(url);
       link = new HTMLElement('a');
-      link.css('backgroundColor', color.url);
-      link.text(title);
       link.attr('href', url);
+      link.addClass('item-card-link');
       if (id != null) {
         link.attr('id', id);
       }
+      hostname = link.DOMElement.hostname;
+      searchPattern = '^w+\\d*\\.';
+      rx = new RegExp(searchPattern, 'gim');
+      replacePattern = '';
+      parsedHostname = hostname.replace(rx, replacePattern);
+      badge = new HTMLElement('span');
+      badge.text(parsedHostname.substring(0, 2));
+      badge.css('borderColor', color.url);
+      badge.addClass('item-card-badge');
+      labelContainer = new HTMLElement('div');
+      labelContainer.addClass('item-card-label-container');
+      label = new HTMLElement('span');
+      if (title.length > 30) {
+        title = title.substring(0, 30) + '...';
+      }
+      label.text(title);
+      label.addClass('item-card-label');
+      lineBreak = new HTMLElement('br');
+      labelUrl = new HTMLElement('span');
+      if (hostname.length > 30) {
+        hostname = hostname.substring(0, 40) + '...';
+      }
+      labelUrl.text(hostname);
+      labelUrl.addClass('item-card-label-secondary');
+      link.push(badge);
+      labelContainer.push(label);
+      labelContainer.push(lineBreak);
+      labelContainer.push(labelUrl);
+      link.push(labelContainer);
       this.push(link);
     }
 
@@ -273,6 +341,7 @@
         id = null;
       }
       ItemCardHeading.__super__.constructor.call(this, 'li');
+      this.addClass('item-card-heading');
       heading = new HTMLElement('h5');
       heading.text(title);
       if (id != null) {
@@ -299,6 +368,7 @@
         baseId = 'card';
       }
       ItemCardList.__super__.constructor.call(this, 'ul');
+      this.addClass('item-card-list');
       this.dataGetter = dataGetter;
       this.baseId = baseId;
       this.attr('id', this.baseId + "-list");
@@ -326,38 +396,38 @@
 
   })(HTMLElement);
 
-  Helpers = (function() {
-    function Helpers() {
+  Init = (function() {
+    function Init() {
       this.bindClick('#go-incognito', this.goIncognito);
       this.bindClick('#view-bookmarks', this.viewBookmarks);
       this.bindClick('#view-history', this.viewHistory);
     }
 
-    Helpers.prototype.bindClick = function(id, listener) {
+    Init.prototype.bindClick = function(id, listener) {
       var elem;
       elem = new HTMLElement(id, listener);
       return elem.on('click', listener);
     };
 
-    Helpers.prototype.viewBookmarks = function() {
+    Init.prototype.viewBookmarks = function() {
       return chrome.tabs.update({
         url: 'chrome://bookmarks/#1'
       });
     };
 
-    Helpers.prototype.viewHistory = function() {
+    Init.prototype.viewHistory = function() {
       return chrome.tabs.update({
         url: 'chrome://history/'
       });
     };
 
-    Helpers.prototype.goIncognito = function() {
+    Init.prototype.goIncognito = function() {
       return chrome.windows.create({
         'incognito': true
       });
     };
 
-    return Helpers;
+    return Init;
 
   })();
 
@@ -376,12 +446,13 @@
     App.dataStorage;
 
     function App() {
-      var helpers, root;
+      var root;
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.mostVisited.done = function() {
         var container, list;
         container = new HTMLElement('#most-visited');
+        container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.mostVisited, 'most-visited');
         return container.push(list);
       };
@@ -404,7 +475,7 @@
         return container.push(list);
       };
       this.dataStorage.fetchAll();
-      helpers = new Helpers;
+      new Init;
       console.log("App: Ready <3");
     }
 

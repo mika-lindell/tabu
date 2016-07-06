@@ -1,6 +1,6 @@
-# Class to make miscellanious calls to browser api
+# Class to misc startup initializations
 #
-class Helpers
+class Init
 
 	constructor: ()->
 		

@@ -8,6 +8,7 @@ class ItemCardList extends HTMLElement
 
 	constructor: (dataGetter, baseId = 'card')->
 		super('ul')
+		@addClass('item-card-list')
 
 		@dataGetter = dataGetter
 		@baseId = baseId

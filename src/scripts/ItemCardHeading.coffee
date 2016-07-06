@@ -8,6 +8,7 @@ class ItemCardHeading extends HTMLElement
 	#
 	constructor: (title, id = null)->
 		super('li')
+		@addClass('item-card-heading')
 
 		heading = new HTMLElement('h5')
 		heading.text(title)

@@ -2107,11 +2107,11 @@ ul {
 .z-depth-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22); }
 
-.hoverable {
+.hoverable, a.item-card-link {
   transition: box-shadow .25s;
   box-shadow: 0; }
 
-.hoverable:hover {
+.hoverable:hover, a.item-card-link:hover {
   transition: box-shadow .25s;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
@@ -2403,7 +2403,7 @@ td, th {
       min-height: 84px;
       padding-left: 72px;
       position: relative; }
-      .collection .collection-item.avatar .circle {
+      .collection .collection-item.avatar .circle, .collection .collection-item.avatar .item-card-badge {
         position: absolute;
         width: 42px;
         height: 42px;
@@ -2411,7 +2411,7 @@ td, th {
         left: 15px;
         display: inline-block;
         vertical-align: middle; }
-      .collection .collection-item.avatar i.circle {
+      .collection .collection-item.avatar i.circle, .collection .collection-item.avatar i.item-card-badge {
         font-size: 18px;
         line-height: 42px;
         color: #fff;
@@ -2561,7 +2561,7 @@ nav ul a span.badge {
 .right-align {
   text-align: right; }
 
-.center, .center-align {
+.center, .item-card-badge, .center-align {
   text-align: center; }
 
 .left {
@@ -2579,7 +2579,7 @@ input[type=range] + .thumb {
   -ms-user-select: none;
   user-select: none; }
 
-.circle {
+.circle, .item-card-badge {
   border-radius: 50%; }
 
 .center-block {
@@ -3076,7 +3076,7 @@ nav {
     font-size: 2.1rem;
     padding: 0;
     white-space: nowrap; }
-    nav .brand-logo.center {
+    nav .brand-logo.center, nav .brand-logo.item-card-badge {
       left: 50%;
       transform: translateX(-50%); }
     @media only screen and (max-width: 992px) {
@@ -5337,7 +5337,7 @@ input[type=range]:focus::-ms-fill-upper {
   overflow: hidden;
   border-color: inherit; }
 
-.gap-patch .circle {
+.gap-patch .circle, .gap-patch .item-card-badge {
   width: 1000%;
   left: -450%; }
 
@@ -5348,7 +5348,7 @@ input[type=range]:focus::-ms-fill-upper {
   height: 100%;
   overflow: hidden;
   border-color: inherit; }
-  .circle-clipper .circle {
+  .circle-clipper .circle, .circle-clipper .item-card-badge {
     width: 200%;
     height: 100%;
     border-width: 3px;
@@ -5363,23 +5363,23 @@ input[type=range]:focus::-ms-fill-upper {
     top: 0;
     right: 0;
     bottom: 0; }
-  .circle-clipper.left .circle {
+  .circle-clipper.left .circle, .circle-clipper.left .item-card-badge {
     left: 0;
     border-right-color: transparent !important;
     -webkit-transform: rotate(129deg);
     transform: rotate(129deg); }
-  .circle-clipper.right .circle {
+  .circle-clipper.right .circle, .circle-clipper.right .item-card-badge {
     left: -100%;
     border-left-color: transparent !important;
     -webkit-transform: rotate(-129deg);
     transform: rotate(-129deg); }
 
-.active .circle-clipper.left .circle {
+.active .circle-clipper.left .circle, .active .circle-clipper.left .item-card-badge {
   /* duration: ARCTIME */
   -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
 
-.active .circle-clipper.right .circle {
+.active .circle-clipper.right .circle, .active .circle-clipper.right .item-card-badge {
   /* duration: ARCTIME */
   -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
@@ -6152,10 +6152,20 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 @media (min-height: 40.125em) {
   .picker--time .picker__box {
     margin-bottom: 5em; } }
+/***
+
+To cancel stylesheet injection made by Chrome
+
+***/
 body {
   font-family: Roboto;
   font-size: 100%; }
 
+/***
+
+Material icons
+
+***/
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
@@ -6175,5 +6185,92 @@ body {
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
+
+/***
+
+Colors
+
+***/
+/***
+
+Font sizes
+
+***/
+.font-size-small, .item-card-label-secondary {
+  font-size: 0.8rem; }
+
+.font-size-regular {
+  font-size: 1.0rem; }
+
+.font-size-large, .item-card-badge {
+  font-size: 1.3rem; }
+
+/***
+
+Helpers
+
+***/
+.thinner {
+  font-weight: 200; }
+
+.thin {
+  font-weight: 300; }
+
+.regular {
+  font-weight: 400; }
+
+.bold {
+  font-weight: 500; }
+
+.bolder, .item-card-badge {
+  font-weight: 600; }
+
+.uppercase, .item-card-badge {
+  text-transform: uppercase; }
+
+.color-black, a.item-card-link {
+  color: #000; }
+
+/***
+
+Structure
+
+***/
+#actions {
+  margin: 0.5rem 0 1rem 0; }
+
+/***
+
+Item card styles
+
+***/
+.item-card {
+  margin-bottom: 0.1rem; }
+
+a.item-card-link {
+  display: block;
+  padding: 0.5rem; }
+
+.item-card-badge {
+  display: inline-block;
+  border-width: 0.4rem;
+  border-style: solid;
+  padding: 0.5rem 0;
+  margin: 0.5rem;
+  width: 3.7rem;
+  height: 3.7rem;
+  opacity: 0.75; }
+
+.item-card-label-container {
+  display: inline-block;
+  vertical-align: middle; }
+
+.item-card-label-secondary {
+  opacity: 0.75; }
+
+.horizontal-list li {
+  display: inline-block;
+  padding-right: 1rem;
+  width: 33%; }
 
 /*# sourceMappingURL=app.css.map */

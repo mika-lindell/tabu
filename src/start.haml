@@ -6,21 +6,22 @@
 		%link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 	%body(data-app="newTab" id="app")
 		.container
-			.row
+			.row.section
 				.col.s12
 					#most-visited
 						%h2 Top
-			.row
+			.row.section
 				.col.s12.center
-					%button.btn-large#view-bookmarks
-						View Bookmarks
-					%button.btn-large#view-history
-						View History
-					%button.btn-large#go-incognito
-						%i.material-icons.right
-							open_in_new
-						Go Incognito
-			.row
+					#actions
+						%button.btn-large#view-bookmarks
+							View Bookmarks
+						%button.btn-large#view-history
+							View History
+						%button.btn-large#go-incognito
+							%i.material-icons.right
+								open_in_new
+							Go Incognito
+			.row.section
 				.col.s4
 					#recent-bookmarks
 						%h2 Marks

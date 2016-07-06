@@ -57,6 +57,7 @@ module.exports = {
     }
     return results;
   },
+  'it should not have titles longer than 3 characters': function(browser) {},
   'it should display recently closed items': function(browser) {
     return browser.expect.element("#recently-closed").to.be.present;
   },

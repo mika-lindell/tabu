@@ -60,7 +60,7 @@ module.exports = function(grunt) {
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
-              'src/**/Helpers.coffee',
+              'src/**/Init.coffee',
               'src/**/Render.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee'

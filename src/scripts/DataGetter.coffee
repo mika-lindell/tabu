@@ -20,9 +20,9 @@ class DataGetter
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
 	# @param [String] The structure type of this data. Can be links, bookmarks, devices or history
 	#
-	constructor: (api, dataType = 'links')->
+	constructor: (api, dataType = 'links', limit = 15)->
 		@api = api
-		@limit = 20
+		@limit = limit
 		@dataType = dataType
 
 	# Get the data from chrome API
@@ -35,10 +35,12 @@ class DataGetter
 
 		getter = (result)->
 
+			limited_result =  result.slice(0, root.limit);
+
 			if root.dataType is 'devices' or root.dataType is 'history' # If we are getting tabs, we need to flatten the object first
-				root.data = root.flatten(result)
+				root.data = root.flatten(limited_result)
 			else
-				root.data = result
+				root.data = limited_result
 
 			root.status = 'ready'
 			root.done()
@@ -70,6 +72,7 @@ class DataGetter
 					})
 
 		if root.dataType is 'devices'
+
 			for item, i in source
 
 				result.push({ 'heading': item.deviceName }) # Add the device as heading
@@ -78,7 +81,9 @@ class DataGetter
 					addToResult tab.title, tab.url, result  # Add tabs from this session
 
 		else if root.dataType is 'history'
-			for item in source
+
+			for item, i in source
+
 				if item.window? # There are two kinds of objects in recentlyClosed: full sessions with multiple tabs and wiondows with single tab
 					for tab in item.window.tabs # Handle multiple tabs
 						addToResult tab.title, tab.url, result  # Add tabs from this session

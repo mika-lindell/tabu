@@ -1,8 +1,19 @@
-// To cancel the stylesheet injection made by Chrome
+/***
+
+To cancel stylesheet injection made by Chrome
+
+***/
+
 body{
 	font-family: Roboto;
 	font-size: 100%;
 }
+
+/***
+
+Material icons
+
+***/
 
 @font-face {
   font-family: 'Material Icons';
@@ -26,3 +37,131 @@ body{
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+/***
+
+Colors
+
+***/
+
+$black: #000;
+
+/***
+
+Font sizes
+
+***/
+
+.font-size-small{
+	font-size: 0.8rem;
+}
+
+.font-size-regular{
+	font-size: 1.0rem;
+}
+
+.font-size-large{
+	font-size: 1.3rem;
+}
+
+/***
+
+Helpers
+
+***/
+
+.thinner{
+	font-weight: 200;
+}
+
+.thin{
+	font-weight: 300;
+}
+
+.regular{
+	font-weight: 400;
+}
+
+.bold{
+	font-weight: 500;
+}
+
+.bolder{
+	font-weight: 600;
+}
+
+.uppercase{
+	text-transform: uppercase;
+}
+
+.color-black{
+	color: $black;
+}
+
+/***
+
+Structure
+
+***/
+
+#actions{
+	margin: 0.5rem 0 1rem 0;
+}
+
+/***
+
+Item card styles
+
+***/
+
+.item-card{
+	margin-bottom: 0.1rem;
+}
+
+a.item-card-link{
+	display: block;
+	padding: 0.5rem;
+
+	@extend .color-black;
+	@extend .hoverable;
+}
+
+.item-card-badge{
+	display: inline-block;
+	border-width: 0.4rem;
+	border-style: solid;
+	padding: 0.5rem 0;
+	margin: 0.5rem;
+	width: 3.7rem;
+	height: 3.7rem;
+	opacity: 0.75;
+
+	@extend .font-size-large;
+	@extend .center;
+	@extend .bolder;
+	@extend .uppercase;
+	@extend .circle;
+}
+
+.item-card-label-container{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.item-card-label{
+
+}
+
+.item-card-label-secondary{
+	opacity: 0.75;
+	@extend .font-size-small;
+}
+
+
+// Styles for horizontal lists
+.horizontal-list li{
+	display: inline-block;
+	padding-right: 1rem;
+	width: 33%;
+}
+

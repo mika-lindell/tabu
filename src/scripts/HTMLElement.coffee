@@ -34,6 +34,19 @@ class HTMLElement
 		else
 			return @DOMElement.textContent
 
+	# Gets/sets the HTML inside an element
+	#
+	# @param [String] HTML to be inserted
+	#
+	# @return [String]
+	#
+	html: (html = null)->
+		if html?
+			if @DOMElement
+				return @DOMElement.innerHTML = html
+		else
+			return @DOMElement.innerHTML
+
 	# Gets/sets an attribute of an element
 	#
 	# @param [String] Attribute to be targeted
@@ -47,7 +60,8 @@ class HTMLElement
 		else
 			return @DOMElement.getAttribute(attrName)
 
-	# Gets/sets a style rule of an element
+	# Gets/sets a style rule of an element.
+	# NOTE: rule border-color is borderColor etc.
 	#
 	# @param [String] Rule to be targeted
 	# @param [String] New value for specified rule
@@ -60,12 +74,20 @@ class HTMLElement
 		else
 			return @DOMElement.style[ruleName]
 
+	# Add CSS class to an element
+	#
+	# @param [String] List of classes to be added (separated with space)
+	#
+	addClass: (className = null)->
+		if className?
+			@DOMElement.className += " #{className}"
+
 	# Set event listener to an event
 	#
 	# @param [String] Name of the event
 	# @param [Function] Function to be called when the event is fired
 	#
-	on: (name, listener)->
+	on: (name = null, listener = null)->
 		if name? and listener?
 			return @DOMElement.addEventListener(name, listener)
 

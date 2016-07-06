@@ -56,7 +56,10 @@ module.exports =
 		for site, i in browser.globals.sites.slice(0).reverse() # Create reversed copy of data, as it will be in reversed order in recent list!
 			browser.expect.element("#recent-bookmarks-#{ i }").text.to.equal(site.title)
 			browser.expect.element("#recent-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)
-		
+	
+	# TODO	
+	'it should not have titles longer than 3 characters': (browser)->		
+
 	'it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
 		browser.expect.element("#recently-closed").to.be.present

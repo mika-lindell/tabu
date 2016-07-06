@@ -9,14 +9,51 @@ class ItemCard extends HTMLElement
 	#
 	constructor: (title, url, id = null)->
 		super('li')
+		@addClass('item-card')
 
 		color = new HexColor(url)
 
 		link = new HTMLElement('a')
-		link.css('backgroundColor', color.url)
-		link.text(title)
 		link.attr('href', url)
-		if id?
-			link.attr('id', id)
+		link.addClass('item-card-link')
+		if id? then link.attr('id', id)
+
+		hostname = link.DOMElement.hostname
+
+		# This will remove www. prefixes from url, but will keep subdomains.
+		searchPattern = '^w+\\d*\\.'
+		rx = new RegExp(searchPattern, 'gim')
+		replacePattern = ''
+		parsedHostname = hostname.replace(rx, replacePattern)
+
+		badge = new HTMLElement('span')
+		badge.text( parsedHostname.substring(0, 2) )
+		badge.css('borderColor', color.url )
+		badge.addClass('item-card-badge')
+
+		labelContainer = new HTMLElement('div')
+		labelContainer.addClass('item-card-label-container')
+
+		label = new HTMLElement('span')
+		# TODO: Make truncate as a method
+		if title.length > 30 then title = title.substring(0, 30) + '...'
+		label.text(title)
+		label.addClass('item-card-label')
+
+		lineBreak = new HTMLElement('br')
+
+		labelUrl = new HTMLElement('span')
+		# TODO: Make truncate as a method
+		if hostname.length > 30 then hostname = hostname.substring(0, 40) + '...'
+		labelUrl.text(hostname)
+		labelUrl.addClass('item-card-label-secondary')
+
+		link.push(badge)
+
+		labelContainer.push(label)
+		labelContainer.push(lineBreak)
+		labelContainer.push(labelUrl)
+
+		link.push(labelContainer)
 
 		@push(link)
