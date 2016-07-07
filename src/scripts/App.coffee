@@ -39,6 +39,7 @@ class App
 
 		@dataStorage.fetchAll()
 
+		new Visibility # This will init the visibility-mode settings
 		new Init # This will make some startup time initializations
 
 		console.log "App: Ready <3"

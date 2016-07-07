@@ -61,6 +61,7 @@ module.exports = function(grunt) {
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
               'src/**/Loader.coffee',
+              'src/**/VisibilityMode.coffee',
               'src/**/Init.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee'

@@ -5,22 +5,26 @@
 		%link(href="styles/app.css" rel="stylesheet")
 		%link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 	%body(data-app="newTab" id="app")
-		%nav
-			.nav-wrapper.white
-				%ul.right
-					%li
-						%a#visibility-mode.font-size-small.color-dark-grey(href="#")
-							%i.material-icons.left visibility_off
-							Hide Us
-					%li
-						%a#settings.font-size-small.color-dark-grey(href="#")
-							%i.material-icons.left settings
-							Settings
 		#loader.valign-wrapper
 			.valign
 				.progress
 					.indeterminate
-		.container
+		%nav
+			.nav-wrapper.white
+				%ul.right
+					%li
+						%a#visibility-off.font-size-small.color-dark-grey(href="#")
+							%i.material-icons.left visibility_off
+							Hide Us
+					%li
+						%a#visibility-on.font-size-small.color-dark-grey(href="#")
+							%i.material-icons.left.bugged visibility_on
+							See Us
+					%li
+						%a#settings.font-size-small.color-dark-grey(href="#")
+							%i.material-icons.left settings
+							Settings
+		#content-container.container
 			.row.section
 				.col.s12
 					#top-sites

@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader,
+  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -421,6 +421,54 @@
 
   })();
 
+  Visibility = (function() {
+    Visibility.controllers;
+
+    Visibility.enabled;
+
+    function Visibility(enable) {
+      var root, toggleStatus;
+      if (enable == null) {
+        enable = true;
+      }
+      root = this;
+      this.controllers = {
+        enabler: new HTMLElement('#visibility-on'),
+        disabler: new HTMLElement('#visibility-off')
+      };
+      this.container = new HTMLElement('#content-container');
+      this.enabled = enable;
+      toggleStatus = function() {
+        if (root.enabled) {
+          return root.disable();
+        } else {
+          return root.enable();
+        }
+      };
+      this.controllers.enabler.on('click', toggleStatus);
+      this.controllers.disabler.on('click', toggleStatus);
+    }
+
+    Visibility.prototype.enable = function() {
+      this.container.css('display', 'block');
+      this.controllers.enabler.css('display', 'none');
+      this.controllers.disabler.css('display', 'block');
+      this.enabled = true;
+      return console.log("Visibility: On");
+    };
+
+    Visibility.prototype.disable = function() {
+      this.container.css('display', 'none');
+      this.controllers.enabler.css('display', 'block');
+      this.controllers.disabler.css('display', 'none');
+      this.enabled = false;
+      return console.log("Visibility: Off");
+    };
+
+    return Visibility;
+
+  })();
+
   Init = (function() {
     function Init() {
       this.bindClick('#view-bookmarks', this.viewBookmarks);
@@ -431,7 +479,7 @@
 
     Init.prototype.bindClick = function(id, listener) {
       var elem;
-      elem = new HTMLElement(id, listener);
+      elem = new HTMLElement(id);
       return elem.on('click', listener);
     };
 
@@ -500,6 +548,7 @@
         return container.push(list);
       };
       this.dataStorage.fetchAll();
+      new Visibility;
       new Init;
       console.log("App: Ready <3");
     }

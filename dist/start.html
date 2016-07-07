@@ -6,13 +6,26 @@
     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
   </head>
   <body data-app='newTab' id='app'>
+    <div class='valign-wrapper' id='loader'>
+      <div class='valign'>
+        <div class='progress'>
+          <div class='indeterminate'></div>
+        </div>
+      </div>
+    </div>
     <nav>
       <div class='nav-wrapper white'>
         <ul class='right'>
           <li>
-            <a class='font-size-small color-dark-grey' href='#' id='visibility-mode'>
+            <a class='font-size-small color-dark-grey' href='#' id='visibility-off'>
               <i class='material-icons left'>visibility_off</i>
               Hide Us
+            </a>
+          </li>
+          <li>
+            <a class='font-size-small color-dark-grey' href='#' id='visibility-on'>
+              <i class='material-icons left bugged'>visibility_on</i>
+              See Us
             </a>
           </li>
           <li>
@@ -24,14 +37,7 @@
         </ul>
       </div>
     </nav>
-    <div class='valign-wrapper' id='loader'>
-      <div class='valign'>
-        <div class='progress'>
-          <div class='indeterminate'></div>
-        </div>
-      </div>
-    </div>
-    <div class='container'>
+    <div class='container' id='content-container'>
       <div class='row section'>
         <div class='col s12'>
           <div id='top-sites'>

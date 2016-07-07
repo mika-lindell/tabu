@@ -16,7 +16,7 @@ class Init
 	# @param listener [Function] the function to be called when the event is fired
 	#	
 	bindClick: (id, listener)->
-		elem = new HTMLElement(id, listener)
+		elem = new HTMLElement(id)
 		elem.on('click', listener)
 
 	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.

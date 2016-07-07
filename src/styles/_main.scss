@@ -67,6 +67,11 @@ Material icons
   -webkit-font-smoothing: antialiased;
 }
 
+// Some icons are bugged and this will fix it
+nav i.material-icons.bugged{
+	margin-right: -4rem !important;
+}
+
 // Override the font size and icon space for navigation
 nav i.material-icons{
 	font-size: 1.5rem;
@@ -183,6 +188,12 @@ Animations
   animation-duration: 0.3s;
 }
 
+.anim-move-out{
+	animation-name: move-in;
+  animation-duration: 0.3s;
+  animation-direction: reverse;
+}
+
 // Will add flip animation when the element appears
 @keyframes flip-in{
 
@@ -227,6 +238,24 @@ Animations
 
 /***
 
+Scrollbar
+
+***/
+
+// body::-webkit-scrollbar {
+//   width: 12px;
+// }
+ 
+// body::-webkit-scrollbar-thumb {
+//   background: #666;
+// }
+
+// body::-webkit-scrollbar-track {
+//   background: #ddd;
+// }
+
+/***
+
 Loader
 
 ***/
@@ -255,9 +284,23 @@ Loader
 
 /***
 
+Menu
+
+***/
+
+#visibility-on{
+	display: none;
+}
+
+/***
+
 Structure
 
 ***/
+
+body{
+	overflow-y: scroll; // This keeps the scrollbars always visible, so you don't get repositioning when toggling the visibility of elements
+}
 
 #actions{
 	margin: 0.5rem 0 1rem 0;
