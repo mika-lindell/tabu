@@ -5,16 +5,16 @@
 
   <testsuite name="test"
     errors="0" failures="1" hostname="" id="" package="test" skipped="0"
-    tests="16" time="15.54" timestamp="Thu, 07 Jul 2016 15:16:08 GMT">
+    tests="16" time="11.83" timestamp="Thu, 07 Jul 2016 18:07:07 GMT">
   
-    <testcase name="it should display the extension" time="4.805" assertions="2">
+    <testcase name="it should display the extension" time="3.673" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have section headings" time="0.2080" assertions="4">
+    <testcase name="it should have section headings" time="0.2010" assertions="4">
 
     
 
@@ -28,14 +28,14 @@
     <testcase name="TODO: tests for loader" time="0.001000" assertions="0">
     </testcase>
   
-    <testcase name="it should display most visited sites" time="0.04100" assertions="2">
+    <testcase name="it should display most visited sites" time="0.03900" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should display latest bookmarks" time="1.072" assertions="32">
+    <testcase name="it should display latest bookmarks" time="1.094" assertions="32">
 
     
 
@@ -102,12 +102,12 @@
     
     </testcase>
   
-    <testcase name="it should display recently closed items" time="0.01900" assertions="1">
+    <testcase name="it should display recently closed items" time="0.01800" assertions="1">
 
     
     </testcase>
   
-    <testcase name="it should have button to view bookmarks" time="0.05500" assertions="2">
+    <testcase name="it should have button to view bookmarks" time="0.05800" assertions="2">
 
     
 
@@ -119,7 +119,7 @@
     
     </testcase>
   
-    <testcase name="clicking bookmark button should take to bookmark-page" time="2.648" assertions="2">
+    <testcase name="clicking bookmark button should take to bookmark-page" time="1.842" assertions="2">
 
     
 
@@ -133,21 +133,21 @@
     
     </testcase>
   
-    <testcase name="clicking history button should take to history-page" time="2.774" assertions="2">
+    <testcase name="clicking history button should take to history-page" time="1.798" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to view downloads" time="0.06100" assertions="2">
+    <testcase name="it should have button to view downloads" time="0.06000" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="clicking downloads button should take to downloads-page" time="2.793" assertions="2">
+    <testcase name="clicking downloads button should take to downloads-page" time="1.955" assertions="2">
 
     
 
@@ -161,12 +161,12 @@
     
     </testcase>
   
-    <testcase name="it should have navbar" time="0.02000" assertions="1">
+    <testcase name="it should have navbar" time="0.01900" assertions="1">
 
     
     </testcase>
   
-    <testcase name="navbar should have Hide &amp; Settings -buttons" time="0.9010" assertions="1">  <failure message="Expected element &lt;#visibility-mode&gt; to be present - element was not found">    at Object.module.exports.navbar should have Hide &amp; Settings -buttons (D:\Dev\newtab\tests\js\test.js:114:20)
+    <testcase name="navbar should have Hide &amp; Settings -buttons" time="0.9370" assertions="1">  <failure message="Expected element &lt;#visibility-mode&gt; to be present - element was not found">    at Object.module.exports.navbar should have Hide &amp; Settings -buttons (D:\Dev\newtab\tests\js\test.js:114:20)
     at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
     at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
     at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)

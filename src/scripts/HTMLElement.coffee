@@ -82,6 +82,15 @@ class HTMLElement
 		if className?
 			@DOMElement.className += " #{className}"
 
+	# Remove CSS class from an element
+	#
+	# @param [String] Class to be removed
+	#
+	removeClass: (className = null)->
+		if className?
+			@DOMElement.className = @DOMElement.className.replace(' ' + className, '')
+			@DOMElement.className = @DOMElement.className.replace(className, '')
+
 	# Set event listener to an event
 	#
 	# @param [String] Name of the event

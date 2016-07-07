@@ -160,6 +160,10 @@ Helpers
 	color: $dark-grey;
 }
 
+.color-white{
+	color: $white;
+}
+
 /***
 
 Animations
@@ -170,47 +174,47 @@ Animations
 @keyframes move-in{
 
 	0%{
-		margin-top: -1.5rem;
-		transform: rotateX(180deg);
+		transform: translateY(-50px) rotateX(90deg);
 		opacity: 0;
 	}
 
+	50%{
+		transform: translateY(-25px) rotateX(90deg);
+	}
+
 	100%{
-		margin-top: 0;
-		transform: rotateX(0deg);
+		transform: translateY(0px) rotateX(0deg);
 		opacity: 1;
 	}
+}
+
+@keyframes move-out{
+
+	0%{
+		transform: translateY(0px) rotateX(0deg);
+		opacity: 1;
+	}	
+
+	50%{
+		transform: translateY(-25px) rotateX(90deg);
+	}
+
+	100%{
+			transform: translateY(-50px) rotateX(90deg);
+			opacity: 0;
+		}
 
 }
 
 .anim-move-in{
+	animation-fill-mode: forwards;
 	animation-name: move-in;
   animation-duration: 0.3s;
 }
 
 .anim-move-out{
-	animation-name: move-in;
-  animation-duration: 0.3s;
-  animation-direction: reverse;
-}
-
-// Will add flip animation when the element appears
-@keyframes flip-in{
-
-	0%{
-		transform: rotateX(180deg);
-		opacity: 0;
-	}
-
-	100%{
-		transform: rotateX(0deg);
-		opacity: 1;
-	}
-
-}
-
-.anim-flip-in{
-	animation-name: flip-in;
+	animation-fill-mode: forwards;
+	animation-name: move-out;
   animation-duration: 0.3s;
 }
 
@@ -339,7 +343,23 @@ Item card styles
 .item-card{
 	margin-bottom: 0.1rem;
 
+	//@extend .anim-move-in;
+}
+
+.intro .item-card,
+.intro h4,
+.intro h6,
+.intro button,
+{ // When .item-card is under element .outro in hierarchy, outro-animation is played
 	@extend .anim-move-in;
+}
+
+.outro .item-card,
+.outro h4,
+.outro h6,
+.outro button,
+{ // When .item-card is under element .outro in hierarchy, outro-animation is played
+	@extend .anim-move-out;
 }
 
 .item-card-heading {

@@ -2,6 +2,7 @@ class Visibility
 
 	@controllers # References to button controlling functionality in this class
 	@enabled # Current status of the visibility mode: true or false?
+	@animations # Holds reference to class, which controls animations
 
 	constructor: (enable = true)->
 
@@ -10,10 +11,10 @@ class Visibility
 		@controllers = 
 			enabler: new HTMLElement('#visibility-on')
 			disabler: new HTMLElement('#visibility-off')
-
-		@container = new HTMLElement('#content-container')
 	
 		@enabled = enable
+
+		@animations = new Animations
 
 		# This function needs to be here for the sake of scope in eventListener below
 		toggleStatus = ()->
@@ -28,7 +29,7 @@ class Visibility
 
 	enable: ()->
 
-		@container.css('display', 'block')
+		@animations.intro()
 
 		@controllers.enabler.css('display', 'none')
 		@controllers.disabler.css('display', 'block')
@@ -38,7 +39,9 @@ class Visibility
 
 	disable: ()->
 
-		@container.css('display', 'none')
+		root = @
+
+		@animations.outro()
 
 		@controllers.enabler.css('display', 'block')
 		@controllers.disabler.css('display', 'none')

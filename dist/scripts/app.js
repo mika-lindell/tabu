@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Visibility,
+  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -127,6 +127,16 @@
       }
       if (className != null) {
         return this.DOMElement.className += " " + className;
+      }
+    };
+
+    HTMLElement.prototype.removeClass = function(className) {
+      if (className == null) {
+        className = null;
+      }
+      if (className != null) {
+        this.DOMElement.className = this.DOMElement.className.replace(' ' + className, '');
+        return this.DOMElement.className = this.DOMElement.className.replace(className, '');
       }
     };
 
@@ -390,6 +400,39 @@
 
   })(HTMLElement);
 
+  Animations = (function() {
+    Animations.duration;
+
+    function Animations(duration) {
+      if (duration == null) {
+        duration = 0.3;
+      }
+      this.duration = duration;
+    }
+
+    Animations.prototype.intro = function() {
+      var container;
+      container = new HTMLElement('#content-container');
+      container.removeClass('outro');
+      container.addClass('intro');
+      return container.css('display', 'block');
+    };
+
+    Animations.prototype.outro = function() {
+      var container, setDisplay;
+      container = new HTMLElement('#content-container');
+      container.removeClass('intro');
+      container.addClass('outro');
+      setDisplay = function() {
+        return container.css('display', 'none');
+      };
+      return setTimeout(setDisplay, this.duration * 1000);
+    };
+
+    return Animations;
+
+  })();
+
   Loader = (function() {
     Loader.element;
 
@@ -426,6 +469,8 @@
 
     Visibility.enabled;
 
+    Visibility.animations;
+
     function Visibility(enable) {
       var root, toggleStatus;
       if (enable == null) {
@@ -436,8 +481,8 @@
         enabler: new HTMLElement('#visibility-on'),
         disabler: new HTMLElement('#visibility-off')
       };
-      this.container = new HTMLElement('#content-container');
       this.enabled = enable;
+      this.animations = new Animations;
       toggleStatus = function() {
         if (root.enabled) {
           return root.disable();
@@ -450,7 +495,7 @@
     }
 
     Visibility.prototype.enable = function() {
-      this.container.css('display', 'block');
+      this.animations.intro();
       this.controllers.enabler.css('display', 'none');
       this.controllers.disabler.css('display', 'block');
       this.enabled = true;
@@ -458,7 +503,9 @@
     };
 
     Visibility.prototype.disable = function() {
-      this.container.css('display', 'none');
+      var root;
+      root = this;
+      this.animations.outro();
       this.controllers.enabler.css('display', 'block');
       this.controllers.disabler.css('display', 'none');
       this.enabled = false;
@@ -521,12 +568,14 @@
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
-        var container, list, loader;
+        var animations, container, list, loader;
         loader = new Loader;
         container = new HTMLElement('#top-sites');
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
         container.push(list);
+        animations = new Animations;
+        animations.intro();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
