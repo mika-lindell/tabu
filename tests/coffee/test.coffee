@@ -30,6 +30,9 @@ module.exports =
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
 
+	'TODO: tests for loader': (browser)->
+
+
 	'it should display most visited sites': (browser)->
 
 		browser.expect.element("#top-sites").to.be.present
@@ -52,7 +55,7 @@ module.exports =
 		browser.execute( get, [], test)
 		###
 
-	'it should display latest bookmarks and not have titles longer than 33 chars': (browser)->
+	'it should display latest bookmarks': (browser)->
 
 		browser.expect.element("#latest-bookmarks").to.be.present
 		browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000) # Wait for page to load
@@ -105,11 +108,10 @@ module.exports =
 
 	'navbar should have Hide & Settings -buttons': (browser)->
 		browser.expect.element("#visibility-mode").to.be.present
-		browser.expect.element("#visibility-mode").text.to.contain('Hide Me')
+		browser.expect.element("#visibility-mode").text.to.contain('Hide Us')
 
 		browser.expect.element("#settings").to.be.present
 		browser.expect.element("#settings").text.to.contain('Settings')
-
 
 
 	

@@ -35,15 +35,15 @@ class DataGetter
 
 		getter = (result)->
 
-			limited_result =  result.slice(0, root.limit);
-
 			if root.dataType is 'devices' or root.dataType is 'history' # If we are getting tabs, we need to flatten the object first
-				root.data = root.flatten(limited_result)
+				data = root.flatten(result)
 			else
-				root.data = limited_result
+				data = result
 
+			root.data = data.slice(0, root.limit) # Limit the amount of data stored
 			root.status = 'ready'
 			root.done()
+
 			console.log "DataGetter: Got #{root.dataType} \\o/ - ", root.data
 
 		if @dataType is 'bookmarks' # If we are getting bookmarks, use limit

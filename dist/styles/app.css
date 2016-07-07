@@ -6154,12 +6154,31 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     margin-bottom: 5em; } }
 /***
 
+Colors
+
+***/
+/***
+
 To cancel stylesheet injection made by Chrome
 
 ***/
 body {
   font-family: Roboto;
   font-size: 100%; }
+
+/***
+
+Override Materialize.css
+
+***/
+select {
+  display: inline-block;
+  background-color: #FFF;
+  padding: 5px 10px;
+  border: 1px solid #c7c7c7;
+  border-radius: 3px;
+  width: auto;
+  height: auto; }
 
 /***
 
@@ -6193,9 +6212,21 @@ nav i.material-icons {
 
 /***
 
-Colors
+Layers
 
 ***/
+.layer-behind {
+  z-index: -1; }
+
+.layer-default {
+  z-index: 0; }
+
+.layer-loader, #loader {
+  z-index: 99; }
+
+.layer-menu {
+  z-index: 199; }
+
 /***
 
 Font sizes
@@ -6244,9 +6275,50 @@ Helpers
 
 /***
 
+Animations
+
+***/
+@keyframes move-in {
+  0% {
+    margin-top: -1.5rem;
+    transform: rotateX(180deg);
+    opacity: 0; }
+  100% {
+    margin-top: 0;
+    transform: rotateX(0deg);
+    opacity: 1; } }
+.anim-move-in, .item-card {
+  animation-name: move-in;
+  animation-duration: 0.3s; }
+
+@keyframes delay {
+  0% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+.anim-delay-1s, #loader .progress {
+  animation-name: delay;
+  animation-duration: 1.5s; }
+
+/***
+
 Structure
 
 ***/
+#loader {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  top: 0; }
+  #loader .valign {
+    width: 100%; }
+  #loader .progress {
+    max-width: 300px;
+    margin: auto; }
+
 #actions {
   margin: 0.5rem 0 1rem 0; }
 
@@ -6257,6 +6329,9 @@ Item card styles
 ***/
 .item-card {
   margin-bottom: 0.1rem; }
+
+.item-card-heading {
+  padding-top: 1.2rem; }
 
 a.item-card-link {
   display: block;

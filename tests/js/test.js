@@ -27,6 +27,7 @@ module.exports = {
     browser.expect.element("#recently-closed").text.to.contain('Recently Closed');
     return browser.expect.element("#other-devices").text.to.contain('Other Devices');
   },
+  'TODO: tests for loader': function(browser) {},
   'it should display most visited sites': function(browser) {
     browser.expect.element("#top-sites").to.be.present;
     return browser.expect.element("#top-sites-0").to.be.present.after(1000);
@@ -47,7 +48,7 @@ module.exports = {
     		browser.execute( get, [], test)
      */
   },
-  'it should display latest bookmarks and not have titles longer than 33 chars': function(browser) {
+  'it should display latest bookmarks': function(browser) {
     var i, j, len, ref, results, site;
     browser.expect.element("#latest-bookmarks").to.be.present;
     browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000);
@@ -98,7 +99,7 @@ module.exports = {
   },
   'navbar should have Hide & Settings -buttons': function(browser) {
     browser.expect.element("#visibility-mode").to.be.present;
-    browser.expect.element("#visibility-mode").text.to.contain('Hide Me');
+    browser.expect.element("#visibility-mode").text.to.contain('Hide Us');
     browser.expect.element("#settings").to.be.present;
     return browser.expect.element("#settings").text.to.contain('Settings');
   }

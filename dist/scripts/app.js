@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Render,
+  var $newTab, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -192,13 +192,13 @@
       console.log("DataGetter: Calling to chrome API for", this.dataType);
       root = this;
       getter = function(result) {
-        var limited_result;
-        limited_result = result.slice(0, root.limit);
+        var data;
         if (root.dataType === 'devices' || root.dataType === 'history') {
-          root.data = root.flatten(limited_result);
+          data = root.flatten(result);
         } else {
-          root.data = limited_result;
+          data = result;
         }
+        root.data = data.slice(0, root.limit);
         root.status = 'ready';
         root.done();
         return console.log("DataGetter: Got " + root.dataType + " \\o/ - ", root.data);
@@ -390,6 +390,37 @@
 
   })(HTMLElement);
 
+  Loader = (function() {
+    Loader.element;
+
+    Loader.duration;
+
+    function Loader(elementId, duration) {
+      if (elementId == null) {
+        elementId = '#loader';
+      }
+      if (duration == null) {
+        duration = 0.3;
+      }
+      this.duration = duration;
+      this.element = new HTMLElement(elementId);
+      this.element.css("transition", "opacity " + this.duration + "s");
+    }
+
+    Loader.prototype.hide = function() {
+      var root, setDisplay;
+      root = this;
+      this.element.css('opacity', '0');
+      setDisplay = function() {
+        return root.element.css('display', 'none');
+      };
+      return setTimeout(setDisplay, this.duration * 1000);
+    };
+
+    return Loader;
+
+  })();
+
   Init = (function() {
     function Init() {
       this.bindClick('#go-incognito', this.goIncognito);
@@ -425,15 +456,6 @@
 
   })();
 
-  Render = (function() {
-    function Render() {}
-
-    Render.prototype.itemCardList = function() {};
-
-    return Render;
-
-  })();
-
   App = (function() {
     console.log("App: Starting up...");
 
@@ -444,11 +466,13 @@
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
-        var container, list;
+        var container, list, loader;
+        loader = new Loader;
         container = new HTMLElement('#top-sites');
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
-        return container.push(list);
+        container.push(list);
+        return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
         var container, list;

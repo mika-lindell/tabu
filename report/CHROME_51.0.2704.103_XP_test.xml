@@ -1,94 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="1"
-            tests="13">
+            tests="14">
 
   <testsuite name="test"
-    errors="0" failures="1" hostname="" id="" package="test" skipped="0"
-    tests="13" time="8.112" timestamp="Wed, 06 Jul 2016 18:07:58 GMT">
+    errors="0" failures="1" hostname="" id="" package="test" skipped="3"
+    tests="14" time="7.821" timestamp="Thu, 07 Jul 2016 11:22:39 GMT">
   
-    <testcase name="it should display the extension" time="3.346" assertions="2">
+    <testcase name="it should display the extension" time="3.192" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have section headings" time="0.2300" assertions="4">
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should display most visited sites" time="0.04900" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should display latest bookmarks and not have titles longer than 33 chars" time="1.433" assertions="32">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
+    <testcase name="it should have section headings" time="0.2060" assertions="4">
 
     
 
@@ -99,59 +25,115 @@
     
     </testcase>
   
-    <testcase name="it should display recently closed items" time="0.02300" assertions="1">
-
-    
+    <testcase name="TODO: tests for loader" time="0.000" assertions="0">
     </testcase>
   
-    <testcase name="it should have button to view bookmarks" time="0.07200" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should display items from other devices" time="0.02300" assertions="1">
-
-    
-    </testcase>
-  
-    <testcase name="clicking bookmark button should take to bookmark-page" time="0.8770" assertions="2">
+    <testcase name="it should display most visited sites" time="0.04100" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to view history" time="0.07800" assertions="2">
+    <testcase name="it should display latest bookmarks" time="1.079" assertions="32">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 
     
     </testcase>
   
-    <testcase name="clicking history button should take to history-page" time="0.8640" assertions="2">
+    <testcase name="it should display recently closed items" time="0.01900" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to view bookmarks" time="0.05900" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to open incognito-window" time="0.07200" assertions="2">
+    <testcase name="it should display items from other devices" time="0.01800" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="clicking bookmark button should take to bookmark-page" time="0.7710" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have navbar" time="0.02500" assertions="1">
+    <testcase name="it should have button to view history" time="0.06400" assertions="2">
+
+    
 
     
     </testcase>
   
-    <testcase name="navbar should have Hide &amp; Settings -buttons" time="1.020" assertions="2">
-
-      <failure message="Expected element &lt;#visibility-mode&gt; text to contain: &quot;Hide Me&quot;">  at Object.module.exports.navbar should have Hide &amp; Settings -buttons (D:\Dev\newtab\tests\js\test.js:101:20)
+    <testcase name="clicking history button should take to history-page" time="2.372" assertions="1">  <failure message="Expected element &lt;#history&gt; to be present after 1000ms - element was not found">  at Object.module.exports.clicking history button should take to history-page (D:\Dev\newtab\tests\js\test.js:89:20)
   at Module.call (D:\Dev\newtab\node_modules\nightwatch\lib\runner\module.js:63:34)
   at D:\Dev\newtab\node_modules\nightwatch\lib\runner\testcase.js:97:29
   at _fulfilled (D:\Dev\newtab\node_modules\q\q.js:834:54)
@@ -167,6 +149,23 @@
     
     </testcase>
   
+  
+    
+    <testcase
+      name="it should have button to open incognito-window">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="it should have navbar">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="navbar should have Hide &amp; Settings -buttons">
+      <skipped />
+    </testcase>
+    
   
   </testsuite>
 </testsuites>

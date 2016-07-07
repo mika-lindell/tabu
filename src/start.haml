@@ -11,11 +11,15 @@
 					%li
 						%a#visibility-mode.font-size-small.color-dark-grey(href="#")
 							%i.material-icons.left visibility_off
-							Hide me
+							Hide Us
 					%li
 						%a#settings.font-size-small.color-dark-grey(href="#")
 							%i.material-icons.left settings
 							Settings
+		#loader.valign-wrapper
+			.valign
+				.progress
+					.indeterminate
 		.container
 			.row.section
 				.col.s12
@@ -24,11 +28,11 @@
 			.row.section
 				.col.s12.center
 					#actions
-						%button.btn-large#view-bookmarks
+						%button.btn-large.light-blue.darken-3#view-bookmarks
 							View Bookmarks
-						%button.btn-large.btn-with-margin#view-history
+						%button.btn-large.btn-with-margin.light-blue.darken-3#view-history
 							View History
-						%button.btn-large#go-incognito
+						%button.btn-large.light-blue.darken-3#go-incognito
 							%i.material-icons.right open_in_new
 							Go Incognito
 			.row.section

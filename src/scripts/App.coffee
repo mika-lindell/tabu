@@ -15,10 +15,12 @@ class App
 		@dataStorage = new DataStorage
 
 		@dataStorage.topSites.done = ()->
-			container = new HTMLElement ('#top-sites')
-			container.addClass('horizontal-list')
-			list = new ItemCardList(root.dataStorage.topSites, 'top-sites')
-			container.push list
+			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
+			container = new HTMLElement ('#top-sites') # Wrap the container of this list with our wrapper class
+			container.addClass('horizontal-list') # Add class to tell that this list should expand horizontally as well (inline-block)
+			list = new ItemCardList(root.dataStorage.topSites, 'top-sites') # Create new list class
+			container.push list # Add items to list
+			loader.hide() # Hide the laoder
 
 		@dataStorage.latestBookmarks.done = ()->
 			container = new HTMLElement ('#latest-bookmarks')
