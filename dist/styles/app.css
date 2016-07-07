@@ -6210,7 +6210,8 @@ Material icons
   -webkit-font-smoothing: antialiased; }
 
 nav i.material-icons.bugged {
-  margin-right: -3.7rem !important; }
+  max-width: 25px;
+  overflow: hidden; }
 
 nav i.material-icons {
   font-size: 1.5rem; }
