@@ -155,10 +155,6 @@ Helpers
 	color: $dark-grey;
 }
 
-.btn-with-margin{
-	margin: 0 0.5rem;
-}
-
 /***
 
 Animations
@@ -187,6 +183,26 @@ Animations
   animation-duration: 0.3s;
 }
 
+// Will add flip animation when the element appears
+@keyframes flip-in{
+
+	0%{
+		transform: rotateX(180deg);
+		opacity: 0;
+	}
+
+	100%{
+		transform: rotateX(0deg);
+		opacity: 1;
+	}
+
+}
+
+.anim-flip-in{
+	animation-name: flip-in;
+  animation-duration: 0.3s;
+}
+
 // Will add slight delay until the element appears
 @keyframes delay{
 
@@ -211,7 +227,7 @@ Animations
 
 /***
 
-Structure
+Loader
 
 ***/
 
@@ -237,8 +253,38 @@ Structure
 
 }
 
+/***
+
+Structure
+
+***/
+
 #actions{
 	margin: 0.5rem 0 1rem 0;
+}
+
+/***
+
+Button styles
+
+***/
+
+$action-buttons-gap: 0.6rem;
+
+#actions button{
+
+	margin-left: $action-buttons-gap / 2;
+	margin-right: $action-buttons-gap / 2;
+
+	min-width: 180px;
+
+	&:first-child{
+		margin-left: 0;
+	}
+
+	&:last-child{
+		margin-right: 0;
+	}
 }
 
 /***

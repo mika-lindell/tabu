@@ -69,7 +69,7 @@ module.exports = {
   },
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
-    return browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS');
+    return browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS');
   },
   'it should display items from other devices': function(browser) {
     return browser.expect.element("#other-devices").to.be.present;
@@ -78,17 +78,30 @@ module.exports = {
     browser.click("#view-bookmarks");
     browser.expect.element("#add-new-bookmark-command").to.be.present.after(1000);
     browser.url('chrome://newtab');
-    return browser.expect.element('#app').to.be.present.after(1000);
+    browser.expect.element('#app').to.be.present.after(1000);
+    return browser.pause(1000);
   },
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
-    return browser.expect.element("#view-history").text.to.equal('VIEW HISTORY');
+    return browser.expect.element("#view-history").text.to.equal('HISTORY');
   },
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
     browser.expect.element("#history").to.be.present.after(1000);
     browser.url('chrome://newtab');
-    return browser.expect.element("#app").to.be.present.after(1000);
+    browser.expect.element("#app").to.be.present.after(1000);
+    return browser.pause(1000);
+  },
+  'it should have button to view downloads': function(browser) {
+    browser.expect.element("#view-downloads").to.be.present;
+    return browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS');
+  },
+  'clicking downloads button should take to downloads-page': function(browser) {
+    browser.click("#view-downloads");
+    browser.expect.element("downloads-manager").to.be.present.after(1000);
+    browser.url('chrome://newtab');
+    browser.expect.element("#app").to.be.present.after(1000);
+    return browser.pause(1000);
   },
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;

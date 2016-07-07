@@ -6270,9 +6270,6 @@ Helpers
 .color-dark-grey, .item-card-label-secondary {
   color: #5a5a5a; }
 
-.btn-with-margin {
-  margin: 0 0.5rem; }
-
 /***
 
 Animations
@@ -6291,6 +6288,17 @@ Animations
   animation-name: move-in;
   animation-duration: 0.3s; }
 
+@keyframes flip-in {
+  0% {
+    transform: rotateX(180deg);
+    opacity: 0; }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1; } }
+.anim-flip-in {
+  animation-name: flip-in;
+  animation-duration: 0.3s; }
+
 @keyframes delay {
   0% {
     opacity: 0; }
@@ -6304,7 +6312,7 @@ Animations
 
 /***
 
-Structure
+Loader
 
 ***/
 #loader {
@@ -6319,8 +6327,27 @@ Structure
     max-width: 300px;
     margin: auto; }
 
+/***
+
+Structure
+
+***/
 #actions {
   margin: 0.5rem 0 1rem 0; }
+
+/***
+
+Button styles
+
+***/
+#actions button {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  min-width: 180px; }
+  #actions button:first-child {
+    margin-left: 0; }
+  #actions button:last-child {
+    margin-right: 0; }
 
 /***
 

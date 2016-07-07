@@ -4,9 +4,10 @@ class Init
 
 	constructor: ()->
 		
-		@bindClick '#go-incognito', @goIncognito
 		@bindClick '#view-bookmarks', @viewBookmarks
 		@bindClick '#view-history', @viewHistory
+		@bindClick '#view-downloads', @viewDownloads
+		@bindClick '#go-incognito', @goIncognito
 
 
 	# To add listener to click event
@@ -23,10 +24,15 @@ class Init
 	viewBookmarks: ()->
 		chrome.tabs.update { url: 'chrome://bookmarks/#1' }
 
-	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.
+	# Navigate to history-page. Have to use script, as local resources cannot be opened by links.
 	#	
 	viewHistory: ()->
 		chrome.tabs.update { url: 'chrome://history/' }
+
+	# Navigate to downloads-page. Have to use script, as local resources cannot be opened by links.
+	#	
+	viewDownloads: ()->
+		chrome.tabs.update { url: 'chrome://downloads/' }
 
 	# Open new window in Incognito-mode
 	#

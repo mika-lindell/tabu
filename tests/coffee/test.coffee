@@ -74,7 +74,7 @@ module.exports =
 
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
-		browser.expect.element("#view-bookmarks").text.to.equal('VIEW BOOKMARKS')
+		browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS')
 
 	'it should display items from other devices': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
@@ -86,17 +86,33 @@ module.exports =
 
 		browser.url('chrome://newtab')
 		browser.expect.element('#app').to.be.present.after(1000)
+		browser.pause(1000)
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
-		browser.expect.element("#view-history").text.to.equal('VIEW HISTORY')
+		browser.expect.element("#view-history").text.to.equal('HISTORY')
 
 	'clicking history button should take to history-page': (browser)->		
+		
 		browser.click("#view-history")
 		browser.expect.element("#history").to.be.present.after(1000)
 
 		browser.url('chrome://newtab') # This is done to load the generated content
 		browser.expect.element("#app").to.be.present.after(1000)
+		browser.pause(1000)
+
+	'it should have button to view downloads': (browser)->
+		browser.expect.element("#view-downloads").to.be.present
+		browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
+
+	'clicking downloads button should take to downloads-page': (browser)->		
+		browser.click("#view-downloads")
+		browser.expect.element("downloads-manager").to.be.present.after(1000)
+
+		browser.url('chrome://newtab') # This is done to load the generated content
+		browser.expect.element("#app").to.be.present.after(1000)
+		browser.pause(1000)
+
 
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present

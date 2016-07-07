@@ -423,9 +423,10 @@
 
   Init = (function() {
     function Init() {
-      this.bindClick('#go-incognito', this.goIncognito);
       this.bindClick('#view-bookmarks', this.viewBookmarks);
       this.bindClick('#view-history', this.viewHistory);
+      this.bindClick('#view-downloads', this.viewDownloads);
+      this.bindClick('#go-incognito', this.goIncognito);
     }
 
     Init.prototype.bindClick = function(id, listener) {
@@ -443,6 +444,12 @@
     Init.prototype.viewHistory = function() {
       return chrome.tabs.update({
         url: 'chrome://history/'
+      });
+    };
+
+    Init.prototype.viewDownloads = function() {
+      return chrome.tabs.update({
+        url: 'chrome://downloads/'
       });
     };
 
