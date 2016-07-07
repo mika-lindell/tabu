@@ -6180,6 +6180,10 @@ select {
   width: auto;
   height: auto; }
 
+nav {
+  box-shadow: none;
+  border-bottom: 1px solid #c7c7c7; }
+
 /***
 
 Material icons

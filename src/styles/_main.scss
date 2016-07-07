@@ -38,6 +38,11 @@ select{
   height: auto;
 }
 
+nav{
+	box-shadow: none;
+	border-bottom: 1px solid $light-grey;
+}
+
 /***
 
 Material icons
