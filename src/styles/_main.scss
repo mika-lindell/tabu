@@ -246,6 +246,22 @@ Animations
   animation-duration: 1.5s;
 }
 
+// When under element .outro in hierarchy, outro-animation is played
+.intro .item-card,
+.intro .item-card-heading,
+.intro .animated
+{ 
+	@extend .anim-move-in;
+}
+
+// When under element .outro in hierarchy, outro-animation is played
+.outro .item-card,
+.outro .item-card-heading,
+.outro .animated
+{ 
+	@extend .anim-move-out;
+}
+
 /***
 
 Scrollbar
@@ -350,22 +366,6 @@ Item card styles
 	margin-bottom: 0.1rem;
 
 	//@extend .anim-move-in;
-}
-
-.intro .item-card,
-.intro h4,
-.intro h6,
-.intro button,
-{ // When .item-card is under element .outro in hierarchy, outro-animation is played
-	@extend .anim-move-in;
-}
-
-.outro .item-card,
-.outro h4,
-.outro h6,
-.outro button,
-{ // When .item-card is under element .outro in hierarchy, outro-animation is played
-	@extend .anim-move-out;
 }
 
 .item-card-heading {

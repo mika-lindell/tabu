@@ -6305,17 +6305,15 @@ Animations
     transform: translateY(-50px) rotateX(90deg);
     opacity: 0; } }
 .anim-move-in, .intro .item-card,
-.intro h4,
-.intro h6,
-.intro button {
+.intro .item-card-heading,
+.intro .animated {
   animation-fill-mode: forwards;
   animation-name: move-in;
   animation-duration: 0.3s; }
 
 .anim-move-out, .outro .item-card,
-.outro h4,
-.outro h6,
-.outro button {
+.outro .item-card-heading,
+.outro .animated {
   animation-fill-mode: forwards;
   animation-name: move-out;
   animation-duration: 0.3s; }
