@@ -18,9 +18,9 @@ class DataGetter
 	# Construct new datablock
 	#
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
-	# @param [String] The structure type of this data. Can be links, bookmarks, devices or history
+	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, otherDevices or recentlyClosed
 	#
-	constructor: (api, dataType = 'links', limit = 15)->
+	constructor: (api, dataType = 'topSites', limit = 15)->
 		@api = api
 		@limit = limit
 		@dataType = dataType
@@ -29,13 +29,13 @@ class DataGetter
 	#
 	fetch: (api)->
 		@status = 'loading'
-		console.log "DataGetter: Calling to chrome API for", @dataType
+		console.log "DataGetter: I'm calling to chrome API about #{@dataType}..."
 
 		root = @ # Reference the class so we can access it in getter-function
 
 		getter = (result)->
 
-			if root.dataType is 'devices' or root.dataType is 'history' # If we are getting tabs, we need to flatten the object first
+			if root.dataType is 'otherDevices' or root.dataType is 'recentlyClosed' # If we are getting tabs, we need to flatten the object first
 				data = root.flatten(result)
 			else
 				data = result
@@ -44,9 +44,9 @@ class DataGetter
 			root.status = 'ready'
 			root.done()
 
-			console.log "DataGetter: Got #{root.dataType} \\o/ - ", root.data
+			console.log "DataGetter: Ok, got #{root.dataType} ->", root.data
 
-		if @dataType is 'bookmarks' # If we are getting bookmarks, use limit
+		if @dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
 			@api(@limit, getter)
 		else
 			@api(getter) # Call the api referenced in constructor
@@ -55,7 +55,7 @@ class DataGetter
 	#
 	done: ()->
 
-	# Flatten multidimensional devices and 'tabs'-array
+	# Flatten multidimensional 'otherDevices' and 'tabs'-array (recentlyClosed)
 	#
 	# @param [array] The multidimensional array to be flattened
 	#
@@ -71,7 +71,7 @@ class DataGetter
 					'url': url 
 					})
 
-		if root.dataType is 'devices'
+		if root.dataType is 'otherDevices'
 
 			for item, i in source
 
@@ -80,7 +80,7 @@ class DataGetter
 				for tab in item.sessions[0].window.tabs
 					addToResult tab.title, tab.url, result  # Add tabs from this session
 
-		else if root.dataType is 'history'
+		else if root.dataType is 'recentlyClosed'
 
 			for item, i in source
 

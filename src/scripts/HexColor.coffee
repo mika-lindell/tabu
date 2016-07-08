@@ -1,4 +1,6 @@
-
+# Convert arbitrary string to color in hexadecimal format
+#
+#
 class HexColor
 	
 	@parser

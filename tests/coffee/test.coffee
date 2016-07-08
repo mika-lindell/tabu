@@ -74,6 +74,8 @@ module.exports =
 		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
 		browser.pause(500) # REMOVE
 
+	'TODO: it should save changed state of visibility locally': (browser)->
+
 	'clicking visibility off -button should hide it and make visibility on -button appear': (browser)->
 		browser.expect.element("#visibility-on").to.be.present
 		browser.expect.element("#visibility-on").text.to.contain('SEE US')
@@ -83,6 +85,7 @@ module.exports =
 		browser.click("#visibility-on")
 		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
 		browser.pause(500) # REMOVE
+
 
 	###	
 	#
@@ -159,7 +162,7 @@ module.exports =
 
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
-		browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS')
+		browser.expect.element("#view-bookmarks").text.to.contain('BOOKMARKS')
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
@@ -177,7 +180,7 @@ module.exports =
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
-		browser.expect.element("#view-history").text.to.equal('HISTORY')
+		browser.expect.element("#view-history").text.to.contain('HISTORY')
 
 	'clicking history button should take to history-page': (browser)->		
 		
@@ -196,7 +199,7 @@ module.exports =
 
 	'it should have button to view downloads': (browser)->
 		browser.expect.element("#view-downloads").to.be.present
-		browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
+		browser.expect.element("#view-downloads").text.to.contain('DOWNLOADS')
 
 	'clicking downloads button should take to downloads-page': (browser)->		
 		browser.click("#view-downloads")

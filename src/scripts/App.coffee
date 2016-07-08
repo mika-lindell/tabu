@@ -8,7 +8,16 @@ class App
 	#
 	constructor: ()->
 
-		console.log "App: Starting up..."
+		console.log "App: I'm warming up..."
+
+		visibility = new Visibility # This will init the visibility-mode settings
+		inits = new Init # This will make misc startup time initializations (bindings, listeners etc.)
+
+		###
+		#
+		# Get all the data and put in UI
+		#
+		###
 
 		root = @
 
@@ -23,9 +32,6 @@ class App
 			
 			list = new ItemCardList(root.dataStorage.topSites, 'top-sites') # Create new list class
 			container.push list # Add items to list
-			
-			animations = new Animations
-			animations.intro() # Ready to play intro animations!
 			
 			loader.hide() # Hide the loader
 
@@ -49,7 +55,4 @@ class App
 
 		@dataStorage.fetchAll()
 
-		new Visibility # This will init the visibility-mode settings
-		new Init # This will make misc startup time initializations (bindings, listeners etc.)
-
-		console.log "App: Ready <3"
+		console.log "App: I'm ready <3"

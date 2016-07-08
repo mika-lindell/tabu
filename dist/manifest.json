@@ -4,10 +4,10 @@
   "version": "0.01",
   "minimum_chrome_version": "37",
   "permissions": [
-          "sessions",
+          "storage",
           "tabs",
           "bookmarks",
-          "history",
+          "sessions",
           "topSites"
         ],
 	"chrome_url_overrides" : {

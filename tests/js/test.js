@@ -71,6 +71,7 @@ module.exports = {
     browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
     return browser.pause(500);
   },
+  'TODO: it should save changed state of visibility locally': function(browser) {},
   'clicking visibility off -button should hide it and make visibility on -button appear': function(browser) {
     browser.expect.element("#visibility-on").to.be.present;
     return browser.expect.element("#visibility-on").text.to.contain('SEE US');
@@ -155,7 +156,7 @@ module.exports = {
    */
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
-    return browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS');
+    return browser.expect.element("#view-bookmarks").text.to.contain('BOOKMARKS');
   },
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
@@ -172,7 +173,7 @@ module.exports = {
    */
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
-    return browser.expect.element("#view-history").text.to.equal('HISTORY');
+    return browser.expect.element("#view-history").text.to.contain('HISTORY');
   },
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
@@ -189,7 +190,7 @@ module.exports = {
    */
   'it should have button to view downloads': function(browser) {
     browser.expect.element("#view-downloads").to.be.present;
-    return browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS');
+    return browser.expect.element("#view-downloads").text.to.contain('DOWNLOADS');
   },
   'clicking downloads button should take to downloads-page': function(browser) {
     browser.click("#view-downloads");

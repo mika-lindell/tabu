@@ -53,6 +53,7 @@ module.exports = function(grunt) {
           {                         
             'dist/scripts/app.js': [
               'src/**/Binding.coffee',
+              'src/**/Storage.coffee',
               'src/**/HexColor.coffee',
               'src/**/HTMLElement.coffee',
               'src/**/DataGetter.coffee',
@@ -62,7 +63,7 @@ module.exports = function(grunt) {
               'src/**/ItemCardList.coffee',
               'src/**/Animations.coffee',
               'src/**/Loader.coffee',
-              'src/**/VisibilityMode.coffee',
+              'src/**/Visibility.coffee',
               'src/**/Init.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee'

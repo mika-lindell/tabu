@@ -2,15 +2,21 @@
 #
 class DataStorage
 
-	constructor: ()->
+	@topSites
+	@latestBookmarks
+	@recentlyClosed
+	@otherDevices
 
-	topSites: new DataGetter(chrome.topSites.get)
-	recentlyClosed: new DataGetter(chrome.sessions.getRecentlyClosed, 'history')
-	otherDevices: new DataGetter(chrome.sessions.getDevices, 'devices')
-	latestBookmarks: new DataGetter(chrome.bookmarks.getRecent, 'bookmarks')
+	constructor: ()->
+		@topSites = new DataGetter(chrome.topSites.get)
+		@latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks')
+		@recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed')
+		@otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices')
+	
 
 	fetchAll: ()->
 		@topSites.fetch()
+		@latestBookmarks.fetch()
 		@recentlyClosed.fetch()
 		@otherDevices.fetch()
-		@latestBookmarks.fetch()
+		

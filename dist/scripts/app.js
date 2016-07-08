@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Visibility,
+  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -7,6 +7,83 @@
     function Binding() {}
 
     return Binding;
+
+  })();
+
+  Storage = (function() {
+    function Storage() {}
+
+    Storage.prototype.get = function(key, area, callback) {
+      var getComplete;
+      if (area == null) {
+        area = 'cloud';
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      console.log("Storage: I'm trying to get " + area + " data...");
+      getComplete = function(result) {
+        return console.log("Storage: Ok, got " + area + " data ->", result);
+      };
+      if (callback == null) {
+        callback = getComplete;
+      }
+      if (area === 'local') {
+        return chrome.storage.local.get(key, callback);
+      } else {
+        return chrome.storage.sync.get(key, callback);
+      }
+    };
+
+    Storage.prototype.set = function(items, area) {
+      var setComplete;
+      if (area == null) {
+        area = 'cloud';
+      }
+      console.log("Storage: I'm trying to save " + area + " data...");
+      setComplete = function() {
+        return console.log("Storage: Ok, saved " + area + " data.");
+      };
+      if (area === 'local') {
+        return chrome.storage.local.set(items, setComplete);
+      } else {
+        return chrome.storage.sync.set(items, setComplete);
+      }
+    };
+
+    Storage.prototype.clear = function(area) {
+      var clearComplete;
+      if (area == null) {
+        area = 'cloud';
+      }
+      console.log("Storage: I'm trying to delete all " + area + " data...");
+      clearComplete = function() {
+        return console.log("Storage: Ok, all " + area + " data deleted.");
+      };
+      if (area === 'local') {
+        return chrome.storage.local.clear(clearComplete);
+      } else {
+        return chrome.storage.sync.clear(clearComplete);
+      }
+    };
+
+    Storage.prototype.getVisible = function(callback) {
+      var data;
+      return data = this.get('visible', 'local', callback);
+    };
+
+    Storage.prototype.setVisible = function(newValue) {
+      var data;
+      if (newValue == null) {
+        newValue = true;
+      }
+      data = {
+        visible: newValue
+      };
+      return this.set(data, 'local');
+    };
+
+    return Storage;
 
   })();
 
@@ -188,7 +265,7 @@
 
     function DataGetter(api, dataType, limit) {
       if (dataType == null) {
-        dataType = 'links';
+        dataType = 'topSites';
       }
       if (limit == null) {
         limit = 15;
@@ -201,11 +278,11 @@
     DataGetter.prototype.fetch = function(api) {
       var getter, root;
       this.status = 'loading';
-      console.log("DataGetter: Calling to chrome API for", this.dataType);
+      console.log("DataGetter: I'm calling to chrome API about " + this.dataType + "...");
       root = this;
       getter = function(result) {
         var data;
-        if (root.dataType === 'devices' || root.dataType === 'history') {
+        if (root.dataType === 'otherDevices' || root.dataType === 'recentlyClosed') {
           data = root.flatten(result);
         } else {
           data = result;
@@ -213,9 +290,9 @@
         root.data = data.slice(0, root.limit);
         root.status = 'ready';
         root.done();
-        return console.log("DataGetter: Got " + root.dataType + " \\o/ - ", root.data);
+        return console.log("DataGetter: Ok, got " + root.dataType + " ->", root.data);
       };
-      if (this.dataType === 'bookmarks') {
+      if (this.dataType === 'latestBookmarks') {
         return this.api(this.limit, getter);
       } else {
         return this.api(getter);
@@ -236,7 +313,7 @@
           });
         }
       };
-      if (root.dataType === 'devices') {
+      if (root.dataType === 'otherDevices') {
         for (i = j = 0, len = source.length; j < len; i = ++j) {
           item = source[i];
           result.push({
@@ -248,7 +325,7 @@
             addToResult(tab.title, tab.url, result);
           }
         }
-      } else if (root.dataType === 'history') {
+      } else if (root.dataType === 'recentlyClosed') {
         for (i = l = 0, len2 = source.length; l < len2; i = ++l) {
           item = source[i];
           if (item.window != null) {
@@ -270,21 +347,26 @@
   })();
 
   DataStorage = (function() {
-    function DataStorage() {}
+    DataStorage.topSites;
 
-    DataStorage.prototype.topSites = new DataGetter(chrome.topSites.get);
+    DataStorage.latestBookmarks;
 
-    DataStorage.prototype.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'history');
+    DataStorage.recentlyClosed;
 
-    DataStorage.prototype.otherDevices = new DataGetter(chrome.sessions.getDevices, 'devices');
+    DataStorage.otherDevices;
 
-    DataStorage.prototype.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'bookmarks');
+    function DataStorage() {
+      this.topSites = new DataGetter(chrome.topSites.get);
+      this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
+      this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
+      this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
+    }
 
     DataStorage.prototype.fetchAll = function() {
       this.topSites.fetch();
+      this.latestBookmarks.fetch();
       this.recentlyClosed.fetch();
-      this.otherDevices.fetch();
-      return this.latestBookmarks.fetch();
+      return this.otherDevices.fetch();
     };
 
     return DataStorage;
@@ -412,23 +494,39 @@
       this.duration = duration;
     }
 
-    Animations.prototype.intro = function() {
+    Animations.prototype.intro = function(instant) {
       var container;
+      if (instant == null) {
+        instant = false;
+      }
+      console.log("Animations: I'll play intro now.", 'Instant?', instant);
       container = new HTMLElement('#content-container');
-      container.removeClass('outro');
-      container.addClass('intro');
+      if (!instant) {
+        container.removeClass('outro');
+        container.addClass('intro');
+      }
       return container.css('display', 'block');
     };
 
-    Animations.prototype.outro = function() {
+    Animations.prototype.outro = function(instant) {
       var container, setDisplay;
+      if (instant == null) {
+        instant = false;
+      }
+      console.log("Animations: I'll play outro now.", 'Instant?', instant);
       container = new HTMLElement('#content-container');
-      container.removeClass('intro');
-      container.addClass('outro');
+      if (!instant) {
+        container.removeClass('intro');
+        container.addClass('outro');
+      }
       setDisplay = function() {
         return container.css('display', 'none');
       };
-      return setTimeout(setDisplay, this.duration * 1000);
+      if (!instant) {
+        return setTimeout(setDisplay, this.duration * 1000);
+      } else {
+        return setDisplay();
+      }
     };
 
     return Animations;
@@ -473,18 +571,30 @@
 
     Visibility.animations;
 
-    function Visibility(enable) {
-      var root, toggleStatus;
-      if (enable == null) {
-        enable = true;
-      }
+    Visibility.storage;
+
+    function Visibility() {
+      var getSavedStatus, root, toggleStatus;
       root = this;
       this.controllers = {
         enabler: new HTMLElement('#visibility-on'),
         disabler: new HTMLElement('#visibility-off')
       };
-      this.enabled = enable;
       this.animations = new Animations;
+      this.storage = new Storage;
+      getSavedStatus = function(data) {
+        if (data.visible != null) {
+          root.enabled = data.visible;
+          if (root.enabled) {
+            return root.enable();
+          } else {
+            return root.disable(true);
+          }
+        } else {
+          return root.enabled = true;
+        }
+      };
+      this.storage.getVisible(getSavedStatus);
       toggleStatus = function() {
         if (root.enabled) {
           return root.disable();
@@ -496,21 +606,29 @@
       this.controllers.disabler.on('click', toggleStatus);
     }
 
-    Visibility.prototype.enable = function() {
-      this.animations.intro();
+    Visibility.prototype.enable = function(instant) {
+      if (instant == null) {
+        instant = false;
+      }
+      this.animations.intro(instant);
       this.controllers.enabler.css('display', 'none');
       this.controllers.disabler.css('display', 'block');
       this.enabled = true;
+      this.storage.setVisible(this.enabled);
       return console.log("Visibility: On");
     };
 
-    Visibility.prototype.disable = function() {
+    Visibility.prototype.disable = function(instant) {
       var root;
+      if (instant == null) {
+        instant = false;
+      }
       root = this;
-      this.animations.outro();
+      this.animations.outro(instant);
       this.controllers.enabler.css('display', 'block');
       this.controllers.disabler.css('display', 'none');
       this.enabled = false;
+      this.storage.setVisible(this.enabled);
       return console.log("Visibility: Off");
     };
 
@@ -566,19 +684,25 @@
     App.dataStorage;
 
     function App() {
-      var root;
-      console.log("App: Starting up...");
+      var inits, root, visibility;
+      console.log("App: I'm warming up...");
+      visibility = new Visibility;
+      inits = new Init;
+
+      /*
+      		 *
+      		 * Get all the data and put in UI
+      		 *
+       */
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
-        var animations, container, list, loader;
+        var container, list, loader;
         loader = new Loader;
         container = new HTMLElement('#top-sites');
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
         container.push(list);
-        animations = new Animations;
-        animations.intro();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
@@ -600,9 +724,7 @@
         return container.push(list);
       };
       this.dataStorage.fetchAll();
-      new Visibility;
-      new Init;
-      console.log("App: Ready <3");
+      console.log("App: I'm ready <3");
     }
 
     return App;
