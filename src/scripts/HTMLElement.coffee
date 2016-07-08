@@ -18,6 +18,8 @@ class HTMLElement
 			@DOMElement = element
 		else if element.charAt(0) is '#' # Use the passed id to wrap an element
 			@DOMElement = document.getElementById(element.substr(1))
+		else if element is 'body' # Use the passed id to wrap an element
+			@DOMElement = document.getElementsByTagName(element)[0]
 		else # Create new element to be wrapped
 			@DOMElement = document.createElement(element)
 

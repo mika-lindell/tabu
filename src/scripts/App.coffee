@@ -2,13 +2,13 @@
 #
 class App
 	
-	console.log "App: Starting up..."
-
 	@dataStorage
 	
 	# Construct new app
 	#
 	constructor: ()->
+
+		console.log "App: Starting up..."
 
 		root = @
 
@@ -50,6 +50,6 @@ class App
 		@dataStorage.fetchAll()
 
 		new Visibility # This will init the visibility-mode settings
-		new Init # This will make some startup time initializations
+		new Init # This will make misc startup time initializations (bindings, listeners etc.)
 
 		console.log "App: Ready <3"

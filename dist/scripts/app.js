@@ -68,6 +68,8 @@
         this.DOMElement = element;
       } else if (element.charAt(0) === '#') {
         this.DOMElement = document.getElementById(element.substr(1));
+      } else if (element === 'body') {
+        this.DOMElement = document.getElementsByTagName(element)[0];
       } else {
         this.DOMElement = document.createElement(element);
       }
@@ -520,14 +522,15 @@
     function Init() {
       this.bindClick('#view-bookmarks', this.viewBookmarks);
       this.bindClick('#view-history', this.viewHistory);
-      this.bindClick('#view-downloads', this.viewDownloads);
       this.bindClick('#go-incognito', this.goIncognito);
     }
 
     Init.prototype.bindClick = function(id, listener) {
       var elem;
       elem = new HTMLElement(id);
-      return elem.on('click', listener);
+      if (elem instanceof HTMLElement) {
+        return elem.on('click', listener);
+      }
     };
 
     Init.prototype.viewBookmarks = function() {
@@ -559,12 +562,11 @@
   })();
 
   App = (function() {
-    console.log("App: Starting up...");
-
     App.dataStorage;
 
     function App() {
       var root;
+      console.log("App: Starting up...");
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
