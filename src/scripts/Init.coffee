@@ -4,11 +4,11 @@ class Init
 
 	constructor: ()->
 		
+		# Bind functionality to action buttons
 		@bindClick '#view-bookmarks', @viewBookmarks
 		@bindClick '#view-history', @viewHistory
-		@bindClick '#view-downloads', @viewDownloads
+		#@bindClick '#view-downloads', @viewDownloads
 		@bindClick '#go-incognito', @goIncognito
-
 
 	# To add listener to click event
 	#
@@ -17,7 +17,8 @@ class Init
 	#	
 	bindClick: (id, listener)->
 		elem = new HTMLElement(id)
-		elem.on('click', listener)
+		if elem instanceof HTMLElement
+			elem.on('click', listener)
 
 	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.
 	#

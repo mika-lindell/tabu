@@ -1,8 +1,14 @@
 module.exports =
 
+	###	
+	#
+	# TEST SETUP
+	#
+	###
+
 	before: (browser)->
 
-		browser.url('chrome://newtab') # This is needed for the chrome-object to init
+		browser.url('chrome://newtab') # Won't run without
 		
 		# Create some bookmarks
 		# TODO: Can't test recentlyClosed and otherDevices, because I can't generate the data and the loading of profile seems bugged :(
@@ -28,6 +34,7 @@ module.exports =
 		browser
 			.expect.element('body')
 			.to.have.attribute("data-app").which.equals('newTab')
+
 	###	
 	#
 	# LOADER
@@ -76,7 +83,7 @@ module.exports =
 		browser.click("#visibility-on")
 		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
 		browser.pause(500) # REMOVE
-		
+
 	###	
 	#
 	# TOP SITES
@@ -158,7 +165,7 @@ module.exports =
 		browser.click("#view-bookmarks")
 		browser.expect.element("#add-new-bookmark-command").to.be.present.after(500)
 
-		browser.url('chrome://newtab')
+		browser.back()
 		browser.expect.element('#app').to.be.present.after(500)
 		browser.pause(500)
 
@@ -177,7 +184,7 @@ module.exports =
 		browser.click("#view-history")
 		browser.expect.element("#history").to.be.present.after(500)
 
-		browser.url('chrome://newtab') # This is done to load the generated content
+		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
 		browser.pause(500)
 
@@ -195,7 +202,7 @@ module.exports =
 	# 	browser.click("#view-downloads")
 	# 	browser.expect.element("downloads-manager").to.be.present.after(500)
 
-	# 	browser.url('chrome://newtab') # This is done to load the generated content
+	# 	browser.back()
 	# 	browser.expect.element("#app").to.be.present.after(500)
 	# 	browser.pause(500)
 
@@ -208,7 +215,11 @@ module.exports =
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present
 		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
-		#browser.click("#go-incognito")
+		browser.click("#go-incognito")
+		browser.pause(500)
+
+		# TODO: Didn't figure out way to test if the incogito window fires - have to rely on visual confirmation for now =)
+		
 
 	
 

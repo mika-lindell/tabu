@@ -1,4 +1,10 @@
 module.exports = {
+
+  /*	
+  	 *
+  	 * TEST SETUP
+  	 *
+   */
   before: function(browser) {
     var createBS;
     browser.url('chrome://newtab');
@@ -154,7 +160,7 @@ module.exports = {
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
     browser.expect.element("#add-new-bookmark-command").to.be.present.after(500);
-    browser.url('chrome://newtab');
+    browser.back();
     browser.expect.element('#app').to.be.present.after(500);
     return browser.pause(500);
   },
@@ -171,7 +177,7 @@ module.exports = {
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
     browser.expect.element("#history").to.be.present.after(500);
-    browser.url('chrome://newtab');
+    browser.back();
     browser.expect.element("#app").to.be.present.after(500);
     return browser.pause(500);
   },
@@ -189,6 +195,8 @@ module.exports = {
    */
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;
-    return browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
+    browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
+    browser.click("#go-incognito");
+    return browser.pause(500);
   }
 };
