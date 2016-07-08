@@ -36,7 +36,7 @@ class Visibility
 					root.enable()
 
 				else
-				
+
 					root.disable(true)
 					
 
@@ -61,6 +61,8 @@ class Visibility
 
 	# Makes container element visible via Animations-class.
 	#
+	# @param [boolean] Shall we skip the animation and just hide the element?
+	#
 	enable: (instant = false)->
 
 		@animations.intro(instant)
@@ -69,11 +71,12 @@ class Visibility
 		@controllers.disabler.css('display', 'block')
 
 		@enabled = true
+		console.log "Visibility: On"
 		@storage.setVisible(@enabled)
 
-		console.log "Visibility: On"
-
 	# Hides container element via Animations-class.
+	#
+	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
 	disable: (instant = false)->
 
@@ -85,7 +88,8 @@ class Visibility
 		@controllers.disabler.css('display', 'none')
 
 		@enabled = false
+		console.log "Visibility: Off"
 		@storage.setVisible(@enabled)
 
-		console.log "Visibility: Off"
+		
 

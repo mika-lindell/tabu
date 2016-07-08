@@ -614,8 +614,8 @@
       this.controllers.enabler.css('display', 'none');
       this.controllers.disabler.css('display', 'block');
       this.enabled = true;
-      this.storage.setVisible(this.enabled);
-      return console.log("Visibility: On");
+      console.log("Visibility: On");
+      return this.storage.setVisible(this.enabled);
     };
 
     Visibility.prototype.disable = function(instant) {
@@ -628,8 +628,8 @@
       this.controllers.enabler.css('display', 'block');
       this.controllers.disabler.css('display', 'none');
       this.enabled = false;
-      this.storage.setVisible(this.enabled);
-      return console.log("Visibility: Off");
+      console.log("Visibility: Off");
+      return this.storage.setVisible(this.enabled);
     };
 
     return Visibility;
