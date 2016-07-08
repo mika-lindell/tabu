@@ -58,7 +58,7 @@ module.exports =
 	'it should display latest bookmarks': (browser)->
 
 		browser.expect.element("#latest-bookmarks").to.be.present
-		browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000) # Wait for page to load
+		browser.expect.element("#latest-bookmarks-0").to.be.present.after(500) # Wait for page to load
 
 		if !browser.globals.sites?
 			throw new Error('Test failed: no array.') 
@@ -82,11 +82,11 @@ module.exports =
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
-		browser.expect.element("#add-new-bookmark-command").to.be.present.after(1000)
+		browser.expect.element("#add-new-bookmark-command").to.be.present.after(500)
 
 		browser.url('chrome://newtab')
-		browser.expect.element('#app').to.be.present.after(1000)
-		browser.pause(1000)
+		browser.expect.element('#app').to.be.present.after(500)
+		browser.pause(500)
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
@@ -95,11 +95,11 @@ module.exports =
 	'clicking history button should take to history-page': (browser)->		
 		
 		browser.click("#view-history")
-		browser.expect.element("#history").to.be.present.after(1000)
+		browser.expect.element("#history").to.be.present.after(500)
 
 		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element("#app").to.be.present.after(1000)
-		browser.pause(1000)
+		browser.expect.element("#app").to.be.present.after(500)
+		browser.pause(500)
 
 	'it should have button to view downloads': (browser)->
 		browser.expect.element("#view-downloads").to.be.present
@@ -107,11 +107,11 @@ module.exports =
 
 	'clicking downloads button should take to downloads-page': (browser)->		
 		browser.click("#view-downloads")
-		browser.expect.element("downloads-manager").to.be.present.after(1000)
+		browser.expect.element("downloads-manager").to.be.present.after(500)
 
 		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element("#app").to.be.present.after(1000)
-		browser.pause(1000)
+		browser.expect.element("#app").to.be.present.after(500)
+		browser.pause(500)
 
 
 	'it should have button to open incognito-window': (browser)->
@@ -122,12 +122,24 @@ module.exports =
 	'it should have navbar': (browser)->
 		browser.expect.element(".nav-wrapper").to.be.present
 
-	'navbar should have Hide & Settings -buttons': (browser)->
-		browser.expect.element("#visibility-mode").to.be.present
-		browser.expect.element("#visibility-mode").text.to.contain('Hide Us')
+	'navbar should have visibility off -button': (browser)->
+		browser.expect.element("#visibility-off").to.be.present
+		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
 
-		browser.expect.element("#settings").to.be.present
-		browser.expect.element("#settings").text.to.contain('Settings')
+
+	'clicking visibility off -button should hide all elements': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'block')
+		browser.click("#visibility-off")
+		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
+
+	'clicking visibility off -button should hide it and make visibility on -button appear': (browser)->
+		browser.expect.element("#visibility-on").to.be.present
+		browser.expect.element("#visibility-on").text.to.contain('SEE US')
+
+	'clicking visibility on -button should make all elements visible': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.click("#visibility-on")
+		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
 
 
 	

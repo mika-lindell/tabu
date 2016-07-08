@@ -51,7 +51,7 @@ module.exports = {
   'it should display latest bookmarks': function(browser) {
     var i, j, len, ref, results, site;
     browser.expect.element("#latest-bookmarks").to.be.present;
-    browser.expect.element("#latest-bookmarks-0").to.be.present.after(1000);
+    browser.expect.element("#latest-bookmarks-0").to.be.present.after(500);
     if (browser.globals.sites == null) {
       throw new Error('Test failed: no array.');
     }
@@ -76,10 +76,10 @@ module.exports = {
   },
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
-    browser.expect.element("#add-new-bookmark-command").to.be.present.after(1000);
+    browser.expect.element("#add-new-bookmark-command").to.be.present.after(500);
     browser.url('chrome://newtab');
-    browser.expect.element('#app').to.be.present.after(1000);
-    return browser.pause(1000);
+    browser.expect.element('#app').to.be.present.after(500);
+    return browser.pause(500);
   },
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
@@ -87,10 +87,10 @@ module.exports = {
   },
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
-    browser.expect.element("#history").to.be.present.after(1000);
+    browser.expect.element("#history").to.be.present.after(500);
     browser.url('chrome://newtab');
-    browser.expect.element("#app").to.be.present.after(1000);
-    return browser.pause(1000);
+    browser.expect.element("#app").to.be.present.after(500);
+    return browser.pause(500);
   },
   'it should have button to view downloads': function(browser) {
     browser.expect.element("#view-downloads").to.be.present;
@@ -98,10 +98,10 @@ module.exports = {
   },
   'clicking downloads button should take to downloads-page': function(browser) {
     browser.click("#view-downloads");
-    browser.expect.element("downloads-manager").to.be.present.after(1000);
+    browser.expect.element("downloads-manager").to.be.present.after(500);
     browser.url('chrome://newtab');
-    browser.expect.element("#app").to.be.present.after(1000);
-    return browser.pause(1000);
+    browser.expect.element("#app").to.be.present.after(500);
+    return browser.pause(500);
   },
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;
@@ -110,10 +110,22 @@ module.exports = {
   'it should have navbar': function(browser) {
     return browser.expect.element(".nav-wrapper").to.be.present;
   },
-  'navbar should have Hide & Settings -buttons': function(browser) {
-    browser.expect.element("#visibility-mode").to.be.present;
-    browser.expect.element("#visibility-mode").text.to.contain('Hide Us');
-    browser.expect.element("#settings").to.be.present;
-    return browser.expect.element("#settings").text.to.contain('Settings');
+  'navbar should have visibility off -button': function(browser) {
+    browser.expect.element("#visibility-off").to.be.present;
+    return browser.expect.element("#visibility-off").text.to.contain('HIDE US');
+  },
+  'clicking visibility off -button should hide all elements': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'block');
+    browser.click("#visibility-off");
+    return browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
+  },
+  'clicking visibility off -button should hide it and make visibility on -button appear': function(browser) {
+    browser.expect.element("#visibility-on").to.be.present;
+    return browser.expect.element("#visibility-on").text.to.contain('SEE US');
+  },
+  'clicking visibility on -button should make all elements visible': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'none');
+    browser.click("#visibility-on");
+    return browser.expect.element("#content-container").to.have.css('display', 'block').after(500);
   }
 };
