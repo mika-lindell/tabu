@@ -228,7 +228,6 @@
       var addToResult, i, item, j, k, l, len, len1, len2, len3, m, ref, ref1, result, root, tab;
       root = this;
       result = [];
-      console.log(source);
       addToResult = function(title, url, result) {
         if (url.indexOf('chrome://') === -1) {
           return result.push({

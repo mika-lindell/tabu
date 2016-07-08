@@ -63,7 +63,6 @@ class DataGetter
 		root = @
 		result = []
 
-		console.log source
 		# Adds item to array to be returned
 		addToResult = (title, url, result)->
 			if url.indexOf('chrome://') is -1 # Exclude system urls
