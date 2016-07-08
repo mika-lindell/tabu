@@ -7,7 +7,7 @@ class Init
 		# Bind functionality to action buttons
 		@bindClick '#view-bookmarks', @viewBookmarks
 		@bindClick '#view-history', @viewHistory
-		#@bindClick '#view-downloads', @viewDownloads
+		@bindClick '#view-downloads', @viewDownloads
 		@bindClick '#go-incognito', @goIncognito
 
 	# To add listener to click event

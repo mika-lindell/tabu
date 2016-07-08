@@ -187,6 +187,17 @@ module.exports = {
   	 * ACTION BUTTONS: DOWNLOADS
   	 *
    */
+  'it should have button to view downloads': function(browser) {
+    browser.expect.element("#view-downloads").to.be.present;
+    return browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS');
+  },
+  'clicking downloads button should take to downloads-page': function(browser) {
+    browser.click("#view-downloads");
+    browser.expect.element("downloads-manager").to.be.present.after(500);
+    browser.back();
+    browser.expect.element("#app").to.be.present.after(500);
+    return browser.pause(500);
+  },
 
   /*	
   	 *

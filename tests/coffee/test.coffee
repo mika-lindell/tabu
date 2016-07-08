@@ -194,17 +194,17 @@ module.exports =
 	#
 	###
 
-	# 'it should have button to view downloads': (browser)->
-	# 	browser.expect.element("#view-downloads").to.be.present
-	# 	browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
+	'it should have button to view downloads': (browser)->
+		browser.expect.element("#view-downloads").to.be.present
+		browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
 
-	# 'clicking downloads button should take to downloads-page': (browser)->		
-	# 	browser.click("#view-downloads")
-	# 	browser.expect.element("downloads-manager").to.be.present.after(500)
+	'clicking downloads button should take to downloads-page': (browser)->		
+		browser.click("#view-downloads")
+		browser.expect.element("downloads-manager").to.be.present.after(500)
 
-	# 	browser.back()
-	# 	browser.expect.element("#app").to.be.present.after(500)
-	# 	browser.pause(500)
+		browser.back()
+		browser.expect.element("#app").to.be.present.after(500)
+		browser.pause(500)
 
 	###	
 	#

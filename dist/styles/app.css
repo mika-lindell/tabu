@@ -6377,8 +6377,7 @@ Button styles
 ***/
 #actions button {
   margin-left: 0.3rem;
-  margin-right: 0.3rem;
-  min-width: 180px; }
+  margin-right: 0.3rem; }
   #actions button:first-child {
     margin-left: 0; }
   #actions button:last-child {
