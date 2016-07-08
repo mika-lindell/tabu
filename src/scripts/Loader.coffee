@@ -11,6 +11,7 @@ class Loader
 		@element.css("transition", "opacity #{@duration}s")
 
 	# Hide the loader with animation
+	# TODO: Move this to animations -class
 	#
 	hide: ()->
 		root = @
