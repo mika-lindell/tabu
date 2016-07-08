@@ -18,17 +18,70 @@ module.exports = {
   after: function(browser) {
     return browser.end();
   },
+
+  /*	
+  	 *
+  	 * STARTUP
+  	 *
+   */
   'it should display the extension': function(browser) {
     return browser.expect.element('body').to.have.attribute("data-app").which.equals('newTab');
   },
+
+  /*	
+  	 *
+  	 * LOADER
+  	 *
+   */
+  'TODO: tests for loader': function(browser) {},
+
+  /*	
+  	 *
+  	 * BASIC COMPONENTS
+  	 *
+   */
   'it should have section headings': function(browser) {
     browser.expect.element("#top-sites").text.to.contain('Top Sites');
     browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks');
     browser.expect.element("#recently-closed").text.to.contain('Recently Closed');
     return browser.expect.element("#other-devices").text.to.contain('Other Devices');
   },
-  'TODO: tests for loader': function(browser) {},
-  'it should display most visited sites': function(browser) {
+
+  /*	
+  	 *
+  	 * NAVBAR AND VISIBILITY
+  	 *
+   */
+  'it should have navbar': function(browser) {
+    return browser.expect.element(".nav-wrapper").to.be.present;
+  },
+  'navbar should have visibility off -button': function(browser) {
+    browser.expect.element("#visibility-off").to.be.present;
+    return browser.expect.element("#visibility-off").text.to.contain('HIDE US');
+  },
+  'clicking visibility off -button should hide all elements': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'block');
+    browser.click("#visibility-off");
+    browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
+    return browser.pause(500);
+  },
+  'clicking visibility off -button should hide it and make visibility on -button appear': function(browser) {
+    browser.expect.element("#visibility-on").to.be.present;
+    return browser.expect.element("#visibility-on").text.to.contain('SEE US');
+  },
+  'clicking visibility on -button should make all elements visible': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'none');
+    browser.click("#visibility-on");
+    browser.expect.element("#content-container").to.have.css('display', 'block').after(500);
+    return browser.pause(500);
+  },
+
+  /*	
+  	 *
+  	 * TOP SITES
+  	 *
+   */
+  'it should display top sites': function(browser) {
     browser.expect.element("#top-sites").to.be.present;
     return browser.expect.element("#top-sites-0").to.be.present.after(1000);
 
@@ -48,6 +101,12 @@ module.exports = {
     		browser.execute( get, [], test)
      */
   },
+
+  /*	
+  	 *
+  	 * LATEST BOOKMARKS
+  	 *
+   */
   'it should display latest bookmarks': function(browser) {
     var i, j, len, ref, results, site;
     browser.expect.element("#latest-bookmarks").to.be.present;
@@ -64,15 +123,33 @@ module.exports = {
     }
     return results;
   },
-  'it should display recently closed items': function(browser) {
+
+  /*	
+  	 *
+  	 * RECENTLY CLOSED
+  	 *
+   */
+  'TODO: it should display recently closed items': function(browser) {
     return browser.expect.element("#recently-closed").to.be.present;
   },
+
+  /*	
+  	 *
+  	 * OTHER DEVICES
+  	 *
+   */
+  'TODO: it should display items from other devices': function(browser) {
+    return browser.expect.element("#other-devices").to.be.present;
+  },
+
+  /*	
+  	 *
+  	 * ACTION BUTTONS: BOOKMARKS
+  	 *
+   */
   'it should have button to view bookmarks': function(browser) {
     browser.expect.element("#view-bookmarks").to.be.present;
     return browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS');
-  },
-  'it should display items from other devices': function(browser) {
-    return browser.expect.element("#other-devices").to.be.present;
   },
   'clicking bookmark button should take to bookmark-page': function(browser) {
     browser.click("#view-bookmarks");
@@ -81,6 +158,12 @@ module.exports = {
     browser.expect.element('#app').to.be.present.after(500);
     return browser.pause(500);
   },
+
+  /*	
+  	 *
+  	 * ACTION BUTTONS: HISTORY
+  	 *
+   */
   'it should have button to view history': function(browser) {
     browser.expect.element("#view-history").to.be.present;
     return browser.expect.element("#view-history").text.to.equal('HISTORY');
@@ -92,40 +175,20 @@ module.exports = {
     browser.expect.element("#app").to.be.present.after(500);
     return browser.pause(500);
   },
-  'it should have button to view downloads': function(browser) {
-    browser.expect.element("#view-downloads").to.be.present;
-    return browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS');
-  },
-  'clicking downloads button should take to downloads-page': function(browser) {
-    browser.click("#view-downloads");
-    browser.expect.element("downloads-manager").to.be.present.after(500);
-    browser.url('chrome://newtab');
-    browser.expect.element("#app").to.be.present.after(500);
-    return browser.pause(500);
-  },
+
+  /*	
+  	 *
+  	 * ACTION BUTTONS: DOWNLOADS
+  	 *
+   */
+
+  /*	
+  	 *
+  	 * ACTION BUTTONS: INCOGNITO
+  	 *
+   */
   'it should have button to open incognito-window': function(browser) {
     browser.expect.element("#go-incognito").to.be.present;
     return browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
-  },
-  'it should have navbar': function(browser) {
-    return browser.expect.element(".nav-wrapper").to.be.present;
-  },
-  'navbar should have visibility off -button': function(browser) {
-    browser.expect.element("#visibility-off").to.be.present;
-    return browser.expect.element("#visibility-off").text.to.contain('HIDE US');
-  },
-  'clicking visibility off -button should hide all elements': function(browser) {
-    browser.expect.element("#content-container").to.have.css('display', 'block');
-    browser.click("#visibility-off");
-    return browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
-  },
-  'clicking visibility off -button should hide it and make visibility on -button appear': function(browser) {
-    browser.expect.element("#visibility-on").to.be.present;
-    return browser.expect.element("#visibility-on").text.to.contain('SEE US');
-  },
-  'clicking visibility on -button should make all elements visible': function(browser) {
-    browser.expect.element("#content-container").to.have.css('display', 'none');
-    browser.click("#visibility-on");
-    return browser.expect.element("#content-container").to.have.css('display', 'block').after(500);
   }
 };

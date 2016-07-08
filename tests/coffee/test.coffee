@@ -18,10 +18,29 @@ module.exports =
 	after: (browser)->
 		browser.end()
 
+	###	
+	#
+	# STARTUP
+	#
+	###
+
 	'it should display the extension': (browser)->
 		browser
 			.expect.element('body')
 			.to.have.attribute("data-app").which.equals('newTab')
+	###	
+	#
+	# LOADER
+	#
+	###
+
+	'TODO: tests for loader': (browser)->
+
+	###	
+	#
+	# BASIC COMPONENTS
+	#
+	###
 
 	'it should have section headings': (browser)->
 		browser.expect.element("#top-sites").text.to.contain('Top Sites')
@@ -29,11 +48,42 @@ module.exports =
 		browser.expect.element("#recently-closed").text.to.contain('Recently Closed')
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
+	###	
+	#
+	# NAVBAR AND VISIBILITY
+	#
+	###
 
-	'TODO: tests for loader': (browser)->
+	'it should have navbar': (browser)->
+		browser.expect.element(".nav-wrapper").to.be.present
 
+	'navbar should have visibility off -button': (browser)->
+		browser.expect.element("#visibility-off").to.be.present
+		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
 
-	'it should display most visited sites': (browser)->
+	'clicking visibility off -button should hide all elements': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'block')
+		browser.click("#visibility-off")
+		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
+		browser.pause(500) # REMOVE
+
+	'clicking visibility off -button should hide it and make visibility on -button appear': (browser)->
+		browser.expect.element("#visibility-on").to.be.present
+		browser.expect.element("#visibility-on").text.to.contain('SEE US')
+
+	'clicking visibility on -button should make all elements visible': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.click("#visibility-on")
+		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
+		browser.pause(500) # REMOVE
+		
+	###	
+	#
+	# TOP SITES
+	#
+	###
+
+	'it should display top sites': (browser)->
 
 		browser.expect.element("#top-sites").to.be.present
 		browser.expect.element("#top-sites-0").to.be.present.after(1000) # Wait for page to load
@@ -55,6 +105,12 @@ module.exports =
 		browser.execute( get, [], test)
 		###
 
+	###	
+	#
+	# LATEST BOOKMARKS
+	#
+	###
+
 	'it should display latest bookmarks': (browser)->
 
 		browser.expect.element("#latest-bookmarks").to.be.present
@@ -68,17 +124,35 @@ module.exports =
 			browser.expect.element("#latest-bookmarks-#{ i }").text.to.contain(site.title)
 			browser.expect.element("#latest-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)	
 
-	'it should display recently closed items': (browser)->
+	###	
+	#
+	# RECENTLY CLOSED
+	#
+	###
+
+	'TODO: it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
 		browser.expect.element("#recently-closed").to.be.present
+
+	###	
+	#
+	# OTHER DEVICES
+	#
+	###
+
+	'TODO: it should display items from other devices': (browser)->
+		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
+		browser.expect.element("#other-devices").to.be.present
+
+	###	
+	#
+	# ACTION BUTTONS: BOOKMARKS
+	#
+	###
 
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
 		browser.expect.element("#view-bookmarks").text.to.equal('BOOKMARKS')
-
-	'it should display items from other devices': (browser)->
-		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
-		browser.expect.element("#other-devices").to.be.present
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
@@ -87,6 +161,12 @@ module.exports =
 		browser.url('chrome://newtab')
 		browser.expect.element('#app').to.be.present.after(500)
 		browser.pause(500)
+
+	###	
+	#
+	# ACTION BUTTONS: HISTORY
+	#
+	###
 
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
@@ -101,45 +181,36 @@ module.exports =
 		browser.expect.element("#app").to.be.present.after(500)
 		browser.pause(500)
 
-	'it should have button to view downloads': (browser)->
-		browser.expect.element("#view-downloads").to.be.present
-		browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
+	###	
+	#
+	# ACTION BUTTONS: DOWNLOADS
+	#
+	###
 
-	'clicking downloads button should take to downloads-page': (browser)->		
-		browser.click("#view-downloads")
-		browser.expect.element("downloads-manager").to.be.present.after(500)
+	# 'it should have button to view downloads': (browser)->
+	# 	browser.expect.element("#view-downloads").to.be.present
+	# 	browser.expect.element("#view-downloads").text.to.equal('DOWNLOADS')
 
-		browser.url('chrome://newtab') # This is done to load the generated content
-		browser.expect.element("#app").to.be.present.after(500)
-		browser.pause(500)
+	# 'clicking downloads button should take to downloads-page': (browser)->		
+	# 	browser.click("#view-downloads")
+	# 	browser.expect.element("downloads-manager").to.be.present.after(500)
 
+	# 	browser.url('chrome://newtab') # This is done to load the generated content
+	# 	browser.expect.element("#app").to.be.present.after(500)
+	# 	browser.pause(500)
+
+	###	
+	#
+	# ACTION BUTTONS: INCOGNITO
+	#
+	###
 
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present
 		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
 		#browser.click("#go-incognito")
 
-	'it should have navbar': (browser)->
-		browser.expect.element(".nav-wrapper").to.be.present
-
-	'navbar should have visibility off -button': (browser)->
-		browser.expect.element("#visibility-off").to.be.present
-		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
-
-
-	'clicking visibility off -button should hide all elements': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'block')
-		browser.click("#visibility-off")
-		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
-
-	'clicking visibility off -button should hide it and make visibility on -button appear': (browser)->
-		browser.expect.element("#visibility-on").to.be.present
-		browser.expect.element("#visibility-on").text.to.contain('SEE US')
-
-	'clicking visibility on -button should make all elements visible': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'none')
-		browser.click("#visibility-on")
-		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
+	
 
 
 	
