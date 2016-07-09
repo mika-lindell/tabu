@@ -152,6 +152,17 @@
       }
     }
 
+    HTMLElement.prototype.parent = function() {
+      var parent;
+      parent = this.DOMElement.parentElement;
+      console.log('parent:', parent);
+      if (parent != null) {
+        return new HTMLElement(parent);
+      } else {
+        return null;
+      }
+    };
+
     HTMLElement.prototype.text = function(text) {
       if (text == null) {
         text = null;
@@ -460,11 +471,10 @@
       this.dataGetter = dataGetter;
       this.baseId = baseId;
       this.attr('id', this.baseId + "-list");
-      this.update();
     }
 
     ItemCardList.prototype.update = function() {
-      var card, cardId, i, item, j, len, ref;
+      var card, cardId, count, i, item, j, len, parent, ref;
       this.fragment = document.createDocumentFragment();
       ref = this.dataGetter.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
@@ -477,6 +487,15 @@
         }
         this.fragment.appendChild(card.DOMElement);
       }
+      count = this.dataGetter.data.length;
+      console.log(count, count === 0, count === '0');
+      if (count === 0) {
+        parent = this.parent();
+        if (parent != null) {
+          parent.attr('data-has-empty-list-as-child', '');
+        }
+      }
+      this.attr('data-list-count', count);
       return this.push(this.fragment);
     };
 
@@ -703,25 +722,29 @@
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
         container.push(list);
+        list.update();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
         var container, list;
         container = new HTMLElement('#latest-bookmarks');
         list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
-        return container.push(list);
+        container.push(list);
+        return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
         var container, list;
         container = new HTMLElement('#recently-closed');
         list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed');
-        return container.push(list);
+        container.push(list);
+        return list.update();
       };
       this.dataStorage.otherDevices.done = function() {
         var container, list;
         container = new HTMLElement('#other-devices');
         list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
-        return container.push(list);
+        container.push(list);
+        return list.update();
       };
       this.dataStorage.fetchAll();
       console.log("App: I'm ready <3");

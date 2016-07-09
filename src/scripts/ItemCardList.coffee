@@ -14,10 +14,9 @@ class ItemCardList extends HTMLElement
 		@baseId = baseId
 
 		@attr('id', "#{ @baseId }-list")
-		@update()
 
 	update: ()->	
-		# Create document fragment for not to reflow when appending elements (better performance)
+		# Create document fragment for not to cause reflow when appending elements (better performance)
 		@fragment = document.createDocumentFragment()
 
 		for item, i in @dataGetter.data
@@ -30,5 +29,17 @@ class ItemCardList extends HTMLElement
 				card = new ItemCard(item.title, item.url, cardId)
 
 			@fragment.appendChild(card.DOMElement)
+
+
+		count = @dataGetter.data.length
+
+		console.log count, count is 0, count is '0'
+
+		# Add some information about the list to DOM as attributes, so we can target with CSS selectors
+		if count is 0
+			parent = @parent()
+			if parent? then parent.attr('data-has-empty-list-as-child', '') # To parent element that it's has empty list as child
+		
+		@attr('data-list-count', count) # To list the count of children
 
 		@push(@fragment) 

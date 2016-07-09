@@ -25,6 +25,19 @@ class HTMLElement
 
 	# Gets/sets the text inside an element
 	#
+	# @return [HTMLElement] The parent element or null if element has no parent
+	#
+	parent: ()->
+		parent = @DOMElement.parentElement
+
+		console.log 'parent:', parent
+		if parent?
+			return new HTMLElement(parent)
+		else
+			return null
+
+	# Gets/sets the text inside an element
+	#
 	# @param [String] Text to be inserted
 	#
 	# @return [String]

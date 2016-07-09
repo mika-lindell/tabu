@@ -31,7 +31,8 @@ class App
 			container.addClass('horizontal-list') # Add class to tell that this list should expand horizontally as well (inline-block)
 			
 			list = new ItemCardList(root.dataStorage.topSites, 'top-sites') # Create new list class
-			container.push list # Add items to list
+			container.push list # Add list to DOM
+			list.update() # Add items to the list
 			
 			loader.hide() # Hide the loader
 
@@ -40,18 +41,22 @@ class App
 			container = new HTMLElement ('#latest-bookmarks')
 			list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks')
 			container.push list
+			list.update()
 
 		@dataStorage.recentlyClosed.done = ()->
 
 			container = new HTMLElement ('#recently-closed')
 			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
 			container.push list
+			list.update()
+			
 
 		@dataStorage.otherDevices.done = ()->
 			
 			container = new HTMLElement ('#other-devices')
 			list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices')
 			container.push list
+			list.update()
 
 		@dataStorage.fetchAll()
 

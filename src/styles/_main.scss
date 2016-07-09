@@ -382,7 +382,8 @@ Item card styles
 	//@extend .anim-move-in;
 }
 
-.item-card-heading {
+.item-card-heading,
+.no-items {
    padding-top: 1.2rem;
 }
 
@@ -436,3 +437,21 @@ a.item-card-link{
 	width: 33%;
 }
 
+// To display the 'no items in this list' -message when the list has no items =)
+.no-items{
+	display: none;
+	padding-right: 1rem;
+
+	@extend .color-dark-grey;
+
+	.headline{
+		display: inline-block;
+		margin-bottom: 1rem;
+
+		@extend .font-size-large;
+	}
+}
+
+[data-has-empty-list-as-child] > .no-items{
+	display: block;
+}

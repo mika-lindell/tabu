@@ -6246,7 +6246,7 @@ Font sizes
 .font-size-regular {
   font-size: 1.0rem; }
 
-.font-size-large, .item-card-badge {
+.font-size-large, .item-card-badge, .no-items .headline {
   font-size: 1.3rem; }
 
 /***
@@ -6275,7 +6275,7 @@ Helpers
 .color-black, a.item-card-link {
   color: #000; }
 
-.color-dark-grey, .item-card-label-secondary {
+.color-dark-grey, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
 
 .color-white {
@@ -6400,7 +6400,8 @@ Item card styles
 .item-card {
   margin-bottom: 0.1rem; }
 
-.item-card-heading {
+.item-card-heading,
+.no-items {
   padding-top: 1.2rem; }
 
 a.item-card-link {
@@ -6426,5 +6427,15 @@ a.item-card-link {
   display: inline-block;
   padding-right: 1rem;
   width: 33%; }
+
+.no-items {
+  display: none;
+  padding-right: 1rem; }
+  .no-items .headline {
+    display: inline-block;
+    margin-bottom: 1rem; }
+
+[data-has-empty-list-as-child] > .no-items {
+  display: block; }
 
 /*# sourceMappingURL=app.css.map */
