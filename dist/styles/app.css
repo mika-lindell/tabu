@@ -6220,6 +6220,18 @@ nav i.material-icons {
 
 /***
 
+Font for logo
+
+***/
+@font-face {
+  font-family: 'Logo';
+  src: url(./assets/chewy/NineteenOhFive.woff2) format("woff2"); }
+.logo-font, .logo {
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased; }
+
+/***
+
 Layers
 
 ***/
@@ -6280,6 +6292,17 @@ Helpers
 
 .color-white {
   color: #FFF; }
+
+/***
+
+Some special text styles
+
+***/
+.logo {
+  font-family: 'Logo';
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  cursor: default; }
 
 /***
 
@@ -6430,7 +6453,7 @@ a.item-card-link {
 
 .no-items {
   display: none;
-  padding-right: 1rem; }
+  padding-right: 1.5rem; }
   .no-items .headline {
     display: inline-block;
     margin-bottom: 1rem; }

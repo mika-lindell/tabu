@@ -91,6 +91,23 @@ nav i.material-icons{
 
 /***
 
+Font for logo
+
+***/
+
+@font-face{
+	font-family: 'Logo';
+  src: url(./assets/chewy/NineteenOhFive.woff2) format('woff2')
+}
+
+.logo-font{
+	-webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/***
+
 Layers
 
 ***/
@@ -170,6 +187,21 @@ Helpers
 
 .color-white{
 	color: $white;
+}
+
+/***
+
+Some special text styles
+
+***/
+
+.logo{
+	font-family: 'Logo';
+	font-size: 2.5rem;
+	margin-bottom: 0;
+	cursor: default;
+
+	@extend .logo-font;
 }
 
 /***
@@ -440,7 +472,7 @@ a.item-card-link{
 // To display the 'no items in this list' -message when the list has no items =)
 .no-items{
 	display: none;
-	padding-right: 1rem;
+	padding-right: 1.5rem;
 
 	@extend .color-dark-grey;
 
