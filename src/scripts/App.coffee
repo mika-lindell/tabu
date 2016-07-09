@@ -43,10 +43,10 @@ class App
 			container.push list
 			list.update()
 
-		@dataStorage.recentlyViewed.done = ()->
+		@dataStorage.recentHistory.done = ()->
 
-			container = new HTMLElement ('#recently-viewed')
-			list = new ItemCardList(root.dataStorage.recentlyViewed, 'recently-viewed')
+			container = new HTMLElement ('#recent-history')
+			list = new ItemCardList(root.dataStorage.recentHistory, 'recent-history')
 			container.push list
 			list.update()
 

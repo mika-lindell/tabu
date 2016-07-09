@@ -18,7 +18,7 @@ class DataGetter
 	# Construct new datablock
 	#
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
-	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, otherDevices or recentlyClosed
+	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, recentHistory, otherDevices or recentlyClosed
 	#
 	constructor: (api, dataType = 'topSites', limit = 15)->
 		@api = api
@@ -37,7 +37,7 @@ class DataGetter
 
 			if root.dataType is 'otherDevices' or root.dataType is 'recentlyClosed' # If we are getting tabs, we need to flatten the object first
 				data = root.flatten(result)
-			else if root.dataType is 'recentlyViewed'
+			else if root.dataType is 'recentHistory'
 				data = root.unique(result, 'url', 'title')
 			else
 				data = result
@@ -52,7 +52,7 @@ class DataGetter
 			
 			@api(@limit, getter)
 
-		else if @dataType is 'recentlyViewed' # If we are getting history, special call is needed
+		else if @dataType is 'recentHistory' # If we are getting history, special call is needed
 			
 			params =
 				'text': ''
@@ -105,6 +105,14 @@ class DataGetter
 
 		return result
 
+	# Remove duplicate items from array of objects,
+	#
+	# @param [array] The array to be modified
+	# @param [string] The name of the property which is compared to determine uniqueness
+	# @param [string] Optional. The name of the property which is compared to determine if this item shouldn't be included.
+	#
+	# @return [array] Array with all 'undesirables' removed.
+	#
 	unique: (source, include, exclude = null)->
 
 		walker = (mapItem) ->

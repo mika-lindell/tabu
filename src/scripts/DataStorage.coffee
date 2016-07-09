@@ -4,14 +4,14 @@ class DataStorage
 
 	@topSites
 	@latestBookmarks
-	@recentlyViewed
+	@recentHistory
 	@recentlyClosed
 	@otherDevices
 
 	constructor: ()->
 		@topSites = new DataGetter(chrome.topSites.get)
 		@latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks')
-		@recentlyViewed = new DataGetter(chrome.history.search, 'recentlyViewed')
+		@recentHistory = new DataGetter(chrome.history.search, 'recentHistory')
 		@recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed')
 		@otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices')
 	
@@ -19,7 +19,7 @@ class DataStorage
 	fetchAll: ()->
 		@topSites.fetch()
 		@latestBookmarks.fetch()
-		@recentlyViewed.fetch()
+		@recentHistory.fetch()
 		@recentlyClosed.fetch()
 		@otherDevices.fetch()
 		

@@ -294,7 +294,7 @@
         var data;
         if (root.dataType === 'otherDevices' || root.dataType === 'recentlyClosed') {
           data = root.flatten(result);
-        } else if (root.dataType === 'recentlyViewed') {
+        } else if (root.dataType === 'recentHistory') {
           data = root.unique(result, 'url', 'title');
         } else {
           data = result;
@@ -306,7 +306,7 @@
       };
       if (this.dataType === 'latestBookmarks') {
         return this.api(this.limit, getter);
-      } else if (this.dataType === 'recentlyViewed') {
+      } else if (this.dataType === 'recentHistory') {
         params = {
           'text': '',
           'maxResults': this.limit * 2
@@ -387,7 +387,7 @@
 
     DataStorage.latestBookmarks;
 
-    DataStorage.recentlyViewed;
+    DataStorage.recentHistory;
 
     DataStorage.recentlyClosed;
 
@@ -396,7 +396,7 @@
     function DataStorage() {
       this.topSites = new DataGetter(chrome.topSites.get);
       this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
-      this.recentlyViewed = new DataGetter(chrome.history.search, 'recentlyViewed');
+      this.recentHistory = new DataGetter(chrome.history.search, 'recentHistory');
       this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
       this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
     }
@@ -404,7 +404,7 @@
     DataStorage.prototype.fetchAll = function() {
       this.topSites.fetch();
       this.latestBookmarks.fetch();
-      this.recentlyViewed.fetch();
+      this.recentHistory.fetch();
       this.recentlyClosed.fetch();
       return this.otherDevices.fetch();
     };
@@ -760,10 +760,10 @@
         container.push(list);
         return list.update();
       };
-      this.dataStorage.recentlyViewed.done = function() {
+      this.dataStorage.recentHistory.done = function() {
         var container, list;
-        container = new HTMLElement('#recently-viewed');
-        list = new ItemCardList(root.dataStorage.recentlyViewed, 'recently-viewed');
+        container = new HTMLElement('#recent-history');
+        list = new ItemCardList(root.dataStorage.recentHistory, 'recent-history');
         container.push(list);
         return list.update();
       };
