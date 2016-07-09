@@ -48,7 +48,7 @@
 						#top-sites
 							%h4.animated Top Sites
 							%p.no-items.animated
-								%span.headline I looked, but I didn't find it :/
+								%span.headline I looked, but I didn't find any :/
 								%br
 								Usually here is a list of websites Chrome has cherry picked for you based on your preferences.
 				.row.section
@@ -66,26 +66,34 @@
 							%button#go-incognito.btn-large.light-blue.darken-3.animated
 								%i.material-icons.right open_in_new
 								Go Incognito
+			.container-large
 				.row.section
-					%section.col.s4
-						#latest-bookmarks
+					%section.col.s3
+						#latest-bookmarks.card-list-column
 							%h4.animated Latest Bookmarks
 							%p.no-items.animated
-								%span.headline I couldn't find a thing :(
+								%span.headline  I looked, but I didn't find any :/
 								%br
 								Usually here is a list of your most recent bookmarks.
-					%section.col.s4
-						#recently-closed
+					%section.col.s3
+						#recently-viewed.card-list-column
+							%h4.animated Recently Viewed
+							%p.no-items.animated
+								%span.headline I couldn't find anything :(
+								%br
+								Usually here is a list of websites you have recently visited.
+					%section.col.s3
+						#recently-closed.card-list-column
 							%h4.animated Recently Closed
 							%p.no-items.animated
-								%span.headline I looked, but I didn't find it :/
+								%span.headline I looked, but I didn't find any :/
 								%br
-								Usually here is a list of recent websites you have visited and then closed the tab or the window.
-					%section.col.s4
+								Usually here is a list of websites you have recently visited, and then closed the tab or the window.
+					%section.col.s3
 						#other-devices
 							%h4.animated Other Devices
 							%p.no-items.animated
-								%span.headline I couldn't find a thing :(
+								%span.headline I couldn't find anything :(
 								%br
 								Usually here is a list of websites you have viewed with your other devices like tablet or smartphone (while logged in to Chrome).
 		

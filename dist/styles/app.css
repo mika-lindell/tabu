@@ -6404,6 +6404,13 @@ body {
 #actions {
   margin: 0.5rem 0 1rem 0; }
 
+.container-large {
+  width: 90%;
+  margin: auto; }
+
+.card-list-column {
+  margin-right: 2.5rem; }
+
 footer {
   border-top: 1px solid #c7c7c7; }
 
@@ -6455,7 +6462,7 @@ a.item-card-link {
 .item-card-label-container {
   display: inline-block;
   vertical-align: middle;
-  width: 80%; }
+  width: 75%; }
 
 .horizontal-list li {
   display: inline-block;

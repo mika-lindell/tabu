@@ -394,6 +394,15 @@ body{
 	margin: 0.5rem 0 1rem 0;
 }
 
+.container-large{
+	width: 90%;
+	margin: auto;
+}
+
+.card-list-column{
+	margin-right: 2.5rem;
+}
+
 footer{
 	border-top: $border-light;
 }
@@ -475,7 +484,7 @@ a.item-card-link{
 .item-card-label-container{
 	display: inline-block;
 	vertical-align: middle;
-	width: 80%; // For truncate to work (with text-overflow: ellipsis;)
+	width: 75%; // For truncate to work (with text-overflow: ellipsis;)
 
 	@extend .truncate;
 }

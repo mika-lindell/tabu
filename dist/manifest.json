@@ -8,7 +8,8 @@
           "tabs",
           "bookmarks",
           "sessions",
-          "topSites"
+          "topSites",
+          "history"
         ],
 	"chrome_url_overrides" : {
 	  "newtab": "start.html"

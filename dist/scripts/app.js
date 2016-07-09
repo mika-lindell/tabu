@@ -286,7 +286,7 @@
     }
 
     DataGetter.prototype.fetch = function(api) {
-      var getter, root;
+      var getter, params, root;
       this.status = 'loading';
       console.log("DataGetter: I'm calling to chrome API about " + this.dataType + "...");
       root = this;
@@ -294,6 +294,8 @@
         var data;
         if (root.dataType === 'otherDevices' || root.dataType === 'recentlyClosed') {
           data = root.flatten(result);
+        } else if (root.dataType === 'recentlyViewed') {
+          data = root.unique(result, 'url', 'title');
         } else {
           data = result;
         }
@@ -304,6 +306,12 @@
       };
       if (this.dataType === 'latestBookmarks') {
         return this.api(this.limit, getter);
+      } else if (this.dataType === 'recentlyViewed') {
+        params = {
+          'text': '',
+          'maxResults': this.limit * 2
+        };
+        return this.api(params, getter);
       } else {
         return this.api(getter);
       }
@@ -352,6 +360,24 @@
       return result;
     };
 
+    DataGetter.prototype.unique = function(source, include, exclude) {
+      var filter, walker;
+      if (exclude == null) {
+        exclude = null;
+      }
+      walker = function(mapItem) {
+        return mapItem[include];
+      };
+      filter = function(item, pos, array) {
+        if (exclude != null) {
+          return array.map(walker).indexOf(item[include]) === pos && item[exclude] !== '';
+        } else {
+          return array.map(walker).indexOf(item[include]) === pos;
+        }
+      };
+      return source.filter(filter);
+    };
+
     return DataGetter;
 
   })();
@@ -361,6 +387,8 @@
 
     DataStorage.latestBookmarks;
 
+    DataStorage.recentlyViewed;
+
     DataStorage.recentlyClosed;
 
     DataStorage.otherDevices;
@@ -368,6 +396,7 @@
     function DataStorage() {
       this.topSites = new DataGetter(chrome.topSites.get);
       this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
+      this.recentlyViewed = new DataGetter(chrome.history.search, 'recentlyViewed');
       this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
       this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
     }
@@ -375,6 +404,7 @@
     DataStorage.prototype.fetchAll = function() {
       this.topSites.fetch();
       this.latestBookmarks.fetch();
+      this.recentlyViewed.fetch();
       this.recentlyClosed.fetch();
       return this.otherDevices.fetch();
     };
@@ -727,6 +757,13 @@
         var container, list;
         container = new HTMLElement('#latest-bookmarks');
         list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
+        container.push(list);
+        return list.update();
+      };
+      this.dataStorage.recentlyViewed.done = function() {
+        var container, list;
+        container = new HTMLElement('#recently-viewed');
+        list = new ItemCardList(root.dataStorage.recentlyViewed, 'recently-viewed');
         container.push(list);
         return list.update();
       };

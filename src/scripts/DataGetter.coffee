@@ -37,6 +37,8 @@ class DataGetter
 
 			if root.dataType is 'otherDevices' or root.dataType is 'recentlyClosed' # If we are getting tabs, we need to flatten the object first
 				data = root.flatten(result)
+			else if root.dataType is 'recentlyViewed'
+				data = root.unique(result, 'url', 'title')
 			else
 				data = result
 
@@ -47,8 +49,19 @@ class DataGetter
 			console.log "DataGetter: Ok, got #{root.dataType} ->", root.data
 
 		if @dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
+			
 			@api(@limit, getter)
+
+		else if @dataType is 'recentlyViewed' # If we are getting history, special call is needed
+			
+			params =
+				'text': ''
+				'maxResults': @limit * 2
+
+			@api(params, getter)
+
 		else
+			
 			@api(getter) # Call the api referenced in constructor
 
 	# The callback evoked when operation status changes to 'ready'
@@ -91,3 +104,17 @@ class DataGetter
 					addToResult item.tab.title, item.tab.url, result
 
 		return result
+
+	unique: (source, include, exclude = null)->
+
+		walker = (mapItem) ->
+			return mapItem[include]
+
+		filter = (item, pos, array) ->
+			
+			if exclude?
+				return array.map(walker).indexOf(item[include]) == pos and item[exclude] != ''
+			else
+				return array.map(walker).indexOf(item[include]) == pos
+
+		source.filter filter
