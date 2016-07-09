@@ -124,8 +124,12 @@ Layers
 	z-index: 99;
 }
 
-.layer-menu{
+.layer-noscript{
 	z-index: 199;
+}
+
+.layer-menu{
+	z-index: 299;
 }
 
 
@@ -189,6 +193,21 @@ Helpers
 	color: $white;
 }
 
+.overlay{
+	position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  top: 0;
+
+  @extend .valign-wrapper;
+
+	.valign{
+		width: 100%;
+	}
+
+}
+
 /***
 
 Some special text styles
@@ -200,6 +219,10 @@ Some special text styles
 	font-size: 2.5rem;
 	margin-bottom: 0;
 	cursor: default;
+
+	&.logo-small{
+		font-size: 1.5rem;
+	}
 
 	@extend .logo-font;
 }
@@ -316,24 +339,29 @@ Scrollbar
 
 /***
 
+Noscript
+
+***/
+
+ noscript{
+
+ 	@extend .overlay;
+	@extend .layer-noscript;
+
+}
+
+/***
+
 Loader
 
 ***/
 
 #loader{
-	position: fixed;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-  top: 0;
 
+	@extend .overlay;
 	@extend .layer-loader;
 
-	.valign{
-		width: 100%;
-	}
-
-	.progress{
+	.loader-intro{
 		max-width: 300px;
 		margin: auto;
 

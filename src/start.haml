@@ -5,10 +5,27 @@
 		%link(href="styles/app.css" rel="stylesheet")
 		%link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 	%body(data-app="newTab" id="app")
+		%noscript
+			.container
+				%h4 I see you have disabled JavaScript :(
+				%p 
+					That's something I need to get things done.
+					%br
+					If you don't know how to enable JavaScript  
+					%a(href="http://www.google.com/search?q=how+to+enable+javascript+in+chrome")
+						click this link and let Google find it out 
+					for you.
+				%p
+					TABU
+					%br
+					The New Tab page for Chrome 	
 		#loader.valign-wrapper
 			.valign
-				.progress
-					.indeterminate
+				.loader-intro.center-align
+					%p.logo
+						TABU
+					.progress
+						.indeterminate
 		%nav
 			.nav-wrapper.white
 				%ul.right
@@ -77,7 +94,7 @@
 					%p.logo
 						TABU
 					%p.font-size-small.color-dark-grey
-						The New Tab-page for Chrome
+						The New Tab page for Chrome
 					%p.font-size-small.color-dark-grey
 						&copy; 2016 Mika Lindell
 

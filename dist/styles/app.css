@@ -2072,10 +2072,10 @@ a {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent; }
 
-.valign-wrapper {
+.valign-wrapper, .overlay, noscript, #loader {
   display: flex;
   align-items: center; }
-  .valign-wrapper .valign {
+  .valign-wrapper .valign, .overlay .valign, noscript .valign, #loader .valign {
     display: block; }
 
 ul {
@@ -6244,8 +6244,11 @@ Layers
 .layer-loader, #loader {
   z-index: 99; }
 
-.layer-menu {
+.layer-noscript, noscript {
   z-index: 199; }
+
+.layer-menu {
+  z-index: 299; }
 
 /***
 
@@ -6293,6 +6296,15 @@ Helpers
 .color-white {
   color: #FFF; }
 
+.overlay, noscript, #loader {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  top: 0; }
+  .overlay .valign, noscript .valign, #loader .valign {
+    width: 100%; }
+
 /***
 
 Some special text styles
@@ -6303,6 +6315,8 @@ Some special text styles
   font-size: 2.5rem;
   margin-bottom: 0;
   cursor: default; }
+  .logo.logo-small {
+    font-size: 1.5rem; }
 
 /***
 
@@ -6348,7 +6362,7 @@ Animations
     opacity: 0; }
   100% {
     opacity: 1; } }
-.anim-delay-1s, #loader .progress {
+.anim-delay-1s, #loader .loader-intro {
   animation-name: delay;
   animation-duration: 1.5s; }
 
@@ -6359,20 +6373,17 @@ Scrollbar
 ***/
 /***
 
+Noscript
+
+***/
+/***
+
 Loader
 
 ***/
-#loader {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-  top: 0; }
-  #loader .valign {
-    width: 100%; }
-  #loader .progress {
-    max-width: 300px;
-    margin: auto; }
+#loader .loader-intro {
+  max-width: 300px;
+  margin: auto; }
 
 /***
 

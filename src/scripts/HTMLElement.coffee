@@ -30,7 +30,6 @@ class HTMLElement
 	parent: ()->
 		parent = @DOMElement.parentElement
 
-		console.log 'parent:', parent
 		if parent?
 			return new HTMLElement(parent)
 		else

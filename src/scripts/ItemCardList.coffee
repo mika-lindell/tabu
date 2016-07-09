@@ -33,8 +33,6 @@ class ItemCardList extends HTMLElement
 
 		count = @dataGetter.data.length
 
-		console.log count, count is 0, count is '0'
-
 		# Add some information about the list to DOM as attributes, so we can target with CSS selectors
 		if count is 0
 			parent = @parent()

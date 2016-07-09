@@ -155,7 +155,6 @@
     HTMLElement.prototype.parent = function() {
       var parent;
       parent = this.DOMElement.parentElement;
-      console.log('parent:', parent);
       if (parent != null) {
         return new HTMLElement(parent);
       } else {
@@ -488,7 +487,6 @@
         this.fragment.appendChild(card.DOMElement);
       }
       count = this.dataGetter.data.length;
-      console.log(count, count === 0, count === '0');
       if (count === 0) {
         parent = this.parent();
         if (parent != null) {
