@@ -1,63 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="20">
+            tests="24">
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="20" time="10.66" timestamp="Fri, 08 Jul 2016 14:21:52 GMT">
+    tests="24" time="13.21" timestamp="Sat, 09 Jul 2016 09:44:24 GMT">
   
-    <testcase name="it should display the extension" time="3.165" assertions="2">
+    <testcase name="it should display the extension" time="3.556" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="TODO: tests for loader" time="0.000" assertions="0">
+    <testcase name="TODO: tests for loader" time="0.001000" assertions="0">
     </testcase>
   
-    <testcase name="it should have section headings" time="0.1850" assertions="4">
+    <testcase name="it should have section headings" time="0.2160" assertions="4">
 
     
 
     
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="it should have navbar" time="0.02100" assertions="1">
-
-    
-    </testcase>
-  
-    <testcase name="navbar should have visibility off -button" time="0.05900" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="clicking visibility off -button should hide all elements" time="0.6210" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="TODO: it should save changed state of visibility locally" time="0.001000" assertions="0">
-    </testcase>
-  
-    <testcase name="clicking visibility off -button should hide it and make visibility on -button appear" time="0.05200" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="clicking visibility on -button should make all elements visible" time="0.5970" assertions="2">
 
     
 
@@ -71,7 +35,7 @@
     
     </testcase>
   
-    <testcase name="it should display latest bookmarks" time="1.074" assertions="32">
+    <testcase name="it should display latest bookmarks" time="1.113" assertions="32">
 
     
 
@@ -138,7 +102,7 @@
     
     </testcase>
   
-    <testcase name="TODO: it should display recently closed items" time="0.01700" assertions="1">
+    <testcase name="TODO: it should display recently closed items" time="0.01800" assertions="1">
 
     
     </testcase>
@@ -148,49 +112,115 @@
     
     </testcase>
   
-    <testcase name="it should have button to view bookmarks" time="0.05600" assertions="2">
+    <testcase name="it should have navbar" time="0.01900" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="navbar should have visibility off -button" time="0.07500" assertions="3">
+
+    
 
     
 
     
     </testcase>
   
-    <testcase name="clicking bookmark button should take to bookmark-page" time="1.324" assertions="2">
+    <testcase name="visibility-on -button should be hidden" time="0.04800" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to view history" time="0.06100" assertions="2">
+    <testcase name="clicking visibility off -button should hide all elements" time="0.6190" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="clicking history button should take to history-page" time="1.290" assertions="2">
+    <testcase name="clicking visibility off -button should hide it" time="0.02100" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="clicking visibility off -button should make visibility on -button appear" time="0.05000" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to view downloads" time="0.06200" assertions="2">
+    <testcase name="the state of visibility off should persist between sessions" time="1.857" assertions="3">
 
     
-
-    
-    </testcase>
-  
-    <testcase name="clicking downloads button should take to downloads-page" time="1.388" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="it should have button to open incognito-window" time="0.6330" assertions="2">
+    <testcase name="clicking visibility on -button should make all elements visible" time="0.6460" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="clicking visibility on -button should hide it" time="0.03100" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="clicking visibility on -button should make visibility-off -button appear" time="0.02700" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to view bookmarks" time="0.05000" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="clicking bookmark button should take to bookmark-page" time="1.340" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to view history" time="0.06000" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="clicking history button should take to history-page" time="1.327" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to view downloads" time="0.05900" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="clicking downloads button should take to downloads-page" time="1.382" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should have button to open incognito-window" time="0.6370" assertions="2">
 
     
 

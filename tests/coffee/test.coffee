@@ -9,7 +9,7 @@ module.exports =
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without
-		
+
 		# Create some bookmarks
 		# TODO: Can't test recentlyClosed and otherDevices, because I can't generate the data and the loading of profile seems bugged :(
 		createBS = (data)->
@@ -54,38 +54,6 @@ module.exports =
 		browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks')
 		browser.expect.element("#recently-closed").text.to.contain('Recently Closed')
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
-
-	###	
-	#
-	# NAVBAR AND VISIBILITY
-	#
-	###
-
-	'it should have navbar': (browser)->
-		browser.expect.element(".nav-wrapper").to.be.present
-
-	'navbar should have visibility off -button': (browser)->
-		browser.expect.element("#visibility-off").to.be.present
-		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
-
-	'clicking visibility off -button should hide all elements': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'block')
-		browser.click("#visibility-off")
-		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
-		browser.pause(500) # REMOVE
-
-	'TODO: it should save changed state of visibility locally': (browser)->
-
-	'clicking visibility off -button should hide it and make visibility on -button appear': (browser)->
-		browser.expect.element("#visibility-on").to.be.present
-		browser.expect.element("#visibility-on").text.to.contain('SEE US')
-
-	'clicking visibility on -button should make all elements visible': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'none')
-		browser.click("#visibility-on")
-		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
-		browser.pause(500) # REMOVE
-
 
 	###	
 	#
@@ -156,6 +124,64 @@ module.exports =
 
 	###	
 	#
+	# NAVBAR & VISIBILITY OFF
+	#
+	###
+
+	'it should have navbar': (browser)->
+		browser.expect.element(".nav-wrapper").to.be.present
+
+	'navbar should have visibility off -button': (browser)->
+		browser.expect.element("#visibility-off").to.be.present
+		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
+		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+
+	'visibility-on -button should be hidden': (browser)->
+		browser.expect.element("#visibility-on").to.be.present
+		browser.expect.element("#visibility-on").to.have.css('display', 'none')
+
+	'clicking visibility off -button should hide all elements': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'block')
+		browser.click("#visibility-off")
+		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
+		browser.pause(500) # REMOVE
+
+	'clicking visibility off -button should hide it': (browser)->
+		browser.expect.element("#visibility-off").to.have.css('display', 'none')
+
+	'clicking visibility off -button should make visibility on -button appear': (browser)->
+		browser.expect.element("#visibility-on").text.to.contain('SEE US')
+		browser.expect.element("#visibility-on").to.have.css('display', 'block')
+
+	###	
+	#
+	# VISIBILITY SETTING PERSISTS & VISIBILITY ON 
+	#
+	###
+
+	'the state of visibility off should persist between sessions': (browser)->
+		browser.url("https://www.google.fi")
+		browser.back()
+		browser.expect.element("#app").to.be.present.after(1000)
+
+		browser.expect.element("#visibility-on").to.have.css('display', 'block')
+		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.pause(500) # Give the extension some time to load JS
+
+	'clicking visibility on -button should make all elements visible': (browser)->
+		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.click("#visibility-on")
+		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
+		browser.pause(500) # REMOVE
+
+	'clicking visibility on -button should hide it': (browser)->
+		browser.expect.element("#visibility-on").to.have.css('display', 'none')
+
+	'clicking visibility on -button should make visibility-off -button appear': (browser)->
+		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+
+	###	
+	#
 	# ACTION BUTTONS: BOOKMARKS
 	#
 	###
@@ -170,7 +196,7 @@ module.exports =
 
 		browser.back()
 		browser.expect.element('#app').to.be.present.after(500)
-		browser.pause(500)
+		browser.pause(500) # Give the extension some time to load JS
 
 	###	
 	#
@@ -189,7 +215,7 @@ module.exports =
 
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
-		browser.pause(500)
+		browser.pause(500) # Give the extension some time to load JS
 
 	###	
 	#
@@ -207,7 +233,7 @@ module.exports =
 
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
-		browser.pause(500)
+		browser.pause(500) # Give the extension some time to load JS
 
 	###	
 	#

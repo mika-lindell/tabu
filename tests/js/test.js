@@ -55,36 +55,6 @@ module.exports = {
 
   /*	
   	 *
-  	 * NAVBAR AND VISIBILITY
-  	 *
-   */
-  'it should have navbar': function(browser) {
-    return browser.expect.element(".nav-wrapper").to.be.present;
-  },
-  'navbar should have visibility off -button': function(browser) {
-    browser.expect.element("#visibility-off").to.be.present;
-    return browser.expect.element("#visibility-off").text.to.contain('HIDE US');
-  },
-  'clicking visibility off -button should hide all elements': function(browser) {
-    browser.expect.element("#content-container").to.have.css('display', 'block');
-    browser.click("#visibility-off");
-    browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
-    return browser.pause(500);
-  },
-  'TODO: it should save changed state of visibility locally': function(browser) {},
-  'clicking visibility off -button should hide it and make visibility on -button appear': function(browser) {
-    browser.expect.element("#visibility-on").to.be.present;
-    return browser.expect.element("#visibility-on").text.to.contain('SEE US');
-  },
-  'clicking visibility on -button should make all elements visible': function(browser) {
-    browser.expect.element("#content-container").to.have.css('display', 'none');
-    browser.click("#visibility-on");
-    browser.expect.element("#content-container").to.have.css('display', 'block').after(500);
-    return browser.pause(500);
-  },
-
-  /*	
-  	 *
   	 * TOP SITES
   	 *
    */
@@ -147,6 +117,63 @@ module.exports = {
    */
   'TODO: it should display items from other devices': function(browser) {
     return browser.expect.element("#other-devices").to.be.present;
+  },
+
+  /*	
+  	 *
+  	 * NAVBAR & VISIBILITY OFF
+  	 *
+   */
+  'it should have navbar': function(browser) {
+    return browser.expect.element(".nav-wrapper").to.be.present;
+  },
+  'navbar should have visibility off -button': function(browser) {
+    browser.expect.element("#visibility-off").to.be.present;
+    browser.expect.element("#visibility-off").text.to.contain('HIDE US');
+    return browser.expect.element("#visibility-off").to.have.css('display', 'block');
+  },
+  'visibility-on -button should be hidden': function(browser) {
+    browser.expect.element("#visibility-on").to.be.present;
+    return browser.expect.element("#visibility-on").to.have.css('display', 'none');
+  },
+  'clicking visibility off -button should hide all elements': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'block');
+    browser.click("#visibility-off");
+    browser.expect.element("#content-container").to.have.css('display', 'none').after(500);
+    return browser.pause(500);
+  },
+  'clicking visibility off -button should hide it': function(browser) {
+    return browser.expect.element("#visibility-off").to.have.css('display', 'none');
+  },
+  'clicking visibility off -button should make visibility on -button appear': function(browser) {
+    browser.expect.element("#visibility-on").text.to.contain('SEE US');
+    return browser.expect.element("#visibility-on").to.have.css('display', 'block');
+  },
+
+  /*	
+  	 *
+  	 * VISIBILITY SETTING PERSISTS & VISIBILITY ON 
+  	 *
+   */
+  'the state of visibility off should persist between sessions': function(browser) {
+    browser.url("https://www.google.fi");
+    browser.back();
+    browser.expect.element("#app").to.be.present.after(1000);
+    browser.expect.element("#visibility-on").to.have.css('display', 'block');
+    browser.expect.element("#content-container").to.have.css('display', 'none');
+    return browser.pause(500);
+  },
+  'clicking visibility on -button should make all elements visible': function(browser) {
+    browser.expect.element("#content-container").to.have.css('display', 'none');
+    browser.click("#visibility-on");
+    browser.expect.element("#content-container").to.have.css('display', 'block').after(500);
+    return browser.pause(500);
+  },
+  'clicking visibility on -button should hide it': function(browser) {
+    return browser.expect.element("#visibility-on").to.have.css('display', 'none');
+  },
+  'clicking visibility on -button should make visibility-off -button appear': function(browser) {
+    return browser.expect.element("#visibility-off").to.have.css('display', 'block');
   },
 
   /*	
