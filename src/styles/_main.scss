@@ -1,6 +1,6 @@
 /***
 
-Colors
+Colors & styles
 
 ***/
 
@@ -8,6 +8,8 @@ $black: #000;
 $white: #FFF;
 $light-grey: #c7c7c7;
 $dark-grey: #5a5a5a;
+
+$border-light: 1px solid $light-grey;
 
 /***
 
@@ -32,7 +34,7 @@ select{
 	display: inline-block;
   background-color: $white;
   padding: 5px 10px;
-  border: 1px solid $light-grey;
+  border: $border-light;
   border-radius: 3px;
   width: auto;
   height: auto;
@@ -40,7 +42,7 @@ select{
 
 nav{
 	box-shadow: none;
-	border-bottom: 1px solid $light-grey;
+	border-bottom: $border-light;
 }
 
 /***
@@ -330,6 +332,10 @@ body{
 
 #actions{
 	margin: 0.5rem 0 1rem 0;
+}
+
+footer{
+	border-top: $border-light;
 }
 
 /***
