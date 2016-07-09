@@ -35,53 +35,62 @@
         </ul>
       </div>
     </nav>
-    <div class='container' id='content-container'>
-      <div class='row section'>
-        <div class='col s12'>
-          <div id='top-sites'>
-            <h4 class='animated'>Top Sites</h4>
-          </div>
+    <div id='content-container'>
+      <div class='container'>
+        <div class='row section'>
+          <section class='col s12'>
+            <div id='top-sites'>
+              <h4 class='animated'>Top Sites</h4>
+            </div>
+          </section>
+        </div>
+        <div class='row section'>
+          <section class='col s12 center'>
+            <div id='actions'>
+              <button class='btn-large light-blue darken-3 animated' id='view-bookmarks'>
+                <i class='material-icons left'>star</i>
+                Bookmarks
+              </button>
+              <button class='btn-large light-blue darken-3 animated' id='view-history'>
+                <i class='material-icons left'>restore</i>
+                History
+              </button>
+              <button class='btn-large light-blue darken-3 animated' id='view-downloads'>
+                <i class='material-icons left'>play_for_work</i>
+                Downloads
+              </button>
+              <button class='btn-large light-blue darken-3 animated' id='go-incognito'>
+                <i class='material-icons right'>open_in_new</i>
+                Go Incognito
+              </button>
+            </div>
+          </section>
+        </div>
+        <div class='row section'>
+          <section class='col s4'>
+            <div id='latest-bookmarks'>
+              <h4 class='animated'>Latest Bookmarks</h4>
+            </div>
+          </section>
+          <section class='col s4'>
+            <div id='recently-closed'>
+              <h4 class='animated'>Recently Closed</h4>
+            </div>
+          </section>
+          <section class='col s4'>
+            <div id='other-devices'>
+              <h4 class='animated'>Other Devices</h4>
+            </div>
+          </section>
         </div>
       </div>
-      <div class='row section'>
-        <div class='col s12 center'>
-          <div id='actions'>
-            <button class='btn-large light-blue darken-3 animated' id='view-bookmarks'>
-              <i class='material-icons left'>star</i>
-              Bookmarks
-            </button>
-            <button class='btn-large light-blue darken-3 animated' id='view-history'>
-              <i class='material-icons left'>restore</i>
-              History
-            </button>
-            <button class='btn-large light-blue darken-3 animated' id='view-downloads'>
-              <i class='material-icons left'>play_for_work</i>
-              Downloads
-            </button>
-            <button class='btn-large light-blue darken-3 animated' id='go-incognito'>
-              <i class='material-icons right'>open_in_new</i>
-              Go Incognito
-            </button>
-          </div>
+      <footer>
+        <div class='container center-align'>
+          <p class='font-size-small color-dark-grey'>
+            &copy; 2016 Mika Lindell
+          </p>
         </div>
-      </div>
-      <div class='row section'>
-        <div class='col s4'>
-          <div id='latest-bookmarks'>
-            <h4 class='animated'>Latest Bookmarks</h4>
-          </div>
-        </div>
-        <div class='col s4'>
-          <div id='recently-closed'>
-            <h4 class='animated'>Recently Closed</h4>
-          </div>
-        </div>
-        <div class='col s4'>
-          <div id='other-devices'>
-            <h4 class='animated'>Other Devices</h4>
-          </div>
-        </div>
-      </div>
+      </footer>
     </div>
     <script src='./scripts/app.js'></script>
   </body>

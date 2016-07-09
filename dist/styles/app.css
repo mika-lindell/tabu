@@ -6154,7 +6154,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     margin-bottom: 5em; } }
 /***
 
-Colors
+Colors & styles
 
 ***/
 /***
@@ -6369,6 +6369,9 @@ body {
 
 #actions {
   margin: 0.5rem 0 1rem 0; }
+
+footer {
+  border-top: 1px solid #c7c7c7; }
 
 /***
 
