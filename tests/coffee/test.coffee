@@ -355,6 +355,9 @@ module.exports =
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present
 		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
+
+	'clicking the incognito-button should open incognito-window': (browser)->
+
 		browser.click("#go-incognito")
 		browser.pause(500)
 

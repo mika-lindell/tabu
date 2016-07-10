@@ -325,9 +325,11 @@ module.exports = {
   	 *
    */
   'it should have button to open incognito-window': function(browser) {
-    var testIncognitoWin;
     browser.expect.element("#go-incognito").to.be.present;
-    browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
+    return browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
+  },
+  'clicking the incognito-button should open incognito-window': function(browser) {
+    var testIncognitoWin;
     browser.click("#go-incognito");
     browser.pause(500);
     testIncognitoWin = function(result) {
