@@ -1,36 +1,4 @@
 module.exports = {
-  mostVisited: [
-    {
-      "title": "Tervetuloa Google Chromeen",
-      "url": "http://www.google.com/chrome/intl/fi/welcome.html"
-    }, {
-      "title": "Chrome Web Store",
-      "url": "https://chrome.google.com/webstore?hl=fi"
-    }
-  ],
-
-  /*
-   {
-     "title": "Ilta-Sanomat - IS - Suomen suurin uutismedia"
-     "url": "http://www.iltasanomat.fi/"
-   },
-   {
-     "title": "Henkilöasiakkaat | Nordea.fi"
-     "url": "http://www.nordea.fi/"
-   },
-   {
-     "title": "TMTurbo - Tracks"
-     "url": "https://players.turbo.trackmania.com/pc/maps"
-   },
-   {
-     "title": "Dark Souls II Wiki - DarkSouls II Wiki"
-     "url": "http://darksouls2.wikidot.com/"
-   },
-   {
-     "title": "Battlelog / Battlefield Hardline"
-     "url": "http://battlelog.battlefield.com/"
-   },
-   */
   sites: [
     {
       "title": "Documentation - Materialize",
@@ -76,7 +44,7 @@ module.exports = {
       "url": "http://www.amazon.co.uk/gp/product/B009QVQQPW/ref=pe_385721_37038051_pd_te_s_mr_im/278-6074260-6132113"
     }, {
       "title": "Foundation for Sites 6 Docs",
-      "url": "http://foundation.zurb.com/docs/"
+      "url": "http://foundation.zurb.com/sites/docs/"
     }
   ]
 };

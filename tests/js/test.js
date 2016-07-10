@@ -339,5 +339,63 @@ module.exports = {
       return browser.switchWindow(result.value[0]);
     };
     return browser.windowHandles(testIncognitoWin);
+  },
+
+  /*	
+  	 *
+  	 * DOES LINKS TAKE PEOPLE TO PLACES?	
+  	 *
+   */
+  'clicking link in Top Sites should take to correct destination': function(browser) {
+    var done;
+    done = function(result) {
+      var href;
+      href = result.value;
+      browser.click("#top-sites-0");
+      browser.assert.urlContains(href);
+      browser.back();
+      browser.expect.element("#app").to.be.present.after(500);
+      return browser.pause(500);
+    };
+    return browser.getAttribute("#top-sites-0", 'href', done);
+  },
+  'clicking link in Latest Bookmarks should take to correct destination': function(browser) {
+    var done;
+    done = function(result) {
+      var href;
+      href = result.value;
+      browser.click("#latest-bookmarks-0");
+      browser.assert.urlContains(href);
+      browser.back();
+      browser.expect.element("#app").to.be.present.after(500);
+      return browser.pause(500);
+    };
+    return browser.getAttribute("#latest-bookmarks-0", 'href', done);
+  },
+  'clicking link in Recent History should take to correct destination': function(browser) {
+    var done;
+    done = function(result) {
+      var href;
+      href = result.value;
+      browser.click("#recent-history-0");
+      browser.assert.urlContains(href);
+      browser.back();
+      browser.expect.element("#app").to.be.present.after(500);
+      return browser.pause(500);
+    };
+    return browser.getAttribute("#recent-history-0", 'href', done);
+  },
+  'clicking link in Recently Closed should take to correct destination': function(browser) {
+    var done;
+    done = function(result) {
+      var href;
+      href = result.value;
+      browser.click("#recently-closed-0");
+      browser.assert.urlContains(href);
+      browser.back();
+      browser.expect.element("#app").to.be.present.after(500);
+      return browser.pause(500);
+    };
+    return browser.getAttribute("#recently-closed-0", 'href', done);
   }
 };

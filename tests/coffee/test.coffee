@@ -369,7 +369,63 @@ module.exports =
 
 		browser.windowHandles(testIncognitoWin)
 		
+	###	
+	#
+	# DOES LINKS TAKE PEOPLE TO PLACES?	
+	#
+	###
 
+	'clicking link in Top Sites should take to correct destination': (browser)->
+
+		done = (result)->
+			href = result.value
+			browser.click("#top-sites-0")
+			browser.assert.urlContains(href)
+			browser.back()
+
+			browser.expect.element("#app").to.be.present.after(500)
+			browser.pause(500) # Give the extension some time to load JS
+		
+		browser.getAttribute("#top-sites-0", 'href', done)
+
+	'clicking link in Latest Bookmarks should take to correct destination': (browser)->
+
+		done = (result)->
+			href = result.value
+			browser.click("#latest-bookmarks-0")
+			browser.assert.urlContains(href)
+			browser.back()
+
+			browser.expect.element("#app").to.be.present.after(500)
+			browser.pause(500) # Give the extension some time to load JS
+		
+		browser.getAttribute("#latest-bookmarks-0", 'href', done)
+
+	'clicking link in Recent History should take to correct destination': (browser)->
+
+		done = (result)->
+			href = result.value
+			browser.click("#recent-history-0")
+			browser.assert.urlContains(href)
+			browser.back()
+
+			browser.expect.element("#app").to.be.present.after(500)
+			browser.pause(500) # Give the extension some time to load JS
+		
+		browser.getAttribute("#recent-history-0", 'href', done)		
+
+	'clicking link in Recently Closed should take to correct destination': (browser)->
+
+		done = (result)->
+			href = result.value
+			browser.click("#recently-closed-0")
+			browser.assert.urlContains(href)
+			browser.back()
+
+			browser.expect.element("#app").to.be.present.after(500)
+			browser.pause(500) # Give the extension some time to load JS
+		
+		browser.getAttribute("#recently-closed-0", 'href', done)
 	
 
 
