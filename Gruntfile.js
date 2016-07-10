@@ -91,7 +91,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // test runner
+    // Test runner
     nightwatch: {
       options: {
         // task options
@@ -106,14 +106,13 @@ module.exports = function(grunt) {
         output_folder: 'report',
         globals_path: 'tests/js/globals.js', 
 
-
         test_settings: {
           default: {
             desiredCapabilities: {
-              'browserName': "chrome",
+              'browserName': "chrome", // We only need Chrome this time =)
               'silent': true,
               'chromeOptions' : {
-                'args': ['start-maximized', 'load-extension=' + process.cwd() + '/dist/']
+                'args': ['start-maximized', 'load-extension=' + process.cwd() + '/dist/'] // To load the extension for testing
               }
             }
           }
@@ -150,25 +149,38 @@ module.exports = function(grunt) {
     // File watch for lint, compilers and nightwatch e2e -tests
     watch: {
       lint: {
-        files: ['<%= jshint.files %>'],
-        tasks: ['jshint']
+        interrupt:  true,
+        files:      ['<%= jshint.files %>'],
+        tasks:      ['jshint']
       },
-      templates: {
-        files: ['src/**/*.haml'],
-        tasks: ['haml', 'nightwatch']
+      haml: {
+        interrupt:  true,
+        files:      ['src/**/*.haml'],
+        tasks:      ['haml']
       },
-      styles: {
-        files: ['src/**/*.scss'],
-        tasks: ['sass', 'nightwatch']
+      sass: {
+        interrupt:  true,
+        files:      ['src/**/*.scss'],
+        tasks:      ['sass']
       },
-      scripts: {
-        files: ['src/**/*.coffee'],
-        tasks: ['coffee:dist', 'nightwatch']
+      coffee: {
+        files:      ['src/**/*.coffee'],
+        tasks:      ['coffee:dist']
       },
-      tests: {
-        files: ['tests/**/*.coffee'],
-        tasks: ['coffee:tests', 'nightwatch']
+      nightwatch: {
+        files: ['tests/**/*.coffee', 'src/**/*.coffee', 'src/**/*.scss', 'src/**/*.haml'],
+        tasks: ['coffee:tests', 'force:nightwatch']
       }      
+    },
+
+    // Make tasks run independently - e.g don't have to wait tests to finish to build coffee or haml etc.
+    concurrent: {
+      build: {
+        tasks: ['watch:lint', 'watch:haml', 'watch:sass', 'watch:coffee', 'watch:nightwatch'],
+        options: {
+         logConcurrentOutput: true
+        }
+      }
     }
 
   });
@@ -185,6 +197,7 @@ module.exports = function(grunt) {
 
   // This will enable forcing tasks (to not exit on warnings) with 'force:' -prefix
   grunt.loadNpmTasks('grunt-force-task');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   grunt.registerTask('default', [
     'copy:assets', 
@@ -192,8 +205,8 @@ module.exports = function(grunt) {
     'haml', 
     'coffee', 
     'sass', 
-    'force:nightwatch', 
-    'watch'
+    'concurrent:build',
+    'concurrent:test',
     ]);
 
 
