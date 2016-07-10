@@ -10,7 +10,9 @@ module.exports = {
     browser.expect.element("#app").to.be.present.after(1000);
     return browser.pause(500);
   },
-  after: function(browser) {},
+  after: function(browser) {
+    return browser.end();
+  },
 
   /*	
   	 *
@@ -51,8 +53,10 @@ module.exports = {
   	 * TOP SITES
   	 *
    */
-  'it should display top sites': function(browser) {
-    return browser.expect.element("#top-sites-0").to.be.present.after(1000);
+  'Top sites should have only default items': function(browser) {
+    browser.expect.element("#top-sites-0").to.be.present;
+    browser.expect.element("#top-sites-1").to.be.present;
+    return browser.expect.element("#top-sites-2").not.to.be.present;
 
     /*
     		get = (data)->
@@ -125,13 +129,15 @@ module.exports = {
   'Recent History should have "no-items"-message visible': function(browser) {
     return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block');
   },
-  'Recent History should have item after visiting Google': function(browser) {
-    browser.url("https://www.google.fi");
+  'Recent History should have item after visiting a site': function(browser) {
+    browser.url("http://www.vero.fi");
+    browser.click('[href="/fi-FI/Henkiloasiakkaat"]');
+    browser.back();
     browser.back();
     browser.expect.element("#app").to.be.present.after(1000);
     browser.expect.element("#recent-history-0").to.be.present;
-    browser.expect.element("#recent-history-0").text.to.contain('Google');
-    return browser.expect.element("#recent-history-0").text.to.contain('www.google.fi');
+    browser.expect.element("#recent-history-0").text.to.contain('Verohallinto');
+    return browser.expect.element("#recent-history-0").text.to.contain('www.vero.fi');
   },
   'Recent History should have "no-items"-message hidden': function(browser) {
     return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none');
@@ -142,13 +148,48 @@ module.exports = {
   	 * RECENTLY CLOSED
   	 *
    */
-  'TODO: it should display recently closed items': function(browser) {},
+  'Recently Closed should not have any items': function(browser) {
+    return browser.expect.element("#recently-closed-0").not.to.be.present;
+  },
+  'Recently Closed should have "no-items"-message visible': function(browser) {
+    return browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'block');
+  },
+  'Recently Closed should have 1 item': function(browser) {
+    var done, openWin, testRecentlyClosed;
+    openWin = function(data) {
+      return window.open('http://www.vero.fi', '_blank');
+    };
+    testRecentlyClosed = function(result) {
+      browser.switchWindow(result.value[1]);
+      browser.closeWindow();
+      browser.switchWindow(result.value[0]);
+      browser.refresh();
+      browser.expect.element("#app").to.be.present.after(500);
+      browser.expect.element("#recently-closed-0").to.be.present;
+      browser.expect.element("#recently-closed-0").text.to.contain('Verohallinto');
+      browser.expect.element("#recently-closed-0").text.to.contain('www.vero.fi');
+      return browser.expect.element("#recently-closed-1").not.to.be.present;
+    };
+    done = function() {
+      return browser.windowHandles(testRecentlyClosed);
+    };
+    return browser.execute(openWin, [], done);
+  },
+  'Recently Closed should have "no-items"-message hidden': function(browser) {
+    return browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'none');
+  },
 
   /*	
   	 *
   	 * OTHER DEVICES
   	 *
    */
+  'Other Devices should not have any items': function(browser) {
+    return browser.expect.element("#other-devices-0").not.to.be.present;
+  },
+  'Other Devices  should have "no-items"-message visible': function(browser) {
+    return browser.expect.element("#other-devices > .no-items").to.have.css('display', 'block');
+  },
   'TODO: it should display items from other devices': function(browser) {},
 
   /*	
@@ -188,7 +229,9 @@ module.exports = {
   	 *
    */
   'the state of visibility off should persist between sessions': function(browser) {
-    browser.url("https://www.google.fi");
+    browser.url("http://www.kela.fi");
+    browser.click('[href="/aitiyspakkaus"]');
+    browser.back();
     browser.back();
     browser.expect.element("#app").to.be.present.after(1000);
     browser.expect.element("#visibility-on").to.have.css('display', 'block');
@@ -206,6 +249,23 @@ module.exports = {
   },
   'clicking visibility on -button should make visibility-off -button appear': function(browser) {
     return browser.expect.element("#visibility-off").to.have.css('display', 'block');
+  },
+
+  /*	
+  	 *
+  	 * TOP SITES NEW ITEMS
+  	 *
+   */
+  'Top Sites should have 2 new items': function(browser) {
+    browser.expect.element("#top-sites-0").to.be.present;
+    browser.expect.element("#top-sites-0").text.to.contain('Verohallinto');
+    browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi');
+    browser.expect.element("#top-sites-1").to.be.present;
+    browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi');
+    browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi');
+    browser.expect.element("#top-sites-2").to.be.present;
+    browser.expect.element("#top-sites-3").to.be.present;
+    return browser.expect.element("#top-sites-4").not.to.be.present;
   },
 
   /*	
@@ -265,9 +325,17 @@ module.exports = {
   	 *
    */
   'it should have button to open incognito-window': function(browser) {
+    var testIncognitoWin;
     browser.expect.element("#go-incognito").to.be.present;
     browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO');
     browser.click("#go-incognito");
-    return browser.pause(500);
+    browser.pause(500);
+    testIncognitoWin = function(result) {
+      browser.switchWindow(result.value[1]);
+      browser.expect.element("#incognitothemecss").to.be.present;
+      browser.closeWindow();
+      return browser.switchWindow(result.value[0]);
+    };
+    return browser.windowHandles(testIncognitoWin);
   }
 };

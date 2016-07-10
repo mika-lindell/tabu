@@ -13,7 +13,7 @@ module.exports =
 		browser.pause(500)
 
 	after: (browser)->
-		#browser.end()
+		browser.end()
 
 	###	
 	#
@@ -62,9 +62,13 @@ module.exports =
 	#
 	###
 
-	'it should display top sites': (browser)->
+	'Top sites should have only default items': (browser)->
 
-		browser.expect.element("#top-sites-0").to.be.present.after(1000) # Wait for page to load
+		browser.expect.element("#top-sites-0").to.be.present
+		browser.expect.element("#top-sites-1").to.be.present
+		browser.expect.element("#top-sites-2").not.to.be.present 
+
+
 
 		# TODO: Can't run these tests because the code cannot reach this data (don't want to expose extension to window-scope), and can't create dummy data
 		###
@@ -133,15 +137,17 @@ module.exports =
 	'Recent History should have "no-items"-message visible': (browser)->
 		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block')
 	
-	'Recent History should have item after visiting Google': (browser)->
+	'Recent History should have item after visiting a site': (browser)->
 
-		browser.url("https://www.google.fi")
+		browser.url("http://www.vero.fi")
+		browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
+		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(1000)
 
 		browser.expect.element("#recent-history-0").to.be.present
-		browser.expect.element("#recent-history-0").text.to.contain('Google')
-		browser.expect.element("#recent-history-0").text.to.contain('www.google.fi')
+		browser.expect.element("#recent-history-0").text.to.contain('Verohallinto')
+		browser.expect.element("#recent-history-0").text.to.contain('www.vero.fi')
 
 	'Recent History should have "no-items"-message hidden': (browser)->
 		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none')
@@ -153,14 +159,55 @@ module.exports =
 	#
 	###
 
-	'TODO: it should display recently closed items': (browser)->
-		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
+	'Recently Closed should not have any items': (browser)->
+		browser.expect.element("#recently-closed-0").not.to.be.present
+
+	'Recently Closed should have "no-items"-message visible': (browser)->
+		browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'block')
+
+	'Recently Closed should have 1 item': (browser)->
+		
+		openWin = (data)->
+			window.open('http://www.vero.fi', '_blank')
+
+		testRecentlyClosed = (result)->
+			# Create entry to Recently Closed
+			browser.switchWindow(result.value[1])
+			browser.closeWindow()
+			browser.switchWindow(result.value[0])
+
+			# Refresh to load the generated data
+			browser.refresh()
+			browser.expect.element("#app").to.be.present.after(500)
+
+			# Test if the item was added
+			browser.expect.element("#recently-closed-0").to.be.present
+			browser.expect.element("#recently-closed-0").text.to.contain('Verohallinto')
+			browser.expect.element("#recently-closed-0").text.to.contain('www.vero.fi')
+
+			browser.expect.element("#recently-closed-1").not.to.be.present
+
+		done = ()->
+
+			browser.windowHandles(testRecentlyClosed)
+
+		# Run this to begin the assertion
+		browser.execute(openWin, [], done)
+
+	'Recently Closed should have "no-items"-message hidden': (browser)->
+		browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'none')
 
 	###	
 	#
 	# OTHER DEVICES
 	#
 	###
+
+	'Other Devices should not have any items': (browser)->
+		browser.expect.element("#other-devices-0").not.to.be.present
+
+	'Other Devices  should have "no-items"-message visible': (browser)->
+		browser.expect.element("#other-devices > .no-items").to.have.css('display', 'block')
 
 	'TODO: it should display items from other devices': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
@@ -203,7 +250,9 @@ module.exports =
 	###
 
 	'the state of visibility off should persist between sessions': (browser)->
-		browser.url("https://www.google.fi")
+		browser.url("http://www.kela.fi")
+		browser.click('[href="/aitiyspakkaus"]')
+		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(1000)
 
@@ -222,6 +271,25 @@ module.exports =
 
 	'clicking visibility on -button should make visibility-off -button appear': (browser)->
 		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+
+	###	
+	#
+	# TOP SITES NEW ITEMS
+	#
+	###
+
+	'Top Sites should have 2 new items': (browser)->
+		browser.expect.element("#top-sites-0").to.be.present
+		browser.expect.element("#top-sites-0").text.to.contain('Verohallinto')
+		browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi')
+	
+		browser.expect.element("#top-sites-1").to.be.present
+		browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi')
+		browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi')
+		
+		browser.expect.element("#top-sites-2").to.be.present
+		browser.expect.element("#top-sites-3").to.be.present
+		browser.expect.element("#top-sites-4").not.to.be.present 
 
 	###	
 	#
@@ -290,10 +358,17 @@ module.exports =
 		browser.click("#go-incognito")
 		browser.pause(500)
 
-		# TODO: Didn't figure out way to test if the incogito window fires - have to rely on visual confirmation for now =)
+		testIncognitoWin = (result)->
+			browser.switchWindow(result.value[1])
+			browser.expect.element("#incognitothemecss").to.be.present
+			browser.closeWindow()
+			browser.switchWindow(result.value[0])
+
+		browser.windowHandles(testIncognitoWin)
 		
 
 	
+
 
 
 	
