@@ -6,24 +6,11 @@ module.exports = {
   	 *
    */
   before: function(browser) {
-    var createBS;
     browser.url('chrome://newtab');
-    createBS = function(data) {
-      var j, len, results, site;
-      results = [];
-      for (j = 0, len = data.length; j < len; j++) {
-        site = data[j];
-        results.push(chrome.bookmarks.create(site));
-      }
-      return results;
-    };
-    browser.execute(createBS, [browser.globals.sites]);
-    browser.url("chrome://newtab");
-    return browser.expect.element("#app").to.be.present.after(1000);
+    browser.expect.element("#app").to.be.present.after(1000);
+    return browser.pause(500);
   },
-  after: function(browser) {
-    return browser.end();
-  },
+  after: function(browser) {},
 
   /*	
   	 *
@@ -47,9 +34,15 @@ module.exports = {
   	 *
    */
   'it should have section headings': function(browser) {
+    browser.expect.element("#top-sites").to.be.present;
     browser.expect.element("#top-sites").text.to.contain('Top Sites');
+    browser.expect.element("#latest-bookmarks").to.be.present;
     browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks');
+    browser.expect.element("#recent-history").to.be.present;
+    browser.expect.element("#recent-history").text.to.contain('Recent History');
+    browser.expect.element("#recently-closed").to.be.present;
     browser.expect.element("#recently-closed").text.to.contain('Recently Closed');
+    browser.expect.element("#other-devices").to.be.present;
     return browser.expect.element("#other-devices").text.to.contain('Other Devices');
   },
 
@@ -59,7 +52,6 @@ module.exports = {
   	 *
    */
   'it should display top sites': function(browser) {
-    browser.expect.element("#top-sites").to.be.present;
     return browser.expect.element("#top-sites-0").to.be.present.after(1000);
 
     /*
@@ -84,10 +76,27 @@ module.exports = {
   	 * LATEST BOOKMARKS
   	 *
    */
-  'it should display latest bookmarks': function(browser) {
-    var i, j, len, ref, results, site;
-    browser.expect.element("#latest-bookmarks").to.be.present;
-    browser.expect.element("#latest-bookmarks-0").to.be.present.after(500);
+  'Latest Boomarks should not have any items': function(browser) {
+    return browser.expect.element("#latest-bookmarks-0").not.to.be.present;
+  },
+  'Latest Boomarks should have "no-items"-message visible': function(browser) {
+    return browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'block');
+  },
+  'Latest Boomarks should list recently added bookmarks': function(browser) {
+    var createBS, i, j, len, ref, results, site;
+    createBS = function(data) {
+      var j, len, results, site;
+      results = [];
+      for (j = 0, len = data.length; j < len; j++) {
+        site = data[j];
+        results.push(chrome.bookmarks.create(site));
+      }
+      return results;
+    };
+    browser.execute(createBS, [browser.globals.sites]);
+    browser.pause(500);
+    browser.refresh();
+    browser.expect.element("#app").to.be.present.after(1000);
     if (browser.globals.sites == null) {
       throw new Error('Test failed: no array.');
     }
@@ -95,10 +104,37 @@ module.exports = {
     results = [];
     for (i = j = 0, len = ref.length; j < len; i = ++j) {
       site = ref[i];
+      browser.expect.element("#latest-bookmarks-" + i).to.be.present;
       browser.expect.element("#latest-bookmarks-" + i).text.to.contain(site.title);
       results.push(browser.expect.element("#latest-bookmarks-" + i).to.have.attribute("href").which.equals(site.url));
     }
     return results;
+  },
+  'Latest Boomarks should have "no-items"-message hidden': function(browser) {
+    return browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'none');
+  },
+
+  /*	
+  	 *
+  	 * RECENT HISTORY
+  	 *
+   */
+  'Recent History should not have any items': function(browser) {
+    return browser.expect.element("#recent-history-0").not.to.be.present;
+  },
+  'Recent History should have "no-items"-message visible': function(browser) {
+    return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block');
+  },
+  'Recent History should have item after visiting Google': function(browser) {
+    browser.url("https://www.google.fi");
+    browser.back();
+    browser.expect.element("#app").to.be.present.after(1000);
+    browser.expect.element("#recent-history-0").to.be.present;
+    browser.expect.element("#recent-history-0").text.to.contain('Google');
+    return browser.expect.element("#recent-history-0").text.to.contain('www.google.fi');
+  },
+  'Recent History should have "no-items"-message hidden': function(browser) {
+    return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none');
   },
 
   /*	
@@ -106,18 +142,14 @@ module.exports = {
   	 * RECENTLY CLOSED
   	 *
    */
-  'TODO: it should display recently closed items': function(browser) {
-    return browser.expect.element("#recently-closed").to.be.present;
-  },
+  'TODO: it should display recently closed items': function(browser) {},
 
   /*	
   	 *
   	 * OTHER DEVICES
   	 *
    */
-  'TODO: it should display items from other devices': function(browser) {
-    return browser.expect.element("#other-devices").to.be.present;
-  },
+  'TODO: it should display items from other devices': function(browser) {},
 
   /*	
   	 *

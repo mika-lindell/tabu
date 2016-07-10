@@ -9,20 +9,11 @@ module.exports =
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without
-
-		# Create some bookmarks
-		# TODO: Can't test recentlyClosed and otherDevices, because I can't generate the data and the loading of profile seems bugged :(
-		createBS = (data)->
-			for site in data
-				chrome.bookmarks.create(site)
-
-		browser.execute(createBS, [browser.globals.sites])
-
-		browser.url("chrome://newtab") # This is done to load the generated content
 		browser.expect.element("#app").to.be.present.after(1000)
+		browser.pause(500)
 
 	after: (browser)->
-		browser.end()
+		#browser.end()
 
 	###	
 	#
@@ -50,9 +41,19 @@ module.exports =
 	###
 
 	'it should have section headings': (browser)->
+		browser.expect.element("#top-sites").to.be.present
 		browser.expect.element("#top-sites").text.to.contain('Top Sites')
+		
+		browser.expect.element("#latest-bookmarks").to.be.present
 		browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks')
+		
+		browser.expect.element("#recent-history").to.be.present
+		browser.expect.element("#recent-history").text.to.contain('Recent History')
+		
+		browser.expect.element("#recently-closed").to.be.present
 		browser.expect.element("#recently-closed").text.to.contain('Recently Closed')
+		
+		browser.expect.element("#other-devices").to.be.present
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
 	###	
@@ -63,7 +64,6 @@ module.exports =
 
 	'it should display top sites': (browser)->
 
-		browser.expect.element("#top-sites").to.be.present
 		browser.expect.element("#top-sites-0").to.be.present.after(1000) # Wait for page to load
 
 		# TODO: Can't run these tests because the code cannot reach this data (don't want to expose extension to window-scope), and can't create dummy data
@@ -89,18 +89,63 @@ module.exports =
 	#
 	###
 
-	'it should display latest bookmarks': (browser)->
+	'Latest Boomarks should not have any items': (browser)->
+		browser.expect.element("#latest-bookmarks-0").not.to.be.present
+		
+	'Latest Boomarks should have "no-items"-message visible': (browser)->
+		browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'block')
 
-		browser.expect.element("#latest-bookmarks").to.be.present
-		browser.expect.element("#latest-bookmarks-0").to.be.present.after(500) # Wait for page to load
+	'Latest Boomarks should list recently added bookmarks': (browser)->
+
+		# Create some bookmarks
+		createBS = (data)->
+			for site in data
+				chrome.bookmarks.create(site)
+
+		browser.execute(createBS, [browser.globals.sites])
+
+		# Refresh to load the generated data
+		browser.pause(500)
+		browser.refresh()
+		browser.expect.element("#app").to.be.present.after(1000)
+		
 
 		if !browser.globals.sites?
 			throw new Error('Test failed: no array.') 
 
 		for site, i in browser.globals.sites.slice(0).reverse() # Create reversed copy of data, as it will be in reversed order in recent list!
-
+			browser.expect.element("#latest-bookmarks-#{ i }").to.be.present
 			browser.expect.element("#latest-bookmarks-#{ i }").text.to.contain(site.title)
 			browser.expect.element("#latest-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)	
+
+	'Latest Boomarks should have "no-items"-message hidden': (browser)->
+		browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'none')
+
+	###	
+	#
+	# RECENT HISTORY
+	#
+	###
+
+	'Recent History should not have any items': (browser)->
+		browser.expect.element("#recent-history-0").not.to.be.present
+
+	'Recent History should have "no-items"-message visible': (browser)->
+		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block')
+	
+	'Recent History should have item after visiting Google': (browser)->
+
+		browser.url("https://www.google.fi")
+		browser.back()
+		browser.expect.element("#app").to.be.present.after(1000)
+
+		browser.expect.element("#recent-history-0").to.be.present
+		browser.expect.element("#recent-history-0").text.to.contain('Google')
+		browser.expect.element("#recent-history-0").text.to.contain('www.google.fi')
+
+	'Recent History should have "no-items"-message hidden': (browser)->
+		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none')
+
 
 	###	
 	#
@@ -110,7 +155,6 @@ module.exports =
 
 	'TODO: it should display recently closed items': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
-		browser.expect.element("#recently-closed").to.be.present
 
 	###	
 	#
@@ -120,7 +164,6 @@ module.exports =
 
 	'TODO: it should display items from other devices': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
-		browser.expect.element("#other-devices").to.be.present
 
 	###	
 	#
