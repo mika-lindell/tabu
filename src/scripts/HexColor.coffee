@@ -21,17 +21,8 @@ class HexColor
 	#	
 	fromUrl: (url)->
 
-		@parser = document.createElement('a')
-		@parser.href = url
-
-		hostname = @parser.hostname
-
-		# This will remove www. prefixes from url, but will keep subdomains.
-		searchPattern = '^w+\\d*\\.'
-		rx = new RegExp(searchPattern, 'gim')
-		replacePattern = ''
-		parsedHostname = hostname.replace(rx, replacePattern)
-		return @fromString(parsedHostname)
+		urlParser = new Url(url)
+		return @fromString(urlParser.noPrefix())
 
 	# Generates hexadecimal color from arbitrary string
 	# Courtesy of http://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript

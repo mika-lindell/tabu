@@ -52,6 +52,7 @@ module.exports = function(grunt) {
         files: [
           {                         
             'dist/scripts/app.js': [
+              'src/**/Url.coffee',
               'src/**/Binding.coffee',
               'src/**/Storage.coffee',
               'src/**/HexColor.coffee',

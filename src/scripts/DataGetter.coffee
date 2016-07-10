@@ -105,7 +105,7 @@ class DataGetter
 
 		return result
 
-	# Remove duplicate items from array of objects,
+	# Remove duplicate urls and empty titles from history array (array of objects).
 	#
 	# @param [array] The array to be modified
 	# @param [string] The name of the property which is compared to determine uniqueness
@@ -113,16 +113,12 @@ class DataGetter
 	#
 	# @return [array] Array with all 'undesirables' removed.
 	#
-	unique: (source, include, exclude = null)->
+	unique: (source)->
 
 		walker = (mapItem) ->
-			return mapItem[include]
+			return mapItem['url']
 
 		filter = (item, pos, array) ->
-			
-			if exclude?
-				return array.map(walker).indexOf(item[include]) == pos and item[exclude] != ''
-			else
-				return array.map(walker).indexOf(item[include]) == pos
+			return array.map(walker).indexOf(item['url']) == pos and item['title'] != ''
 
 		source.filter filter

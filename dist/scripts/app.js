@@ -1,7 +1,48 @@
 (function() {
-  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Visibility,
+  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Url, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
+
+  Url = (function() {
+    Url.url;
+
+    Url.protocol;
+
+    Url.hostname;
+
+    Url.pathname;
+
+    Url.port;
+
+    Url.search;
+
+    Url.hash;
+
+    function Url(url) {
+      var parser;
+      parser = document.createElement('a');
+      parser.href = url;
+      this.url = parser.href;
+      this.protocol = parser.protocol;
+      this.hostname = parser.hostname;
+      this.pathname = parser.pathname;
+      this.port = parser.port;
+      this.search = parser.search;
+      this.hash = parser.hash;
+      parser = null;
+    }
+
+    Url.prototype.noPrefix = function() {
+      var replacePattern, rx, searchPattern;
+      searchPattern = '^w+\\d*\\.';
+      rx = new RegExp(searchPattern, 'gim');
+      replacePattern = '';
+      return this.hostname.replace(rx, replacePattern);
+    };
+
+    return Url;
+
+  })();
 
   Binding = (function() {
     function Binding() {}
@@ -100,15 +141,9 @@
     }
 
     HexColor.prototype.fromUrl = function(url) {
-      var hostname, parsedHostname, replacePattern, rx, searchPattern;
-      this.parser = document.createElement('a');
-      this.parser.href = url;
-      hostname = this.parser.hostname;
-      searchPattern = '^w+\\d*\\.';
-      rx = new RegExp(searchPattern, 'gim');
-      replacePattern = '';
-      parsedHostname = hostname.replace(rx, replacePattern);
-      return this.fromString(parsedHostname);
+      var urlParser;
+      urlParser = new Url(url);
+      return this.fromString(urlParser.noPrefix());
     };
 
     HexColor.prototype.fromString = function(string) {
@@ -360,20 +395,13 @@
       return result;
     };
 
-    DataGetter.prototype.unique = function(source, include, exclude) {
+    DataGetter.prototype.unique = function(source) {
       var filter, walker;
-      if (exclude == null) {
-        exclude = null;
-      }
       walker = function(mapItem) {
-        return mapItem[include];
+        return mapItem['url'];
       };
       filter = function(item, pos, array) {
-        if (exclude != null) {
-          return array.map(walker).indexOf(item[include]) === pos && item[exclude] !== '';
-        } else {
-          return array.map(walker).indexOf(item[include]) === pos;
-        }
+        return array.map(walker).indexOf(item['url']) === pos && item['title'] !== '';
       };
       return source.filter(filter);
     };
