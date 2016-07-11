@@ -45,6 +45,14 @@ nav{
 	border-bottom: $border-light;
 }
 
+i.left{
+	margin-right: 10px;
+}
+
+i.right{
+	margin-left: 10px;
+}
+
 /***
 
 Material icons
@@ -435,10 +443,6 @@ button#go-incognito i.material-icons{
 	font-size: 1.35rem;
 }
 
-button#view-downloads i.material-icons{
-	font-size: 1.9rem;
-}
-
 /***
 
 Item card styles
@@ -498,7 +502,6 @@ a.item-card-link{
 	@extend .font-size-small;
 	@extend .color-dark-grey;
 }
-
 
 // Styles for horizontal lists
 .horizontal-list li{
