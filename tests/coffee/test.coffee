@@ -214,7 +214,7 @@ module.exports =
 
 	###	
 	#
-	# NAVBAR & VISIBILITY OFF
+	# VISIBILITY OFF & NAVBAR
 	#
 	###
 
@@ -245,13 +245,14 @@ module.exports =
 
 	###	
 	#
-	# VISIBILITY SETTING PERSISTS & VISIBILITY ON 
+	# VISIBILITY ON & VISIBILITY SETTING PERSISTS
 	#
 	###
 
-	'the state of visibility off should persist between sessions': (browser)->
-		browser.url("http://www.kela.fi")
-		browser.click('[href="/aitiyspakkaus"]')
+	'the state of visibility:off should persist between sessions': (browser)->
+		
+		browser.url("http://www.vero.fi")
+		browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
 		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(1000)
@@ -272,24 +273,16 @@ module.exports =
 	'clicking visibility on -button should make visibility-off -button appear': (browser)->
 		browser.expect.element("#visibility-off").to.have.css('display', 'block')
 
-	###	
-	#
-	# TOP SITES NEW ITEMS
-	#
-	###
+	'the state of visibility:on should persist between sessions': (browser)->
+		browser.url("http://www.kela.fi")
+		browser.click('[href="/aitiyspakkaus"]')
+		browser.back()
+		browser.back()
+		browser.expect.element("#app").to.be.present.after(1000)
 
-	'Top Sites should have 2 new items': (browser)->
-		browser.expect.element("#top-sites-0").to.be.present
-		browser.expect.element("#top-sites-0").text.to.contain('Verohallinto')
-		browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi')
-	
-		browser.expect.element("#top-sites-1").to.be.present
-		browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi')
-		browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi')
-		
-		browser.expect.element("#top-sites-2").to.be.present
-		browser.expect.element("#top-sites-3").to.be.present
-		browser.expect.element("#top-sites-4").not.to.be.present 
+		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+		browser.expect.element("#content-container").to.have.css('display', 'block')
+		browser.pause(500) # Give the extension some time to load JS
 
 	###	
 	#
@@ -368,7 +361,27 @@ module.exports =
 			browser.switchWindow(result.value[0])
 
 		browser.windowHandles(testIncognitoWin)
+	
+	###	
+	#
+	# TOP SITES NEW ITEMS
+	#
+	###
+
+	'Top Sites should have 2 new items': (browser)->
+
+		browser.expect.element("#top-sites-0").to.be.present
+		browser.expect.element("#top-sites-0").text.to.contain('Verohallinto')
+		browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi')
+	
+		browser.expect.element("#top-sites-1").to.be.present
+		browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi')
+		browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi')
 		
+		browser.expect.element("#top-sites-2").to.be.present
+		browser.expect.element("#top-sites-3").to.be.present
+		browser.expect.element("#top-sites-4").not.to.be.present 
+
 	###	
 	#
 	# DOES LINKS TAKE PEOPLE TO PLACES?	
