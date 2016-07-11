@@ -453,7 +453,7 @@ Item card styles
 
 .item-card-heading,
 .no-items {
-   padding-top: 1.2rem;
+  padding-top: 0.6rem;
 }
 
 a.item-card-link{
@@ -468,13 +468,14 @@ a.item-card-link{
 	display: inline-block;
 	border-width: 0.4rem;
 	border-style: solid;
-	padding: 0.5rem 0;
-	margin: 0.5rem;
-	width: 3.7rem;
-	height: 3.7rem;
+	// padding: 0.4rem 0;
+	// margin: 0.5rem;
+	margin-right: 0.6rem;
+	width: 3.0rem;
+	height: 3.0rem;
 	opacity: 0.75;
+	line-height: 2.3rem;
 
-	@extend .font-size-large;
 	@extend .center;
 	@extend .bolder;
 	@extend .uppercase;

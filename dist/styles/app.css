@@ -6261,7 +6261,7 @@ Font sizes
 .font-size-regular {
   font-size: 1.0rem; }
 
-.font-size-large, .item-card-badge, .no-items .headline {
+.font-size-large, .no-items .headline {
   font-size: 1.3rem; }
 
 /***
@@ -6443,7 +6443,7 @@ Item card styles
 
 .item-card-heading,
 .no-items {
-  padding-top: 1.2rem; }
+  padding-top: 0.6rem; }
 
 a.item-card-link {
   display: block;
@@ -6453,11 +6453,11 @@ a.item-card-link {
   display: inline-block;
   border-width: 0.4rem;
   border-style: solid;
-  padding: 0.5rem 0;
-  margin: 0.5rem;
-  width: 3.7rem;
-  height: 3.7rem;
-  opacity: 0.75; }
+  margin-right: 0.6rem;
+  width: 3.0rem;
+  height: 3.0rem;
+  opacity: 0.75;
+  line-height: 2.3rem; }
 
 .item-card-label-container {
   display: inline-block;
