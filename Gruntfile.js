@@ -149,17 +149,14 @@ module.exports = function(grunt) {
     // File watch for lint, compilers and nightwatch e2e -tests
     watch: {
       lint: {
-        interrupt:  true,
         files:      ['<%= jshint.files %>'],
         tasks:      ['jshint']
       },
       haml: {
-        interrupt:  true,
         files:      ['src/**/*.haml'],
         tasks:      ['haml']
       },
       sass: {
-        interrupt:  true,
         files:      ['src/**/*.scss'],
         tasks:      ['sass']
       },
