@@ -6372,6 +6372,9 @@ Animations
   animation-name: delay;
   animation-duration: 1.5s; }
 
+.transition-position, .item-card-list-column, .item-card {
+  transition: width 0.3s, top 0.3s, left 0.3s; }
+
 /***
 
 Scrollbar
@@ -6411,11 +6414,9 @@ body {
   margin: 0.5rem 0 1rem 0; }
 
 .container-large {
-  width: 90%;
-  margin: auto; }
-
-.card-list-column {
-  margin-right: 2.5rem; }
+  width: 100%;
+  margin: auto;
+  max-width: 1500px; }
 
 footer {
   border-top: 1px solid #c7c7c7; }
@@ -6426,12 +6427,14 @@ Button styles
 
 ***/
 #actions button {
-  margin-left: 0.3rem;
-  margin-right: 0.3rem; }
+  margin-bottom: 0.6rem;
+  width: 47%; }
   #actions button:first-child {
-    margin-left: 0; }
+    margin-left: 0;
+    margin-right: 0.6rem; }
   #actions button:last-child {
-    margin-right: 0; }
+    margin-right: 0;
+    margin-left: 0.6rem; }
 
 button#go-incognito i.material-icons {
   font-size: 1.35rem; }
@@ -6470,7 +6473,7 @@ a.item-card-link {
 .horizontal-list li {
   display: inline-block;
   padding-right: 1rem;
-  width: 33%; }
+  width: 100%; }
 
 .no-items {
   display: none;
@@ -6481,5 +6484,34 @@ a.item-card-link {
 
 [data-has-empty-list-as-child] > .no-items {
   display: block; }
+
+/***
+
+Responsive - breakpoints are the same as Materialize.css uses
+
+***/
+@media only screen and (min-width: 600px) {
+  .container-large {
+    width: 90%; }
+
+  #actions button {
+    width: 40%; }
+
+  .horizontal-list li {
+    width: 50%; } }
+@media only screen and (min-width: 992px) {
+  #actions button {
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+    margin-bottom: 0;
+    width: auto;
+    min-width: 180px; }
+    #actions button:first-child {
+      margin-right: 0.3rem; }
+    #actions button:last-child {
+      margin-left: 0.3rem; }
+
+  .horizontal-list li {
+    width: 33%; } }
 
 /*# sourceMappingURL=app.css.map */

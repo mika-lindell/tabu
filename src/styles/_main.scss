@@ -311,6 +311,11 @@ Animations
   animation-duration: 1.5s;
 }
 
+// To aniomate element movement on media query breakpoints
+.transition-position{
+	transition: width 0.3s, top 0.3s, left 0.3s;
+}
+
 // When under element .outro in hierarchy, outro-animation is played
 .intro .item-card,
 .intro .item-card-heading,
@@ -403,12 +408,13 @@ body{
 }
 
 .container-large{
-	width: 90%;
+	width: 100%;
 	margin: auto;
+	max-width: 1500px;
 }
 
 .card-list-column{
-	margin-right: 2.5rem;
+	// margin-right: 2.5rem;
 }
 
 footer{
@@ -425,17 +431,17 @@ $action-buttons-gap: 0.6rem;
 
 #actions button{
 
-	margin-left: $action-buttons-gap / 2;
-	margin-right: $action-buttons-gap / 2;
-
-	//min-width: 180px;
+	margin-bottom: $action-buttons-gap;
+	width: 47%;
 
 	&:first-child{
 		margin-left: 0;
+		margin-right: $action-buttons-gap;
 	}
 
 	&:last-child{
 		margin-right: 0;
+		margin-left: $action-buttons-gap;
 	}
 }
 
@@ -449,10 +455,14 @@ Item card styles
 
 ***/
 
+.item-card-list-column{
+	@extend .transition-position;
+}
+
 .item-card{
 	margin-bottom: 0.5rem;
 
-	//@extend .anim-move-in;
+	@extend .transition-position;
 }
 
 .item-card-heading,
@@ -472,8 +482,6 @@ a.item-card-link{
 	display: inline-block;
 	border-width: 0.4rem;
 	border-style: solid;
-	// padding: 0.4rem 0;
-	// margin: 0.5rem;
 	margin-right: 0.6rem;
 	width: 3.0rem;
 	height: 3.0rem;
@@ -507,7 +515,7 @@ a.item-card-link{
 .horizontal-list li{
 	display: inline-block;
 	padding-right: 1rem;
-	width: 33%;
+	width: 100%; 
 }
 
 // To display the 'no items in this list' -message when the list has no items =)
@@ -527,4 +535,59 @@ a.item-card-link{
 
 [data-has-empty-list-as-child] > .no-items{
 	display: block;
+}
+
+/***
+
+Responsive - breakpoints are the same as Materialize.css uses
+
+***/
+
+
+@media only screen and (min-width: 600px){
+
+	.container-large{
+		width: 90%;
+	}
+
+	#actions button{
+		width: 40%;
+	}	
+
+	.horizontal-list li{
+		width: 50%; // 2 items in arow instead of 1 in horiz lists
+	}
+
+
+
+}
+
+@media only screen and (min-width: 992px){
+	
+	#actions button{
+
+		margin-right: $action-buttons-gap / 2;
+		margin-left: $action-buttons-gap / 2;	
+
+		margin-bottom: 0;
+		width: auto;
+		min-width: 180px;
+
+		&:first-child{
+			margin-right: $action-buttons-gap / 2;
+		}
+
+		&:last-child{
+			margin-left: $action-buttons-gap / 2;
+		}
+	}	
+
+	.horizontal-list li{
+		width: 33%; // 3 items in arow instead of 2 in horiz lists
+	}
+
+}
+
+@media only screen and (min-width: 1200px){
+
 }
