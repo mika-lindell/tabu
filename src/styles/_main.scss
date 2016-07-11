@@ -311,9 +311,10 @@ Animations
   animation-duration: 1.5s;
 }
 
-// To aniomate element movement on media query breakpoints
-.transition-position{
-	transition: width 0.3s, top 0.3s, left 0.3s;
+// To animate element movement on media query breakpoints
+.transitions,
+.animated{
+	transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s, font-size, 0.2s;
 }
 
 // When under element .outro in hierarchy, outro-animation is played
@@ -455,14 +456,10 @@ Item card styles
 
 ***/
 
-.item-card-list-column{
-	@extend .transition-position;
-}
-
 .item-card{
 	margin-bottom: 0.5rem;
 
-	@extend .transition-position;
+	@extend .transitions;
 }
 
 .item-card-heading,
@@ -497,7 +494,7 @@ a.item-card-link{
 .item-card-label-container{
 	display: inline-block;
 	vertical-align: middle;
-	width: 75%; // For truncate to work (with text-overflow: ellipsis;)
+	width: 80%; // For truncate to work (with text-overflow: ellipsis;)
 
 	@extend .truncate;
 }
@@ -554,6 +551,10 @@ Responsive - breakpoints are the same as Materialize.css uses
 		width: 40%;
 	}	
 
+	.item-card-label-container{
+		width: 75%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+
 	.horizontal-list li{
 		width: 50%; // 2 items in arow instead of 1 in horiz lists
 	}
@@ -582,6 +583,10 @@ Responsive - breakpoints are the same as Materialize.css uses
 		}
 	}	
 
+	.item-card-label-container{
+		width: 79%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+
 	.horizontal-list li{
 		width: 33%; // 3 items in arow instead of 2 in horiz lists
 	}
@@ -589,5 +594,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 }
 
 @media only screen and (min-width: 1200px){
-
+	.item-card-label-container{
+		width: 81%; // For truncate to work (with text-overflow: ellipsis;)
+	}
 }

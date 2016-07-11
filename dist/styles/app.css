@@ -6372,8 +6372,9 @@ Animations
   animation-name: delay;
   animation-duration: 1.5s; }
 
-.transition-position, .item-card-list-column, .item-card {
-  transition: width 0.3s, top 0.3s, left 0.3s; }
+.transitions, .item-card,
+.animated {
+  transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s, font-size, 0.2s; }
 
 /***
 
@@ -6468,7 +6469,7 @@ a.item-card-link {
 .item-card-label-container {
   display: inline-block;
   vertical-align: middle;
-  width: 75%; }
+  width: 80%; }
 
 .horizontal-list li {
   display: inline-block;
@@ -6497,6 +6498,9 @@ Responsive - breakpoints are the same as Materialize.css uses
   #actions button {
     width: 40%; }
 
+  .item-card-label-container {
+    width: 75%; }
+
   .horizontal-list li {
     width: 50%; } }
 @media only screen and (min-width: 992px) {
@@ -6511,7 +6515,13 @@ Responsive - breakpoints are the same as Materialize.css uses
     #actions button:last-child {
       margin-left: 0.3rem; }
 
+  .item-card-label-container {
+    width: 79%; }
+
   .horizontal-list li {
     width: 33%; } }
+@media only screen and (min-width: 1200px) {
+  .item-card-label-container {
+    width: 81%; } }
 
 /*# sourceMappingURL=app.css.map */
