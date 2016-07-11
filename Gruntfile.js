@@ -98,9 +98,9 @@ module.exports = function(grunt) {
         standalone: false,
         workers: true,
 
-        // download settings
-        jar_version: '2.53.0',
-        jar_path: 'lib/selenium-server-standalone-2.53.0.jar',
+        // selenium server
+        jar_version: '2.53.1',
+        jar_path: 'lib/selenium-server-standalone-2.53.1.jar',
 
         src_folders: ['tests/js'],
         output_folder: 'report',

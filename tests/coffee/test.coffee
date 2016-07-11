@@ -172,10 +172,11 @@ module.exports =
 
 		testRecentlyClosed = (result)->
 			# Create entry to Recently Closed
+			browser.pause(500)
 			browser.switchWindow(result.value[1])
 			browser.closeWindow()
 			browser.switchWindow(result.value[0])
-
+			
 			# Refresh to load the generated data
 			browser.refresh()
 			browser.expect.element("#app").to.be.present.after(500)

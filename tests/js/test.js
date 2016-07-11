@@ -139,6 +139,7 @@ module.exports = {
       return window.open('http://www.vero.fi', '_blank');
     };
     testRecentlyClosed = function(result) {
+      browser.pause(500);
       browser.switchWindow(result.value[1]);
       browser.closeWindow();
       browser.switchWindow(result.value[0]);
