@@ -47,8 +47,8 @@ module.exports =
 		browser.expect.element("#latest-bookmarks").to.be.present
 		browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks')
 		
-		browser.expect.element("#recent-history").to.be.present
-		browser.expect.element("#recent-history").text.to.contain('Recent History')
+		# browser.expect.element("#recent-history").to.be.present
+		# browser.expect.element("#recent-history").text.to.contain('Recent History')
 		
 		browser.expect.element("#recently-closed").to.be.present
 		browser.expect.element("#recently-closed").text.to.contain('Recently Closed')
@@ -131,26 +131,26 @@ module.exports =
 	#
 	###
 
-	'Recent History should not have any items': (browser)->
-		browser.expect.element("#recent-history-0").not.to.be.present
+	# 'Recent History should not have any items': (browser)->
+	# 	browser.expect.element("#recent-history-0").not.to.be.present
 
-	'Recent History should have "no-items"-message visible': (browser)->
-		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block')
+	# 'Recent History should have "no-items"-message visible': (browser)->
+	# 	browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block')
 	
-	'Recent History should have item after visiting a site': (browser)->
+	# 'Recent History should have item after visiting a site': (browser)->
 
-		browser.url("http://www.vero.fi")
-		browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
-		browser.back()
-		browser.back()
-		browser.expect.element("#app").to.be.present.after(1000)
+	# 	browser.url("http://www.vero.fi")
+	# 	browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
+	# 	browser.back()
+	# 	browser.back()
+	# 	browser.expect.element("#app").to.be.present.after(1000)
 
-		browser.expect.element("#recent-history-0").to.be.present
-		browser.expect.element("#recent-history-0").text.to.contain('Verohallinto')
-		browser.expect.element("#recent-history-0").text.to.contain('www.vero.fi')
+	# 	browser.expect.element("#recent-history-0").to.be.present
+	# 	browser.expect.element("#recent-history-0").text.to.contain('Verohallinto')
+	# 	browser.expect.element("#recent-history-0").text.to.contain('www.vero.fi')
 
-	'Recent History should have "no-items"-message hidden': (browser)->
-		browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none')
+	# 'Recent History should have "no-items"-message hidden': (browser)->
+	# 	browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none')
 
 
 	###	
@@ -401,18 +401,18 @@ module.exports =
 		
 		browser.getAttribute("#latest-bookmarks-0", 'href', done)
 
-	'clicking link in Recent History should take to correct destination': (browser)->
+	# 'clicking link in Recent History should take to correct destination': (browser)->
 
-		done = (result)->
-			href = result.value
-			browser.click("#recent-history-0")
-			browser.assert.urlContains(href)
-			browser.back()
+	# 	done = (result)->
+	# 		href = result.value
+	# 		browser.click("#recent-history-0")
+	# 		browser.assert.urlContains(href)
+	# 		browser.back()
 
-			browser.expect.element("#app").to.be.present.after(500)
-			browser.pause(500) # Give the extension some time to load JS
+	# 		browser.expect.element("#app").to.be.present.after(500)
+	# 		browser.pause(500) # Give the extension some time to load JS
 		
-		browser.getAttribute("#recent-history-0", 'href', done)		
+	# 	browser.getAttribute("#recent-history-0", 'href', done)		
 
 	'clicking link in Recently Closed should take to correct destination': (browser)->
 

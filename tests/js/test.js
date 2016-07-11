@@ -40,8 +40,6 @@ module.exports = {
     browser.expect.element("#top-sites").text.to.contain('Top Sites');
     browser.expect.element("#latest-bookmarks").to.be.present;
     browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks');
-    browser.expect.element("#recent-history").to.be.present;
-    browser.expect.element("#recent-history").text.to.contain('Recent History');
     browser.expect.element("#recently-closed").to.be.present;
     browser.expect.element("#recently-closed").text.to.contain('Recently Closed');
     browser.expect.element("#other-devices").to.be.present;
@@ -123,25 +121,6 @@ module.exports = {
   	 * RECENT HISTORY
   	 *
    */
-  'Recent History should not have any items': function(browser) {
-    return browser.expect.element("#recent-history-0").not.to.be.present;
-  },
-  'Recent History should have "no-items"-message visible': function(browser) {
-    return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'block');
-  },
-  'Recent History should have item after visiting a site': function(browser) {
-    browser.url("http://www.vero.fi");
-    browser.click('[href="/fi-FI/Henkiloasiakkaat"]');
-    browser.back();
-    browser.back();
-    browser.expect.element("#app").to.be.present.after(1000);
-    browser.expect.element("#recent-history-0").to.be.present;
-    browser.expect.element("#recent-history-0").text.to.contain('Verohallinto');
-    return browser.expect.element("#recent-history-0").text.to.contain('www.vero.fi');
-  },
-  'Recent History should have "no-items"-message hidden': function(browser) {
-    return browser.expect.element("#recent-history > .no-items").to.have.css('display', 'none');
-  },
 
   /*	
   	 *
@@ -371,19 +350,6 @@ module.exports = {
       return browser.pause(500);
     };
     return browser.getAttribute("#latest-bookmarks-0", 'href', done);
-  },
-  'clicking link in Recent History should take to correct destination': function(browser) {
-    var done;
-    done = function(result) {
-      var href;
-      href = result.value;
-      browser.click("#recent-history-0");
-      browser.assert.urlContains(href);
-      browser.back();
-      browser.expect.element("#app").to.be.present.after(500);
-      return browser.pause(500);
-    };
-    return browser.getAttribute("#recent-history-0", 'href', done);
   },
   'clicking link in Recently Closed should take to correct destination': function(browser) {
     var done;

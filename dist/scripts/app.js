@@ -415,8 +415,6 @@
 
     DataStorage.latestBookmarks;
 
-    DataStorage.recentHistory;
-
     DataStorage.recentlyClosed;
 
     DataStorage.otherDevices;
@@ -424,7 +422,6 @@
     function DataStorage() {
       this.topSites = new DataGetter(chrome.topSites.get);
       this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
-      this.recentHistory = new DataGetter(chrome.history.search, 'recentHistory');
       this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
       this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
     }
@@ -432,7 +429,6 @@
     DataStorage.prototype.fetchAll = function() {
       this.topSites.fetch();
       this.latestBookmarks.fetch();
-      this.recentHistory.fetch();
       this.recentlyClosed.fetch();
       return this.otherDevices.fetch();
     };
@@ -785,13 +781,6 @@
         var container, list;
         container = new HTMLElement('#latest-bookmarks');
         list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
-        container.push(list);
-        return list.update();
-      };
-      this.dataStorage.recentHistory.done = function() {
-        var container, list;
-        container = new HTMLElement('#recent-history');
-        list = new ItemCardList(root.dataStorage.recentHistory, 'recent-history');
         container.push(list);
         return list.update();
       };
