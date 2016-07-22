@@ -2107,11 +2107,11 @@ ul {
 .z-depth-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22); }
 
-.hoverable, a.item-card-link {
+.hoverable, .item-card {
   transition: box-shadow .25s;
   box-shadow: 0; }
 
-.hoverable:hover, a.item-card-link:hover {
+.hoverable:hover, .item-card:hover {
   transition: box-shadow .25s;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
@@ -6302,12 +6302,6 @@ Helpers
 .color-white {
   color: #FFF; }
 
-.btn-large:active,
-.btn:active,
-.btn-large:active,
-a.item-card-link:active {
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
-
 .overlay, noscript, #loader {
   position: fixed;
   height: 100%;
@@ -6316,10 +6310,6 @@ a.item-card-link:active {
   top: 0; }
   .overlay .valign, noscript .valign, #loader .valign {
     width: 100%; }
-
-li[draggable] {
-  -webkit-user-drag: element !important;
-  -webkit-user-select: none !important; }
 
 /***
 
@@ -6450,13 +6440,28 @@ Button styles
 button#go-incognito i.material-icons {
   font-size: 1.35rem; }
 
+.btn-large:active,
+.btn:active,
+.btn-large:active {
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+
 /***
 
 Item card styles
 
 ***/
+[data-dragged-item] > .item-card {
+  box-shadow: none; }
+
 .item-card {
-  margin-bottom: 0.5rem; }
+  margin-bottom: 0.5rem;
+  border: 2px dashed transparent; }
+  .item-card.dragged {
+    border-color: #c7c7c7; }
+    .item-card.dragged * {
+      cursor: move !important; }
+  .item-card:active {
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
 
 .item-card-heading,
 .no-items {

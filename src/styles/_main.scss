@@ -201,12 +201,6 @@ Helpers
 	color: $white;
 }
 
-.btn-large:active,
-.btn:active,
-a.item-card-link:active{
-	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
-}
-
 .overlay{
 	position: fixed;
   height: 100%;
@@ -220,12 +214,6 @@ a.item-card-link:active{
 		width: 100%;
 	}
 
-}
-
-li[draggable]
-{
-	-webkit-user-drag: element !important;
-	-webkit-user-select: none !important;
 }
 
 /***
@@ -462,16 +450,45 @@ button#go-incognito i.material-icons{
 	font-size: 1.35rem;
 }
 
+.btn-large:active,
+.btn:active{
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
 /***
 
 Item card styles
 
 ***/
 
+//  li[draggable]
+//  {
+//  	-webkit-user-drag: element !important;
+//  	-webkit-user-select: none !important;
+// }
+
+[data-dragged-item] > .item-card{
+	box-shadow:none;
+}
+
 .item-card{
 	margin-bottom: 0.5rem;
+	border: 2px dashed transparent;
 
 	@extend .transitions;
+	@extend .hoverable;
+
+	&.dragged{
+		border-color: $light-grey;
+		*{
+			cursor: move !important;
+		}
+
+	}
+
+	&:active{
+		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+	}
 }
 
 .item-card-heading,
@@ -485,7 +502,6 @@ a.item-card-link{
 	border-radius: 2px;
 
 	@extend .color-black;
-	@extend .hoverable;
 }
 
 .item-card-badge{

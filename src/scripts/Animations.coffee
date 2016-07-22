@@ -24,6 +24,14 @@ class Animations
 
 		container.css('display', 'block')
 
+		cleanUp = ()->
+			container.removeClass('intro')
+
+		if not instant
+			setTimeout(cleanUp, @duration * 1000)
+		else
+			cleanUp()
+
 
 	# Plays the outro animation by adding .outro-class to´container element.
 	# Hence there needs to be CSS working in tandem with this script.	
@@ -40,10 +48,11 @@ class Animations
 			container.removeClass('intro')
 			container.addClass('outro')
 
-		setDisplay = ()->
+		cleanUp = ()->
 			container.css('display', 'none')
+			container.removeClass('outro')
 
 		if not instant
-			setTimeout(setDisplay, @duration * 1000)
+			setTimeout(cleanUp, @duration * 1000)
 		else
-			setDisplay()
+			cleanUp()

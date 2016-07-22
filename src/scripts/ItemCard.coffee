@@ -22,9 +22,11 @@ class ItemCard extends HTMLElement
 		@on('dragstart', ()->
 			dragStart(event, root)
 		)
-
 		@on('dragover', ()->
 			dragOver(event, root)
+		)
+		@on('dragend', ()->
+			dragEnd(event, root)
 		)
 
 		color = new HexColor(url)
@@ -32,6 +34,7 @@ class ItemCard extends HTMLElement
 
 		link = new HTMLElement('a')
 		link.attr('href', url.href)
+		link.attr('draggable', 'false')
 		
 		link.addClass('item-card-link')
 
@@ -68,17 +71,24 @@ class ItemCard extends HTMLElement
 	dragStart = (ev, root)->
 
 		root.parent().attr('data-dragged-item', root.attr('id'))
+		root.addClass('dragged')
 		
 		ev.dataTransfer.setData('text/html', root.html())
-		#ev.dataTransfer.setData("text", root.html())
-		#ev.dataTransfer.setDragImage(root.html(), 0, 0)
+
+		ghost = root.DOMElement.cloneNode(true)
+
+		ev.dataTransfer.setDragImage(ghost, 0, 0)
 		ev.dataTransfer.effectAllowed = "move"
 
 	dragOver = (ev, root)->
+
+		ev.preventDefault()
 		ev.dataTransfer.dropEffect = "move"
 
 		parent = root.parent()
 		target = ev.target.closest('li')
+
+		target.style.cursor = 'move'
 		
 		draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'))
 		
@@ -106,25 +116,8 @@ class ItemCard extends HTMLElement
 				if target.nextSibling
 					parent.insert(draggedItem, target, 'after')
 
-
-		# parent = root.parent()
-
-		# draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'))
-		
-		# if draggedItem?
-	 #  	# If this list is horizontal, some special rules are needed to make dragging feel intuitive
-		# 	if root.css('display') is 'inline-block'
-		# 		# If we are moving left, move the dragger item before the item mouse is over
-		# 		if ev.clientX < root.oldClientX
-		# 			if ev.target # Are we actually over an element?
-		# 				parent.insert draggedItem, ev.target.closest('li')
-		# 		# If we are moving left, move the dragger item before the item mouse is over
-		# 		else if ev.clientX > root.oldClientX
-		# 			if ev.target.nextSibling # Are we actually over an element?
-		# 				parent.insert draggedItem, ev.target.nextSibling.closest('li')
-		# 	else # This list doesn't have horizontal layout, so we can just insert before all night long
-		# 		parent.insert draggedItem, ev.target.closest('li')
-
-	 #  root.oldClientX = ev.clientX
-	 #  ev.preventDefault()
-	  return
+	dragEnd = (ev, root)->
+		ev.preventDefault()
+		console.log 'Drop'
+		root.parent().removeAttr('data-dragged-item')
+		root.removeClass('dragged')

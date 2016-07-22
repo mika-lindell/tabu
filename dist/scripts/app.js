@@ -250,6 +250,12 @@
       }
     };
 
+    HTMLElement.prototype.removeAttr = function(attrName) {
+      if (attrName != null) {
+        return this.DOMElement.removeAttribute(attrName);
+      }
+    };
+
     HTMLElement.prototype.css = function(ruleName, newValue) {
       if (newValue == null) {
         newValue = null;
@@ -489,7 +495,7 @@
   })();
 
   ItemCard = (function(superClass) {
-    var dragOver, dragStart;
+    var dragEnd, dragOver, dragStart;
 
     extend(ItemCard, superClass);
 
@@ -516,10 +522,14 @@
       this.on('dragover', function() {
         return dragOver(event, root);
       });
+      this.on('dragend', function() {
+        return dragEnd(event, root);
+      });
       color = new HexColor(url);
       url = new Url(url);
       link = new HTMLElement('a');
       link.attr('href', url.href);
+      link.attr('draggable', 'false');
       link.addClass('item-card-link');
       if (id != null) {
         link.attr('id', id + '-link');
@@ -546,31 +556,44 @@
     }
 
     dragStart = function(ev, root) {
+      var ghost;
       root.parent().attr('data-dragged-item', root.attr('id'));
+      root.addClass('dragged');
       ev.dataTransfer.setData('text/html', root.html());
+      ghost = root.DOMElement.cloneNode(true);
+      ev.dataTransfer.setDragImage(ghost, 0, 0);
       return ev.dataTransfer.effectAllowed = "move";
     };
 
     dragOver = function(ev, root) {
       var draggedItem, parent, target;
+      ev.preventDefault();
       ev.dataTransfer.dropEffect = "move";
       parent = root.parent();
       target = ev.target.closest('li');
+      target.style.cursor = 'move';
       draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
       if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
         if (target === parent.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
-          parent.append(draggedItem);
+          return parent.append(draggedItem);
         } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
           console.log('DragOver: insertBefore');
-          parent.insert(draggedItem, target);
+          return parent.insert(draggedItem, target);
         } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
           console.log('DragOver: insertAfter');
           if (target.nextSibling) {
-            parent.insert(draggedItem, target, 'after');
+            return parent.insert(draggedItem, target, 'after');
           }
         }
       }
+    };
+
+    dragEnd = function(ev, root) {
+      ev.preventDefault();
+      console.log('Drop');
+      root.parent().removeAttr('data-dragged-item');
+      return root.removeClass('dragged');
     };
 
     return ItemCard;
@@ -659,7 +682,7 @@
     }
 
     Animations.prototype.intro = function(instant) {
-      var container;
+      var cleanUp, container;
       if (instant == null) {
         instant = false;
       }
@@ -669,11 +692,19 @@
         container.removeClass('outro');
         container.addClass('intro');
       }
-      return container.css('display', 'block');
+      container.css('display', 'block');
+      cleanUp = function() {
+        return container.removeClass('intro');
+      };
+      if (!instant) {
+        return setTimeout(cleanUp, this.duration * 1000);
+      } else {
+        return cleanUp();
+      }
     };
 
     Animations.prototype.outro = function(instant) {
-      var container, setDisplay;
+      var cleanUp, container;
       if (instant == null) {
         instant = false;
       }
@@ -683,13 +714,14 @@
         container.removeClass('intro');
         container.addClass('outro');
       }
-      setDisplay = function() {
-        return container.css('display', 'none');
+      cleanUp = function() {
+        container.css('display', 'none');
+        return container.removeClass('outro');
       };
       if (!instant) {
-        return setTimeout(setDisplay, this.duration * 1000);
+        return setTimeout(cleanUp, this.duration * 1000);
       } else {
-        return setDisplay();
+        return cleanUp();
       }
     };
 

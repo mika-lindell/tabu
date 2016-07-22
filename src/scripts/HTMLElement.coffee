@@ -73,6 +73,14 @@ class HTMLElement
 			return @DOMElement.setAttribute(attrName, newValue)
 		else
 			return @DOMElement.getAttribute(attrName)
+			
+	# Removes an attribute from an element
+	#
+	# @param [String] Attribute to be removed
+	#
+	removeAttr: (attrName)->
+		if attrName?
+			return @DOMElement.removeAttribute(attrName)
 
 	# Gets/sets a style rule of an element.
 	# NOTE: rule border-color is borderColor etc.
