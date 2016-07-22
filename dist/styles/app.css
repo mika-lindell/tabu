@@ -6302,6 +6302,12 @@ Helpers
 .color-white {
   color: #FFF; }
 
+.btn-large:active,
+.btn:active,
+.btn-large:active,
+a.item-card-link:active {
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+
 .overlay, noscript, #loader {
   position: fixed;
   height: 100%;
@@ -6310,6 +6316,10 @@ Helpers
   top: 0; }
   .overlay .valign, noscript .valign, #loader .valign {
     width: 100%; }
+
+li[draggable] {
+  -webkit-user-drag: element !important;
+  -webkit-user-select: none !important; }
 
 /***
 
@@ -6374,7 +6384,7 @@ Animations
 
 .transitions, .item-card,
 .animated {
-  transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s, font-size, 0.2s; }
+  transition: all 0.3s; }
 
 /***
 
@@ -6454,9 +6464,8 @@ Item card styles
 
 a.item-card-link {
   display: block;
-  padding: 0.5rem; }
-  a.item-card-link:active {
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+  padding: 0.5rem;
+  border-radius: 2px; }
 
 .item-card-badge {
   display: inline-block;

@@ -88,6 +88,8 @@ class HTMLElement
 		else
 			return @DOMElement.style[ruleName]
 
+	# TODO: Rewrite to use classList
+
 	# Add CSS class to an element
 	#
 	# @param [String] List of classes to be added (separated with space)
@@ -118,12 +120,39 @@ class HTMLElement
 	#
 	# @param [HTMLElement] The element to be added
 	#
-	push: (element = null)->
+	append: (element = null)->
 		if element?
 			if element instanceof HTMLElement
 				return @DOMElement.appendChild(element.DOMElement)
 			else
 				return @DOMElement.appendChild(element)
+
+	# Add child element before or after specified child
+	#
+	# @param [HTMLElement] The element to be added
+	# @param [Mixed] The element at the insertion point
+	#
+	insert: (element = null, target = null, beforeOrAfter = 'before')->
+		if element? and target?
+
+				if target instanceof HTMLElement then target = target.DOMElement
+
+				if beforeOrAfter is 'before'
+					@DOMElement.insertBefore(element.DOMElement, target)
+					return true
+				else
+					if target.nextSibling?
+						@DOMElement.insertBefore(element.DOMElement, target.nextSibling)
+						return true
+					else
+						return false
+
+	top: ()->
+		return @DOMElement.offsetTop
+
+	left: ()->
+		return @DOMElement.offsetLeft
+
 
 	# Bind element to variable
 	#

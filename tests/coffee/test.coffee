@@ -119,8 +119,8 @@ module.exports =
 
 		for site, i in browser.globals.sites.slice(0).reverse() # Create reversed copy of data, as it will be in reversed order in recent list!
 			browser.expect.element("#latest-bookmarks-#{ i }").to.be.present
-			browser.expect.element("#latest-bookmarks-#{ i }").text.to.contain(site.title)
-			browser.expect.element("#latest-bookmarks-#{ i }").to.have.attribute("href").which.equals(site.url)	
+			browser.expect.element("#latest-bookmarks-#{ i }-link").text.to.contain(site.title)
+			browser.expect.element("#latest-bookmarks-#{ i }-link").to.have.attribute("href").which.equals(site.url)	
 
 	'Latest Boomarks should have "no-items"-message hidden': (browser)->
 		browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'none')
@@ -183,8 +183,8 @@ module.exports =
 
 			# Test if the item was added
 			browser.expect.element("#recently-closed-0").to.be.present
-			browser.expect.element("#recently-closed-0").text.to.contain('Verohallinto')
-			browser.expect.element("#recently-closed-0").text.to.contain('www.vero.fi')
+			browser.expect.element("#recently-closed-0-link").text.to.contain('Verohallinto')
+			browser.expect.element("#recently-closed-0-link").text.to.contain('www.vero.fi')
 
 			browser.expect.element("#recently-closed-1").not.to.be.present
 
@@ -372,12 +372,12 @@ module.exports =
 	'Top Sites should have 2 new items': (browser)->
 
 		browser.expect.element("#top-sites-0").to.be.present
-		browser.expect.element("#top-sites-0").text.to.contain('Verohallinto')
-		browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi')
+		browser.expect.element("#top-sites-0-link").text.to.contain('Verohallinto')
+		browser.expect.element("#top-sites-0-link").text.to.contain('www.vero.fi')
 	
 		browser.expect.element("#top-sites-1").to.be.present
-		browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi')
-		browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi')
+		browser.expect.element("#top-sites-1-link").text.to.contain('Henkilöasiakkaat - kela.fi')
+		browser.expect.element("#top-sites-1-link").text.to.contain('www.kela.fi')
 		
 		browser.expect.element("#top-sites-2").to.be.present
 		browser.expect.element("#top-sites-3").to.be.present

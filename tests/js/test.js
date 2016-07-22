@@ -107,8 +107,8 @@ module.exports = {
     for (i = j = 0, len = ref.length; j < len; i = ++j) {
       site = ref[i];
       browser.expect.element("#latest-bookmarks-" + i).to.be.present;
-      browser.expect.element("#latest-bookmarks-" + i).text.to.contain(site.title);
-      results.push(browser.expect.element("#latest-bookmarks-" + i).to.have.attribute("href").which.equals(site.url));
+      browser.expect.element("#latest-bookmarks-" + i + "-link").text.to.contain(site.title);
+      results.push(browser.expect.element("#latest-bookmarks-" + i + "-link").to.have.attribute("href").which.equals(site.url));
     }
     return results;
   },
@@ -146,8 +146,8 @@ module.exports = {
       browser.refresh();
       browser.expect.element("#app").to.be.present.after(500);
       browser.expect.element("#recently-closed-0").to.be.present;
-      browser.expect.element("#recently-closed-0").text.to.contain('Verohallinto');
-      browser.expect.element("#recently-closed-0").text.to.contain('www.vero.fi');
+      browser.expect.element("#recently-closed-0-link").text.to.contain('Verohallinto');
+      browser.expect.element("#recently-closed-0-link").text.to.contain('www.vero.fi');
       return browser.expect.element("#recently-closed-1").not.to.be.present;
     };
     done = function() {
@@ -321,11 +321,11 @@ module.exports = {
    */
   'Top Sites should have 2 new items': function(browser) {
     browser.expect.element("#top-sites-0").to.be.present;
-    browser.expect.element("#top-sites-0").text.to.contain('Verohallinto');
-    browser.expect.element("#top-sites-0").text.to.contain('www.vero.fi');
+    browser.expect.element("#top-sites-0-link").text.to.contain('Verohallinto');
+    browser.expect.element("#top-sites-0-link").text.to.contain('www.vero.fi');
     browser.expect.element("#top-sites-1").to.be.present;
-    browser.expect.element("#top-sites-1").text.to.contain('Henkilöasiakkaat - kela.fi');
-    browser.expect.element("#top-sites-1").text.to.contain('www.kela.fi');
+    browser.expect.element("#top-sites-1-link").text.to.contain('Henkilöasiakkaat - kela.fi');
+    browser.expect.element("#top-sites-1-link").text.to.contain('www.kela.fi');
     browser.expect.element("#top-sites-2").to.be.present;
     browser.expect.element("#top-sites-3").to.be.present;
     return browser.expect.element("#top-sites-4").not.to.be.present;

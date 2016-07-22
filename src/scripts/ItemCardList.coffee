@@ -40,4 +40,4 @@ class ItemCardList extends HTMLElement
 		
 		@attr('data-list-count', count) # To list the count of children
 
-		@push(@fragment) 
+		@append(@fragment) 

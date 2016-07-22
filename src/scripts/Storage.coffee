@@ -48,6 +48,23 @@ class Storage
 		else
 			chrome.storage.sync.set(items, setComplete)
 
+	# Remove key/value-pairs to local or cloud storage.
+	#
+	# @param [Mixed] String, array of strings, or object containing keys containing key/value-pairs to be removed.
+	# @param [String] The storage area, where from the data will be removed. Can be 'cloud' or 'local', defaults to 'cloud'.
+	#
+	remove: (items, area = 'cloud')->
+
+		console.log "Storage: I'm trying to remove data from #{area} storage..."
+
+		removeComplete = ()->
+			console.log "Storage: Ok, removed data from #{area} storage."
+
+		if area is 'local'
+			chrome.storage.local.remove(items, removeComplete)
+		else
+			chrome.storage.sync.remove(items, removeComplete)
+
 	# Delete all key/value-pairs from local or cloud storage 
 	#
 	# @param [String] The storage area, where from the data will be deleted. Can be 'cloud' or 'local', defaults to 'cloud'.

@@ -22,7 +22,7 @@ class HexColor
 	fromUrl: (url)->
 
 		urlParser = new Url(url)
-		return @fromString(urlParser.noPrefix())
+		return @fromString(urlParser.withoutPrefix())
 
 	# Generates hexadecimal color from arbitrary string
 	# Courtesy of http://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript

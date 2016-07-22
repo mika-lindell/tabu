@@ -4,7 +4,7 @@
     hasProp = {}.hasOwnProperty;
 
   Url = (function() {
-    Url.url;
+    Url.href;
 
     Url.protocol;
 
@@ -22,7 +22,7 @@
       var parser;
       parser = document.createElement('a');
       parser.href = url;
-      this.url = parser.href;
+      this.href = parser.href;
       this.protocol = parser.protocol;
       this.hostname = parser.hostname;
       this.pathname = parser.pathname;
@@ -32,7 +32,7 @@
       parser = null;
     }
 
-    Url.prototype.noPrefix = function() {
+    Url.prototype.withoutPrefix = function() {
       var replacePattern, rx, searchPattern;
       searchPattern = '^w+\\d*\\.';
       rx = new RegExp(searchPattern, 'gim');
@@ -92,6 +92,22 @@
       }
     };
 
+    Storage.prototype.remove = function(items, area) {
+      var removeComplete;
+      if (area == null) {
+        area = 'cloud';
+      }
+      console.log("Storage: I'm trying to remove data from " + area + " storage...");
+      removeComplete = function() {
+        return console.log("Storage: Ok, removed data from " + area + " storage.");
+      };
+      if (area === 'local') {
+        return chrome.storage.local.remove(items, removeComplete);
+      } else {
+        return chrome.storage.sync.remove(items, removeComplete);
+      }
+    };
+
     Storage.prototype.clear = function(area) {
       var clearComplete;
       if (area == null) {
@@ -143,7 +159,7 @@
     HexColor.prototype.fromUrl = function(url) {
       var urlParser;
       urlParser = new Url(url);
-      return this.fromString(urlParser.noPrefix());
+      return this.fromString(urlParser.withoutPrefix());
     };
 
     HexColor.prototype.fromString = function(string) {
@@ -276,7 +292,7 @@
       }
     };
 
-    HTMLElement.prototype.push = function(element) {
+    HTMLElement.prototype.append = function(element) {
       if (element == null) {
         element = null;
       }
@@ -287,6 +303,42 @@
           return this.DOMElement.appendChild(element);
         }
       }
+    };
+
+    HTMLElement.prototype.insert = function(element, target, beforeOrAfter) {
+      if (element == null) {
+        element = null;
+      }
+      if (target == null) {
+        target = null;
+      }
+      if (beforeOrAfter == null) {
+        beforeOrAfter = 'before';
+      }
+      if ((element != null) && (target != null)) {
+        if (target instanceof HTMLElement) {
+          target = target.DOMElement;
+        }
+        if (beforeOrAfter === 'before') {
+          this.DOMElement.insertBefore(element.DOMElement, target);
+          return true;
+        } else {
+          if (target.nextSibling != null) {
+            this.DOMElement.insertBefore(element.DOMElement, target.nextSibling);
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    };
+
+    HTMLElement.prototype.top = function() {
+      return this.DOMElement.offsetTop;
+    };
+
+    HTMLElement.prototype.left = function() {
+      return this.DOMElement.offsetLeft;
     };
 
     HTMLElement.prototype.bind = function(variable) {};
@@ -438,47 +490,89 @@
   })();
 
   ItemCard = (function(superClass) {
+    var dragOver, dragStart;
+
     extend(ItemCard, superClass);
 
+    ItemCard.oldClientX = 0;
+
+    ItemCard.container;
+
     function ItemCard(title, url, id) {
-      var badge, color, hostname, label, labelContainer, labelUrl, lineBreak, link, parsedHostname, replacePattern, rx, searchPattern;
+      var badge, color, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
       if (id == null) {
         id = null;
       }
       ItemCard.__super__.constructor.call(this, 'li');
       this.addClass('item-card');
+      if (id != null) {
+        this.attr('id', id);
+      }
+      this.attr('draggable', 'true');
+      this.container = this.parent();
+      root = this;
+      this.on('dragstart', function() {
+        return dragStart(event, root);
+      });
+      this.on('dragover', function() {
+        return dragOver(event, root);
+      });
       color = new HexColor(url);
+      url = new Url(url);
       link = new HTMLElement('a');
-      link.attr('href', url);
+      link.attr('href', url.href);
       link.addClass('item-card-link');
       if (id != null) {
-        link.attr('id', id);
+        link.attr('id', id + '-link');
       }
-      hostname = link.DOMElement.hostname;
-      searchPattern = '^w+\\d*\\.';
-      rx = new RegExp(searchPattern, 'gim');
-      replacePattern = '';
-      parsedHostname = hostname.replace(rx, replacePattern);
       badge = new HTMLElement('span');
-      badge.text(parsedHostname.substring(0, 2));
+      badge.text(url.withoutPrefix().substring(0, 2));
       badge.css('borderColor', color.url);
       badge.addClass('item-card-badge');
       labelContainer = new HTMLElement('div');
       labelContainer.addClass('item-card-label-container');
-      label = new HTMLElement('span');
-      label.text(title);
-      label.addClass('item-card-label');
+      labelTitle = new HTMLElement('span');
+      labelTitle.text(title);
+      labelTitle.addClass('item-card-label');
       lineBreak = new HTMLElement('br');
       labelUrl = new HTMLElement('span');
-      labelUrl.text(hostname);
+      labelUrl.text(url.hostname);
       labelUrl.addClass('item-card-label-secondary');
-      link.push(badge);
-      labelContainer.push(label);
-      labelContainer.push(lineBreak);
-      labelContainer.push(labelUrl);
-      link.push(labelContainer);
-      this.push(link);
+      link.append(badge);
+      labelContainer.append(labelTitle);
+      labelContainer.append(lineBreak);
+      labelContainer.append(labelUrl);
+      link.append(labelContainer);
+      this.append(link);
     }
+
+    dragStart = function(ev, root) {
+      root.parent().attr('data-dragged-item', root.attr('id'));
+      ev.dataTransfer.setData('text/html', root.html());
+      return ev.dataTransfer.effectAllowed = "move";
+    };
+
+    dragOver = function(ev, root) {
+      var draggedItem, parent, target;
+      ev.dataTransfer.dropEffect = "move";
+      parent = root.parent();
+      target = ev.target.closest('li');
+      draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
+      if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
+        if (target === parent.DOMElement.lastElementChild) {
+          console.log('Append');
+          parent.append(draggedItem);
+        } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
+          console.log('insertBefore');
+          parent.insert(draggedItem, target);
+        } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
+          console.log('insertAfter');
+          if (target.nextSibling) {
+            parent.insert(draggedItem, target, 'after');
+          }
+        }
+      }
+    };
 
     return ItemCard;
 
@@ -499,7 +593,7 @@
       if (id != null) {
         heading.attr('id', id);
       }
-      this.push(heading);
+      this.append(heading);
     }
 
     return ItemCardHeading;
@@ -548,7 +642,7 @@
         }
       }
       this.attr('data-list-count', count);
-      return this.push(this.fragment);
+      return this.append(this.fragment);
     };
 
     return ItemCardList;
@@ -773,7 +867,7 @@
         container = new HTMLElement('#top-sites');
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
-        container.push(list);
+        container.append(list);
         list.update();
         return loader.hide();
       };
@@ -781,21 +875,21 @@
         var container, list;
         container = new HTMLElement('#latest-bookmarks');
         list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
-        container.push(list);
+        container.append(list);
         return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
         var container, list;
         container = new HTMLElement('#recently-closed');
         list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed');
-        container.push(list);
+        container.append(list);
         return list.update();
       };
       this.dataStorage.otherDevices.done = function() {
         var container, list;
         container = new HTMLElement('#other-devices');
         list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
-        container.push(list);
+        container.append(list);
         return list.update();
       };
       this.dataStorage.fetchAll();

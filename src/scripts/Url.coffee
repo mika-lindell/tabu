@@ -1,6 +1,6 @@
 class Url
 
-	@url
+	@href
 	@protocol
 	@hostname
 	@pathname
@@ -13,7 +13,7 @@ class Url
 		parser = document.createElement('a')
 		parser.href = url
 
-		@url = parser.href
+		@href = parser.href
 		@protocol = parser.protocol
 		@hostname = parser.hostname
 		@pathname = parser.pathname
@@ -23,7 +23,7 @@ class Url
 
 		parser = null
 
-	noPrefix: ()->
+	withoutPrefix: ()->
 		# This will remove www. prefixes from url, but will keep subdomains.
 		searchPattern = '^w+\\d*\\.'
 		rx = new RegExp(searchPattern, 'gim')

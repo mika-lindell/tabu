@@ -15,4 +15,4 @@ class ItemCardHeading extends HTMLElement
 		if id?
 			heading.attr('id', id)
 
-		@push(heading)
+		@append(heading)

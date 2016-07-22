@@ -201,6 +201,12 @@ Helpers
 	color: $white;
 }
 
+.btn-large:active,
+.btn:active,
+a.item-card-link:active{
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
 .overlay{
 	position: fixed;
   height: 100%;
@@ -214,6 +220,12 @@ Helpers
 		width: 100%;
 	}
 
+}
+
+li[draggable]
+{
+	-webkit-user-drag: element !important;
+	-webkit-user-select: none !important;
 }
 
 /***
@@ -314,7 +326,7 @@ Animations
 // To animate element movement on media query breakpoints
 .transitions,
 .animated{
-	transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s, font-size, 0.2s;
+	transition: all 0.3s;
 }
 
 // When under element .outro in hierarchy, outro-animation is played
@@ -470,13 +482,10 @@ Item card styles
 a.item-card-link{
 	display: block;
 	padding: 0.5rem;
+	border-radius: 2px;
 
 	@extend .color-black;
 	@extend .hoverable;
-
-	&:active{
-		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
-	}
 }
 
 .item-card-badge{
