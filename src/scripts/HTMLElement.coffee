@@ -88,24 +88,21 @@ class HTMLElement
 		else
 			return @DOMElement.style[ruleName]
 
-	# TODO: Rewrite to use classList
-
 	# Add CSS class to an element
 	#
 	# @param [String] List of classes to be added (separated with space)
 	#
 	addClass: (className = null)->
-		if className?
-			@DOMElement.className += " #{className}"
+		if className? and not @DOMElement.classList.contains(className)		
+			@DOMElement.classList.add(className)
 
 	# Remove CSS class from an element
 	#
 	# @param [String] Class to be removed
 	#
 	removeClass: (className = null)->
-		if className?
-			@DOMElement.className = @DOMElement.className.replace(' ' + className, '')
-			@DOMElement.className = @DOMElement.className.replace(className, '')
+		if className? and @DOMElement.classList.contains(className)
+			@DOMElement.classList.remove(className)
 
 	# Set event listener to an event
 	#

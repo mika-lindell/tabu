@@ -265,8 +265,8 @@
       if (className == null) {
         className = null;
       }
-      if (className != null) {
-        return this.DOMElement.className += " " + className;
+      if ((className != null) && !this.DOMElement.classList.contains(className)) {
+        return this.DOMElement.classList.add(className);
       }
     };
 
@@ -274,9 +274,8 @@
       if (className == null) {
         className = null;
       }
-      if (className != null) {
-        this.DOMElement.className = this.DOMElement.className.replace(' ' + className, '');
-        return this.DOMElement.className = this.DOMElement.className.replace(className, '');
+      if ((className != null) && this.DOMElement.classList.contains(className)) {
+        return this.DOMElement.classList.remove(className);
       }
     };
 
@@ -560,13 +559,13 @@
       draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
       if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
         if (target === parent.DOMElement.lastElementChild) {
-          console.log('Append');
+          console.log('DragOver: Append');
           parent.append(draggedItem);
         } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
-          console.log('insertBefore');
+          console.log('DragOver: insertBefore');
           parent.insert(draggedItem, target);
         } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
-          console.log('insertAfter');
+          console.log('DragOver: insertAfter');
           if (target.nextSibling) {
             parent.insert(draggedItem, target, 'after');
           }

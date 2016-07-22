@@ -66,7 +66,7 @@ class ItemCard extends HTMLElement
 		@append(link)
 
 	dragStart = (ev, root)->
-		
+
 		root.parent().attr('data-dragged-item', root.attr('id'))
 		
 		ev.dataTransfer.setData('text/html', root.html())
@@ -76,8 +76,6 @@ class ItemCard extends HTMLElement
 
 	dragOver = (ev, root)->
 		ev.dataTransfer.dropEffect = "move"
-
-		
 
 		parent = root.parent()
 		target = ev.target.closest('li')
@@ -89,24 +87,22 @@ class ItemCard extends HTMLElement
 			# - over last child
 			
 			if target is parent.DOMElement.lastElementChild
-				console.log 'Append'
+				console.log 'DragOver: Append'
 				parent.append(draggedItem)
-
 			
 			else if target.offsetTop < draggedItem.top() or target.offsetLeft < draggedItem.left()
-				# InsertBefore has to be first for this to work
+				# InsertBefore has to be first option for this to work
 				# Insert before if dragging:
 				# - Up
 				# - Left
-				console.log 'insertBefore'
+				console.log 'DragOver: insertBefore'
 				parent.insert(draggedItem, target)
 
-			
 			else if target.offsetTop > draggedItem.top() or target.offsetLeft > draggedItem.left()
 				# Insert after if dragging:
 				# - Down
 				# - Right				
-				console.log 'insertAfter'
+				console.log 'DragOver: insertAfter'
 				if target.nextSibling
 					parent.insert(draggedItem, target, 'after')
 
