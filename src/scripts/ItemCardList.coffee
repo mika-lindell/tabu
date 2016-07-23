@@ -5,6 +5,7 @@ class ItemCardList extends HTMLElement
 	@dataGetter
 	@baseId
 	@fragment
+	@ghost
 
 	constructor: (dataGetter, baseId = 'card')->
 		super('ul')

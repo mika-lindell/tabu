@@ -73,6 +73,18 @@ class HTMLElement
 			return @DOMElement.setAttribute(attrName, newValue)
 		else
 			return @DOMElement.getAttribute(attrName)
+
+	# Tests if element has specified attribute
+	#
+	# @param [String] Attribute to be tested
+	#
+	# @return [Boolean]
+	#
+	hasAttr: (attrName)->
+		if attrName?
+			return @DOMElement.hasAttribute(attrName)
+		else
+			return false
 			
 	# Removes an attribute from an element
 	#
@@ -111,6 +123,18 @@ class HTMLElement
 	removeClass: (className = null)->
 		if className? and @DOMElement.classList.contains(className)
 			@DOMElement.classList.remove(className)
+
+	# Test if element has specified CSS class
+	#
+	# @param [String] Class to be tested
+	#
+	# @return [Boolean]
+	# 
+	removeClass: (className = null)->
+		if className?
+			return @DOMElement.classList.remove(className)
+		else
+			return false
 
 	# Set event listener to an event
 	#
@@ -158,6 +182,8 @@ class HTMLElement
 	left: ()->
 		return @DOMElement.offsetLeft
 
+	clone: ()->
+		return new HTMLElement(@DOMElement.cloneNode(true))
 
 	# Bind element to variable
 	#

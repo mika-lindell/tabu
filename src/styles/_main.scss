@@ -467,8 +467,17 @@ Item card styles
 //  	-webkit-user-select: none !important;
 // }
 
-[data-dragged-item] > .item-card{
-	box-shadow:none;
+[data-dragged-item]{
+	.item-card{
+		box-shadow: none;
+	}
+
+	#ghost{
+		transition: none;
+		border: none;
+		background-color: white;
+		opacity: 0.7;
+	}
 }
 
 .item-card{
@@ -480,10 +489,7 @@ Item card styles
 
 	&.dragged{
 		border-color: $light-grey;
-		*{
-			cursor: move !important;
-		}
-
+		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
 	}
 
 	&:active{

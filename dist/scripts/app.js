@@ -250,6 +250,14 @@
       }
     };
 
+    HTMLElement.prototype.hasAttr = function(attrName) {
+      if (attrName != null) {
+        return this.DOMElement.hasAttribute(attrName);
+      } else {
+        return false;
+      }
+    };
+
     HTMLElement.prototype.removeAttr = function(attrName) {
       if (attrName != null) {
         return this.DOMElement.removeAttribute(attrName);
@@ -282,6 +290,17 @@
       }
       if ((className != null) && this.DOMElement.classList.contains(className)) {
         return this.DOMElement.classList.remove(className);
+      }
+    };
+
+    HTMLElement.prototype.removeClass = function(className) {
+      if (className == null) {
+        className = null;
+      }
+      if (className != null) {
+        return this.DOMElement.classList.remove(className);
+      } else {
+        return false;
       }
     };
 
@@ -344,6 +363,10 @@
 
     HTMLElement.prototype.left = function() {
       return this.DOMElement.offsetLeft;
+    };
+
+    HTMLElement.prototype.clone = function() {
+      return new HTMLElement(this.DOMElement.cloneNode(true));
     };
 
     HTMLElement.prototype.bind = function(variable) {};
@@ -495,16 +518,14 @@
   })();
 
   ItemCard = (function(superClass) {
-    var dragEnd, dragOver, dragStart;
+    var dragEnd, dragOver, dragStart, updateGhost;
 
     extend(ItemCard, superClass);
 
-    ItemCard.oldClientX = 0;
-
-    ItemCard.container;
+    ItemCard.ghost;
 
     function ItemCard(title, url, id) {
-      var badge, color, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
+      var badge, body, color, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
       if (id == null) {
         id = null;
       }
@@ -514,7 +535,6 @@
         this.attr('id', id);
       }
       this.attr('draggable', 'true');
-      this.container = this.parent();
       root = this;
       this.on('dragstart', function() {
         return dragStart(event, root);
@@ -525,6 +545,8 @@
       this.on('dragend', function() {
         return dragEnd(event, root);
       });
+      body = new HTMLElement('body');
+      body.on('dragover', updateGhost);
       color = new HexColor(url);
       url = new Url(url);
       link = new HTMLElement('a');
@@ -555,23 +577,44 @@
       this.append(link);
     }
 
+    updateGhost = function(ev, ghost) {
+      if (ghost == null) {
+        ghost = null;
+      }
+      console.log('ghost');
+      if (ghost == null) {
+        ghost = new HTMLElement('#ghost');
+      }
+      if (ghost.DOMElement != null) {
+        ghost.css('left', ev.clientX + 20 + 'px');
+        return ghost.css('top', ev.clientY + 'px');
+      }
+    };
+
     dragStart = function(ev, root) {
-      var ghost;
-      root.parent().attr('data-dragged-item', root.attr('id'));
+      var foo, ghost, parent;
+      ev.dataTransfer.effectAllowed = "move";
+      parent = root.parent();
+      parent.attr('data-dragged-item', root.attr('id'));
       root.addClass('dragged');
-      ev.dataTransfer.setData('text/html', root.html());
-      ghost = root.DOMElement.cloneNode(true);
-      ev.dataTransfer.setDragImage(ghost, 0, 0);
-      return ev.dataTransfer.effectAllowed = "move";
+      ghost = root.clone();
+      ghost.attr('id', 'ghost');
+      ghost.css('position', 'fixed');
+      updateGhost(ev, ghost);
+      parent.append(ghost);
+      foo = root.DOMElement.cloneNode(true);
+      return ev.dataTransfer.setDragImage(foo, 0, 0);
     };
 
     dragOver = function(ev, root) {
       var draggedItem, parent, target;
       ev.preventDefault();
+      ev.stopPropagation();
+      ev.dataTransfer.effectAllowed = "move";
       ev.dataTransfer.dropEffect = "move";
+      updateGhost(ev);
       parent = root.parent();
       target = ev.target.closest('li');
-      target.style.cursor = 'move';
       draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
       if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
         if (target === parent.DOMElement.lastElementChild) {
@@ -590,10 +633,13 @@
     };
 
     dragEnd = function(ev, root) {
+      var ghost;
       ev.preventDefault();
       console.log('Drop');
       root.parent().removeAttr('data-dragged-item');
-      return root.removeClass('dragged');
+      root.removeClass('dragged');
+      ghost = new HTMLElement('#ghost');
+      return ghost.DOMElement.outerHTML = '';
     };
 
     return ItemCard;
@@ -630,6 +676,8 @@
     ItemCardList.baseId;
 
     ItemCardList.fragment;
+
+    ItemCardList.ghost;
 
     function ItemCardList(dataGetter, baseId) {
       if (baseId == null) {
