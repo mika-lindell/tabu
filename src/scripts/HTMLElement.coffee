@@ -182,6 +182,12 @@ class HTMLElement
 	left: ()->
 		return @DOMElement.offsetLeft
 
+	width: ()->
+		return @DOMElement.offsetWidth
+
+	height: ()->
+		return @DOMElement.offsetHeight
+
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))
 

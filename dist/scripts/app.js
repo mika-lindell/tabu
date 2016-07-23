@@ -365,6 +365,14 @@
       return this.DOMElement.offsetLeft;
     };
 
+    HTMLElement.prototype.width = function() {
+      return this.DOMElement.offsetWidth;
+    };
+
+    HTMLElement.prototype.height = function() {
+      return this.DOMElement.offsetHeight;
+    };
+
     HTMLElement.prototype.clone = function() {
       return new HTMLElement(this.DOMElement.cloneNode(true));
     };
@@ -518,7 +526,7 @@
   })();
 
   ItemCard = (function(superClass) {
-    var dragEnd, dragOver, dragStart, updateGhost;
+    var dragStart, updateGhost;
 
     extend(ItemCard, superClass);
 
@@ -538,12 +546,6 @@
       root = this;
       this.on('dragstart', function() {
         return dragStart(event, root);
-      });
-      this.on('dragover', function() {
-        return dragOver(event, root);
-      });
-      this.on('dragend', function() {
-        return dragEnd(event, root);
       });
       body = new HTMLElement('body');
       body.on('dragover', updateGhost);
@@ -581,7 +583,6 @@
       if (ghost == null) {
         ghost = null;
       }
-      console.log('ghost');
       if (ghost == null) {
         ghost = new HTMLElement('#ghost');
       }
@@ -600,46 +601,11 @@
       ghost = root.clone();
       ghost.attr('id', 'ghost');
       ghost.css('position', 'fixed');
+      ghost.css('width', root.width() + 'px');
       updateGhost(ev, ghost);
       parent.append(ghost);
       foo = root.DOMElement.cloneNode(true);
       return ev.dataTransfer.setDragImage(foo, 0, 0);
-    };
-
-    dragOver = function(ev, root) {
-      var draggedItem, parent, target;
-      ev.preventDefault();
-      ev.stopPropagation();
-      ev.dataTransfer.effectAllowed = "move";
-      ev.dataTransfer.dropEffect = "move";
-      updateGhost(ev);
-      parent = root.parent();
-      target = ev.target.closest('li');
-      draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
-      if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
-        if (target === parent.DOMElement.lastElementChild) {
-          console.log('DragOver: Append');
-          return parent.append(draggedItem);
-        } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
-          console.log('DragOver: insertBefore');
-          return parent.insert(draggedItem, target);
-        } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
-          console.log('DragOver: insertAfter');
-          if (target.nextSibling) {
-            return parent.insert(draggedItem, target, 'after');
-          }
-        }
-      }
-    };
-
-    dragEnd = function(ev, root) {
-      var ghost;
-      ev.preventDefault();
-      console.log('Drop');
-      root.parent().removeAttr('data-dragged-item');
-      root.removeClass('dragged');
-      ghost = new HTMLElement('#ghost');
-      return ghost.DOMElement.outerHTML = '';
     };
 
     return ItemCard;
@@ -669,6 +635,8 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
+    var dragEnd, dragOver, updateGhost;
+
     extend(ItemCardList, superClass);
 
     ItemCardList.dataGetter;
@@ -680,6 +648,7 @@
     ItemCardList.ghost;
 
     function ItemCardList(dataGetter, baseId) {
+      var root;
       if (baseId == null) {
         baseId = 'card';
       }
@@ -688,6 +657,14 @@
       this.dataGetter = dataGetter;
       this.baseId = baseId;
       this.attr('id', this.baseId + "-list");
+      this.attr('draggable', 'true');
+      root = this;
+      this.on('dragover', function() {
+        return dragOver(event, root);
+      });
+      this.on('dragend', function() {
+        return dragEnd(event, root);
+      });
     }
 
     ItemCardList.prototype.update = function() {
@@ -713,6 +690,55 @@
       }
       this.attr('data-list-count', count);
       return this.append(this.fragment);
+    };
+
+    updateGhost = function(ev, ghost) {
+      if (ghost == null) {
+        ghost = null;
+      }
+      if (ghost == null) {
+        ghost = new HTMLElement('#ghost');
+      }
+      if (ghost.DOMElement != null) {
+        ghost.css('left', ev.clientX + 20 + 'px');
+        return ghost.css('top', ev.clientY + 'px');
+      }
+    };
+
+    dragOver = function(ev, root) {
+      var draggedItem, parent, target;
+      ev.preventDefault();
+      ev.dataTransfer.effectAllowed = "move";
+      updateGhost(ev);
+      parent = root;
+      target = ev.target.closest('li');
+      draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
+      if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
+        if (target === parent.DOMElement.lastElementChild) {
+          console.log('DragOver: Append');
+          return parent.append(draggedItem);
+        } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
+          console.log('DragOver: insertBefore');
+          return parent.insert(draggedItem, target);
+        } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
+          console.log('DragOver: insertAfter');
+          if (target.nextSibling) {
+            return parent.insert(draggedItem, target, 'after');
+          }
+        }
+      }
+    };
+
+    dragEnd = function(ev, root) {
+      var ghost, parent, target;
+      console.log('Drop');
+      ev.preventDefault();
+      parent = root;
+      target = new HTMLElement(ev.target.closest('li'));
+      ghost = new HTMLElement('#ghost');
+      parent.removeAttr('data-dragged-item');
+      target.removeClass('dragged');
+      return ghost.DOMElement.outerHTML = '';
     };
 
     return ItemCardList;

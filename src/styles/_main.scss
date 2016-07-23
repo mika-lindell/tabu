@@ -11,6 +11,9 @@ $dark-grey: #5a5a5a;
 
 $border-light: 1px solid $light-grey;
 
+$shadow-inset: inset 0 0 15px rgba(0, 0, 0, 0.25);
+$shadow-outset: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 /***
 
 To cancel stylesheet injection made by Chrome
@@ -452,7 +455,7 @@ button#go-incognito i.material-icons{
 
 .btn-large:active,
 .btn:active{
-	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+	box-shadow: $shadow-inset;
 }
 
 /***
@@ -467,16 +470,33 @@ Item card styles
 //  	-webkit-user-select: none !important;
 // }
 
+ul[draggable='true']{
+	.item-card > a::before{
+
+			display: inline-block;
+			content: 'more_vert'; //drag_handle
+			cursor: move;
+			vertical-align: middle;
+			color: $light-grey;
+
+			@extend .material-icons
+		}
+}
+
 [data-dragged-item]{
 	.item-card{
 		box-shadow: none;
 	}
 
 	#ghost{
+		a::before{
+			display: none;
+		}
 		transition: none;
 		border: none;
 		background-color: white;
 		opacity: 0.7;
+		box-shadow: $shadow-outset;
 	}
 }
 
@@ -489,11 +509,11 @@ Item card styles
 
 	&.dragged{
 		border-color: $light-grey;
-		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+		box-shadow: $shadow-inset;
 	}
 
 	&:active{
-		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+		box-shadow: $shadow-inset;
 	}
 }
 
@@ -587,7 +607,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 	}	
 
 	.item-card-label-container{
-		width: 75%; // For truncate to work (with text-overflow: ellipsis;)
+		width: 66%; // For truncate to work (with text-overflow: ellipsis;)
 	}
 
 	.horizontal-list li{
@@ -619,7 +639,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 	}	
 
 	.item-card-label-container{
-		width: 79%; // For truncate to work (with text-overflow: ellipsis;)
+		width: 69%; // For truncate to work (with text-overflow: ellipsis;)
 	}
 
 	.horizontal-list li{
@@ -630,6 +650,6 @@ Responsive - breakpoints are the same as Materialize.css uses
 
 @media only screen and (min-width: 1200px){
 	.item-card-label-container{
-		width: 81%; // For truncate to work (with text-overflow: ellipsis;)
+		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
 	}
 }

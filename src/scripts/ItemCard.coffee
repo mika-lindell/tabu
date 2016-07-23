@@ -8,7 +8,7 @@ class ItemCard extends HTMLElement
 	#
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
-	#
+	
 	constructor: (title, url, id = null)->
 		super('li')
 		@addClass('item-card')
@@ -20,12 +20,12 @@ class ItemCard extends HTMLElement
 		@on('dragstart', ()->
 			dragStart(event, root)
 		)
-		@on('dragover', ()->
-			dragOver(event, root)
-		)
-		@on('dragend', ()->
-			dragEnd(event, root)
-		)
+		# @on('dragover', ()->
+		# 	dragOver(event, root)
+		# )
+		# @on('dragend', ()->
+		# 	dragEnd(event, root)
+		# )
 
 		body = new HTMLElement('body')
 		body.on('dragover', updateGhost)
@@ -72,7 +72,87 @@ class ItemCard extends HTMLElement
 
 		@append(link)
 
-	# dragOver2 = (ev, root)->
+
+	updateGhost = (ev, ghost = null)->
+
+		if not ghost?
+			ghost = new HTMLElement('#ghost')
+
+		if ghost.DOMElement?
+			ghost.css('left', ev.clientX + 20  + 'px')
+			ghost.css('top', ev.clientY + 'px')
+
+	dragStart = (ev, root)->
+
+		ev.dataTransfer.effectAllowed = "move"
+
+		parent = root.parent()
+
+		parent.attr('data-dragged-item', root.attr('id'))
+
+		root.addClass('dragged')
+		
+		#ev.dataTransfer.setData('text/html', root.html())
+
+		ghost = root.clone()
+		ghost.attr('id', 'ghost')
+		ghost.css('position', 'fixed')
+		ghost.css('width', root.width() + 'px')
+		updateGhost(ev, ghost)
+		parent.append(ghost)
+
+		foo = root.DOMElement.cloneNode(true)
+
+		ev.dataTransfer.setDragImage(foo, 0, 0)
+		
+	# dragOver = (ev, root)->
+
+	# 	ev.preventDefault()
+	# 	#ev.stopPropagation()
+
+	# 	ev.dataTransfer.effectAllowed = "move"
+	# 	ev.dataTransfer.dropEffect = "move"
+
+	# 	updateGhost(ev)
+
+	# 	parent = root.parent()
+	# 	target = ev.target.closest('li')
+
+	# 	draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'))
+		
+	# 	if target isnt draggedItem.DOMElement and target? and target.parentNode is parent.DOMElement
+	# 		# Insert as last item if dragging: 
+	# 		# - over last child
+			
+	# 		if target is parent.DOMElement.lastElementChild
+	# 			console.log 'DragOver: Append'
+	# 			parent.append(draggedItem)
+			
+	# 		else if target.offsetTop < draggedItem.top() or target.offsetLeft < draggedItem.left()
+	# 			# InsertBefore has to be first option for this to work
+	# 			# Insert before if dragging:
+	# 			# - Up
+	# 			# - Left
+	# 			console.log 'DragOver: insertBefore'
+	# 			parent.insert(draggedItem, target)
+
+	# 		else if target.offsetTop > draggedItem.top() or target.offsetLeft > draggedItem.left()
+	# 			# Insert after if dragging:
+	# 			# - Down
+	# 			# - Right				
+	# 			console.log 'DragOver: insertAfter'
+	# 			if target.nextSibling
+	# 				parent.insert(draggedItem, target, 'after')
+
+	# dragEnd = (ev, root)->
+	# 	ev.preventDefault()
+	# 	console.log 'Drop'
+	# 	root.parent().removeAttr('data-dragged-item')
+	# 	root.removeClass('dragged')
+	# 	ghost = new HTMLElement('#ghost')
+	# 	ghost.DOMElement.outerHTML = ''
+
+		# dragOver2 = (ev, root)->
 		
 	# 	if ev.buttons is 1
 
@@ -128,82 +208,3 @@ class ItemCard extends HTMLElement
 	# 		# Stop draggin'
 	# 		root.parent().removeAttr('data-dragged-item')
 	# 		root.removeClass('dragged')
-		
-
-	updateGhost = (ev, ghost = null)->
-
-		console.log 'ghost'
-		if not ghost?
-			ghost = new HTMLElement('#ghost')
-
-		if ghost.DOMElement?
-			ghost.css('left', ev.clientX + 20  + 'px')
-			ghost.css('top', ev.clientY + 'px')
-
-	dragStart = (ev, root)->
-
-		ev.dataTransfer.effectAllowed = "move"
-
-		parent = root.parent()
-
-		parent.attr('data-dragged-item', root.attr('id'))
-		root.addClass('dragged')
-		
-		#ev.dataTransfer.setData('text/html', root.html())
-
-		ghost = root.clone()
-		ghost.attr('id', 'ghost')
-		ghost.css('position', 'fixed')
-		updateGhost(ev, ghost)
-		parent.append(ghost)
-
-		foo = root.DOMElement.cloneNode(true)
-
-		ev.dataTransfer.setDragImage(foo, 0, 0)
-		
-	dragOver = (ev, root)->
-
-		ev.preventDefault()
-		ev.stopPropagation()
-
-		ev.dataTransfer.effectAllowed = "move"
-		ev.dataTransfer.dropEffect = "move"
-
-		updateGhost(ev)
-
-		parent = root.parent()
-		target = ev.target.closest('li')
-
-		draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'))
-		
-		if target isnt draggedItem.DOMElement and target? and target.parentNode is parent.DOMElement
-			# Insert as last item if dragging: 
-			# - over last child
-			
-			if target is parent.DOMElement.lastElementChild
-				console.log 'DragOver: Append'
-				parent.append(draggedItem)
-			
-			else if target.offsetTop < draggedItem.top() or target.offsetLeft < draggedItem.left()
-				# InsertBefore has to be first option for this to work
-				# Insert before if dragging:
-				# - Up
-				# - Left
-				console.log 'DragOver: insertBefore'
-				parent.insert(draggedItem, target)
-
-			else if target.offsetTop > draggedItem.top() or target.offsetLeft > draggedItem.left()
-				# Insert after if dragging:
-				# - Down
-				# - Right				
-				console.log 'DragOver: insertAfter'
-				if target.nextSibling
-					parent.insert(draggedItem, target, 'after')
-
-	dragEnd = (ev, root)->
-		ev.preventDefault()
-		console.log 'Drop'
-		root.parent().removeAttr('data-dragged-item')
-		root.removeClass('dragged')
-		ghost = new HTMLElement('#ghost')
-		ghost.DOMElement.outerHTML = ''

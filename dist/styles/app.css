@@ -2597,7 +2597,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons {
+.material-icons, ul[draggable='true'] .item-card > a::before {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -4352,11 +4352,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field ul[draggable='true'] .item-card > input[type=search]:focus ~ a::before, ul[draggable='true'] .input-field .item-card > input[type=search]:focus ~ a::before {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field ul[draggable='true'] .item-card > input[type=search] ~ a::before, ul[draggable='true'] .input-field .item-card > input[type=search] ~ a::before {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6200,7 +6200,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(./assets/material-design-icons/Material-Design-Icons.woff2) format("woff2"); }
-.material-icons {
+.material-icons, ul[draggable='true'] .item-card > a::before {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6450,13 +6450,23 @@ button#go-incognito i.material-icons {
 Item card styles
 
 ***/
+ul[draggable='true'] .item-card > a::before {
+  display: inline-block;
+  content: 'more_vert';
+  cursor: move;
+  vertical-align: middle;
+  color: #c7c7c7; }
+
 [data-dragged-item] .item-card {
   box-shadow: none; }
 [data-dragged-item] #ghost {
   transition: none;
   border: none;
   background-color: white;
-  opacity: 0.7; }
+  opacity: 0.7;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  [data-dragged-item] #ghost a::before {
+    display: none; }
 
 .item-card {
   margin-bottom: 0.5rem;
@@ -6519,7 +6529,7 @@ Responsive - breakpoints are the same as Materialize.css uses
     width: 40%; }
 
   .item-card-label-container {
-    width: 75%; }
+    width: 66%; }
 
   .horizontal-list li {
     width: 50%; } }
@@ -6536,12 +6546,12 @@ Responsive - breakpoints are the same as Materialize.css uses
       margin-left: 0.3rem; }
 
   .item-card-label-container {
-    width: 79%; }
+    width: 69%; }
 
   .horizontal-list li {
     width: 33%; } }
 @media only screen and (min-width: 1200px) {
   .item-card-label-container {
-    width: 81%; } }
+    width: 74%; } }
 
 /*# sourceMappingURL=app.css.map */
