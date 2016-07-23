@@ -438,6 +438,16 @@ $action-buttons-gap: 0.6rem;
 	margin-bottom: $action-buttons-gap;
 	width: 47%;
 
+	&:hover{
+		background-color: #0288d1 !important;
+	}
+
+	&:active{
+		box-shadow: $shadow-inset;
+		background-color: #0277bd !important;
+		
+	}
+
 	&:first-child{
 		margin-left: 0;
 		margin-right: $action-buttons-gap;
@@ -453,10 +463,6 @@ button#go-incognito i.material-icons{
 	font-size: 1.35rem;
 }
 
-.btn-large:active,
-.btn:active{
-	box-shadow: $shadow-inset;
-}
 
 /***
 
@@ -474,10 +480,13 @@ ul[draggable='true']{
 	.item-card > a::before{
 
 			display: inline-block;
-			content: 'more_vert'; //drag_handle
+			content: 'more_vertmore_vert'; //more_vert drag_handle
 			cursor: move;
 			vertical-align: middle;
 			color: $light-grey;
+
+			padding-right: 1em;
+			letter-spacing: -1.23em;
 
 			@extend .material-icons
 		}

@@ -6430,6 +6430,11 @@ Button styles
 #actions button {
   margin-bottom: 0.6rem;
   width: 47%; }
+  #actions button:hover {
+    background-color: #0288d1 !important; }
+  #actions button:active {
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
+    background-color: #0277bd !important; }
   #actions button:first-child {
     margin-left: 0;
     margin-right: 0.6rem; }
@@ -6440,11 +6445,6 @@ Button styles
 button#go-incognito i.material-icons {
   font-size: 1.35rem; }
 
-.btn-large:active,
-.btn:active,
-.btn-large:active {
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
-
 /***
 
 Item card styles
@@ -6452,10 +6452,12 @@ Item card styles
 ***/
 ul[draggable='true'] .item-card > a::before {
   display: inline-block;
-  content: 'more_vert';
+  content: 'more_vertmore_vert';
   cursor: move;
   vertical-align: middle;
-  color: #c7c7c7; }
+  color: #c7c7c7;
+  padding-right: 1em;
+  letter-spacing: -1.23em; }
 
 [data-dragged-item] .item-card {
   box-shadow: none; }

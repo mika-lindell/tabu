@@ -67,4 +67,12 @@ class App
 
 		@dataStorage.fetchAll()
 
+		# Use localised version of the title of new tab page
+		chrome.tabs.getSelected(null, (tab)-> # null defaults to current window
+		  if tab.title?
+		  	document.title = tab.title
+		  else
+		  	document.title = 'New Tab'
+		)
+
 		console.log "App: I'm ready <3"

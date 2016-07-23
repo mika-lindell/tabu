@@ -998,6 +998,13 @@
         return list.update();
       };
       this.dataStorage.fetchAll();
+      chrome.tabs.getSelected(null, function(tab) {
+        if (tab.title != null) {
+          return document.title = tab.title;
+        } else {
+          return document.title = 'New Tab';
+        }
+      });
       console.log("App: I'm ready <3");
     }
 
@@ -1006,5 +1013,9 @@
   })();
 
   $newTab = new App;
+
+  chrome.tabs.getSelected(null, function(tab) {
+    return console.log(tab.title);
+  });
 
 }).call(this);
