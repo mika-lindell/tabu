@@ -26,15 +26,15 @@ class ItemCardList extends HTMLElement
 
 		for item, i in @dataGetter.data
 
-			cardId = "#{ @baseId }-#{ i }"
+			itemCardId = "#{ @baseId }-#{ i }"
 
 			if item.heading?
-				card = new ItemCardHeading(item.heading, @, cardId)
+				itemCard = new ItemCardHeading(item.heading, @, itemCardId)
 			else
-				card = new ItemCard(item.title, item.url, @, cardId)
+				itemCard = new ItemCard(item.title, item.url, @, itemCardId)
 
-			item.card = card
-			@fragment.appendChild(card.DOMElement)
+			item.itemCard = itemCard
+			@fragment.appendChild(itemCard.DOMElement)
 
 		count = @dataGetter.data.length
 
@@ -47,12 +47,12 @@ class ItemCardList extends HTMLElement
 
 		@append(@fragment) 
 
-	getItemForDOMElement: (DOMElement)->
+	getItemForElement: (DOMElement)->
 
 		for item, i in @dataGetter.data
 
-			if item.card.DOMElement is DOMElement
-				return item.card
+			if item.itemCard.DOMElement is DOMElement
+				return item.itemCard
 
 		return null
 
@@ -64,7 +64,9 @@ class ItemCardList extends HTMLElement
 		@attr('data-list-draggable', '')
 
 		# This will update the cursor during DragOver, as throttlig this operation would cause flicker
-		@on('dragover', dragOverUpdateCursor)
+		@on('dragover', ()->
+			dragOverUpdateCursor(event, root)
+		)
 		# Human hand-eye-coordination only need things to be updated at ~ 100ms interval for the action to feel responsive
 		# Hence throttle execution of this event handler to save resources
 		@on('dragover', new Throttle(()->
@@ -98,20 +100,20 @@ class ItemCardList extends HTMLElement
 			ghost.css('left', ev.clientX + 20  + 'px')
 			ghost.css('top', ev.clientY + 'px')
 
-	dragOverUpdateCursor = (ev)->
-		ev.preventDefault()
-		ev.dataTransfer.dropEffect = "move"
-
-	dragOver = (ev, root)->
+	dragOverUpdateCursor = (ev, root)->
 		ev.preventDefault()
 		ev.dataTransfer.dropEffect = "move"
 
 		root.updateGhost(ev)
 
-		parent = root
-		target = root.getItemForDOMElement(ev.target.closest('li'))
+	dragOver = (ev, root)->
+		ev.preventDefault()
+		ev.dataTransfer.dropEffect = "move"
 
-		draggedItem = root.getItemForDOMElement(document.getElementById(parent.attr('data-dragged-item')))
+		parent = root
+		target = root.getItemForElement(ev.target.closest('li'))
+
+		draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')))
 		
 		if target isnt draggedItem and target? and target.containingList is parent
 			# Insert as last item if dragging: 

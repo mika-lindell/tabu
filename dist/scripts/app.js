@@ -684,19 +684,19 @@
     }
 
     ItemCardList.prototype.update = function() {
-      var card, cardId, count, i, item, j, len, parent, ref;
+      var count, i, item, itemCard, itemCardId, j, len, parent, ref;
       this.fragment = document.createDocumentFragment();
       ref = this.dataGetter.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
-        cardId = this.baseId + "-" + i;
+        itemCardId = this.baseId + "-" + i;
         if (item.heading != null) {
-          card = new ItemCardHeading(item.heading, this, cardId);
+          itemCard = new ItemCardHeading(item.heading, this, itemCardId);
         } else {
-          card = new ItemCard(item.title, item.url, this, cardId);
+          itemCard = new ItemCard(item.title, item.url, this, itemCardId);
         }
-        item.card = card;
-        this.fragment.appendChild(card.DOMElement);
+        item.itemCard = itemCard;
+        this.fragment.appendChild(itemCard.DOMElement);
       }
       count = this.dataGetter.data.length;
       if (count === 0) {
@@ -709,13 +709,13 @@
       return this.append(this.fragment);
     };
 
-    ItemCardList.prototype.getItemForDOMElement = function(DOMElement) {
+    ItemCardList.prototype.getItemForElement = function(DOMElement) {
       var i, item, j, len, ref;
       ref = this.dataGetter.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
-        if (item.card.DOMElement === DOMElement) {
-          return item.card;
+        if (item.itemCard.DOMElement === DOMElement) {
+          return item.itemCard;
         }
       }
       return null;
@@ -726,7 +726,9 @@
       this.draggable = true;
       root = this;
       this.attr('data-list-draggable', '');
-      this.on('dragover', dragOverUpdateCursor);
+      this.on('dragover', function() {
+        return dragOverUpdateCursor(event, root);
+      });
       this.on('dragover', new Throttle(function() {
         return dragOver(event, root);
       }, 80));
@@ -761,19 +763,19 @@
       }
     };
 
-    dragOverUpdateCursor = function(ev) {
+    dragOverUpdateCursor = function(ev, root) {
       ev.preventDefault();
-      return ev.dataTransfer.dropEffect = "move";
+      ev.dataTransfer.dropEffect = "move";
+      return root.updateGhost(ev);
     };
 
     dragOver = function(ev, root) {
       var draggedItem, parent, target;
       ev.preventDefault();
       ev.dataTransfer.dropEffect = "move";
-      root.updateGhost(ev);
       parent = root;
-      target = root.getItemForDOMElement(ev.target.closest('li'));
-      draggedItem = root.getItemForDOMElement(document.getElementById(parent.attr('data-dragged-item')));
+      target = root.getItemForElement(ev.target.closest('li'));
+      draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')));
       if (target !== draggedItem && (target != null) && target.containingList === parent) {
         if (target.DOMElement === parent.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
