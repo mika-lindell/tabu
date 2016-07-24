@@ -407,6 +407,16 @@ body{
 	overflow-y: scroll; // This keeps the scrollbars always visible, so you don't get repositioning when toggling the visibility of elements
 }
 
+.section-heading{
+	display: inline-block;
+	margin-right: 1rem;
+}
+
+.section-toolbar{
+	display: inline-block;
+	vertical-align: super;
+}
+
 #actions{
 	margin: 0.5rem 0 1rem 0;
 }
@@ -439,13 +449,16 @@ $action-buttons-gap: 0.6rem;
 	width: 47%;
 
 	&:hover{
-		background-color: #0288d1 !important;
+		// background-color: #0288d1 !important;
+
+		@extend  .light-blue, .darken-4
 	}
 
 	&:active{
 		box-shadow: $shadow-inset;
-		background-color: #0277bd !important;
+		// background-color: #0277bd !important;
 		
+		@extend  .light-blue, .darken-3
 	}
 
 	&:first-child{
@@ -500,7 +513,7 @@ Item card styles
 	box-shadow: $shadow-outset;
 }
 
-ul[data-list-draggable]{
+ul[data-list-editable]{
 	.drag-handle{
 		display: inline-block; // Show handle only if drag is enabled
 	}

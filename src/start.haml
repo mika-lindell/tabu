@@ -46,10 +46,23 @@
 				.row.section
 					%section.col.s12
 						#top-sites
-							%h4.animated Top Sites
-							%p.no-items.animated
-								%i.material-icons.left sentiment_neutral
-								I looked, but I couldn't find anything.
+							%h4.section-heading.animated Top Sites
+							.section-toolbar
+								%button#top-sites-type.btn.font-size-small.uppercase.white.color-dark-grey.animated
+									%i.material-icons.left card_giftcard
+									Recommended by Chrome
+									%i.material-icons.right expand_more
+								%button#add-new-link.btn.font-size-small.uppercase.white.color-dark-grey.animated
+									%i.material-icons.left add
+									Add new link
+							#top-sites-custom
+								%p.no-items.animated
+									%i.material-icons.left sentiment_neutral
+									I looked, but I couldn't find anything.
+							#top-sites-recommended
+								%p.no-items.animated
+									%i.material-icons.left sentiment_neutral
+									I looked, but I couldn't find anything.
 			.container-large
 				.row.section
 					%section.col.s12.center
@@ -70,7 +83,7 @@
 				.row.section
 					%section.col.s12.m6.l4.transitions
 						#latest-bookmarks.card-list-column
-							%h4.animated Latest Bookmarks
+							%h4.section-heading.animated Latest Bookmarks
 							%p.no-items.animated
 								%i.material-icons.left sentiment_neutral
 								It seems you have no bookmarks.
@@ -81,13 +94,13 @@
 					/ 			\-
 					%section.col.s12.m6.l4.transitions
 						#recently-closed.card-list-column
-							%h4.animated Recently Closed
+							%h4.section-heading.animated Recently Closed
 							%p.no-items.animated
 								%i.material-icons.left sentiment_neutral
 								I looked, but I couldn't find anything.
 					%section.col.s12.m6.l4.transitions
 						#other-devices.card-list-column
-							%h4.animated Other Devices
+							%h4.section-heading.animated Other Devices
 							%p.no-items.animated
 								%i.material-icons.left sentiment_neutral
 								Nothing to show here just now.
