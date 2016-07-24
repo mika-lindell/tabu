@@ -32,7 +32,9 @@ class App
 			
 			list = new ItemCardList(root.dataStorage.topSites, 'top-sites') # Create new list class
 			container.append list # Add list to DOM
+			list.enableDragDrop()
 			list.update() # Add items to the list
+
 			
 			loader.hide() # Hide the loader
 

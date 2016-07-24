@@ -341,38 +341,60 @@ module.exports = {
     done = function(result) {
       var href;
       href = result.value;
-      browser.click("#top-sites-0");
+      browser.click("#top-sites-0-link");
       browser.assert.urlContains(href);
       browser.back();
       browser.expect.element("#app").to.be.present.after(500);
       return browser.pause(500);
     };
-    return browser.getAttribute("#top-sites-0", 'href', done);
+    return browser.getAttribute("#top-sites-0-link", 'href', done);
   },
   'clicking link in Latest Bookmarks should take to correct destination': function(browser) {
     var done;
     done = function(result) {
       var href;
       href = result.value;
-      browser.click("#latest-bookmarks-0");
+      browser.click("#latest-bookmarks-0-link");
       browser.assert.urlContains(href);
       browser.back();
       browser.expect.element("#app").to.be.present.after(500);
       return browser.pause(500);
     };
-    return browser.getAttribute("#latest-bookmarks-0", 'href', done);
+    return browser.getAttribute("#latest-bookmarks-0-link", 'href', done);
   },
   'clicking link in Recently Closed should take to correct destination': function(browser) {
     var done;
     done = function(result) {
       var href;
       href = result.value;
-      browser.click("#recently-closed-0");
+      browser.click("#recently-closed-0-link");
       browser.assert.urlContains(href);
       browser.back();
       browser.expect.element("#app").to.be.present.after(500);
       return browser.pause(500);
     };
-    return browser.getAttribute("#recently-closed-0", 'href', done);
-  }
+    return browser.getAttribute("#recently-closed-0-link", 'href', done);
+  },
+
+  /*	
+  	 *
+  	 * DRAG AND DROP
+  	 *
+   */
+  'TODO: Only custom Top Sites should have drag and drop enabled': function(browser) {
+    browser.expect.element("#top-sites-list").to.have.attribute('data-list-draggable');
+    browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-draggable');
+    browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-draggable');
+    return browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-draggable');
+  },
+  'TODO: Custom Top Sites should have visual cue about drag and drop': function(browser) {
+    browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present;
+    browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('display', 'inline-block');
+    browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons');
+    return browser.expect.element('#top-sites-0-link > i.drag-handle').text.to.equal('more_vertmore_vert');
+  },
+  'TODO: Other lists should not have visual cue about drag and drop': function(browser) {},
+  'TODO: Should be able to reorganize custom Top Sites by drag and drop': function(browser) {},
+  'TODO: It should create ghost of the dragged element for the duration of the DnD operation': function(browser) {},
+  'TODO: The ghost should follow mouse cursor during DnD': function(browser) {}
 };

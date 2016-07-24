@@ -476,36 +476,39 @@ Item card styles
 //  	-webkit-user-select: none !important;
 // }
 
-ul[draggable='true']{
-	.item-card > a::before{
+.drag-handle{
+	display: none; // Hide by default
+	cursor: move;
+	vertical-align: middle;
+	color: $light-grey;
 
-			display: inline-block;
-			content: 'more_vertmore_vert'; //more_vert drag_handle
-			cursor: move;
-			vertical-align: middle;
-			color: $light-grey;
+	padding-right: 1em;
+	letter-spacing: -1.23em;
 
-			padding-right: 1em;
-			letter-spacing: -1.23em;
+	@extend .material-icons
+}
 
-			@extend .material-icons
-		}
+// DnD ghost element styles
+#ghost{
+	.drag-handle{
+		display: none;
+	}
+	transition: none;
+	border: none;
+	background-color: white;
+	opacity: 0.7;
+	box-shadow: $shadow-outset;
+}
+
+ul[data-list-draggable]{
+	.drag-handle{
+		display: inline-block; // Show handle only if drag is enabled
+	}
 }
 
 [data-dragged-item]{
 	.item-card{
 		box-shadow: none;
-	}
-
-	#ghost{
-		a::before{
-			display: none;
-		}
-		transition: none;
-		border: none;
-		background-color: white;
-		opacity: 0.7;
-		box-shadow: $shadow-outset;
 	}
 }
 

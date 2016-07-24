@@ -357,6 +357,17 @@
       }
     };
 
+    HTMLElement.prototype.children = function() {
+      var children, i, j, len, orig;
+      orig = this.DOMElement.children;
+      children = [];
+      for (j = 0, len = orig.length; j < len; j++) {
+        i = orig[j];
+        children.push(new HTMLElement(i));
+      }
+      return children;
+    };
+
     HTMLElement.prototype.top = function() {
       return this.DOMElement.offsetTop;
     };
@@ -375,6 +386,10 @@
 
     HTMLElement.prototype.clone = function() {
       return new HTMLElement(this.DOMElement.cloneNode(true));
+    };
+
+    HTMLElement.prototype.removeFromDOM = function() {
+      return this.DOMElement.outerHTML = '';
     };
 
     HTMLElement.prototype.bind = function(variable) {};
@@ -532,25 +547,28 @@
 
     ItemCard.ghost;
 
-    function ItemCard(title, url, id) {
-      var badge, body, color, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
+    function ItemCard(title, url, id, draggable) {
+      var badge, color, dragHandle, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
       if (id == null) {
         id = null;
+      }
+      if (draggable == null) {
+        draggable = false;
       }
       ItemCard.__super__.constructor.call(this, 'li');
       this.addClass('item-card');
       if (id != null) {
         this.attr('id', id);
       }
-      this.attr('draggable', 'true');
-      root = this;
-      this.on('dragstart', function() {
-        return dragStart(event, root);
-      });
-      body = new HTMLElement('body');
-      body.on('dragover', updateGhost);
       color = new HexColor(url);
       url = new Url(url);
+      root = this;
+      if (draggable) {
+        this.attr('draggable', 'true');
+        this.on('dragstart', function() {
+          return dragStart(event, root);
+        });
+      }
       link = new HTMLElement('a');
       link.attr('href', url.href);
       link.attr('draggable', 'false');
@@ -558,6 +576,9 @@
       if (id != null) {
         link.attr('id', id + '-link');
       }
+      dragHandle = new HTMLElement('i');
+      dragHandle.text('more_vertmore_vert');
+      dragHandle.addClass('drag-handle');
       badge = new HTMLElement('span');
       badge.text(url.withoutPrefix().substring(0, 2));
       badge.css('borderColor', color.url);
@@ -571,6 +592,7 @@
       labelUrl = new HTMLElement('span');
       labelUrl.text(url.hostname);
       labelUrl.addClass('item-card-label-secondary');
+      link.append(dragHandle);
       link.append(badge);
       labelContainer.append(labelTitle);
       labelContainer.append(lineBreak);
@@ -593,7 +615,7 @@
     };
 
     dragStart = function(ev, root) {
-      var foo, ghost, parent;
+      var ghost, parent;
       ev.dataTransfer.effectAllowed = "move";
       parent = root.parent();
       parent.attr('data-dragged-item', root.attr('id'));
@@ -604,8 +626,7 @@
       ghost.css('width', root.width() + 'px');
       updateGhost(ev, ghost);
       parent.append(ghost);
-      foo = root.DOMElement.cloneNode(true);
-      return ev.dataTransfer.setDragImage(foo, 0, 0);
+      return ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
     };
 
     return ItemCard;
@@ -643,12 +664,11 @@
 
     ItemCardList.baseId;
 
+    ItemCardList.draggable;
+
     ItemCardList.fragment;
 
-    ItemCardList.ghost;
-
     function ItemCardList(dataGetter, baseId) {
-      var root;
       if (baseId == null) {
         baseId = 'card';
       }
@@ -656,15 +676,8 @@
       this.addClass('item-card-list');
       this.dataGetter = dataGetter;
       this.baseId = baseId;
+      this.draggable = false;
       this.attr('id', this.baseId + "-list");
-      this.attr('draggable', 'true');
-      root = this;
-      this.on('dragover', function() {
-        return dragOver(event, root);
-      });
-      this.on('dragend', function() {
-        return dragEnd(event, root);
-      });
     }
 
     ItemCardList.prototype.update = function() {
@@ -677,7 +690,7 @@
         if (item.heading != null) {
           card = new ItemCardHeading(item.heading, cardId);
         } else {
-          card = new ItemCard(item.title, item.url, cardId);
+          card = new ItemCard(item.title, item.url, cardId, this.draggable);
         }
         this.fragment.appendChild(card.DOMElement);
       }
@@ -690,6 +703,21 @@
       }
       this.attr('data-list-count', count);
       return this.append(this.fragment);
+    };
+
+    ItemCardList.prototype.enableDragDrop = function() {
+      var body, root;
+      this.draggable = true;
+      root = this;
+      this.attr('data-list-draggable', '');
+      this.on('dragover', function() {
+        return dragOver(event, root);
+      });
+      this.on('dragend', function() {
+        return dragEnd(event, root);
+      });
+      body = new HTMLElement('body');
+      return body.on('dragover', updateGhost);
     };
 
     updateGhost = function(ev, ghost) {
@@ -973,6 +1001,7 @@
         container.addClass('horizontal-list');
         list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
         container.append(list);
+        list.enableDragDrop();
         list.update();
         return loader.hide();
       };
@@ -1013,9 +1042,5 @@
   })();
 
   $newTab = new App;
-
-  chrome.tabs.getSelected(null, function(tab) {
-    return console.log(tab.title);
-  });
 
 }).call(this);

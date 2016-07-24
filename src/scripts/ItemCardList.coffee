@@ -4,8 +4,9 @@ class ItemCardList extends HTMLElement
 
 	@dataGetter
 	@baseId
+	@draggable
 	@fragment
-	@ghost
+
 
 	constructor: (dataGetter, baseId = 'card')->
 		super('ul')
@@ -13,18 +14,9 @@ class ItemCardList extends HTMLElement
 
 		@dataGetter = dataGetter
 		@baseId = baseId
+		@draggable = false
 
 		@attr('id', "#{ @baseId }-list")
-
-		@attr('draggable', 'true')
-		root = @
-
-		@on('dragover', ()->
-			dragOver(event, root)
-		)
-		@on('dragend', ()->
-			dragEnd(event, root)
-		)
 
 	update: ()->	
 		# Create document fragment for not to cause reflow when appending elements (better performance)
@@ -37,7 +29,7 @@ class ItemCardList extends HTMLElement
 			if item.heading?
 				card = new ItemCardHeading(item.heading, cardId)
 			else
-				card = new ItemCard(item.title, item.url, cardId)
+				card = new ItemCard(item.title, item.url, cardId, @draggable)
 
 			@fragment.appendChild(card.DOMElement)
 
@@ -52,6 +44,24 @@ class ItemCardList extends HTMLElement
 		@attr('data-list-count', count) # To list the count of children
 
 		@append(@fragment) 
+
+	enableDragDrop: ->
+		
+		@draggable = true
+		root = @
+
+		@attr('data-list-draggable', '')
+
+		@on('dragover', ()->
+			dragOver(event, root)
+		)
+		@on('dragend', ()->
+			dragEnd(event, root)
+		)
+
+		# So that the DnD ghost is updated outside the containing element
+		body = new HTMLElement('body')
+		body.on('dragover', updateGhost)
 
 	updateGhost = (ev, ghost = null)->
 

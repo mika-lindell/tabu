@@ -2185,7 +2185,8 @@ video.responsive-video {
   color: rgba(255, 255, 255, 0.7); }
   .breadcrumb i,
   .breadcrumb [class^="mdi-"], .breadcrumb [class*="mdi-"],
-  .breadcrumb i.material-icons {
+  .breadcrumb i.material-icons,
+  .breadcrumb i.drag-handle {
     display: inline-block;
     float: left;
     font-size: 24px; }
@@ -2597,7 +2598,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons, ul[draggable='true'] .item-card > a::before {
+.material-icons, .drag-handle {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -3049,7 +3050,8 @@ nav {
     color: #5a5a5a; }
   nav i,
   nav [class^="mdi-"], nav [class*="mdi-"],
-  nav i.material-icons {
+  nav i.material-icons,
+  nav i.drag-handle {
     display: block;
     font-size: 2rem;
     height: 50px;
@@ -3977,7 +3979,7 @@ a.waves-effect .waves-ripple {
     height: 32px;
     width: 32px;
     border-radius: 50%; }
-  .chip i.material-icons {
+  .chip i.material-icons, .chip i.drag-handle {
     cursor: pointer;
     float: right;
     font-size: 16px;
@@ -4352,11 +4354,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field ul[draggable='true'] .item-card > input[type=search]:focus ~ a::before, ul[draggable='true'] .input-field .item-card > input[type=search]:focus ~ a::before {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ .drag-handle {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field ul[draggable='true'] .item-card > input[type=search] ~ a::before, ul[draggable='true'] .input-field .item-card > input[type=search] ~ a::before {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ .drag-handle {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6200,7 +6202,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(./assets/material-design-icons/Material-Design-Icons.woff2) format("woff2"); }
-.material-icons, ul[draggable='true'] .item-card > a::before {
+.material-icons, .drag-handle {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6215,13 +6217,13 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
-nav i.material-icons.bugged {
+nav i.material-icons.bugged, nav i.bugged.drag-handle {
   max-width: 25px;
   overflow: hidden; }
 
-nav i.material-icons {
+nav i.material-icons, nav i.drag-handle {
   font-size: 1.5rem; }
-  nav i.material-icons.left {
+  nav i.material-icons.left, nav i.left.drag-handle {
     margin-right: 8px; }
 
 /***
@@ -6442,7 +6444,7 @@ Button styles
     margin-right: 0;
     margin-left: 0.6rem; }
 
-button#go-incognito i.material-icons {
+button#go-incognito i.material-icons, button#go-incognito i.drag-handle {
   font-size: 1.35rem; }
 
 /***
@@ -6450,25 +6452,28 @@ button#go-incognito i.material-icons {
 Item card styles
 
 ***/
-ul[draggable='true'] .item-card > a::before {
-  display: inline-block;
-  content: 'more_vertmore_vert';
+.drag-handle {
+  display: none;
   cursor: move;
   vertical-align: middle;
   color: #c7c7c7;
   padding-right: 1em;
   letter-spacing: -1.23em; }
 
-[data-dragged-item] .item-card {
-  box-shadow: none; }
-[data-dragged-item] #ghost {
+#ghost {
   transition: none;
   border: none;
   background-color: white;
   opacity: 0.7;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
-  [data-dragged-item] #ghost a::before {
+  #ghost .drag-handle {
     display: none; }
+
+ul[data-list-draggable] .drag-handle {
+  display: inline-block; }
+
+[data-dragged-item] .item-card {
+  box-shadow: none; }
 
 .item-card {
   margin-bottom: 0.5rem;

@@ -176,6 +176,16 @@ class HTMLElement
 					else
 						return false
 
+	children: ()->
+
+		orig = @DOMElement.children
+		children = []
+
+		for i in orig
+			children.push(new HTMLElement(i))
+
+		return children
+
 	top: ()->
 		return @DOMElement.offsetTop
 
@@ -190,6 +200,9 @@ class HTMLElement
 
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))
+
+	removeFromDOM: ()->
+		@DOMElement.outerHTML = ''
 
 	# Bind element to variable
 	#
