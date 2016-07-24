@@ -164,14 +164,14 @@ class HTMLElement
 	insert: (element = null, target = null, beforeOrAfter = 'before')->
 		if element? and target?
 
-				if target instanceof HTMLElement then target = target.DOMElement
+				if target instanceof Element then target = new HTMLElement(target)
 
 				if beforeOrAfter is 'before'
-					@DOMElement.insertBefore(element.DOMElement, target)
+					@DOMElement.insertBefore(element.DOMElement, target.DOMElement)
 					return true
 				else
-					if target.nextSibling?
-						@DOMElement.insertBefore(element.DOMElement, target.nextSibling)
+					if target.DOMElement.nextSibling?
+						@DOMElement.insertBefore(element.DOMElement, target.DOMElement.nextSibling)
 						return true
 					else
 						return false

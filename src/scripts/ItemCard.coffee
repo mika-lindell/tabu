@@ -2,14 +2,14 @@
 #
 class ItemCard extends HTMLElement
 
-	@ghost
+	@containingList
 
 	# Construct new card.
 	#
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
 	
-	constructor: (title, url, id = null, draggable = false)->
+	constructor: (title, url, containingList ,id = null)->
 		super('li')
 		@addClass('item-card')
 		if id? then @attr('id', id)
@@ -17,8 +17,9 @@ class ItemCard extends HTMLElement
 		color = new HexColor(url)
 		url = new Url(url)
 		root = @
+		@containingList = containingList
 
-		if draggable
+		if @containingList.draggable
 			# Enable drag-n-drop
 			@attr('draggable', 'true')
 			
@@ -38,7 +39,6 @@ class ItemCard extends HTMLElement
 		dragHandle = new HTMLElement('i')
 		dragHandle.text('more_vertmore_vert')
 		dragHandle.addClass('drag-handle')
-
 
 		badge = new HTMLElement('span')
 		badge.text(url.withoutPrefix().substring(0, 2) )
@@ -70,33 +70,16 @@ class ItemCard extends HTMLElement
 		@append(link)
 
 
-	updateGhost = (ev, ghost = null)->
-
-		if not ghost?
-			ghost = new HTMLElement('#ghost')
-
-		if ghost.DOMElement?
-			ghost.css('left', ev.clientX + 20  + 'px')
-			ghost.css('top', ev.clientY + 'px')
-
 	dragStart = (ev, root)->
 
 		ev.dataTransfer.effectAllowed = "move"
 
-		parent = root.parent()
-
-		parent.attr('data-dragged-item', root.attr('id'))
+		root.containingList.attr('data-dragged-item', root.attr('id'))
 
 		root.addClass('dragged')
 		
+		root.containingList.createGhost(ev, root)
+
 		#ev.dataTransfer.setData('text/html', root.html())
-
-		ghost = root.clone()
-		ghost.attr('id', 'ghost')
-		ghost.css('position', 'fixed')
-		ghost.css('width', root.width() + 'px')
-		updateGhost(ev, ghost)
-		parent.append(ghost)
-
 		ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)
 		

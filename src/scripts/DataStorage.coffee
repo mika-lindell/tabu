@@ -18,8 +18,9 @@ class DataStorage
 
 	fetchAll: ()->
 		@topSites.fetch()
+		@otherDevices.fetch()
 		@latestBookmarks.fetch()
 		# @recentHistory.fetch()
 		@recentlyClosed.fetch()
-		@otherDevices.fetch()
+		
 		

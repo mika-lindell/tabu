@@ -340,15 +340,15 @@
         beforeOrAfter = 'before';
       }
       if ((element != null) && (target != null)) {
-        if (target instanceof HTMLElement) {
-          target = target.DOMElement;
+        if (target instanceof Element) {
+          target = new HTMLElement(target);
         }
         if (beforeOrAfter === 'before') {
-          this.DOMElement.insertBefore(element.DOMElement, target);
+          this.DOMElement.insertBefore(element.DOMElement, target.DOMElement);
           return true;
         } else {
-          if (target.nextSibling != null) {
-            this.DOMElement.insertBefore(element.DOMElement, target.nextSibling);
+          if (target.DOMElement.nextSibling != null) {
+            this.DOMElement.insertBefore(element.DOMElement, target.DOMElement.nextSibling);
             return true;
           } else {
             return false;
@@ -531,9 +531,9 @@
 
     DataStorage.prototype.fetchAll = function() {
       this.topSites.fetch();
+      this.otherDevices.fetch();
       this.latestBookmarks.fetch();
-      this.recentlyClosed.fetch();
-      return this.otherDevices.fetch();
+      return this.recentlyClosed.fetch();
     };
 
     return DataStorage;
@@ -541,19 +541,16 @@
   })();
 
   ItemCard = (function(superClass) {
-    var dragStart, updateGhost;
+    var dragStart;
 
     extend(ItemCard, superClass);
 
-    ItemCard.ghost;
+    ItemCard.containingList;
 
-    function ItemCard(title, url, id, draggable) {
+    function ItemCard(title, url, containingList, id) {
       var badge, color, dragHandle, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
       if (id == null) {
         id = null;
-      }
-      if (draggable == null) {
-        draggable = false;
       }
       ItemCard.__super__.constructor.call(this, 'li');
       this.addClass('item-card');
@@ -563,7 +560,8 @@
       color = new HexColor(url);
       url = new Url(url);
       root = this;
-      if (draggable) {
+      this.containingList = containingList;
+      if (this.containingList.draggable) {
         this.attr('draggable', 'true');
         this.on('dragstart', function() {
           return dragStart(event, root);
@@ -601,31 +599,11 @@
       this.append(link);
     }
 
-    updateGhost = function(ev, ghost) {
-      if (ghost == null) {
-        ghost = null;
-      }
-      if (ghost == null) {
-        ghost = new HTMLElement('#ghost');
-      }
-      if (ghost.DOMElement != null) {
-        ghost.css('left', ev.clientX + 20 + 'px');
-        return ghost.css('top', ev.clientY + 'px');
-      }
-    };
-
     dragStart = function(ev, root) {
-      var ghost, parent;
       ev.dataTransfer.effectAllowed = "move";
-      parent = root.parent();
-      parent.attr('data-dragged-item', root.attr('id'));
+      root.containingList.attr('data-dragged-item', root.attr('id'));
       root.addClass('dragged');
-      ghost = root.clone();
-      ghost.attr('id', 'ghost');
-      ghost.css('position', 'fixed');
-      ghost.css('width', root.width() + 'px');
-      updateGhost(ev, ghost);
-      parent.append(ghost);
+      root.containingList.createGhost(ev, root);
       return ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
     };
 
@@ -636,13 +614,16 @@
   ItemCardHeading = (function(superClass) {
     extend(ItemCardHeading, superClass);
 
-    function ItemCardHeading(title, id) {
+    ItemCardHeading.containingList;
+
+    function ItemCardHeading(title, containingList, id) {
       var heading;
       if (id == null) {
         id = null;
       }
       ItemCardHeading.__super__.constructor.call(this, 'li');
       this.addClass('item-card-heading');
+      this.containingList = containingList;
       heading = new HTMLElement('h6');
       heading.text(title);
       if (id != null) {
@@ -656,7 +637,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var dragEnd, dragOver, updateGhost;
+    var dragEnd, dragOver;
 
     extend(ItemCardList, superClass);
 
@@ -665,6 +646,8 @@
     ItemCardList.baseId;
 
     ItemCardList.draggable;
+
+    ItemCardList.ghost;
 
     ItemCardList.fragment;
 
@@ -677,6 +660,7 @@
       this.dataGetter = dataGetter;
       this.baseId = baseId;
       this.draggable = false;
+      this.ghost = null;
       this.attr('id', this.baseId + "-list");
     }
 
@@ -688,12 +672,14 @@
         item = ref[i];
         cardId = this.baseId + "-" + i;
         if (item.heading != null) {
-          card = new ItemCardHeading(item.heading, cardId);
+          card = new ItemCardHeading(item.heading, this, cardId);
         } else {
-          card = new ItemCard(item.title, item.url, cardId, this.draggable);
+          card = new ItemCard(item.title, item.url, this, cardId);
         }
+        item.card = card;
         this.fragment.appendChild(card.DOMElement);
       }
+      console.log(this.dataGetter.data);
       count = this.dataGetter.data.length;
       if (count === 0) {
         parent = this.parent();
@@ -703,6 +689,18 @@
       }
       this.attr('data-list-count', count);
       return this.append(this.fragment);
+    };
+
+    ItemCardList.prototype.getItemForDOMElement = function(DOMElement) {
+      var i, item, j, len, ref;
+      ref = this.dataGetter.data;
+      for (i = j = 0, len = ref.length; j < len; i = ++j) {
+        item = ref[i];
+        if (item.card.DOMElement === DOMElement) {
+          return item.card;
+        }
+      }
+      return null;
     };
 
     ItemCardList.prototype.enableDragDrop = function() {
@@ -717,10 +715,21 @@
         return dragEnd(event, root);
       });
       body = new HTMLElement('body');
-      return body.on('dragover', updateGhost);
+      return body.on('dragover', this.updateGhost);
     };
 
-    updateGhost = function(ev, ghost) {
+    ItemCardList.prototype.createGhost = function(ev, from) {
+      if (from != null) {
+        this.ghost = from.clone();
+        this.ghost.attr('id', 'ghost');
+        this.ghost.css('position', 'fixed');
+        this.ghost.css('width', from.width() + 'px');
+        this.updateGhost(ev, this.ghost);
+        return this.append(this.ghost);
+      }
+    };
+
+    ItemCardList.prototype.updateGhost = function(ev, ghost) {
       if (ghost == null) {
         ghost = null;
       }
@@ -737,20 +746,20 @@
       var draggedItem, parent, target;
       ev.preventDefault();
       ev.dataTransfer.effectAllowed = "move";
-      updateGhost(ev);
+      root.updateGhost(ev);
       parent = root;
-      target = ev.target.closest('li');
-      draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'));
-      if (target !== draggedItem.DOMElement && (target != null) && target.parentNode === parent.DOMElement) {
-        if (target === parent.DOMElement.lastElementChild) {
+      target = root.getItemForDOMElement(ev.target.closest('li'));
+      draggedItem = root.getItemForDOMElement(document.getElementById(parent.attr('data-dragged-item')));
+      if (target !== draggedItem && (target != null) && target.containingList === parent) {
+        if (target.DOMElement === parent.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
           return parent.append(draggedItem);
-        } else if (target.offsetTop < draggedItem.top() || target.offsetLeft < draggedItem.left()) {
+        } else if (target.top() < draggedItem.top() || target.left() < draggedItem.left()) {
           console.log('DragOver: insertBefore');
           return parent.insert(draggedItem, target);
-        } else if (target.offsetTop > draggedItem.top() || target.offsetLeft > draggedItem.left()) {
+        } else if (target.top() > draggedItem.top() || target.left() > draggedItem.left()) {
           console.log('DragOver: insertAfter');
-          if (target.nextSibling) {
+          if (target.DOMElement.nextSibling) {
             return parent.insert(draggedItem, target, 'after');
           }
         }
@@ -758,15 +767,15 @@
     };
 
     dragEnd = function(ev, root) {
-      var ghost, parent, target;
+      var parent, target;
       console.log('Drop');
       ev.preventDefault();
       parent = root;
       target = new HTMLElement(ev.target.closest('li'));
-      ghost = new HTMLElement('#ghost');
       parent.removeAttr('data-dragged-item');
       target.removeClass('dragged');
-      return ghost.DOMElement.outerHTML = '';
+      root.ghost.DOMElement.outerHTML = '';
+      return root.ghost = null;
     };
 
     return ItemCardList;

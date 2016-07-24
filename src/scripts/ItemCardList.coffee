@@ -5,6 +5,7 @@ class ItemCardList extends HTMLElement
 	@dataGetter
 	@baseId
 	@draggable
+	@ghost
 	@fragment
 
 
@@ -15,6 +16,7 @@ class ItemCardList extends HTMLElement
 		@dataGetter = dataGetter
 		@baseId = baseId
 		@draggable = false
+		@ghost = null
 
 		@attr('id', "#{ @baseId }-list")
 
@@ -27,11 +29,14 @@ class ItemCardList extends HTMLElement
 			cardId = "#{ @baseId }-#{ i }"
 
 			if item.heading?
-				card = new ItemCardHeading(item.heading, cardId)
+				card = new ItemCardHeading(item.heading, @, cardId)
 			else
-				card = new ItemCard(item.title, item.url, cardId, @draggable)
+				card = new ItemCard(item.title, item.url, @, cardId)
 
+			item.card = card
 			@fragment.appendChild(card.DOMElement)
+
+		console.log @dataGetter.data
 
 
 		count = @dataGetter.data.length
@@ -44,6 +49,15 @@ class ItemCardList extends HTMLElement
 		@attr('data-list-count', count) # To list the count of children
 
 		@append(@fragment) 
+
+	getItemForDOMElement: (DOMElement)->
+
+		for item, i in @dataGetter.data
+
+			if item.card.DOMElement is DOMElement
+				return item.card
+
+		return null
 
 	enableDragDrop: ->
 		
@@ -61,9 +75,18 @@ class ItemCardList extends HTMLElement
 
 		# So that the DnD ghost is updated outside the containing element
 		body = new HTMLElement('body')
-		body.on('dragover', updateGhost)
+		body.on('dragover', @updateGhost)
 
-	updateGhost = (ev, ghost = null)->
+	createGhost: (ev, from)->
+		if from?
+			@ghost = from.clone()
+			@ghost.attr('id', 'ghost')
+			@ghost.css('position', 'fixed')
+			@ghost.css('width', from.width() + 'px')
+			@updateGhost(ev, @ghost)
+			@append(@ghost)
+
+	updateGhost: (ev, ghost = null)->
 
 		if not ghost?
 			ghost = new HTMLElement('#ghost')
@@ -79,22 +102,22 @@ class ItemCardList extends HTMLElement
 
 		ev.dataTransfer.effectAllowed = "move"
 
-		updateGhost(ev)
+		root.updateGhost(ev)
 
 		parent = root
-		target = ev.target.closest('li')
+		target = root.getItemForDOMElement(ev.target.closest('li'))
 
-		draggedItem = new HTMLElement('#' + parent.attr('data-dragged-item'))
+		draggedItem = root.getItemForDOMElement(document.getElementById(parent.attr('data-dragged-item')))
 		
-		if target isnt draggedItem.DOMElement and target? and target.parentNode is parent.DOMElement
+		if target isnt draggedItem and target? and target.containingList is parent
 			# Insert as last item if dragging: 
 			# - over last child
 			
-			if target is parent.DOMElement.lastElementChild
+			if target.DOMElement is parent.DOMElement.lastElementChild
 				console.log 'DragOver: Append'
 				parent.append(draggedItem)
 			
-			else if target.offsetTop < draggedItem.top() or target.offsetLeft < draggedItem.left()
+			else if target.top() < draggedItem.top() or target.left() < draggedItem.left()
 				# InsertBefore has to be first option for this to work
 				# Insert before if dragging:
 				# - Up
@@ -102,12 +125,12 @@ class ItemCardList extends HTMLElement
 				console.log 'DragOver: insertBefore'
 				parent.insert(draggedItem, target)
 
-			else if target.offsetTop > draggedItem.top() or target.offsetLeft > draggedItem.left()
+			else if target.top() > draggedItem.top() or target.left() > draggedItem.left()
 				# Insert after if dragging:
 				# - Down
 				# - Right				
 				console.log 'DragOver: insertAfter'
-				if target.nextSibling
+				if target.DOMElement.nextSibling
 					parent.insert(draggedItem, target, 'after')
 
 	dragEnd = (ev, root)->
@@ -118,9 +141,9 @@ class ItemCardList extends HTMLElement
 		
 		parent = root
 		target = new HTMLElement(ev.target.closest('li'))
-		ghost = new HTMLElement('#ghost')
 
 		parent.removeAttr('data-dragged-item')
 		target.removeClass('dragged')
 		
-		ghost.DOMElement.outerHTML = ''
+		root.ghost.DOMElement.outerHTML = ''
+		root.ghost = null
