@@ -1,7 +1,26 @@
 (function() {
-  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Url, Visibility,
+  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Url, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
+
+  Throttle = (function() {
+    function Throttle(callback, limit) {
+      var wait;
+      wait = false;
+      return function() {
+        if (!wait) {
+          callback.call();
+          wait = true;
+          setTimeout((function() {
+            wait = false;
+          }), limit);
+        }
+      };
+    }
+
+    return Throttle;
+
+  })();
 
   Url = (function() {
     Url.href;
@@ -600,7 +619,7 @@
     }
 
     dragStart = function(ev, root) {
-      ev.dataTransfer.effectAllowed = "move";
+      ev.dataTransfer.effectAllowed = "all";
       root.containingList.attr('data-dragged-item', root.attr('id'));
       root.addClass('dragged');
       root.containingList.createGhost(ev, root);
@@ -637,7 +656,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var dragEnd, dragOver;
+    var dragEnd, dragOver, dragOverUpdateCursor;
 
     extend(ItemCardList, superClass);
 
@@ -679,7 +698,6 @@
         item.card = card;
         this.fragment.appendChild(card.DOMElement);
       }
-      console.log(this.dataGetter.data);
       count = this.dataGetter.data.length;
       if (count === 0) {
         parent = this.parent();
@@ -708,9 +726,10 @@
       this.draggable = true;
       root = this;
       this.attr('data-list-draggable', '');
-      this.on('dragover', function() {
+      this.on('dragover', dragOverUpdateCursor);
+      this.on('dragover', new Throttle(function() {
         return dragOver(event, root);
-      });
+      }, 50));
       this.on('dragend', function() {
         return dragEnd(event, root);
       });
@@ -742,10 +761,15 @@
       }
     };
 
+    dragOverUpdateCursor = function(ev) {
+      ev.preventDefault();
+      return ev.dataTransfer.dropEffect = "move";
+    };
+
     dragOver = function(ev, root) {
       var draggedItem, parent, target;
       ev.preventDefault();
-      ev.dataTransfer.effectAllowed = "move";
+      ev.dataTransfer.dropEffect = "move";
       root.updateGhost(ev);
       parent = root;
       target = root.getItemForDOMElement(ev.target.closest('li'));

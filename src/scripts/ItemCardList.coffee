@@ -36,9 +36,6 @@ class ItemCardList extends HTMLElement
 			item.card = card
 			@fragment.appendChild(card.DOMElement)
 
-		console.log @dataGetter.data
-
-
 		count = @dataGetter.data.length
 
 		# Add some information about the list to DOM as attributes, so we can target with CSS selectors
@@ -66,9 +63,14 @@ class ItemCardList extends HTMLElement
 
 		@attr('data-list-draggable', '')
 
-		@on('dragover', ()->
+		# This will update the cursor during DragOver, as throttlig this operation would cause flicker
+		@on('dragover', dragOverUpdateCursor)
+		# Human hand-eye-coordination only need things to be updated at ~ 100ms interval for the action to feel responsive
+		# Hence throttle execution of this event handler to save resources
+		@on('dragover', new Throttle(()->
 			dragOver(event, root)
-		)
+		, 50))
+
 		@on('dragend', ()->
 			dragEnd(event, root)
 		)
@@ -78,6 +80,7 @@ class ItemCardList extends HTMLElement
 		body.on('dragover', @updateGhost)
 
 	createGhost: (ev, from)->
+
 		if from?
 			@ghost = from.clone()
 			@ghost.attr('id', 'ghost')
@@ -95,12 +98,13 @@ class ItemCardList extends HTMLElement
 			ghost.css('left', ev.clientX + 20  + 'px')
 			ghost.css('top', ev.clientY + 'px')
 
-	dragOver = (ev, root)->
-
+	dragOverUpdateCursor = (ev)->
 		ev.preventDefault()
-		#ev.stopPropagation()
+		ev.dataTransfer.dropEffect = "move"
 
-		ev.dataTransfer.effectAllowed = "move"
+	dragOver = (ev, root)->
+		ev.preventDefault()
+		ev.dataTransfer.dropEffect = "move"
 
 		root.updateGhost(ev)
 

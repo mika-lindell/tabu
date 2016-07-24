@@ -27,13 +27,12 @@ class ItemCard extends HTMLElement
 				dragStart(event, root)
 			)
 
+
 		link = new HTMLElement('a')
 		link.attr('href', url.href)
 		# Disable DnD for links to remove its default DnD behavior
 		link.attr('draggable', 'false') 
-		
 		link.addClass('item-card-link')
-
 		if id? then link.attr('id', id + '-link')
 
 		dragHandle = new HTMLElement('i')
@@ -72,7 +71,7 @@ class ItemCard extends HTMLElement
 
 	dragStart = (ev, root)->
 
-		ev.dataTransfer.effectAllowed = "move"
+		ev.dataTransfer.effectAllowed = "all"
 
 		root.containingList.attr('data-dragged-item', root.attr('id'))
 
@@ -82,4 +81,3 @@ class ItemCard extends HTMLElement
 
 		#ev.dataTransfer.setData('text/html', root.html())
 		ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)
-		
