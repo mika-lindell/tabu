@@ -25,7 +25,7 @@ class Url
 
 	withoutPrefix: ()->
 		# This will remove www. & m. prefixes from url, but will keep subdomains.
-		searchPattern = '^(w+\\d*\\.|m.)'
+		searchPattern = '^(w+\\d*\\.|m\\.)'
 		rx = new RegExp(searchPattern, 'gim')
 		replacePattern = ''
 		return @hostname.replace(rx, replacePattern)

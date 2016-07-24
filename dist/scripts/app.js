@@ -53,7 +53,7 @@
 
     Url.prototype.withoutPrefix = function() {
       var replacePattern, rx, searchPattern;
-      searchPattern = '^(w+\\d*\\.|m.)';
+      searchPattern = '^(w+\\d*\\.|m\\.)';
       rx = new RegExp(searchPattern, 'gim');
       replacePattern = '';
       return this.hostname.replace(rx, replacePattern);
