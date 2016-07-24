@@ -86,18 +86,23 @@ Material icons
 }
 
 // Some icons are bugged and this will fix it
-nav i.material-icons.bugged{
-	max-width: 25px;
+i.material-icons.bugged{
+	max-width: 1.15em;
   overflow: hidden;
 }
 
 // Override the font size and icon space for navigation
-nav i.material-icons{
+i.material-icons{
 	font-size: 1.5rem;
 
 	&.left{
 		margin-right: 8px;
 	}
+
+	&.right{
+		margin-left: 5px;
+	}
+
 }
 
 /***
@@ -415,6 +420,11 @@ body{
 .section-toolbar{
 	display: inline-block;
 	vertical-align: super;
+
+	button{
+		box-shadow: none;
+		padding: 0 1rem;
+	}
 }
 
 #actions{

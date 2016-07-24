@@ -6217,14 +6217,16 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
-nav i.material-icons.bugged, nav i.bugged.drag-handle {
-  max-width: 25px;
+i.material-icons.bugged, i.bugged.drag-handle {
+  max-width: 1.15em;
   overflow: hidden; }
 
-nav i.material-icons, nav i.drag-handle {
+i.material-icons, i.drag-handle {
   font-size: 1.5rem; }
-  nav i.material-icons.left, nav i.left.drag-handle {
+  i.material-icons.left, i.left.drag-handle {
     margin-right: 8px; }
+  i.material-icons.right, i.right.drag-handle {
+    margin-left: 5px; }
 
 /***
 
@@ -6420,6 +6422,9 @@ body {
 .section-toolbar {
   display: inline-block;
   vertical-align: super; }
+  .section-toolbar button {
+    box-shadow: none;
+    padding: 0 1rem; }
 
 #actions {
   margin: 0.5rem 0 1rem 0; }
