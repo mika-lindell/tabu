@@ -69,7 +69,7 @@ class ItemCardList extends HTMLElement
 		# Hence throttle execution of this event handler to save resources
 		@on('dragover', new Throttle(()->
 			dragOver(event, root)
-		, 50))
+		, 80))
 
 		@on('dragend', ()->
 			dragEnd(event, root)
