@@ -2,23 +2,28 @@
 #
 class ItemCardList extends HTMLElement
 
+	@container
 	@dataGetter
 	@baseId
-	@draggable
+	@editable
 	@ghost
 	@fragment
 
 
-	constructor: (dataGetter, baseId = 'card')->
+	constructor: (container, dataGetter)->
 		super('ul')
 		@addClass('item-card-list')
 
+		@container = new HTMLElement (container)
+		
 		@dataGetter = dataGetter
-		@baseId = baseId
-		@draggable = false
+		@baseId = container.replace('#', '')
+		@editable = false
 		@ghost = null
 
 		@attr('id', "#{ @baseId }-list")
+
+		@container.append @
 
 	update: ()->	
 		# Create document fragment for not to cause reflow when appending elements (better performance)
@@ -56,12 +61,12 @@ class ItemCardList extends HTMLElement
 
 		return null
 
-	enableDragDrop: ->
+	enableEditing: ->
 		
-		@draggable = true
+		@editable = true
 		root = @
 
-		@attr('data-list-draggable', '')
+		@attr('data-list-editable', '')
 
 		# This will update the cursor during DragOver, as throttlig this operation would cause flicker
 		@on('dragover', ()->
@@ -80,6 +85,13 @@ class ItemCardList extends HTMLElement
 		# So that the DnD ghost is updated outside the containing element
 		body = new HTMLElement('body')
 		body.on('dragover', @updateGhost)
+
+	setOrientation: (orientation = 'horizontal')->
+		if orientation is 'horizontal'
+			@container.addClass('horizontal-list')
+		else
+			@container.removeClass('horizontal-list')
+
 
 	createGhost: (ev, from)->
 

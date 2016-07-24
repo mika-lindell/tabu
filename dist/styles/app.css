@@ -51,13 +51,13 @@
 .materialize-red-text.text-darken-2 {
   color: #b9151b !important; }
 
-.materialize-red.darken-3 {
+.materialize-red.darken-3, #actions button.materialize-red:active {
   background-color: #a21318 !important; }
 
 .materialize-red-text.text-darken-3 {
   color: #a21318 !important; }
 
-.materialize-red.darken-4 {
+.materialize-red.darken-4, #actions button.materialize-red:hover {
   background-color: #8b1014 !important; }
 
 .materialize-red-text.text-darken-4 {
@@ -111,13 +111,13 @@
 .red-text.text-darken-2 {
   color: #D32F2F !important; }
 
-.red.darken-3 {
+.red.darken-3, #actions button.red:active {
   background-color: #C62828 !important; }
 
 .red-text.text-darken-3 {
   color: #C62828 !important; }
 
-.red.darken-4 {
+.red.darken-4, #actions button.red:hover {
   background-color: #B71C1C !important; }
 
 .red-text.text-darken-4 {
@@ -195,13 +195,13 @@
 .pink-text.text-darken-2 {
   color: #c2185b !important; }
 
-.pink.darken-3 {
+.pink.darken-3, #actions button.pink:active {
   background-color: #ad1457 !important; }
 
 .pink-text.text-darken-3 {
   color: #ad1457 !important; }
 
-.pink.darken-4 {
+.pink.darken-4, #actions button.pink:hover {
   background-color: #880e4f !important; }
 
 .pink-text.text-darken-4 {
@@ -279,13 +279,13 @@
 .purple-text.text-darken-2 {
   color: #7b1fa2 !important; }
 
-.purple.darken-3 {
+.purple.darken-3, #actions button.purple:active {
   background-color: #6a1b9a !important; }
 
 .purple-text.text-darken-3 {
   color: #6a1b9a !important; }
 
-.purple.darken-4 {
+.purple.darken-4, #actions button.purple:hover {
   background-color: #4a148c !important; }
 
 .purple-text.text-darken-4 {
@@ -363,13 +363,13 @@
 .deep-purple-text.text-darken-2 {
   color: #512da8 !important; }
 
-.deep-purple.darken-3 {
+.deep-purple.darken-3, #actions button.deep-purple:active {
   background-color: #4527a0 !important; }
 
 .deep-purple-text.text-darken-3 {
   color: #4527a0 !important; }
 
-.deep-purple.darken-4 {
+.deep-purple.darken-4, #actions button.deep-purple:hover {
   background-color: #311b92 !important; }
 
 .deep-purple-text.text-darken-4 {
@@ -447,13 +447,13 @@
 .indigo-text.text-darken-2 {
   color: #303f9f !important; }
 
-.indigo.darken-3 {
+.indigo.darken-3, #actions button.indigo:active {
   background-color: #283593 !important; }
 
 .indigo-text.text-darken-3 {
   color: #283593 !important; }
 
-.indigo.darken-4 {
+.indigo.darken-4, #actions button.indigo:hover {
   background-color: #1a237e !important; }
 
 .indigo-text.text-darken-4 {
@@ -531,13 +531,13 @@
 .blue-text.text-darken-2 {
   color: #1976D2 !important; }
 
-.blue.darken-3 {
+.blue.darken-3, #actions button.blue:active {
   background-color: #1565C0 !important; }
 
 .blue-text.text-darken-3 {
   color: #1565C0 !important; }
 
-.blue.darken-4 {
+.blue.darken-4, #actions button.blue:hover {
   background-color: #0D47A1 !important; }
 
 .blue-text.text-darken-4 {
@@ -567,85 +567,85 @@
 .blue-text.text-accent-4 {
   color: #2962FF !important; }
 
-.light-blue {
+.light-blue, #actions button:hover, #actions button:active {
   background-color: #03a9f4 !important; }
 
 .light-blue-text {
   color: #03a9f4 !important; }
 
-.light-blue.lighten-5 {
+.light-blue.lighten-5, #actions button.lighten-5:hover, #actions button.lighten-5:active {
   background-color: #e1f5fe !important; }
 
 .light-blue-text.text-lighten-5 {
   color: #e1f5fe !important; }
 
-.light-blue.lighten-4 {
+.light-blue.lighten-4, #actions button.lighten-4:hover, #actions button.lighten-4:active {
   background-color: #b3e5fc !important; }
 
 .light-blue-text.text-lighten-4 {
   color: #b3e5fc !important; }
 
-.light-blue.lighten-3 {
+.light-blue.lighten-3, #actions button.lighten-3:hover, #actions button.lighten-3:active {
   background-color: #81d4fa !important; }
 
 .light-blue-text.text-lighten-3 {
   color: #81d4fa !important; }
 
-.light-blue.lighten-2 {
+.light-blue.lighten-2, #actions button.lighten-2:hover, #actions button.lighten-2:active {
   background-color: #4fc3f7 !important; }
 
 .light-blue-text.text-lighten-2 {
   color: #4fc3f7 !important; }
 
-.light-blue.lighten-1 {
+.light-blue.lighten-1, #actions button.lighten-1:hover, #actions button.lighten-1:active {
   background-color: #29b6f6 !important; }
 
 .light-blue-text.text-lighten-1 {
   color: #29b6f6 !important; }
 
-.light-blue.darken-1 {
+.light-blue.darken-1, #actions button.darken-1:hover, #actions button.darken-1:active {
   background-color: #039be5 !important; }
 
 .light-blue-text.text-darken-1 {
   color: #039be5 !important; }
 
-.light-blue.darken-2 {
+.light-blue.darken-2, #actions button.darken-2:hover, #actions button.darken-2:active {
   background-color: #0288d1 !important; }
 
 .light-blue-text.text-darken-2 {
   color: #0288d1 !important; }
 
-.light-blue.darken-3 {
+.light-blue.darken-3, #actions button.darken-3:hover, #actions button:active {
   background-color: #0277bd !important; }
 
 .light-blue-text.text-darken-3 {
   color: #0277bd !important; }
 
-.light-blue.darken-4 {
+.light-blue.darken-4, #actions button:hover, #actions button.darken-4:active {
   background-color: #01579b !important; }
 
 .light-blue-text.text-darken-4 {
   color: #01579b !important; }
 
-.light-blue.accent-1 {
+.light-blue.accent-1, #actions button.accent-1:hover, #actions button.accent-1:active {
   background-color: #80d8ff !important; }
 
 .light-blue-text.text-accent-1 {
   color: #80d8ff !important; }
 
-.light-blue.accent-2 {
+.light-blue.accent-2, #actions button.accent-2:hover, #actions button.accent-2:active {
   background-color: #40c4ff !important; }
 
 .light-blue-text.text-accent-2 {
   color: #40c4ff !important; }
 
-.light-blue.accent-3 {
+.light-blue.accent-3, #actions button.accent-3:hover, #actions button.accent-3:active {
   background-color: #00b0ff !important; }
 
 .light-blue-text.text-accent-3 {
   color: #00b0ff !important; }
 
-.light-blue.accent-4 {
+.light-blue.accent-4, #actions button.accent-4:hover, #actions button.accent-4:active {
   background-color: #0091ea !important; }
 
 .light-blue-text.text-accent-4 {
@@ -699,13 +699,13 @@
 .cyan-text.text-darken-2 {
   color: #0097a7 !important; }
 
-.cyan.darken-3 {
+.cyan.darken-3, #actions button.cyan:active {
   background-color: #00838f !important; }
 
 .cyan-text.text-darken-3 {
   color: #00838f !important; }
 
-.cyan.darken-4 {
+.cyan.darken-4, #actions button.cyan:hover {
   background-color: #006064 !important; }
 
 .cyan-text.text-darken-4 {
@@ -783,13 +783,13 @@
 .teal-text.text-darken-2 {
   color: #00796b !important; }
 
-.teal.darken-3 {
+.teal.darken-3, #actions button.teal:active {
   background-color: #00695c !important; }
 
 .teal-text.text-darken-3 {
   color: #00695c !important; }
 
-.teal.darken-4 {
+.teal.darken-4, #actions button.teal:hover {
   background-color: #004d40 !important; }
 
 .teal-text.text-darken-4 {
@@ -867,13 +867,13 @@
 .green-text.text-darken-2 {
   color: #388E3C !important; }
 
-.green.darken-3 {
+.green.darken-3, #actions button.green:active {
   background-color: #2E7D32 !important; }
 
 .green-text.text-darken-3 {
   color: #2E7D32 !important; }
 
-.green.darken-4 {
+.green.darken-4, #actions button.green:hover {
   background-color: #1B5E20 !important; }
 
 .green-text.text-darken-4 {
@@ -951,13 +951,13 @@
 .light-green-text.text-darken-2 {
   color: #689f38 !important; }
 
-.light-green.darken-3 {
+.light-green.darken-3, #actions button.light-green:active {
   background-color: #558b2f !important; }
 
 .light-green-text.text-darken-3 {
   color: #558b2f !important; }
 
-.light-green.darken-4 {
+.light-green.darken-4, #actions button.light-green:hover {
   background-color: #33691e !important; }
 
 .light-green-text.text-darken-4 {
@@ -1035,13 +1035,13 @@
 .lime-text.text-darken-2 {
   color: #afb42b !important; }
 
-.lime.darken-3 {
+.lime.darken-3, #actions button.lime:active {
   background-color: #9e9d24 !important; }
 
 .lime-text.text-darken-3 {
   color: #9e9d24 !important; }
 
-.lime.darken-4 {
+.lime.darken-4, #actions button.lime:hover {
   background-color: #827717 !important; }
 
 .lime-text.text-darken-4 {
@@ -1119,13 +1119,13 @@
 .yellow-text.text-darken-2 {
   color: #fbc02d !important; }
 
-.yellow.darken-3 {
+.yellow.darken-3, #actions button.yellow:active {
   background-color: #f9a825 !important; }
 
 .yellow-text.text-darken-3 {
   color: #f9a825 !important; }
 
-.yellow.darken-4 {
+.yellow.darken-4, #actions button.yellow:hover {
   background-color: #f57f17 !important; }
 
 .yellow-text.text-darken-4 {
@@ -1203,13 +1203,13 @@
 .amber-text.text-darken-2 {
   color: #ffa000 !important; }
 
-.amber.darken-3 {
+.amber.darken-3, #actions button.amber:active {
   background-color: #ff8f00 !important; }
 
 .amber-text.text-darken-3 {
   color: #ff8f00 !important; }
 
-.amber.darken-4 {
+.amber.darken-4, #actions button.amber:hover {
   background-color: #ff6f00 !important; }
 
 .amber-text.text-darken-4 {
@@ -1287,13 +1287,13 @@
 .orange-text.text-darken-2 {
   color: #f57c00 !important; }
 
-.orange.darken-3 {
+.orange.darken-3, #actions button.orange:active {
   background-color: #ef6c00 !important; }
 
 .orange-text.text-darken-3 {
   color: #ef6c00 !important; }
 
-.orange.darken-4 {
+.orange.darken-4, #actions button.orange:hover {
   background-color: #e65100 !important; }
 
 .orange-text.text-darken-4 {
@@ -1371,13 +1371,13 @@
 .deep-orange-text.text-darken-2 {
   color: #e64a19 !important; }
 
-.deep-orange.darken-3 {
+.deep-orange.darken-3, #actions button.deep-orange:active {
   background-color: #d84315 !important; }
 
 .deep-orange-text.text-darken-3 {
   color: #d84315 !important; }
 
-.deep-orange.darken-4 {
+.deep-orange.darken-4, #actions button.deep-orange:hover {
   background-color: #bf360c !important; }
 
 .deep-orange-text.text-darken-4 {
@@ -1455,13 +1455,13 @@
 .brown-text.text-darken-2 {
   color: #5d4037 !important; }
 
-.brown.darken-3 {
+.brown.darken-3, #actions button.brown:active {
   background-color: #4e342e !important; }
 
 .brown-text.text-darken-3 {
   color: #4e342e !important; }
 
-.brown.darken-4 {
+.brown.darken-4, #actions button.brown:hover {
   background-color: #3e2723 !important; }
 
 .brown-text.text-darken-4 {
@@ -1515,13 +1515,13 @@
 .blue-grey-text.text-darken-2 {
   color: #455a64 !important; }
 
-.blue-grey.darken-3 {
+.blue-grey.darken-3, #actions button.blue-grey:active {
   background-color: #37474f !important; }
 
 .blue-grey-text.text-darken-3 {
   color: #37474f !important; }
 
-.blue-grey.darken-4 {
+.blue-grey.darken-4, #actions button.blue-grey:hover {
   background-color: #263238 !important; }
 
 .blue-grey-text.text-darken-4 {
@@ -1575,13 +1575,13 @@
 .grey-text.text-darken-2 {
   color: #616161 !important; }
 
-.grey.darken-3 {
+.grey.darken-3, #actions button.grey:active {
   background-color: #424242 !important; }
 
 .grey-text.text-darken-3 {
   color: #424242 !important; }
 
-.grey.darken-4 {
+.grey.darken-4, #actions button.grey:hover {
   background-color: #212121 !important; }
 
 .grey-text.text-darken-4 {
@@ -6413,6 +6413,14 @@ Structure
 body {
   overflow-y: scroll; }
 
+.section-heading {
+  display: inline-block;
+  margin-right: 1rem; }
+
+.section-toolbar {
+  display: inline-block;
+  vertical-align: super; }
+
 #actions {
   margin: 0.5rem 0 1rem 0; }
 
@@ -6432,11 +6440,8 @@ Button styles
 #actions button {
   margin-bottom: 0.6rem;
   width: 47%; }
-  #actions button:hover {
-    background-color: #0288d1 !important; }
   #actions button:active {
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25);
-    background-color: #0277bd !important; }
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
   #actions button:first-child {
     margin-left: 0;
     margin-right: 0.6rem; }
@@ -6469,7 +6474,7 @@ Item card styles
   #ghost .drag-handle {
     display: none; }
 
-ul[data-list-draggable] .drag-handle {
+ul[data-list-editable] .drag-handle {
   display: inline-block; }
 
 [data-dragged-item] .item-card {

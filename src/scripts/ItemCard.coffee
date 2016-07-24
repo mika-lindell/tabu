@@ -19,7 +19,7 @@ class ItemCard extends HTMLElement
 		root = @
 		@containingList = containingList
 
-		if @containingList.draggable
+		if @containingList.editable
 			# Enable drag-n-drop
 			@attr('draggable', 'true')
 			

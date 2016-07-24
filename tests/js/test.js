@@ -52,9 +52,9 @@ module.exports = {
   	 *
    */
   'Top sites should have only default items': function(browser) {
-    browser.expect.element("#top-sites-0").to.be.present;
-    browser.expect.element("#top-sites-1").to.be.present;
-    return browser.expect.element("#top-sites-2").not.to.be.present;
+    browser.expect.element("#top-sites-recommended-0").to.be.present;
+    browser.expect.element("#top-sites-recommended-1").to.be.present;
+    return browser.expect.element("#top-sites-recommended-2").not.to.be.present;
 
     /*
     		get = (data)->
@@ -320,15 +320,15 @@ module.exports = {
   	 *
    */
   'Top Sites should have 2 new items': function(browser) {
-    browser.expect.element("#top-sites-0").to.be.present;
-    browser.expect.element("#top-sites-0-link").text.to.contain('Verohallinto');
-    browser.expect.element("#top-sites-0-link").text.to.contain('www.vero.fi');
-    browser.expect.element("#top-sites-1").to.be.present;
-    browser.expect.element("#top-sites-1-link").text.to.contain('Henkilöasiakkaat - kela.fi');
-    browser.expect.element("#top-sites-1-link").text.to.contain('www.kela.fi');
-    browser.expect.element("#top-sites-2").to.be.present;
-    browser.expect.element("#top-sites-3").to.be.present;
-    return browser.expect.element("#top-sites-4").not.to.be.present;
+    browser.expect.element("#top-sites-recommended-0").to.be.present;
+    browser.expect.element("#top-sites-recommended-0-link").text.to.contain('Verohallinto');
+    browser.expect.element("#top-sites-recommended-0-link").text.to.contain('www.vero.fi');
+    browser.expect.element("#top-sites-recommended-1").to.be.present;
+    browser.expect.element("#top-sites-recommended-1-link").text.to.contain('Henkilöasiakkaat - kela.fi');
+    browser.expect.element("#top-sites-recommended-1-link").text.to.contain('www.kela.fi');
+    browser.expect.element("#top-sites-recommended-2").to.be.present;
+    browser.expect.element("#top-sites-recommended-3").to.be.present;
+    return browser.expect.element("#top-sites-recommended-4").not.to.be.present;
   },
 
   /*	
@@ -341,13 +341,13 @@ module.exports = {
     done = function(result) {
       var href;
       href = result.value;
-      browser.click("#top-sites-0-link");
+      browser.click("#top-sites-recommended-0-link");
       browser.assert.urlContains(href);
       browser.back();
       browser.expect.element("#app").to.be.present.after(500);
       return browser.pause(500);
     };
-    return browser.getAttribute("#top-sites-0-link", 'href', done);
+    return browser.getAttribute("#top-sites-recommended-0-link", 'href', done);
   },
   'clicking link in Latest Bookmarks should take to correct destination': function(browser) {
     var done;
@@ -381,19 +381,27 @@ module.exports = {
   	 * DRAG AND DROP
   	 *
    */
-  'TODO: Only custom Top Sites should have drag and drop enabled': function(browser) {
-    browser.expect.element("#top-sites-list").to.have.attribute('data-list-draggable');
-    browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-draggable');
-    browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-draggable');
-    return browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-draggable');
+  'Only custom Top Sites should have drag and drop enabled': function(browser) {
+    browser.expect.element("#top-sites-custom-list").to.have.attribute('data-list-editable');
+    browser.expect.element("#top-sites-recommended-list").not.to.have.attribute('data-list-editable');
+    browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-editable');
+    browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-editable');
+    return browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable');
   },
-  'TODO: Custom Top Sites should have visual cue about drag and drop': function(browser) {
-    browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present;
-    browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('display', 'inline-block');
-    browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons');
-    return browser.expect.element('#top-sites-0-link > i.drag-handle').text.to.equal('more_vertmore_vert');
+  'Custom Top Sites should have visual cue about drag and drop': function(browser) {
+    browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.be.present;
+    browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.have.css('display', 'inline-block');
+    browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons');
+    return browser.expect.element('#top-sites-custom-0-link > i.drag-handle').text.to.equal('more_vertmore_vert');
   },
-  'TODO: Other lists should not have visual cue about drag and drop': function(browser) {},
+  'TODO: Other lists should not have visual cue about drag and drop': function(browser) {
+    browser.expect.element('#top-sites-recommended-0-link > i.drag-handle').to.be.present;
+    browser.expect.element('#top-sites-recommended-0-link > i.drag-handle').to.have.css('display', 'none');
+    browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present;
+    browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.have.css('display', 'none');
+    browser.expect.element('#recently-closed-0-link > i.drag-handle').to.be.present;
+    return browser.expect.element('#recently-closed-0-link > i.drag-handle').to.have.css('display', 'none');
+  },
   'TODO: Should be able to reorganize custom Top Sites by drag and drop': function(browser) {},
   'TODO: It should create ghost of the dragged element for the duration of the DnD operation': function(browser) {},
   'TODO: The ghost should follow mouse cursor during DnD': function(browser) {}

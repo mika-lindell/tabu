@@ -27,22 +27,21 @@ class App
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
 			
-			container = new HTMLElement ('#top-sites') # Wrap the container of this list with our wrapper class
-			container.addClass('horizontal-list') # Add class to tell that this list should expand horizontally as well (inline-block)
-			
-			list = new ItemCardList(root.dataStorage.topSites, 'top-sites') # Create new list class
-			container.append list # Add list to DOM
-			list.enableDragDrop()
+			list = new ItemCardList('#top-sites-recommended', root.dataStorage.topSites) # Create new list class
+			list.container.append list # Add list to DOM
+			list.setOrientation 'horizontal'
 			list.update() # Add items to the list
 
-			
+			list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.topSites) # Create new list class
+			list_custom.enableEditing()
+			list_custom.setOrientation 'horizontal'
+			list_custom.update() # Add items to the list
+
 			loader.hide() # Hide the loader
 
 		@dataStorage.latestBookmarks.done = ()->
 
-			container = new HTMLElement ('#latest-bookmarks')
-			list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks')
-			container.append list
+			list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks)
 			list.update()
 
 		# @dataStorage.recentHistory.done = ()->
@@ -54,17 +53,13 @@ class App
 
 		@dataStorage.recentlyClosed.done = ()->
 
-			container = new HTMLElement ('#recently-closed')
-			list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed')
-			container.append list
+			list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed)
 			list.update()
 			
 
 		@dataStorage.otherDevices.done = ()->
 			
-			container = new HTMLElement ('#other-devices')
-			list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices')
-			container.append list
+			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
 			list.update()
 
 		@dataStorage.fetchAll()

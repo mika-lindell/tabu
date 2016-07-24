@@ -580,7 +580,7 @@
       url = new Url(url);
       root = this;
       this.containingList = containingList;
-      if (this.containingList.draggable) {
+      if (this.containingList.editable) {
         this.attr('draggable', 'true');
         this.on('dragstart', function() {
           return dragStart(event, root);
@@ -660,27 +660,28 @@
 
     extend(ItemCardList, superClass);
 
+    ItemCardList.container;
+
     ItemCardList.dataGetter;
 
     ItemCardList.baseId;
 
-    ItemCardList.draggable;
+    ItemCardList.editable;
 
     ItemCardList.ghost;
 
     ItemCardList.fragment;
 
-    function ItemCardList(dataGetter, baseId) {
-      if (baseId == null) {
-        baseId = 'card';
-      }
+    function ItemCardList(container, dataGetter) {
       ItemCardList.__super__.constructor.call(this, 'ul');
       this.addClass('item-card-list');
+      this.container = new HTMLElement(container);
       this.dataGetter = dataGetter;
-      this.baseId = baseId;
-      this.draggable = false;
+      this.baseId = container.replace('#', '');
+      this.editable = false;
       this.ghost = null;
       this.attr('id', this.baseId + "-list");
+      this.container.append(this);
     }
 
     ItemCardList.prototype.update = function() {
@@ -721,11 +722,11 @@
       return null;
     };
 
-    ItemCardList.prototype.enableDragDrop = function() {
+    ItemCardList.prototype.enableEditing = function() {
       var body, root;
-      this.draggable = true;
+      this.editable = true;
       root = this;
-      this.attr('data-list-draggable', '');
+      this.attr('data-list-editable', '');
       this.on('dragover', function() {
         return dragOverUpdateCursor(event, root);
       });
@@ -737,6 +738,17 @@
       });
       body = new HTMLElement('body');
       return body.on('dragover', this.updateGhost);
+    };
+
+    ItemCardList.prototype.setOrientation = function(orientation) {
+      if (orientation == null) {
+        orientation = 'horizontal';
+      }
+      if (orientation === 'horizontal') {
+        return this.container.addClass('horizontal-list');
+      } else {
+        return this.container.removeClass('horizontal-list');
+      }
     };
 
     ItemCardList.prototype.createGhost = function(ev, from) {
@@ -1030,35 +1042,31 @@
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
-        var container, list, loader;
+        var list, list_custom, loader;
         loader = new Loader;
-        container = new HTMLElement('#top-sites');
-        container.addClass('horizontal-list');
-        list = new ItemCardList(root.dataStorage.topSites, 'top-sites');
-        container.append(list);
-        list.enableDragDrop();
+        list = new ItemCardList('#top-sites-recommended', root.dataStorage.topSites);
+        list.container.append(list);
+        list.setOrientation('horizontal');
         list.update();
+        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.topSites);
+        list_custom.enableEditing();
+        list_custom.setOrientation('horizontal');
+        list_custom.update();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
-        var container, list;
-        container = new HTMLElement('#latest-bookmarks');
-        list = new ItemCardList(root.dataStorage.latestBookmarks, 'latest-bookmarks');
-        container.append(list);
+        var list;
+        list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks);
         return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
-        var container, list;
-        container = new HTMLElement('#recently-closed');
-        list = new ItemCardList(root.dataStorage.recentlyClosed, 'recently-closed');
-        container.append(list);
+        var list;
+        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
         return list.update();
       };
       this.dataStorage.otherDevices.done = function() {
-        var container, list;
-        container = new HTMLElement('#other-devices');
-        list = new ItemCardList(root.dataStorage.otherDevices, 'other-devices');
-        container.append(list);
+        var list;
+        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
         return list.update();
       };
       this.dataStorage.fetchAll();
