@@ -92,15 +92,17 @@ i.material-icons.bugged{
 }
 
 // Override the font size and icon space for navigation
-i.material-icons{
+nav i.material-icons,
+.section-toolbar i.material-icons{
+
 	font-size: 1.5rem;
 
 	&.left{
-		margin-right: 8px;
+		margin-right: 5px;
 	}
 
 	&.right{
-		margin-left: 5px;
+		margin-left: 0px;
 	}
 
 }
@@ -423,7 +425,7 @@ body{
 
 	button{
 		box-shadow: none;
-		padding: 0 1rem;
+		padding: 0 0.5rem;
 	}
 }
 
@@ -453,22 +455,24 @@ Button styles
 
 $action-buttons-gap: 0.6rem;
 
+.btn:active,
+.btn-large:active{
+		box-shadow: $shadow-inset;
+	}
+
 #actions button{
 
 	margin-bottom: $action-buttons-gap;
 	width: 47%;
 
 	&:hover{
-		// background-color: #0288d1 !important;
 
-		@extend  .light-blue, .darken-4
+		@extend .darken-2;
 	}
 
 	&:active{
-		box-shadow: $shadow-inset;
-		// background-color: #0277bd !important;
-		
-		@extend  .light-blue, .darken-3
+
+		@extend .darken-3;
 	}
 
 	&:first-child{
