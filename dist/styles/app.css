@@ -6481,7 +6481,8 @@ button.title {
   box-shadow: none;
   padding: 0.5rem 0.5rem;
   margin-left: -0.5rem;
-  height: auto; }
+  height: auto;
+  min-width: 220px; }
   button.title i.material-icons, button.title i.drag-handle {
     font-size: inherit; }
 

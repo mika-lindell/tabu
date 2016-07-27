@@ -19,17 +19,17 @@ class Toolbars
 		
 		topSitesSelect.addItem('Switch to Speed Dial', ()-> 
 			root.speedDial(root)
-		)
+		, 'compare_arrows')
 
 		speedDialSelect.addItem('Add Link', ()-> 
-			root.topSites(root)
-		)
+			console.log 'Add'
+		, 'add')
 
 		speedDialSelect.addDivider()
 
 		speedDialSelect.addItem('Switch to Top Sites', ()-> 
 			root.topSites(root)
-		)
+		, 'compare_arrows')
 
 
 
@@ -52,7 +52,7 @@ class Toolbars
 		outro = new Animation(from)
 		intro = new Animation(to)
 
-		oldHeight = outro.animate.height()
+		oldHeight = outro.animate.height() + 20 
 
 		outro.done = ()->
 			intro.heightFrom(oldHeight)

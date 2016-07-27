@@ -65,10 +65,13 @@ class Animation
 		setTimeout(cleanUp, @duration * 1000)
 
 	heightFrom: (from)->
-		console.log "Animation: I'll play heightFrom now."
+		console.log "Animation: I'll play heightFrom now.", from
 
 		root = @
 		container = @animate
+
+		oldOverflow = container.css('overflow')
+		container.css('overflow', 'hidden')
 
 		to = container.height()
 
@@ -82,6 +85,7 @@ class Animation
 
 		cleanUp = ()->
 			container.css('height', 'auto')
+			container.css('overflow', oldOverflow)
 			root.done.call()
 
 		setTimeout(cleanUp, @duration * 1000)

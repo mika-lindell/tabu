@@ -59,12 +59,20 @@ class Dropdown extends HTMLElement
 			root.animation.fadeOut()
 			root.active = false
 
-	addItem: (title, callback)->
+	addItem: (title, callback, iconName = null)->
 
 		item = new HTMLElement('li')
 		link = new HTMLElement('a')
 
 		link.text(title)
+
+		if iconName? 
+			icon = new HTMLElement('i')
+			icon.text(iconName)
+			icon.addClass('material-icons')
+			icon.addClass('left')
+			link.append(icon)
+		
 		item.append(link)
 
 		item.on('click', ()->

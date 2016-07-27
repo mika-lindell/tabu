@@ -502,6 +502,7 @@ button.title{
 	padding: 0.5rem 0.5rem;
 	margin-left: -0.5rem;
 	height: auto;
+	min-width: 220px;
 
 	@extend .color-black;
 	@extend .white;

@@ -896,11 +896,21 @@
       }
     };
 
-    Dropdown.prototype.addItem = function(title, callback) {
-      var item, link;
+    Dropdown.prototype.addItem = function(title, callback, iconName) {
+      var icon, item, link;
+      if (iconName == null) {
+        iconName = null;
+      }
       item = new HTMLElement('li');
       link = new HTMLElement('a');
       link.text(title);
+      if (iconName != null) {
+        icon = new HTMLElement('i');
+        icon.text(iconName);
+        icon.addClass('material-icons');
+        icon.addClass('left');
+        link.append(icon);
+      }
       item.append(link);
       item.on('click', function() {
         return callback.call();
@@ -990,10 +1000,12 @@
     };
 
     Animation.prototype.heightFrom = function(from) {
-      var cleanUp, container, play, root, to;
-      console.log("Animation: I'll play heightFrom now.");
+      var cleanUp, container, oldOverflow, play, root, to;
+      console.log("Animation: I'll play heightFrom now.", from);
       root = this;
       container = this.animate;
+      oldOverflow = container.css('overflow');
+      container.css('overflow', 'hidden');
       to = container.height();
       container.css('height', from + 'px');
       play = function() {
@@ -1002,6 +1014,7 @@
       setTimeout(play, 10);
       cleanUp = function() {
         container.css('height', 'auto');
+        container.css('overflow', oldOverflow);
         return root.done.call();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1188,14 +1201,14 @@
       topSitesSelect = new Dropdown('#top-sites-select');
       topSitesSelect.addItem('Switch to Speed Dial', function() {
         return root.speedDial(root);
-      });
+      }, 'compare_arrows');
       speedDialSelect.addItem('Add Link', function() {
-        return root.topSites(root);
-      });
+        return console.log('Add');
+      }, 'add');
       speedDialSelect.addDivider();
       speedDialSelect.addItem('Switch to Top Sites', function() {
         return root.topSites(root);
-      });
+      }, 'compare_arrows');
     }
 
     Toolbars.prototype.speedDial = function(root) {
@@ -1210,7 +1223,7 @@
       var intro, oldHeight, outro;
       outro = new Animation(from);
       intro = new Animation(to);
-      oldHeight = outro.animate.height();
+      oldHeight = outro.animate.height() + 20;
       outro.done = function() {
         intro.heightFrom(oldHeight);
         return intro.intro();
