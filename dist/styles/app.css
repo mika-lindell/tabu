@@ -6266,6 +6266,12 @@ Layers
 .layer-menu {
   z-index: 299; }
 
+.layer-overlay {
+  z-index: 399; }
+
+.layer-dialog {
+  z-index: 499; }
+
 /***
 
 Font sizes
@@ -6316,8 +6322,8 @@ Helpers
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: white;
-  top: 0; }
+  top: 0;
+  left: 0; }
   .overlay .valign, noscript .valign, #loader .valign {
     width: 100%; }
 
@@ -6396,14 +6402,19 @@ Scrollbar
 Noscript
 
 ***/
+noscript {
+  background-color: white; }
+
 /***
 
 Loader
 
 ***/
-#loader .loader-intro {
-  max-width: 300px;
-  margin: auto; }
+#loader {
+  background-color: white; }
+  #loader .loader-intro {
+    max-width: 300px;
+    margin: auto; }
 
 /***
 
@@ -6428,9 +6439,6 @@ body {
 .section-toolbar {
   display: inline-block;
   vertical-align: super; }
-  .section-toolbar button {
-    box-shadow: none;
-    padding: 0 0.5rem; }
 
 #actions {
   margin: 0.5rem 0 1rem 0; }
@@ -6449,8 +6457,13 @@ Button styles
 
 ***/
 .btn:active, .btn-large:active,
-.btn-large:active {
+.btn-large:active,
+.section-toolbar button.active {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+
+.section-toolbar button {
+  box-shadow: none;
+  padding: 0 0.5rem; }
 
 #actions button {
   margin-bottom: 0.6rem;
@@ -6462,7 +6475,7 @@ Button styles
     margin-right: 0;
     margin-left: 0.6rem; }
 
-button#go-incognito i.material-icons, button#go-incognito i.drag-handle {
+#go-incognito i.material-icons, #go-incognito i.drag-handle {
   font-size: 1.35rem; }
 
 /***

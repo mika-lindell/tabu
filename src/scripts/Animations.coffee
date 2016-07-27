@@ -1,11 +1,62 @@
 # Controls animations in the UI
 #
-class Animations
+class Animation
 	
+	@animate
 	@duration # Duration of animations
 
-	constructor: (duration = 0.3)->
+	constructor: (animate, duration = 0.3)->
+
+		if animate instanceof HTMLElement
+			@animate = animate
+		else
+			@animate = new HTMLElement(animate)
+
 		@duration = duration
+
+		@animate.css('transition', "all #{@duration}s")
+		@animate.css('overflow', 'hidden')
+
+	fadeIn: ()->
+		console.log "Animation: I'll play FadeIn now."
+
+		root = @
+		container = @animate
+
+		container.css('opacity', '0')
+		container.css('display', 'block')
+
+		targetHeight = container.height() + 'px'
+
+		container.css('height', '0px')
+
+		play = ()->
+			container.css('height', targetHeight)
+			container.css('opacity', '1')
+
+		setTimeout(play, 10)
+
+		cleanUp = ()->
+			root.done.call()
+
+		setTimeout(cleanUp, @duration * 1000)
+
+	fadeOut: ()->
+		console.log "Animation: I'll play FadeOut now."
+
+		root = @
+		container = @animate
+
+		container.css('height', '0px')
+		container.css('opacity', '0')
+
+		cleanUp = ()->
+			container.css('display', 'none')
+			container.css('height', 'auto')
+			root.done.call()
+
+		setTimeout(cleanUp, @duration * 1000)
+
 
 	# Plays the intro animation by adding .intro-class to container element.
 	# Hence there needs to be CSS working in tandem with this script.	
@@ -14,9 +65,10 @@ class Animations
 	#
 	intro: (instant = false)->
 
-		console.log "Animations: I'll play intro now.", 'Instant?', instant
+		console.log "Animation: I'll play intro now.", 'Instant?', instant
 
-		container = new HTMLElement('#content-container')
+		root = @
+		container = @animate
 
 		if not instant
 			container.removeClass('outro')
@@ -26,6 +78,7 @@ class Animations
 
 		cleanUp = ()->
 			container.removeClass('intro')
+			root.done.call()
 
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
@@ -40,9 +93,10 @@ class Animations
 	#
 	outro: (instant = false)->
 
-		console.log "Animations: I'll play outro now.", 'Instant?', instant
+		console.log "Animation: I'll play outro now.", 'Instant?', instant
 
-		container = new HTMLElement('#content-container')
+		root = @
+		container = @animate
 
 		if not instant
 			container.removeClass('intro')
@@ -51,8 +105,12 @@ class Animations
 		cleanUp = ()->
 			container.css('display', 'none')
 			container.removeClass('outro')
+			root.done.call()
 
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
 		else
 			cleanUp()
+
+
+	done: ()->

@@ -5,7 +5,7 @@ class Visibility
 
 	@controllers # References to button controlling functionality in this class.
 	@enabled # Current status of the visibility mode: true or false?
-	@animations # Holds reference to class, which controls animations.
+	@animation # Holds reference to class, which controls animations.
 	@storage # Holds refrence to storage interface this class will be using.	
 
 	# Is executed when new class instance is created.
@@ -20,7 +20,7 @@ class Visibility
 			enabler: new HTMLElement('#visibility-on')
 			disabler: new HTMLElement('#visibility-off')
 	
-		@animations = new Animations
+		@animation = new Animation('#content-container')
 		@storage = new Storage
 
 		getSavedStatus = (data)->
@@ -65,7 +65,7 @@ class Visibility
 	#
 	enable: (instant = false)->
 
-		@animations.intro(instant)
+		@animation.intro(instant)
 
 		@controllers.enabler.css('display', 'none')
 		@controllers.disabler.css('display', 'block')
@@ -82,7 +82,7 @@ class Visibility
 
 		root = @
 
-		@animations.outro(instant)
+		@animation.outro(instant)
 
 		@controllers.enabler.css('display', 'block')
 		@controllers.disabler.css('display', 'none')

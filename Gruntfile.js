@@ -63,10 +63,10 @@ module.exports = function(grunt) {
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
+              'src/**/Dropdown.coffee',
               'src/**/Animations.coffee',
               'src/**/Loader.coffee',
               'src/**/Visibility.coffee',
-              'src/**/Init.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee'
 

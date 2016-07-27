@@ -150,6 +150,14 @@ Layers
 	z-index: 299;
 }
 
+.layer-overlay{
+	z-index: 399;
+}
+
+.layer-dialog{
+	z-index: 499;
+}
+
 
 /***
 
@@ -215,8 +223,8 @@ Helpers
 	position: fixed;
   height: 100%;
   width: 100%;
-  background-color: white;
   top: 0;
+  left: 0;
 
   @extend .valign-wrapper;
 
@@ -368,6 +376,7 @@ Noscript
 ***/
 
  noscript{
+ 	background-color: white;
 
  	@extend .overlay;
 	@extend .layer-noscript;
@@ -381,6 +390,7 @@ Loader
 ***/
 
 #loader{
+	background-color: white;
 
 	@extend .overlay;
 	@extend .layer-loader;
@@ -422,11 +432,6 @@ body{
 .section-toolbar{
 	display: inline-block;
 	vertical-align: super;
-
-	button{
-		box-shadow: none;
-		padding: 0 0.5rem;
-	}
 }
 
 #actions{
@@ -456,8 +461,14 @@ Button styles
 $action-buttons-gap: 0.6rem;
 
 .btn:active,
-.btn-large:active{
+.btn-large:active,
+.section-toolbar button.active{
 		box-shadow: $shadow-inset;
+	}
+
+.section-toolbar button{
+		box-shadow: none;
+		padding: 0 0.5rem;
 	}
 
 #actions button{
@@ -486,7 +497,7 @@ $action-buttons-gap: 0.6rem;
 	}
 }
 
-button#go-incognito i.material-icons{
+#go-incognito i.material-icons{
 	font-size: 1.35rem;
 }
 

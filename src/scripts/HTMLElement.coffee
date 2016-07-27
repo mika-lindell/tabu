@@ -16,7 +16,7 @@ class HTMLElement
 	  
 		if element instanceof Element # Wrap the passed element
 			@DOMElement = element
-		else if element.charAt(0) is '#' # Use the passed id to wrap an element
+		else if element.charAt? and element.charAt(0) is '#' # Use the passed id to wrap an element
 			@DOMElement = document.getElementById(element.substr(1))
 		else if element is 'body' # Use the passed id to wrap an element
 			@DOMElement = document.getElementsByTagName(element)[0]

@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Animations, App, Binding, DataGetter, DataStorage, HTMLElement, HexColor, Init, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Url, Visibility,
+  var $newTab, Animation, App, Binding, DataGetter, DataStorage, Dropdown, HTMLElement, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Url, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -213,7 +213,7 @@
     function HTMLElement(element) {
       if (element instanceof Element) {
         this.DOMElement = element;
-      } else if (element.charAt(0) === '#') {
+      } else if ((element.charAt != null) && element.charAt(0) === '#') {
         this.DOMElement = document.getElementById(element.substr(1));
       } else if (element === 'body') {
         this.DOMElement = document.getElementsByTagName(element)[0];
@@ -820,30 +820,182 @@
 
   })(HTMLElement);
 
-  Animations = (function() {
-    Animations.duration;
+  Dropdown = (function(superClass) {
+    extend(Dropdown, superClass);
 
-    function Animations(duration) {
+    Dropdown.dropdown;
+
+    Dropdown.items;
+
+    Dropdown.animation;
+
+    Dropdown.trap;
+
+    Dropdown.active;
+
+    function Dropdown(parentId) {
+      var body, root;
+      Dropdown.__super__.constructor.call(this, parentId);
+      this.dropdown = new HTMLElement('ul');
+      this.animation = new Animation(this.dropdown, 0.2);
+      this.active = false;
+      root = this;
+      body = new HTMLElement('body');
+      this.dropdown.addClass('dropdown-content');
+      this.dropdown.addClass('layer-dialog');
+      this.dropdown.css('display', 'none');
+      this.dropdown.css('min-width', this.width() + 'px');
+      body.on('click', function(ev) {
+        return root.hide(ev, root);
+      });
+      body.append(this.dropdown);
+      this.items = new Array();
+      this.on('click', function(ev) {
+        return root.toggleDropdown(ev, root);
+      });
+    }
+
+    Dropdown.prototype.toggleDropdown = function(ev, root) {
+      if (root == null) {
+        root = null;
+      }
+      if (root == null) {
+        root = this;
+      }
+      if (root.dropdown.css('display') === 'none') {
+        return root.show(ev, root);
+      } else {
+        return root.hide(ev, root);
+      }
+    };
+
+    Dropdown.prototype.show = function(ev, root) {
+      if (root == null) {
+        root = null;
+      }
+      ev.stopPropagation();
+      root.dropdown.css('top', this.top() + this.height() + 'px');
+      root.dropdown.css('left', this.left() + 'px');
+      root.addClass('active');
+      root.animation.fadeIn();
+      return root.active = true;
+    };
+
+    Dropdown.prototype.hide = function(ev, root) {
+      if (root == null) {
+        root = null;
+      }
+      if (root.active) {
+        root.removeClass('active');
+        root.animation.fadeOut();
+        return root.active = false;
+      }
+    };
+
+    Dropdown.prototype.addItem = function(title, callback) {
+      var item, link;
+      item = new HTMLElement('li');
+      link = new HTMLElement('a');
+      link.text(title);
+      item.append(link);
+      item.on('click', function() {
+        return callback.call();
+      });
+      this.dropdown.append(item);
+      return this.items.push(item);
+    };
+
+    Dropdown.prototype.addDivider = function() {
+      var divider;
+      divider = new HTMLElement('li');
+      divider.addClass('divider');
+      this.dropdown.append(divider);
+      return this.items.push(divider);
+    };
+
+    Dropdown.prototype.addTitle = function(title) {
+      var divider;
+      divider = new HTMLElement('li');
+      divider.addClass('title');
+      divider.text(title);
+      this.dropdown.append(divider);
+      return this.items.push(divider);
+    };
+
+    return Dropdown;
+
+  })(HTMLElement);
+
+  Animation = (function() {
+    Animation.animate;
+
+    Animation.duration;
+
+    function Animation(animate, duration) {
       if (duration == null) {
         duration = 0.3;
       }
+      if (animate instanceof HTMLElement) {
+        this.animate = animate;
+      } else {
+        this.animate = new HTMLElement(animate);
+      }
       this.duration = duration;
+      this.animate.css('transition', "all " + this.duration + "s");
+      this.animate.css('overflow', 'hidden');
     }
 
-    Animations.prototype.intro = function(instant) {
-      var cleanUp, container;
+    Animation.prototype.fadeIn = function() {
+      var cleanUp, container, play, root, targetHeight;
+      console.log("Animation: I'll play FadeIn now.");
+      root = this;
+      container = this.animate;
+      container.css('opacity', '0');
+      container.css('display', 'block');
+      targetHeight = container.height() + 'px';
+      container.css('height', '0px');
+      play = function() {
+        container.css('height', targetHeight);
+        return container.css('opacity', '1');
+      };
+      setTimeout(play, 10);
+      cleanUp = function() {
+        return root.done.call();
+      };
+      return setTimeout(cleanUp, this.duration * 1000);
+    };
+
+    Animation.prototype.fadeOut = function() {
+      var cleanUp, container, root;
+      console.log("Animation: I'll play FadeOut now.");
+      root = this;
+      container = this.animate;
+      container.css('height', '0px');
+      container.css('opacity', '0');
+      cleanUp = function() {
+        container.css('display', 'none');
+        container.css('height', 'auto');
+        return root.done.call();
+      };
+      return setTimeout(cleanUp, this.duration * 1000);
+    };
+
+    Animation.prototype.intro = function(instant) {
+      var cleanUp, container, root;
       if (instant == null) {
         instant = false;
       }
-      console.log("Animations: I'll play intro now.", 'Instant?', instant);
-      container = new HTMLElement('#content-container');
+      console.log("Animation: I'll play intro now.", 'Instant?', instant);
+      root = this;
+      container = this.animate;
       if (!instant) {
         container.removeClass('outro');
         container.addClass('intro');
       }
       container.css('display', 'block');
       cleanUp = function() {
-        return container.removeClass('intro');
+        container.removeClass('intro');
+        return root.done.call();
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);
@@ -852,20 +1004,22 @@
       }
     };
 
-    Animations.prototype.outro = function(instant) {
-      var cleanUp, container;
+    Animation.prototype.outro = function(instant) {
+      var cleanUp, container, root;
       if (instant == null) {
         instant = false;
       }
-      console.log("Animations: I'll play outro now.", 'Instant?', instant);
-      container = new HTMLElement('#content-container');
+      console.log("Animation: I'll play outro now.", 'Instant?', instant);
+      root = this;
+      container = this.animate;
       if (!instant) {
         container.removeClass('intro');
         container.addClass('outro');
       }
       cleanUp = function() {
         container.css('display', 'none');
-        return container.removeClass('outro');
+        container.removeClass('outro');
+        return root.done.call();
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);
@@ -874,7 +1028,9 @@
       }
     };
 
-    return Animations;
+    Animation.prototype.done = function() {};
+
+    return Animation;
 
   })();
 
@@ -914,7 +1070,7 @@
 
     Visibility.enabled;
 
-    Visibility.animations;
+    Visibility.animation;
 
     Visibility.storage;
 
@@ -925,7 +1081,7 @@
         enabler: new HTMLElement('#visibility-on'),
         disabler: new HTMLElement('#visibility-off')
       };
-      this.animations = new Animations;
+      this.animation = new Animation('#content-container');
       this.storage = new Storage;
       getSavedStatus = function(data) {
         if (data.visible != null) {
@@ -955,7 +1111,7 @@
       if (instant == null) {
         instant = false;
       }
-      this.animations.intro(instant);
+      this.animation.intro(instant);
       this.controllers.enabler.css('display', 'none');
       this.controllers.disabler.css('display', 'block');
       this.enabled = true;
@@ -969,7 +1125,7 @@
         instant = false;
       }
       root = this;
-      this.animations.outro(instant);
+      this.animation.outro(instant);
       this.controllers.enabler.css('display', 'block');
       this.controllers.disabler.css('display', 'none');
       this.enabled = false;
@@ -981,58 +1137,13 @@
 
   })();
 
-  Init = (function() {
-    function Init() {
-      this.bindClick('#view-bookmarks', this.viewBookmarks);
-      this.bindClick('#view-history', this.viewHistory);
-      this.bindClick('#view-downloads', this.viewDownloads);
-      this.bindClick('#go-incognito', this.goIncognito);
-    }
-
-    Init.prototype.bindClick = function(id, listener) {
-      var elem;
-      elem = new HTMLElement(id);
-      if (elem instanceof HTMLElement) {
-        return elem.on('click', listener);
-      }
-    };
-
-    Init.prototype.viewBookmarks = function() {
-      return chrome.tabs.update({
-        url: 'chrome://bookmarks/#1'
-      });
-    };
-
-    Init.prototype.viewHistory = function() {
-      return chrome.tabs.update({
-        url: 'chrome://history/'
-      });
-    };
-
-    Init.prototype.viewDownloads = function() {
-      return chrome.tabs.update({
-        url: 'chrome://downloads/'
-      });
-    };
-
-    Init.prototype.goIncognito = function() {
-      return chrome.windows.create({
-        'incognito': true
-      });
-    };
-
-    return Init;
-
-  })();
-
   App = (function() {
     App.dataStorage;
 
     function App() {
-      var inits, root, visibility;
+      var root, topSitesView, visibility;
       console.log("App: I'm warming up...");
       visibility = new Visibility;
-      inits = new Init;
 
       /*
       		 *
@@ -1042,22 +1153,22 @@
       root = this;
       this.dataStorage = new DataStorage;
       this.dataStorage.topSites.done = function() {
-        var list, list_custom, loader;
+        var list, loader;
         loader = new Loader;
         list = new ItemCardList('#top-sites-recommended', root.dataStorage.topSites);
         list.container.append(list);
         list.setOrientation('horizontal');
         list.update();
-        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.topSites);
-        list_custom.enableEditing();
-        list_custom.setOrientation('horizontal');
-        list_custom.update();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
-        var list;
+        var list, list_custom;
         list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks);
-        return list.update();
+        list.update();
+        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.latestBookmarks);
+        list_custom.enableEditing();
+        list_custom.setOrientation('horizontal');
+        return list_custom.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
         var list;
@@ -1070,6 +1181,17 @@
         return list.update();
       };
       this.dataStorage.fetchAll();
+      topSitesView = new Dropdown('#top-sites-view');
+      topSitesView.addItem('Recommended', function() {
+        return root.topSites('recommended');
+      });
+      topSitesView.addItem('My Choices', function() {
+        return root.topSites('custom');
+      });
+      new HTMLElement('#view-bookmarks').on('click', this.viewBookmarks);
+      new HTMLElement('#view-history').on('click', this.viewHistory);
+      new HTMLElement('#view-downloads').on('click', this.viewDownloads);
+      new HTMLElement('#go-incognito').on('click', this.goIncognito);
       chrome.tabs.getSelected(null, function(tab) {
         if (tab.title != null) {
           return document.title = tab.title;
@@ -1079,6 +1201,51 @@
       });
       console.log("App: I'm ready <3");
     }
+
+    App.prototype.topSites = function(which) {
+      var intro, outro;
+      if (which === 'custom') {
+        outro = new Animation('#top-sites-recommended');
+        intro = new Animation('#top-sites-custom');
+        outro.done = function() {
+          console.log('custom');
+          return intro.intro();
+        };
+        return outro.outro();
+      } else {
+        outro = new Animation('#top-sites-custom');
+        intro = new Animation('#top-sites-recommended');
+        outro.done = function() {
+          console.log('recommended');
+          return intro.intro();
+        };
+        return outro.outro();
+      }
+    };
+
+    App.prototype.viewBookmarks = function() {
+      return chrome.tabs.update({
+        url: 'chrome://bookmarks/#1'
+      });
+    };
+
+    App.prototype.viewHistory = function() {
+      return chrome.tabs.update({
+        url: 'chrome://history/'
+      });
+    };
+
+    App.prototype.viewDownloads = function() {
+      return chrome.tabs.update({
+        url: 'chrome://downloads/'
+      });
+    };
+
+    App.prototype.goIncognito = function() {
+      return chrome.windows.create({
+        'incognito': true
+      });
+    };
 
     return App;
 
