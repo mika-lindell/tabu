@@ -31,9 +31,6 @@ class Toolbars
 			root.topSites(root)
 		, 'compare_arrows')
 
-
-
-
 		# @customButton.on('click', ()->
 		# 	root.showMyPicks(root)
 		# )
@@ -52,7 +49,7 @@ class Toolbars
 		outro = new Animation(from)
 		intro = new Animation(to)
 
-		oldHeight = outro.animate.height() + 20 
+		oldHeight = outro.animate.height()
 
 		outro.done = ()->
 			intro.heightFrom(oldHeight)

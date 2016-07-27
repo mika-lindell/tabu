@@ -998,15 +998,14 @@
       }
       this.duration = duration;
       this.animate.css('transition', "all " + this.duration + "s");
+      this.animate.css('overflow', 'hidden');
     }
 
     Animation.prototype.fadeIn = function() {
-      var cleanUp, container, oldOverflow, play, root, targetHeight;
+      var cleanUp, container, play, root, targetHeight;
       console.log("Animation: I'll play fadeIn now.");
       root = this;
       container = this.animate;
-      oldOverflow = container.css('overflow');
-      container.css('overflow', 'hidden');
       container.css('opacity', '0');
       container.css('display', 'block');
       targetHeight = container.height() + 'px';
@@ -1017,47 +1016,41 @@
       };
       setTimeout(play, 10);
       cleanUp = function() {
-        container.css('overflow', oldOverflow);
-        return root.done.call();
+        return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
     Animation.prototype.fadeOut = function() {
-      var cleanUp, container, oldOverflow, root;
+      var cleanUp, container, root;
       console.log("Animation: I'll play fadeOut now.");
       root = this;
       container = this.animate;
-      oldOverflow = container.css('overflow');
-      container.css('overflow', 'hidden');
       container.css('height', '0px');
       container.css('opacity', '0');
       cleanUp = function() {
         container.css('display', 'none');
         container.css('height', 'auto');
-        container.css('overflow', oldOverflow);
-        return root.done.call();
+        return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
     Animation.prototype.heightFrom = function(from) {
-      var cleanUp, container, oldOverflow, play, root, to;
+      var cleanUp, container, play, root, to;
       console.log("Animation: I'll play heightFrom now.", from);
       root = this;
       container = this.animate;
-      oldOverflow = container.css('overflow');
-      container.css('overflow', 'hidden');
       to = container.height();
       container.css('height', from + 'px');
       play = function() {
+        console.log(to, container.height(), container.height() - to);
         return container.css('height', to + 'px');
       };
-      setTimeout(play, 10);
+      setTimeout(play, 0);
       cleanUp = function() {
         container.css('height', 'auto');
-        container.css('overflow', oldOverflow);
-        return root.done.call();
+        return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
@@ -1077,7 +1070,7 @@
       container.css('display', 'block');
       cleanUp = function() {
         container.removeClass('intro');
-        return root.done.call();
+        return root.done();
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);
@@ -1265,7 +1258,7 @@
       var intro, oldHeight, outro;
       outro = new Animation(from);
       intro = new Animation(to);
-      oldHeight = outro.animate.height() + 20;
+      oldHeight = outro.animate.height();
       outro.done = function() {
         intro.heightFrom(oldHeight);
         return intro.intro();
@@ -1374,18 +1367,18 @@
         return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
-        var list, list_custom;
+        var list;
         list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
+        return list.update();
+      };
+      this.dataStorage.otherDevices.done = function() {
+        var list, list_custom;
+        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
         list.update();
-        list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed);
+        list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices);
         list_custom.enableEditing();
         list_custom.setOrientation('horizontal');
         return list_custom.update();
-      };
-      this.dataStorage.otherDevices.done = function() {
-        var list;
-        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
-        return list.update();
       };
       this.dataStorage.fetchAll();
       this.helpers.getLocalisedTitle(function(title) {

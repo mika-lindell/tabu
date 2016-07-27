@@ -420,6 +420,8 @@ Structure
 
 ***/
 
+$section-heading-margin: 0.7rem;
+
 body{
 	overflow-y: scroll; // This keeps the scrollbars always visible, so you don't get repositioning when toggling the visibility of elements
 }
@@ -427,6 +429,7 @@ body{
 .section-heading{
 	display: inline-block;
 	margin-right: 1rem;
+	margin-left: $section-heading-margin;
 }
 
 .section-toolbar{
@@ -445,7 +448,7 @@ body{
 }
 
 .card-list-column{
-	// margin-right: 2.5rem;
+	padding: 0 0.6rem;// Needs to add some padding for the hoverable shadow not to clip
 }
 
 footer{
@@ -498,9 +501,10 @@ button.title{
 	text-transform: inherit;
 	line-height: inherit;
 	letter-spacing: inherit;
+	text-align: left;
 	box-shadow: none;
 	padding: 0.5rem 0.5rem;
-	margin-left: -0.5rem;
+	margin-left: -$section-heading-margin;
 	height: auto;
 	min-width: 220px;
 
@@ -673,6 +677,7 @@ a.item-card-link{
 
 li.item-card-heading{
 	display: block;
+	margin-left: $section-heading-margin;
 }
 
 // To display the 'no items in this list' -message when the list has no items =)

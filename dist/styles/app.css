@@ -6434,7 +6434,8 @@ body {
 
 .section-heading {
   display: inline-block;
-  margin-right: 1rem; }
+  margin-right: 1rem;
+  margin-left: 0.7rem; }
 
 .section-toolbar {
   display: inline-block;
@@ -6447,6 +6448,9 @@ body {
   width: 100%;
   margin: auto;
   max-width: 1500px; }
+
+.card-list-column {
+  padding: 0 0.6rem; }
 
 footer {
   border-top: 1px solid #c7c7c7; }
@@ -6478,9 +6482,10 @@ button.title {
   text-transform: inherit;
   line-height: inherit;
   letter-spacing: inherit;
+  text-align: left;
   box-shadow: none;
   padding: 0.5rem 0.5rem;
-  margin-left: -0.5rem;
+  margin-left: -0.7rem;
   height: auto;
   min-width: 220px; }
   button.title i.material-icons, button.title i.drag-handle {
@@ -6570,7 +6575,8 @@ a.item-card-link {
   width: 100%; }
 
 li.item-card-heading {
-  display: block; }
+  display: block;
+  margin-left: 0.7rem; }
 
 .no-items {
   display: none;

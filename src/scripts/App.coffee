@@ -57,15 +57,15 @@ class App
 			list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed)
 			list.update()
 
-			list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed) # Create new list class
-			list_custom.enableEditing()
-			list_custom.setOrientation 'horizontal'
-			list_custom.update() # Add items to the list			
-
 		@dataStorage.otherDevices.done = ()->
 			
 			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
 			list.update()
+
+			list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices) # Create new list class
+			list_custom.enableEditing()
+			list_custom.setOrientation 'horizontal'
+			list_custom.update() # Add items to the list			
 
 		@dataStorage.fetchAll()
 

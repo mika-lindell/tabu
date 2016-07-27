@@ -15,6 +15,7 @@ class Animation
 		@duration = duration
 
 		@animate.css('transition', "all #{@duration}s")
+		@animate.css('overflow', 'hidden')
 
 	fadeIn: ()->
 		console.log "Animation: I'll play fadeIn now."
@@ -22,25 +23,24 @@ class Animation
 		root = @
 		container = @animate
 
-		oldOverflow = container.css('overflow')
-		container.css('overflow', 'hidden')
+		# oldOverflow = container.css('overflow')
+		# container.css('overflow', 'hidden')
 
 		container.css('opacity', '0')
 		container.css('display', 'block')
-
 		targetHeight = container.height() + 'px'
-
 		container.css('height', '0px')
 
 		play = ()->
+			
 			container.css('height', targetHeight)
 			container.css('opacity', '1')
 
 		setTimeout(play, 10)
 
 		cleanUp = ()->
-			container.css('overflow', oldOverflow)
-			root.done.call()
+			# container.css('overflow', oldOverflow)
+			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
 
@@ -50,8 +50,8 @@ class Animation
 		root = @
 		container = @animate
 
-		oldOverflow = container.css('overflow')
-		container.css('overflow', 'hidden')
+		# oldOverflow = container.css('overflow')
+		# container.css('overflow', 'hidden')
 
 		container.css('height', '0px')
 		container.css('opacity', '0')
@@ -59,8 +59,8 @@ class Animation
 		cleanUp = ()->
 			container.css('display', 'none')
 			container.css('height', 'auto')
-			container.css('overflow', oldOverflow)
-			root.done.call()
+			# container.css('overflow', oldOverflow)
+			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
 
@@ -70,23 +70,18 @@ class Animation
 		root = @
 		container = @animate
 
-		oldOverflow = container.css('overflow')
-		container.css('overflow', 'hidden')
-
 		to = container.height()
-
 		container.css('height', from + 'px')
 
 		play = ()->
+			console.log to, container.height(), container.height()-to
 			container.css('height', to + 'px')
 
-		setTimeout(play, 10)
+		setTimeout(play, 0)
 		
-
 		cleanUp = ()->
 			container.css('height', 'auto')
-			container.css('overflow', oldOverflow)
-			root.done.call()
+			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
 
@@ -110,7 +105,7 @@ class Animation
 
 		cleanUp = ()->
 			container.removeClass('intro')
-			root.done.call()
+			root.done()
 
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
