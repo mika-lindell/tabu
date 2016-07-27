@@ -18,7 +18,7 @@ class Animation
 		@animate.css('overflow', 'hidden')
 
 	fadeIn: ()->
-		console.log "Animation: I'll play FadeIn now."
+		console.log "Animation: I'll play fadeIn now."
 
 		root = @
 		container = @animate
@@ -42,7 +42,7 @@ class Animation
 		setTimeout(cleanUp, @duration * 1000)
 
 	fadeOut: ()->
-		console.log "Animation: I'll play FadeOut now."
+		console.log "Animation: I'll play fadeOut now."
 
 		root = @
 		container = @animate
@@ -57,6 +57,29 @@ class Animation
 
 		setTimeout(cleanUp, @duration * 1000)
 
+	heightFrom: (from)->
+		console.log "Animation: I'll play heightFrom now."
+
+		root = @
+		container = @animate
+
+		to = container.height()
+
+		console.log from, to
+
+		container.css('height', from + 'px')
+
+		play = ()->
+			container.css('height', to + 'px')
+
+		setTimeout(play, 10)
+		
+
+		cleanUp = ()->
+			container.css('height', 'auto')
+			root.done.call()
+
+		setTimeout(cleanUp, @duration * 1000)
 
 	# Plays the intro animation by adding .intro-class to container element.
 	# Hence there needs to be CSS working in tandem with this script.	

@@ -193,10 +193,21 @@ class HTMLElement
 		return @DOMElement.offsetLeft
 
 	width: ()->
+		if @css('display') is 'none'
+			@css('display', 'block')
+			width = @DOMElement.offsetWidth
+			@css('display', 'none')
+			return width
 		return @DOMElement.offsetWidth
 
 	height: ()->
-		return @DOMElement.offsetHeight
+		if @css('display') is 'none'
+			@css('display', 'block')
+			height = @DOMElement.offsetHeight
+			@css('display', 'none')
+			return height
+		else
+			return @DOMElement.offsetHeight
 
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))

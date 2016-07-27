@@ -38,11 +38,6 @@ class App
 			list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks)
 			list.update()
 
-			list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.latestBookmarks) # Create new list class
-			list_custom.enableEditing()
-			list_custom.setOrientation 'horizontal'
-			list_custom.update() # Add items to the list
-
 		# @dataStorage.recentHistory.done = ()->
 
 		# 	container = new HTMLElement ('#recent-history')
@@ -60,6 +55,11 @@ class App
 			
 			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
 			list.update()
+
+			list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.otherDevices) # Create new list class
+			list_custom.enableEditing()
+			list_custom.setOrientation 'horizontal'
+			list_custom.update() # Add items to the list
 
 		@dataStorage.fetchAll()
 
@@ -93,19 +93,30 @@ class App
 	#
 	topSites: (which)->
 		if which is 'custom'
+
 			outro = new Animation('#top-sites-recommended')
 			intro = new Animation('#top-sites-custom')
+
+			oldHeight = outro.animate.height()
+
 			outro.done = ()->
-				console.log 'custom'
+				intro.heightFrom(oldHeight)
 				intro.intro()
-			outro.outro()
+
+			outro.outro(true)
+
 		else
+
 			outro = new Animation('#top-sites-custom')
 			intro = new Animation('#top-sites-recommended')
+
+			oldHeight = outro.animate.height()
+
 			outro.done = ()->
-				console.log 'recommended'
+				intro.heightFrom(oldHeight)
 				intro.intro()
-			outro.outro()
+
+			outro.outro(true)
 
 
 	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.

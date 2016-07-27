@@ -6544,6 +6544,9 @@ a.item-card-link {
   padding-right: 1rem;
   width: 100%; }
 
+li.item-card-heading {
+  display: block; }
+
 .no-items {
   display: none;
   padding-right: 1.5rem; }

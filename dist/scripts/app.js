@@ -396,11 +396,26 @@
     };
 
     HTMLElement.prototype.width = function() {
+      var width;
+      if (this.css('display') === 'none') {
+        this.css('display', 'block');
+        width = this.DOMElement.offsetWidth;
+        this.css('display', 'none');
+        return width;
+      }
       return this.DOMElement.offsetWidth;
     };
 
     HTMLElement.prototype.height = function() {
-      return this.DOMElement.offsetHeight;
+      var height;
+      if (this.css('display') === 'none') {
+        this.css('display', 'block');
+        height = this.DOMElement.offsetHeight;
+        this.css('display', 'none');
+        return height;
+      } else {
+        return this.DOMElement.offsetHeight;
+      }
     };
 
     HTMLElement.prototype.clone = function() {
@@ -947,7 +962,7 @@
 
     Animation.prototype.fadeIn = function() {
       var cleanUp, container, play, root, targetHeight;
-      console.log("Animation: I'll play FadeIn now.");
+      console.log("Animation: I'll play fadeIn now.");
       root = this;
       container = this.animate;
       container.css('opacity', '0');
@@ -967,13 +982,32 @@
 
     Animation.prototype.fadeOut = function() {
       var cleanUp, container, root;
-      console.log("Animation: I'll play FadeOut now.");
+      console.log("Animation: I'll play fadeOut now.");
       root = this;
       container = this.animate;
       container.css('height', '0px');
       container.css('opacity', '0');
       cleanUp = function() {
         container.css('display', 'none');
+        container.css('height', 'auto');
+        return root.done.call();
+      };
+      return setTimeout(cleanUp, this.duration * 1000);
+    };
+
+    Animation.prototype.heightFrom = function(from) {
+      var cleanUp, container, play, root, to;
+      console.log("Animation: I'll play heightFrom now.");
+      root = this;
+      container = this.animate;
+      to = container.height();
+      console.log(from, to);
+      container.css('height', from + 'px');
+      play = function() {
+        return container.css('height', to + 'px');
+      };
+      setTimeout(play, 10);
+      cleanUp = function() {
         container.css('height', 'auto');
         return root.done.call();
       };
@@ -1162,13 +1196,9 @@
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
-        var list, list_custom;
+        var list;
         list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks);
-        list.update();
-        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.latestBookmarks);
-        list_custom.enableEditing();
-        list_custom.setOrientation('horizontal');
-        return list_custom.update();
+        return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
         var list;
@@ -1176,9 +1206,13 @@
         return list.update();
       };
       this.dataStorage.otherDevices.done = function() {
-        var list;
+        var list, list_custom;
         list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
-        return list.update();
+        list.update();
+        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.otherDevices);
+        list_custom.enableEditing();
+        list_custom.setOrientation('horizontal');
+        return list_custom.update();
       };
       this.dataStorage.fetchAll();
       topSitesView = new Dropdown('#top-sites-view');
@@ -1203,23 +1237,25 @@
     }
 
     App.prototype.topSites = function(which) {
-      var intro, outro;
+      var intro, oldHeight, outro;
       if (which === 'custom') {
         outro = new Animation('#top-sites-recommended');
         intro = new Animation('#top-sites-custom');
+        oldHeight = outro.animate.height();
         outro.done = function() {
-          console.log('custom');
+          intro.heightFrom(oldHeight);
           return intro.intro();
         };
-        return outro.outro();
+        return outro.outro(true);
       } else {
         outro = new Animation('#top-sites-custom');
         intro = new Animation('#top-sites-recommended');
+        oldHeight = outro.animate.height();
         outro.done = function() {
-          console.log('recommended');
+          intro.heightFrom(oldHeight);
           return intro.intro();
         };
-        return outro.outro();
+        return outro.outro(true);
       }
     };
 
