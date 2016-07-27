@@ -12,13 +12,13 @@ class Visibility
 	#
 	# @param [boolean] Sets whether all elements are visible or hidden at after this class has been initialized
 	#
-	constructor: ()->
+	constructor: (enabler = '#visibility-on', disabler = '#visibility-off')->
 
 		root = @ # For the class to be accessible beyond this scope (and in the eventListener)
 
 		@controllers = 
-			enabler: new HTMLElement('#visibility-on')
-			disabler: new HTMLElement('#visibility-off')
+			enabler: new HTMLElement(enabler)
+			disabler: new HTMLElement(disabler)
 	
 		@animation = new Animation('#content-container')
 		@storage = new Storage

@@ -37,32 +37,35 @@
 						%a#visibility-on.font-size-small.light-blue.darken-3.color-white.uppercase
 							%i.material-icons.left.bugged visibility_on
 							See Us
-					/ %li
-					/ 	%a#settings.font-size-small.color-dark-grey.uppercase(href="#")
-					/ 		%i.material-icons.left settings
-					/ 		Settings
+					-# %li
+					-# 	%a#settings.font-size-small.color-dark-grey.uppercase(href="#")
+					-# 		%i.material-icons.left settings
+					-# 		Settings
 		#content-container
 			.container-large
 				.row.section
 					%section.col.s12
-						#top-sites
+						#top-sites-custom
+							%h4.section-heading.animated Speed Dial
+							.section-toolbar
+								%button#show-top-sites-recommended.btn.font-size-small.white.color-dark-grey.animated
+									%i.material-icons.left timeline
+									Show Top Sites
+								%button#add-new.btn.font-size-small.white.color-dark-grey.animated
+									%i.material-icons.left add
+									Add new
+							%p.no-items.animated
+								%i.material-icons.left sentiment_neutral
+								I looked, but I couldn't find anything.
+						#top-sites-recommended
 							%h4.section-heading.animated Top Sites
 							.section-toolbar
-								%button#top-sites-view.btn.font-size-small.white.color-dark-grey.animated
-									-# %i.material-icons.left card_giftcard
-									Recommended
-									%i.material-icons.right expand_more
-								%button#add-new-link.btn.font-size-small.white.color-dark-grey.animated
-									%i.material-icons.left add
-									Add link
-							#top-sites-custom
-								%p.no-items.animated
-									%i.material-icons.left sentiment_neutral
-									I looked, but I couldn't find anything.
-							#top-sites-recommended
-								%p.no-items.animated
-									%i.material-icons.left sentiment_neutral
-									I looked, but I couldn't find anything.
+								%button#show-top-sites-custom.btn.font-size-small.white.color-dark-grey.animated
+									%i.material-icons.left dialpad
+									Show Speed Dial
+							%p.no-items.animated
+								%i.material-icons.left sentiment_neutral
+								I looked, but I couldn't find anything.
 			.container-large
 				.row.section
 					%section.col.s12.center

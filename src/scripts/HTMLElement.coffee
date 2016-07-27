@@ -214,13 +214,3 @@ class HTMLElement
 
 	removeFromDOM: ()->
 		@DOMElement.outerHTML = ''
-
-	# Bind element to variable
-	#
-	# @param [mixed] a variable the element is bound to. Can be int, float, str, array or object 
-	#
-	bind: (variable)->
-
-	# Remove variable binding
-	#
-	unbind: ()->

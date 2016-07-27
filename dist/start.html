@@ -52,10 +52,6 @@
               See Us
             </a>
           </li>
-          <!-- %li -->
-          <!-- %a#settings.font-size-small.color-dark-grey.uppercase(href="#") -->
-          <!-- %i.material-icons.left settings -->
-          <!-- Settings -->
         </ul>
       </div>
     </nav>
@@ -63,30 +59,35 @@
       <div class='container-large'>
         <div class='row section'>
           <section class='col s12'>
-            <div id='top-sites'>
+            <div id='top-sites-custom'>
+              <h4 class='section-heading animated'>Speed Dial</h4>
+              <div class='section-toolbar'>
+                <button class='btn font-size-small white color-dark-grey animated' id='show-top-sites-recommended'>
+                  <i class='material-icons left'>timeline</i>
+                  Show Top Sites
+                </button>
+                <button class='btn font-size-small white color-dark-grey animated' id='add-new'>
+                  <i class='material-icons left'>add</i>
+                  Add new
+                </button>
+              </div>
+              <p class='no-items animated'>
+                <i class='material-icons left'>sentiment_neutral</i>
+                I looked, but I couldn't find anything.
+              </p>
+            </div>
+            <div id='top-sites-recommended'>
               <h4 class='section-heading animated'>Top Sites</h4>
               <div class='section-toolbar'>
-                <button class='btn font-size-small white color-dark-grey animated' id='top-sites-view'>
-                  Recommended
-                  <i class='material-icons right'>expand_more</i>
-                </button>
-                <button class='btn font-size-small white color-dark-grey animated' id='add-new-link'>
-                  <i class='material-icons left'>add</i>
-                  Add link
+                <button class='btn font-size-small white color-dark-grey animated' id='show-top-sites-custom'>
+                  <i class='material-icons left'>dialpad</i>
+                  Show Speed Dial
                 </button>
               </div>
-              <div id='top-sites-custom'>
-                <p class='no-items animated'>
-                  <i class='material-icons left'>sentiment_neutral</i>
-                  I looked, but I couldn't find anything.
-                </p>
-              </div>
-              <div id='top-sites-recommended'>
-                <p class='no-items animated'>
-                  <i class='material-icons left'>sentiment_neutral</i>
-                  I looked, but I couldn't find anything.
-                </p>
-              </div>
+              <p class='no-items animated'>
+                <i class='material-icons left'>sentiment_neutral</i>
+                I looked, but I couldn't find anything.
+              </p>
             </div>
           </section>
         </div>

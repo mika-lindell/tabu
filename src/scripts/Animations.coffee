@@ -65,8 +65,6 @@ class Animation
 
 		to = container.height()
 
-		console.log from, to
-
 		container.css('height', from + 'px')
 
 		play = ()->

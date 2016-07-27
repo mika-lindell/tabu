@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Animation, App, Binding, DataGetter, DataStorage, Dropdown, HTMLElement, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Url, Visibility,
+  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -60,13 +60,6 @@
     };
 
     return Url;
-
-  })();
-
-  Binding = (function() {
-    function Binding() {}
-
-    return Binding;
 
   })();
 
@@ -425,10 +418,6 @@
     HTMLElement.prototype.removeFromDOM = function() {
       return this.DOMElement.outerHTML = '';
     };
-
-    HTMLElement.prototype.bind = function(variable) {};
-
-    HTMLElement.prototype.unbind = function() {};
 
     return HTMLElement;
 
@@ -1001,7 +990,6 @@
       root = this;
       container = this.animate;
       to = container.height();
-      console.log(from, to);
       container.css('height', from + 'px');
       play = function() {
         return container.css('height', to + 'px');
@@ -1108,12 +1096,18 @@
 
     Visibility.storage;
 
-    function Visibility() {
+    function Visibility(enabler, disabler) {
       var getSavedStatus, root, toggleStatus;
+      if (enabler == null) {
+        enabler = '#visibility-on';
+      }
+      if (disabler == null) {
+        disabler = '#visibility-off';
+      }
       root = this;
       this.controllers = {
-        enabler: new HTMLElement('#visibility-on'),
-        disabler: new HTMLElement('#visibility-off')
+        enabler: new HTMLElement(enabler),
+        disabler: new HTMLElement(disabler)
       };
       this.animation = new Animation('#content-container');
       this.storage = new Storage;
@@ -1171,13 +1165,128 @@
 
   })();
 
+  Toolbars = (function() {
+    Toolbars.recommendedContainer;
+
+    Toolbars.customContainer;
+
+    Toolbars.recommendedButton;
+
+    Toolbars.customButton;
+
+    Toolbars.addButton;
+
+    function Toolbars() {
+      var root;
+      this.recommendedContainer = new HTMLElement('#top-sites-recommended');
+      this.customContainer = new HTMLElement('#top-sites-custom');
+      this.recommendedButton = new HTMLElement('#show-top-sites-recommended');
+      this.customButton = new HTMLElement('#show-top-sites-custom');
+      this.addButton = new HTMLElement('#add-new');
+      root = this;
+      this.customButton.on('click', function() {
+        return root.showMyPicks(root);
+      });
+      this.recommendedButton.on('click', function() {
+        return root.showRecommended(root);
+      });
+    }
+
+    Toolbars.prototype.showMyPicks = function(root) {
+      return root.animateTransition(root.recommendedContainer, root.customContainer);
+    };
+
+    Toolbars.prototype.showRecommended = function(root) {
+      return root.animateTransition(root.customContainer, root.recommendedContainer);
+    };
+
+    Toolbars.prototype.animateTransition = function(from, to) {
+      var intro, oldHeight, outro;
+      outro = new Animation(from);
+      intro = new Animation(to);
+      oldHeight = outro.animate.height();
+      outro.done = function() {
+        intro.heightFrom(oldHeight);
+        return intro.intro();
+      };
+      return outro.outro(true);
+    };
+
+    return Toolbars;
+
+  })();
+
+  Actions = (function() {
+    Actions.bookmarks;
+
+    Actions.history;
+
+    Actions.downloads;
+
+    Actions.incognito;
+
+    function Actions(bookmarks, history, downloads, incognito) {
+      if (bookmarks == null) {
+        bookmarks = '#view-bookmarks';
+      }
+      if (history == null) {
+        history = '#view-history';
+      }
+      if (downloads == null) {
+        downloads = '#view-downloads';
+      }
+      if (incognito == null) {
+        incognito = '#go-incognito';
+      }
+      this.bookmarks = new HTMLElement(bookmarks).on('click', this.viewBookmarks);
+      this.history = new HTMLElement(history).on('click', this.viewHistory);
+      this.downloads = new HTMLElement(downloads).on('click', this.viewDownloads);
+      this.incognito = new HTMLElement(incognito).on('click', this.goIncognito);
+    }
+
+    Actions.prototype.viewBookmarks = function() {
+      return chrome.tabs.update({
+        url: 'chrome://bookmarks/#1'
+      });
+    };
+
+    Actions.prototype.viewHistory = function() {
+      return chrome.tabs.update({
+        url: 'chrome://history/'
+      });
+    };
+
+    Actions.prototype.viewDownloads = function() {
+      return chrome.tabs.update({
+        url: 'chrome://downloads/'
+      });
+    };
+
+    Actions.prototype.goIncognito = function() {
+      return chrome.windows.create({
+        'incognito': true
+      });
+    };
+
+    return Actions;
+
+  })();
+
   App = (function() {
+    App.visibility;
+
+    App.toolbars;
+
+    App.actions;
+
     App.dataStorage;
 
     function App() {
-      var root, topSitesView, visibility;
+      var root;
       console.log("App: I'm warming up...");
-      visibility = new Visibility;
+      this.visibility = new Visibility();
+      this.toolbars = new Toolbars();
+      this.actions = new Actions();
 
       /*
       		 *
@@ -1215,17 +1324,6 @@
         return list_custom.update();
       };
       this.dataStorage.fetchAll();
-      topSitesView = new Dropdown('#top-sites-view');
-      topSitesView.addItem('Recommended', function() {
-        return root.topSites('recommended');
-      });
-      topSitesView.addItem('My Choices', function() {
-        return root.topSites('custom');
-      });
-      new HTMLElement('#view-bookmarks').on('click', this.viewBookmarks);
-      new HTMLElement('#view-history').on('click', this.viewHistory);
-      new HTMLElement('#view-downloads').on('click', this.viewDownloads);
-      new HTMLElement('#go-incognito').on('click', this.goIncognito);
       chrome.tabs.getSelected(null, function(tab) {
         if (tab.title != null) {
           return document.title = tab.title;
@@ -1235,53 +1333,6 @@
       });
       console.log("App: I'm ready <3");
     }
-
-    App.prototype.topSites = function(which) {
-      var intro, oldHeight, outro;
-      if (which === 'custom') {
-        outro = new Animation('#top-sites-recommended');
-        intro = new Animation('#top-sites-custom');
-        oldHeight = outro.animate.height();
-        outro.done = function() {
-          intro.heightFrom(oldHeight);
-          return intro.intro();
-        };
-        return outro.outro(true);
-      } else {
-        outro = new Animation('#top-sites-custom');
-        intro = new Animation('#top-sites-recommended');
-        oldHeight = outro.animate.height();
-        outro.done = function() {
-          intro.heightFrom(oldHeight);
-          return intro.intro();
-        };
-        return outro.outro(true);
-      }
-    };
-
-    App.prototype.viewBookmarks = function() {
-      return chrome.tabs.update({
-        url: 'chrome://bookmarks/#1'
-      });
-    };
-
-    App.prototype.viewHistory = function() {
-      return chrome.tabs.update({
-        url: 'chrome://history/'
-      });
-    };
-
-    App.prototype.viewDownloads = function() {
-      return chrome.tabs.update({
-        url: 'chrome://downloads/'
-      });
-    };
-
-    App.prototype.goIncognito = function() {
-      return chrome.windows.create({
-        'incognito': true
-      });
-    };
 
     return App;
 

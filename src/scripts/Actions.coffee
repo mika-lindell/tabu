@@ -1,24 +1,19 @@
 # Class to misc startup initializations
 #
-class Init
+class Actions
 
-	constructor: ()->
+	@bookmarks
+	@history
+	@downloads
+	@incognito
+
+	constructor: (bookmarks = '#view-bookmarks', history = '#view-history', downloads = '#view-downloads', incognito = '#go-incognito')->
 		
 		# Bind functionality to action buttons
-		@bindClick '#view-bookmarks', @viewBookmarks
-		@bindClick '#view-history', @viewHistory
-		@bindClick '#view-downloads', @viewDownloads
-		@bindClick '#go-incognito', @goIncognito
-
-	# To add listener to click event
-	#
-	# @param id [String] id of the HTML element to add the listener to
-	# @param listener [Function] the function to be called when the event is fired
-	#	
-	bindClick: (id, listener)->
-		elem = new HTMLElement(id)
-		if elem instanceof HTMLElement
-			elem.on('click', listener)
+		@bookmarks = new HTMLElement(bookmarks).on('click', @viewBookmarks)
+		@history = new HTMLElement(history).on('click', @viewHistory)
+		@downloads = new HTMLElement(downloads).on('click', @viewDownloads)
+		@incognito = new HTMLElement(incognito).on('click', @goIncognito)
 
 	# Navigate to bookmarks-page. Have to use script, as local resources cannot be opened by links.
 	#

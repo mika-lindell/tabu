@@ -54,7 +54,6 @@ module.exports = function(grunt) {
             'dist/scripts/app.js': [
               'src/**/Throttle.coffee',
               'src/**/Url.coffee',
-              'src/**/Binding.coffee',
               'src/**/Storage.coffee',
               'src/**/HexColor.coffee',
               'src/**/HTMLElement.coffee',
@@ -67,6 +66,8 @@ module.exports = function(grunt) {
               'src/**/Animations.coffee',
               'src/**/Loader.coffee',
               'src/**/Visibility.coffee',
+              'src/**/Toolbars.coffee',
+              'src/**/Actions.coffee',
               'src/**/App.coffee',
               'src/**/Main.coffee'
 
