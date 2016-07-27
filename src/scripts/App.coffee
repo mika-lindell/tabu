@@ -31,7 +31,7 @@ class App
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
 			
-			list = new ItemCardList('#top-sites-recommended', root.dataStorage.topSites) # Create new list class
+			list = new ItemCardList('#top-sites', root.dataStorage.topSites) # Create new list class
 			list.container.append list # Add list to DOM
 			list.setOrientation 'horizontal'
 			list.update() # Add items to the list
@@ -61,22 +61,12 @@ class App
 			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
 			list.update()
 
-			list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.otherDevices) # Create new list class
+			list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices) # Create new list class
 			list_custom.enableEditing()
 			list_custom.setOrientation 'horizontal'
 			list_custom.update() # Add items to the list
 
 		@dataStorage.fetchAll()
-
-		# topSitesView = new Dropdown('#top-sites-view')
-		
-		# topSitesView.addItem('Recommended', ()-> 
-		# 	root.topSites('recommended')
-		# )
-
-		# topSitesView.addItem('My Choices', ()-> 
-		# 	root.topSites('custom')
-		# )
 
 		# Use localised version of the title of new tab page
 		chrome.tabs.getSelected(null, (tab)-> # null defaults to current window

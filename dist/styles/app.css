@@ -1593,7 +1593,7 @@
 .shades-text.text-black {
   color: #000000 !important; }
 
-.shades.white {
+.shades.white, button.shades.toolbar, button.shades.title {
   background-color: #FFFFFF !important; }
 
 .shades-text.text-white {
@@ -1611,7 +1611,7 @@
 .black-text {
   color: #000000 !important; }
 
-.white {
+.white, button.toolbar, button.title {
   background-color: #FFFFFF !important; }
 
 .white-text {
@@ -6277,7 +6277,7 @@ Layers
 Font sizes
 
 ***/
-.font-size-small, .item-card-label-secondary {
+.font-size-small, .dropdown-content li.title, button.toolbar, .item-card-label-secondary {
   font-size: 0.8rem; }
 
 .font-size-regular {
@@ -6309,10 +6309,10 @@ Helpers
 .uppercase, .item-card-badge {
   text-transform: uppercase; }
 
-.color-black, a.item-card-link {
+.color-black, button.title, a.item-card-link {
   color: #000; }
 
-.color-dark-grey, .item-card-label-secondary, .no-items {
+.color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
 
 .color-white {
@@ -6451,19 +6451,43 @@ body {
 footer {
   border-top: 1px solid #c7c7c7; }
 
+.dropdown-content li.title {
+  padding: 14px 16px;
+  line-height: 0.8rem;
+  height: 0.8rem;
+  min-height: 0.1rem;
+  cursor: initial; }
+  .dropdown-content li.title:hover {
+    background-color: inherit; }
+
 /***
 
 Button styles
 
 ***/
 .btn:active, .btn-large:active,
-.btn-large:active,
-.section-toolbar button.active {
+.btn-large:active {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
 
-.section-toolbar button {
+button.toolbar {
+  padding: 0 0.5rem;
+  box-shadow: none; }
+
+button.title {
+  font-size: inherit;
+  text-transform: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
   box-shadow: none;
-  padding: 0 0.5rem; }
+  padding: 0.5rem 0.5rem;
+  margin-left: -0.5rem;
+  height: auto; }
+  button.title i.material-icons, button.title i.drag-handle {
+    font-size: inherit; }
+
+button.active,
+button.active:hover {
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
 
 #actions button {
   margin-bottom: 0.6rem;

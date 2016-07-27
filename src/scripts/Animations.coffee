@@ -15,13 +15,15 @@ class Animation
 		@duration = duration
 
 		@animate.css('transition', "all #{@duration}s")
-		@animate.css('overflow', 'hidden')
 
 	fadeIn: ()->
 		console.log "Animation: I'll play fadeIn now."
 
 		root = @
 		container = @animate
+
+		oldOverflow = container.css('overflow')
+		container.css('overflow', 'hidden')
 
 		container.css('opacity', '0')
 		container.css('display', 'block')
@@ -37,6 +39,7 @@ class Animation
 		setTimeout(play, 10)
 
 		cleanUp = ()->
+			container.css('overflow', oldOverflow)
 			root.done.call()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -47,12 +50,16 @@ class Animation
 		root = @
 		container = @animate
 
+		oldOverflow = container.css('overflow')
+		container.css('overflow', 'hidden')
+
 		container.css('height', '0px')
 		container.css('opacity', '0')
 
 		cleanUp = ()->
 			container.css('display', 'none')
 			container.css('height', 'auto')
+			container.css('overflow', oldOverflow)
 			root.done.call()
 
 		setTimeout(cleanUp, @duration * 1000)

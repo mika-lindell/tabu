@@ -1,36 +1,52 @@
 class Toolbars
 
-	@recommendedContainer
-	@customContainer
+	@speedDialContainer
+	@topSitesContainer
 
-	@recommendedButton
-	@customButton
-	@addButton
+	@speedDialSelect
+	@topSitesSelect
+
 
 	constructor: ()->
 
-		@recommendedContainer = new HTMLElement('#top-sites-recommended')
-		@customContainer = new HTMLElement('#top-sites-custom')
-
-		@recommendedButton = new HTMLElement('#show-top-sites-recommended')
-		@customButton = new HTMLElement('#show-top-sites-custom')
-		@addButton = new HTMLElement('#add-new')
+		@speedDialContainer = new HTMLElement('#speed-dial')
+		@topSitesContainer = new HTMLElement('#top-sites')
 
 		root = @
 
-		@customButton.on('click', ()->
-			root.showMyPicks(root)
+		speedDialSelect = new Dropdown('#speed-dial-select')
+		topSitesSelect = new Dropdown('#top-sites-select')
+		
+		topSitesSelect.addItem('Switch to Speed Dial', ()-> 
+			root.speedDial(root)
 		)
 
-		@recommendedButton.on('click', ()->
-			root.showRecommended(root)
+		speedDialSelect.addItem('Add Link', ()-> 
+			root.topSites(root)
 		)
 
-	showMyPicks: (root)->
-		root.animateTransition(root.recommendedContainer, root.customContainer)
+		speedDialSelect.addDivider()
 
-	showRecommended: (root)->
-		root.animateTransition(root.customContainer, root.recommendedContainer)
+		speedDialSelect.addItem('Switch to Top Sites', ()-> 
+			root.topSites(root)
+		)
+
+
+
+
+		# @customButton.on('click', ()->
+		# 	root.showMyPicks(root)
+		# )
+
+		# @recommendedButton.on('click', ()->
+		# 	root.showRecommended(root)
+		# )
+
+	speedDial: (root)->
+		root.animateTransition(root.topSitesContainer, root.speedDialContainer)
+
+	topSites: (root)->
+		root.animateTransition(root.speedDialContainer, root.topSitesContainer)
 
 	animateTransition: (from, to)->
 		outro = new Animation(from)

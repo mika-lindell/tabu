@@ -452,6 +452,25 @@ footer{
 	border-top: $border-light;
 }
 
+
+.dropdown-content li.title{
+
+  padding: 14px 16px;
+
+  line-height: 0.8rem;
+
+  height: 0.8rem;
+  min-height: 0.1rem;
+  cursor: initial;
+
+	@extend .font-size-small;
+	@extend .color-dark-grey;
+
+	&:hover {
+	    background-color: inherit;
+	}
+}
+
 /***
 
 Button styles
@@ -461,15 +480,44 @@ Button styles
 $action-buttons-gap: 0.6rem;
 
 .btn:active,
-.btn-large:active,
-.section-toolbar button.active{
+.btn-large:active{
 		box-shadow: $shadow-inset;
 	}
 
-.section-toolbar button{
-		box-shadow: none;
-		padding: 0 0.5rem;
+button.toolbar{
+	padding: 0 0.5rem;
+	box-shadow: none;
+
+	@extend .font-size-small;
+	@extend .color-dark-grey;
+	@extend .white;
+}
+
+button.title{
+	font-size: inherit;
+	text-transform: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	box-shadow: none;
+	padding: 0.5rem 0.5rem;
+	margin-left: -0.5rem;
+	height: auto;
+
+	@extend .color-black;
+	@extend .white;
+
+	i.material-icons{
+		font-size: inherit;
 	}
+
+}
+
+button.active,
+button.active:hover{
+	box-shadow: $shadow-inset;
+}
+
+
 
 #actions button{
 
@@ -614,11 +662,12 @@ a.item-card-link{
 }
 
 // Styles for horizontal lists
-.horizontal-list li{
-	display: inline-block;
-	padding-right: 1rem;
-	width: 100%; 
-
+.horizontal-list{
+	li{
+		display: inline-block;
+		padding-right: 1rem;
+		width: 100%; 
+	}
 }
 
 li.item-card-heading{

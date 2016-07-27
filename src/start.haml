@@ -45,24 +45,19 @@
 			.container-large
 				.row.section
 					%section.col.s12
-						#top-sites-custom
-							%h4.section-heading.animated Speed Dial
-							.section-toolbar
-								%button#show-top-sites-recommended.btn.font-size-small.white.color-dark-grey.animated
-									%i.material-icons.left timeline
-									Show Top Sites
-								%button#add-new.btn.font-size-small.white.color-dark-grey.animated
-									%i.material-icons.left add
-									Add new
+						#speed-dial
+							%h4.section-heading 
+								%button#speed-dial-select.btn.title.animated
+									Speed Dial
+									%i.material-icons.right expand_more
 							%p.no-items.animated
 								%i.material-icons.left sentiment_neutral
 								I looked, but I couldn't find anything.
-						#top-sites-recommended
-							%h4.section-heading.animated Top Sites
-							.section-toolbar
-								%button#show-top-sites-custom.btn.font-size-small.white.color-dark-grey.animated
-									%i.material-icons.left dialpad
-									Show Speed Dial
+						#top-sites
+							%h4.section-heading 
+								%button#top-sites-select.btn.title.animated
+									Top Sites
+									%i.material-icons.right expand_more
 							%p.no-items.animated
 								%i.material-icons.left sentiment_neutral
 								I looked, but I couldn't find anything.

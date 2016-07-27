@@ -6,8 +6,8 @@ class Dropdown extends HTMLElement
 	@trap
 	@active
 
-	constructor: (parentId)->
-		super(parentId)
+	constructor: (parent)->
+		super(parent)
 
 		@dropdown = new HTMLElement('ul')
 		@animation = new Animation(@dropdown, 0.2)
@@ -19,7 +19,6 @@ class Dropdown extends HTMLElement
 		@dropdown.addClass('dropdown-content')
 		@dropdown.addClass('layer-dialog')
 		@dropdown.css('display', 'none')
-		@dropdown.css('min-width', @width() + 'px')
 
 		body.on('click', (ev)->
 			root.hide(ev, root)
@@ -47,6 +46,8 @@ class Dropdown extends HTMLElement
 
 		root.dropdown.css('top', @top() + @height() + 'px')
 		root.dropdown.css('left', @left() + 'px')
+
+		root.dropdown.css('min-width', @width() + 'px')
 
 		root.addClass('active')
 		root.animation.fadeIn()

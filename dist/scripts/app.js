@@ -837,9 +837,9 @@
 
     Dropdown.active;
 
-    function Dropdown(parentId) {
+    function Dropdown(parent) {
       var body, root;
-      Dropdown.__super__.constructor.call(this, parentId);
+      Dropdown.__super__.constructor.call(this, parent);
       this.dropdown = new HTMLElement('ul');
       this.animation = new Animation(this.dropdown, 0.2);
       this.active = false;
@@ -848,7 +848,6 @@
       this.dropdown.addClass('dropdown-content');
       this.dropdown.addClass('layer-dialog');
       this.dropdown.css('display', 'none');
-      this.dropdown.css('min-width', this.width() + 'px');
       body.on('click', function(ev) {
         return root.hide(ev, root);
       });
@@ -880,6 +879,7 @@
       ev.stopPropagation();
       root.dropdown.css('top', this.top() + this.height() + 'px');
       root.dropdown.css('left', this.left() + 'px');
+      root.dropdown.css('min-width', this.width() + 'px');
       root.addClass('active');
       root.animation.fadeIn();
       return root.active = true;
@@ -946,14 +946,15 @@
       }
       this.duration = duration;
       this.animate.css('transition', "all " + this.duration + "s");
-      this.animate.css('overflow', 'hidden');
     }
 
     Animation.prototype.fadeIn = function() {
-      var cleanUp, container, play, root, targetHeight;
+      var cleanUp, container, oldOverflow, play, root, targetHeight;
       console.log("Animation: I'll play fadeIn now.");
       root = this;
       container = this.animate;
+      oldOverflow = container.css('overflow');
+      container.css('overflow', 'hidden');
       container.css('opacity', '0');
       container.css('display', 'block');
       targetHeight = container.height() + 'px';
@@ -964,21 +965,25 @@
       };
       setTimeout(play, 10);
       cleanUp = function() {
+        container.css('overflow', oldOverflow);
         return root.done.call();
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
     Animation.prototype.fadeOut = function() {
-      var cleanUp, container, root;
+      var cleanUp, container, oldOverflow, root;
       console.log("Animation: I'll play fadeOut now.");
       root = this;
       container = this.animate;
+      oldOverflow = container.css('overflow');
+      container.css('overflow', 'hidden');
       container.css('height', '0px');
       container.css('opacity', '0');
       cleanUp = function() {
         container.css('display', 'none');
         container.css('height', 'auto');
+        container.css('overflow', oldOverflow);
         return root.done.call();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1166,38 +1171,39 @@
   })();
 
   Toolbars = (function() {
-    Toolbars.recommendedContainer;
+    Toolbars.speedDialContainer;
 
-    Toolbars.customContainer;
+    Toolbars.topSitesContainer;
 
-    Toolbars.recommendedButton;
+    Toolbars.speedDialSelect;
 
-    Toolbars.customButton;
-
-    Toolbars.addButton;
+    Toolbars.topSitesSelect;
 
     function Toolbars() {
-      var root;
-      this.recommendedContainer = new HTMLElement('#top-sites-recommended');
-      this.customContainer = new HTMLElement('#top-sites-custom');
-      this.recommendedButton = new HTMLElement('#show-top-sites-recommended');
-      this.customButton = new HTMLElement('#show-top-sites-custom');
-      this.addButton = new HTMLElement('#add-new');
+      var root, speedDialSelect, topSitesSelect;
+      this.speedDialContainer = new HTMLElement('#speed-dial');
+      this.topSitesContainer = new HTMLElement('#top-sites');
       root = this;
-      this.customButton.on('click', function() {
-        return root.showMyPicks(root);
+      speedDialSelect = new Dropdown('#speed-dial-select');
+      topSitesSelect = new Dropdown('#top-sites-select');
+      topSitesSelect.addItem('Switch to Speed Dial', function() {
+        return root.speedDial(root);
       });
-      this.recommendedButton.on('click', function() {
-        return root.showRecommended(root);
+      speedDialSelect.addItem('Add Link', function() {
+        return root.topSites(root);
+      });
+      speedDialSelect.addDivider();
+      speedDialSelect.addItem('Switch to Top Sites', function() {
+        return root.topSites(root);
       });
     }
 
-    Toolbars.prototype.showMyPicks = function(root) {
-      return root.animateTransition(root.recommendedContainer, root.customContainer);
+    Toolbars.prototype.speedDial = function(root) {
+      return root.animateTransition(root.topSitesContainer, root.speedDialContainer);
     };
 
-    Toolbars.prototype.showRecommended = function(root) {
-      return root.animateTransition(root.customContainer, root.recommendedContainer);
+    Toolbars.prototype.topSites = function(root) {
+      return root.animateTransition(root.speedDialContainer, root.topSitesContainer);
     };
 
     Toolbars.prototype.animateTransition = function(from, to) {
@@ -1298,7 +1304,7 @@
       this.dataStorage.topSites.done = function() {
         var list, loader;
         loader = new Loader;
-        list = new ItemCardList('#top-sites-recommended', root.dataStorage.topSites);
+        list = new ItemCardList('#top-sites', root.dataStorage.topSites);
         list.container.append(list);
         list.setOrientation('horizontal');
         list.update();
@@ -1318,7 +1324,7 @@
         var list, list_custom;
         list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
         list.update();
-        list_custom = new ItemCardList('#top-sites-custom', root.dataStorage.otherDevices);
+        list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices);
         list_custom.enableEditing();
         list_custom.setOrientation('horizontal');
         return list_custom.update();
