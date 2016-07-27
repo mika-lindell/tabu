@@ -6,6 +6,7 @@ class App
 	@toolbars
 	@actions
 	@dataStorage
+	@helpers
 	
 	# Construct new app
 	#
@@ -16,6 +17,7 @@ class App
 		@visibility = new Visibility() # This will init visibility-mode
 		@toolbars = new Toolbars() # This will init top sites toolbar functionality
 		@actions = new Actions() # This will init action buttons
+		@helpers = new Helpers()
 
 		###
 		#
@@ -54,26 +56,22 @@ class App
 
 			list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed)
 			list.update()
-			
+
+			list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed) # Create new list class
+			list_custom.enableEditing()
+			list_custom.setOrientation 'horizontal'
+			list_custom.update() # Add items to the list			
 
 		@dataStorage.otherDevices.done = ()->
 			
 			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
 			list.update()
 
-			list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices) # Create new list class
-			list_custom.enableEditing()
-			list_custom.setOrientation 'horizontal'
-			list_custom.update() # Add items to the list
-
 		@dataStorage.fetchAll()
 
 		# Use localised version of the title of new tab page
-		chrome.tabs.getSelected(null, (tab)-> # null defaults to current window
-		  if tab.title?
-		  	document.title = tab.title
-		  else
-		  	document.title = 'New Tab'
+		@helpers.getLocalisedTitle((title)->
+			document.title = title
 		)
 
 		console.log "App: I'm ready <3"

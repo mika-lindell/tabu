@@ -3726,7 +3726,7 @@ button.btn-floating {
       height: 1px; }
     .dropdown-content li > a, .dropdown-content li > span {
       font-size: 16px;
-      color: #26a69a;
+      color: #5a5a5a;
       display: block;
       line-height: 22px;
       padding: 14px 16px; }
@@ -6467,7 +6467,7 @@ Button styles
 ***/
 .btn:active, .btn-large:active,
 .btn-large:active {
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
 
 button.toolbar {
   padding: 0 0.5rem;
@@ -6488,7 +6488,7 @@ button.title {
 
 button.active,
 button.active:hover {
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
 
 #actions button {
   margin-bottom: 0.6rem;
@@ -6536,9 +6536,9 @@ ul[data-list-editable] .drag-handle {
   border: 2px dashed transparent; }
   .item-card.dragged {
     border-color: #c7c7c7;
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+    box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card:active {
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.25); }
+    box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
 
 .item-card-heading,
 .no-items {

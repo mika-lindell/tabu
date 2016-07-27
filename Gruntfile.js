@@ -52,6 +52,7 @@ module.exports = function(grunt) {
         files: [
           {                         
             'dist/scripts/app.js': [
+              'src/**/Helpers.coffee',
               'src/**/Throttle.coffee',
               'src/**/Url.coffee',
               'src/**/Storage.coffee',

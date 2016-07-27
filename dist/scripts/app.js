@@ -1,7 +1,49 @@
 (function() {
-  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, Visibility,
+  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
+
+  Helpers = (function() {
+    var instance;
+
+    instance = null;
+
+    function Helpers() {
+      if (!instance) {
+        instance = this;
+      }
+      return instance;
+    }
+
+    Helpers.prototype.getOs = function() {
+      if (navigator.appVersion.indexOf("Win") !== -1) {
+        return "Windows";
+      }
+      if (navigator.appVersion.indexOf("Mac") !== -1) {
+        return "MacOS";
+      }
+      if (navigator.appVersion.indexOf("X11") !== -1) {
+        return "UNIX";
+      }
+      if (navigator.appVersion.indexOf("Linux") !== -1) {
+        return "Linux";
+      }
+    };
+
+    Helpers.prototype.getLocalisedTitle = function(callback) {
+      return chrome.tabs.getSelected(null, function(tab) {
+        console.log(tab.title);
+        if (tab.title != null) {
+          return callback(tab.title);
+        } else {
+          return callback('New Tab');
+        }
+      });
+    };
+
+    return Helpers;
+
+  })();
 
   Throttle = (function() {
     function Throttle(callback, limit) {
@@ -1300,12 +1342,15 @@
 
     App.dataStorage;
 
+    App.helpers;
+
     function App() {
       var root;
       console.log("App: I'm warming up...");
       this.visibility = new Visibility();
       this.toolbars = new Toolbars();
       this.actions = new Actions();
+      this.helpers = new Helpers();
 
       /*
       		 *
@@ -1329,26 +1374,22 @@
         return list.update();
       };
       this.dataStorage.recentlyClosed.done = function() {
-        var list;
-        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
-        return list.update();
-      };
-      this.dataStorage.otherDevices.done = function() {
         var list, list_custom;
-        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
+        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
         list.update();
-        list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices);
+        list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed);
         list_custom.enableEditing();
         list_custom.setOrientation('horizontal');
         return list_custom.update();
       };
+      this.dataStorage.otherDevices.done = function() {
+        var list;
+        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
+        return list.update();
+      };
       this.dataStorage.fetchAll();
-      chrome.tabs.getSelected(null, function(tab) {
-        if (tab.title != null) {
-          return document.title = tab.title;
-        } else {
-          return document.title = 'New Tab';
-        }
+      this.helpers.getLocalisedTitle(function(title) {
+        return document.title = title;
       });
       console.log("App: I'm ready <3");
     }
