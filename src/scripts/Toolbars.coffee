@@ -55,7 +55,7 @@ class Toolbars
 		oldHeight = outro.animate.height()
 
 		outro.done = ()->
-			intro.heightFrom(oldHeight)
+			intro.animateHeight(oldHeight)
 			intro.intro()
 
 		outro.outro(true)

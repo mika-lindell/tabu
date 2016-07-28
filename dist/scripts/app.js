@@ -1052,20 +1052,52 @@
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.heightFrom = function(from) {
-      var cleanUp, container, play, root, to;
-      console.log("Animation: I'll play heightFrom now.", from);
+    Animation.prototype.animateHeight = function(from, to) {
+      var cleanUp, container, play, root;
+      if (to == null) {
+        to = null;
+      }
       root = this;
       container = this.animate;
-      to = container.height();
+      if (to == null) {
+        to = container.height();
+      }
+      if (from == null) {
+        from = container.height();
+      }
       container.css('height', from + 'px');
       play = function() {
-        console.log(to, container.height(), container.height() - to);
+        console.log("Animation: I'll animate height now.", from, to);
         return container.css('height', to + 'px');
       };
       setTimeout(play, 0);
       cleanUp = function() {
         container.css('height', 'auto');
+        return root.done();
+      };
+      return setTimeout(cleanUp, this.duration * 1000);
+    };
+
+    Animation.prototype.animateWidth = function(from, to) {
+      var cleanUp, container, play, root;
+      if (to == null) {
+        to = null;
+      }
+      root = this;
+      container = this.animate;
+      if (to == null) {
+        to = container.width();
+      }
+      if (from == null) {
+        from = container.width();
+      }
+      container.css('width', from + 'px');
+      play = function() {
+        console.log("Animation: I'll animate width now.", from, to);
+        return container.css('width', to + 'px');
+      };
+      setTimeout(play, 0);
+      cleanUp = function() {
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1157,7 +1189,11 @@
   })();
 
   Visibility = (function() {
-    Visibility.controllers;
+    Visibility.controller;
+
+    Visibility.enabler;
+
+    Visibility.disabler;
 
     Visibility.enabled;
 
@@ -1165,8 +1201,11 @@
 
     Visibility.storage;
 
-    function Visibility(enabler, disabler) {
+    function Visibility(controller, enabler, disabler) {
       var getSavedStatus, root, toggleStatus;
+      if (controller == null) {
+        controller = '#visibility-toggle';
+      }
       if (enabler == null) {
         enabler = '#visibility-on';
       }
@@ -1174,11 +1213,13 @@
         disabler = '#visibility-off';
       }
       root = this;
-      this.controllers = {
-        enabler: new HTMLElement(enabler),
-        disabler: new HTMLElement(disabler)
+      this.controller = new HTMLElement(controller);
+      this.enabler = new HTMLElement(enabler);
+      this.disabler = new HTMLElement(disabler);
+      this.animation = {
+        content: new Animation('#content-container'),
+        button: new Animation(this.controller)
       };
-      this.animation = new Animation('#content-container');
       this.storage = new Storage;
       getSavedStatus = function(data) {
         if (data.visible != null) {
@@ -1200,18 +1241,20 @@
           return root.enable();
         }
       };
-      this.controllers.enabler.on('click', toggleStatus);
-      this.controllers.disabler.on('click', toggleStatus);
+      this.controller.on('click', toggleStatus);
     }
 
     Visibility.prototype.enable = function(instant) {
+      var root;
       if (instant == null) {
         instant = false;
       }
-      this.animation.intro(instant);
-      this.controllers.enabler.css('display', 'none');
-      this.controllers.enabler.removeClass('anim-highlight');
-      this.controllers.disabler.css('display', 'block');
+      root = this;
+      this.animation.content.intro(instant);
+      this.enabler.css('opacity', 0);
+      this.disabler.css('opacity', 1);
+      this.animation.button.done = function() {};
+      this.animation.button.animateWidth(40, 100);
       this.enabled = true;
       console.log("Visibility: On");
       return this.storage.setVisible(this.enabled);
@@ -1223,10 +1266,11 @@
         instant = false;
       }
       root = this;
-      this.animation.outro(instant);
-      this.controllers.enabler.css('display', 'block');
-      this.controllers.enabler.addClass('anim-highlight');
-      this.controllers.disabler.css('display', 'none');
+      this.animation.content.outro(instant);
+      this.enabler.css('opacity', 1);
+      this.disabler.css('opacity', 0);
+      this.animation.button.done = function() {};
+      this.animation.button.animateWidth(100, 40);
       this.enabled = false;
       console.log("Visibility: Off");
       return this.storage.setVisible(this.enabled);
@@ -1278,7 +1322,7 @@
       intro = new Animation(to);
       oldHeight = outro.animate.height();
       outro.done = function() {
-        intro.heightFrom(oldHeight);
+        intro.animateHeight(oldHeight);
         return intro.intro();
       };
       return outro.outro(true);

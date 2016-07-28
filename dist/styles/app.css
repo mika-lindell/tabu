@@ -6390,15 +6390,19 @@ Animations
   animation-name: delay;
   animation-duration: 1.5s; }
 
-@keyframes highlight {
+@keyframes twist {
   0% {
     opacity: 0;
-    transform: rotate(180deg) scale(2, 2); } }
-.anim-highlight {
-  animation-name: highlight;
+    transform: rotate(180deg) scale(3, 3);
+    box-shadow: none; }
+  100% {
+    opacity: 1; } }
+.anim-twist {
+  animation-name: twist;
   animation-duration: 0.5s; }
 
-.transitions, .item-card,
+.transitions, #visibility-on,
+#visibility-off, .item-card,
 .animated {
   transition: all 0.3s; }
 
@@ -6432,10 +6436,13 @@ Menu
 
 ***/
 .nav-wrapper {
-  padding: 0.4rem; }
+  padding: 0 0.4rem; }
 
-#visibility-on {
-  display: none; }
+#visibility-on,
+#visibility-off {
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap; }
 
 /***
 
@@ -6493,12 +6500,18 @@ Button styles
 
 button.toolbar {
   padding: 0 0.5rem;
+  padding-left: 2.2rem;
   box-shadow: none;
-  background-color: #FFF; }
+  background-color: #FFF;
+  position: relative; }
   button.toolbar:hover {
     background-color: #FFF; }
   button.toolbar i.material-icons, button.toolbar i.drag-handle {
-    line-height: 36px; }
+    position: absolute;
+    left: 9px;
+    top: 0px;
+    line-height: 36px;
+    height: 36px; }
 
 button.highlight {
   background-color: #0277bd; }

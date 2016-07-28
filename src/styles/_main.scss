@@ -46,7 +46,6 @@ select{
 
 nav{
 	box-shadow: none;
-	//border-bottom: $border-light;
 }
 
 i.left{
@@ -333,19 +332,21 @@ Animations
   animation-duration: 1.5s;
 }
 
-@keyframes highlight{
+@keyframes twist{
 
 	0%{
 		opacity: 0;
-		transform: rotate(180deg) scale(2,2)
+		transform: rotate(180deg) scale(3,3);
+		box-shadow: none;
 	}	
 
 	100%{
+		opacity: 1;
 	}
 }
 
-.anim-highlight{
-	animation-name: highlight;
+.anim-twist{
+	animation-name: twist;
   animation-duration: 0.5s;
 }
 
@@ -432,11 +433,17 @@ Menu
 ***/
 
 .nav-wrapper{
-	padding: 0.4rem;
+	padding: 0 0.4rem;
 }
 
-#visibility-on{
-	display: none;
+#visibility-on,
+#visibility-off{
+	opacity: 0;
+	overflow: hidden;
+	white-space: nowrap;
+
+	@extend .transitions;
+
 }
 
 /***
@@ -525,8 +532,10 @@ $action-buttons-gap: 0.6rem;
 
 button.toolbar{
 	padding: 0 0.5rem;
+	padding-left: 2.2rem;
 	box-shadow: none;
 	background-color: $white;
+	position: relative;
 
 	@extend .font-size-small;
 	@extend .color-dark-grey;
@@ -537,7 +546,13 @@ button.toolbar{
 	}
 
 	& i.material-icons{
+
+  	position: absolute;
+  	left: 9px;
+  	top: 0px;
+
 		line-height: 36px;
+		height: 36px;
 	}
 
 }

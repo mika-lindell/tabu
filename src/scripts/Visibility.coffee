@@ -3,7 +3,9 @@
 #
 class Visibility
 
-	@controllers # References to button controlling functionality in this class.
+	@controller # References to button controlling functionality of this class.
+	@enabler
+	@disabler
 	@enabled # Current status of the visibility mode: true or false?
 	@animation # Holds reference to class, which controls animations.
 	@storage # Holds refrence to storage interface this class will be using.	
@@ -12,15 +14,18 @@ class Visibility
 	#
 	# @param [boolean] Sets whether all elements are visible or hidden at after this class has been initialized
 	#
-	constructor: (enabler = '#visibility-on', disabler = '#visibility-off')->
+	constructor: (controller = '#visibility-toggle', enabler = '#visibility-on', disabler = '#visibility-off')->
 
 		root = @ # For the class to be accessible beyond this scope (and in the eventListener)
 
-		@controllers = 
-			enabler: new HTMLElement(enabler)
-			disabler: new HTMLElement(disabler)
+		@controller = new HTMLElement(controller)
+		@enabler = new HTMLElement(enabler)
+		@disabler = new HTMLElement(disabler)
 	
-		@animation = new Animation('#content-container')
+		@animation = 
+			content: new Animation('#content-container')
+			button: new Animation(@controller)
+
 		@storage = new Storage
 
 		getSavedStatus = (data)->
@@ -56,8 +61,7 @@ class Visibility
 			else
 				root.enable()
 
-		@controllers.enabler.on('click', toggleStatus)
-		@controllers.disabler.on('click', toggleStatus)
+		@controller.on('click', toggleStatus)
 
 	# Makes container element visible via Animations-class.
 	#
@@ -65,11 +69,17 @@ class Visibility
 	#
 	enable: (instant = false)->
 
-		@animation.intro(instant)
+		root = @
 
-		@controllers.enabler.css('display', 'none')
-		@controllers.enabler.removeClass('anim-highlight')
-		@controllers.disabler.css('display', 'block')
+		@animation.content.intro(instant)
+
+		@enabler.css('opacity', 0)
+		@disabler.css('opacity', 1)
+
+		@animation.button.done = ()-> 
+			#root.disabler.css('opacity', 1)
+
+		@animation.button.animateWidth(40, 100)
 
 		@enabled = true
 		console.log "Visibility: On"
@@ -83,11 +93,16 @@ class Visibility
 
 		root = @
 
-		@animation.outro(instant)
+		@animation.content.outro(instant)
 
-		@controllers.enabler.css('display', 'block')
-		@controllers.enabler.addClass('anim-highlight')
-		@controllers.disabler.css('display', 'none')
+		@enabler.css('opacity', 1)
+		@disabler.css('opacity', 0)
+
+		@animation.button.done = ()-> 
+			# root.disabler.css('display', 'none')
+			# root.disabler.css('opacity', 0)
+
+		@animation.button.animateWidth(100, 40)
 
 		@enabled = false
 		console.log "Visibility: Off"
