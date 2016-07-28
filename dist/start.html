@@ -58,6 +58,25 @@
       <div class='container-large'>
         <div class='row section'>
           <section class='col s12'>
+            <form class='card light-blue darken-3' id='add-new'>
+              <div class='card-content white-text'>
+                <span class='card-title'>
+                  Add Link
+                </span>
+                <div class='input-field'>
+                  <label class='white-text' for='title'>Title</label>
+                  <input class='black-text' name='title' tabindex='1' type='text'>
+                </div>
+                <div class='input-field'>
+                  <label class='white-text' for='address'>Web Address</label>
+                  <input class='black-text' name='address' tabindex='2' type='url'>
+                </div>
+              </div>
+              <div class='card-action right-align'>
+                <a class='white-text' tabindex='4'>Cancel</a>
+                <input class='btn' tabindex='3' type='submit' value='Add Link'>
+              </div>
+            </form>
             <div class='card-list-column' id='speed-dial'>
               <h4 class='section-heading'>
                 <button class='btn title animated' id='speed-dial-select'>

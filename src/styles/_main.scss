@@ -56,6 +56,34 @@ i.right{
 	margin-left: 10px;
 }
 
+input[type="url"],
+input[type="text"]{
+	background-color: $white;
+	height: auto;
+	padding: 0.5rem;
+	box-sizing: border-box; 
+}
+
+.card-content{
+  line-height: initial;
+}
+
+.card-title{
+	margin-bottom: 1rem;
+	display: block;
+}
+
+.input-field{ 
+
+	margin-top: 0.3rem;
+
+	label{
+		position: static;
+		margin-bottom: 0.3rem;
+	  display: inline-block;
+	}
+}
+
 /***
 
 Material icons
@@ -138,24 +166,28 @@ Layers
 	z-index: 0;
 }
 
-.layer-loader{
+.layer-context-menu{
 	z-index: 99;
 }
 
-.layer-noscript{
+.layer-loader{
 	z-index: 199;
 }
 
-.layer-menu{
+.layer-noscript{
 	z-index: 299;
 }
 
-.layer-overlay{
+.layer-menu{
 	z-index: 399;
 }
 
-.layer-dialog{
+.layer-overlay{
 	z-index: 499;
+}
+
+.layer-dialog{
+	z-index: 599;
 }
 
 
@@ -489,6 +521,32 @@ footer{
 
 /***
 
+Forms
+
+***/
+
+#add-new{
+
+	width: 25%;
+  position: absolute;
+  z-index: 999999;
+  top: 162px;
+
+  @extend .layer-context-menu;
+
+	.card-action{
+		border-top: 1px solid rgba(255, 255, 255, 0.5);
+	}
+}
+
+.hotkey{
+
+	@extend .font-size-small;
+	@extend .color-medium-grey;
+}
+
+/***
+
 Dropdown
 
 ***/
@@ -609,7 +667,7 @@ button.active:hover{
 
 	&:active{
 
-		@extend .darken-3;
+		@extend .darken-2;
 	}
 
 	&:first-child{

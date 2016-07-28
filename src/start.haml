@@ -44,6 +44,20 @@
 			.container-large
 				.row.section
 					%section.col.s12
+						%form#add-new.card.light-blue.darken-3
+							.card-content.white-text
+								%span.card-title
+									Add Link
+								.input-field
+									%label.white-text(for="title") Title
+									%input.black-text(name="title" type="text" tabindex="1")
+								.input-field
+									%label.white-text(for="address") Web Address
+									%input.black-text(name="address" type="url" tabindex="2")
+							.card-action.right-align
+								%a.white-text(tabindex="4") Cancel
+								%input.btn(type="submit" value="Add Link" tabindex="3")
+										
 						#speed-dial.card-list-column
 							%h4.section-heading 
 								%button#speed-dial-select.btn.title.animated
