@@ -29,11 +29,11 @@ class Visibility
 		@storage = new Storage
 
 		getSavedStatus = (data)->
-			
-			if data.visible? # if not undefined or null
+
+			if data.settingVisible? # if not undefined or null
 
 				# Get the saved status - should we display elements?
-				root.enabled = data.visible
+				root.enabled = data.settingVisible
 
 				# Enable the intro animation to start or hide elements (without animations)!
 				if root.enabled
@@ -44,10 +44,9 @@ class Visibility
 
 					root.disable(true)
 					
-
 			else
 
-				root.enabled = true # If no data is found, default to true.
+				root.enable() # If no data is found, default to true.
 
 		@storage.getVisible(getSavedStatus) 
 
@@ -76,9 +75,6 @@ class Visibility
 		@enabler.css('opacity', 0)
 		@disabler.css('opacity', 1)
 
-		@animation.button.done = ()-> 
-			#root.disabler.css('opacity', 1)
-
 		@animation.button.animateWidth(40, 100)
 
 		@enabled = true
@@ -97,10 +93,6 @@ class Visibility
 
 		@enabler.css('opacity', 1)
 		@disabler.css('opacity', 0)
-
-		@animation.button.done = ()-> 
-			# root.disabler.css('display', 'none')
-			# root.disabler.css('opacity', 0)
 
 		@animation.button.animateWidth(100, 40)
 
