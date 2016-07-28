@@ -68,6 +68,7 @@ class Visibility
 		@animation.intro(instant)
 
 		@controllers.enabler.css('display', 'none')
+		@controllers.enabler.removeClass('anim-highlight')
 		@controllers.disabler.css('display', 'block')
 
 		@enabled = true
@@ -85,6 +86,7 @@ class Visibility
 		@animation.outro(instant)
 
 		@controllers.enabler.css('display', 'block')
+		@controllers.enabler.addClass('anim-highlight')
 		@controllers.disabler.css('display', 'none')
 
 		@enabled = false

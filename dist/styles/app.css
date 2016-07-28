@@ -6183,8 +6183,7 @@ select {
   height: auto; }
 
 nav {
-  box-shadow: none;
-  border-bottom: 1px solid #c7c7c7; }
+  box-shadow: none; }
 
 i.left {
   margin-right: 10px; }
@@ -6218,7 +6217,7 @@ Material icons
   -webkit-font-smoothing: antialiased; }
 
 i.material-icons.bugged, i.bugged.drag-handle {
-  max-width: 1.15em;
+  max-width: 1.1em;
   overflow: hidden; }
 
 nav i.material-icons, nav i.drag-handle,
@@ -6390,6 +6389,14 @@ Animations
 .anim-delay-1s, #loader .loader-intro {
   animation-name: delay;
   animation-duration: 1.5s; }
+
+@keyframes highlight {
+  0% {
+    opacity: 0;
+    transform: rotate(180deg) scale(2, 2); } }
+.anim-highlight {
+  animation-name: highlight;
+  animation-duration: 0.5s; }
 
 .transitions, .item-card,
 .animated {

@@ -1210,6 +1210,7 @@
       }
       this.animation.intro(instant);
       this.controllers.enabler.css('display', 'none');
+      this.controllers.enabler.removeClass('anim-highlight');
       this.controllers.disabler.css('display', 'block');
       this.enabled = true;
       console.log("Visibility: On");
@@ -1224,6 +1225,7 @@
       root = this;
       this.animation.outro(instant);
       this.controllers.enabler.css('display', 'block');
+      this.controllers.enabler.addClass('anim-highlight');
       this.controllers.disabler.css('display', 'none');
       this.enabled = false;
       console.log("Visibility: Off");

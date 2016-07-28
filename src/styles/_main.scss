@@ -46,7 +46,7 @@ select{
 
 nav{
 	box-shadow: none;
-	border-bottom: $border-light;
+	//border-bottom: $border-light;
 }
 
 i.left{
@@ -88,7 +88,7 @@ Material icons
 
 // Some icons are bugged and this will fix it
 i.material-icons.bugged{
-	max-width: 1.15em;
+	max-width: 1.1em;
   overflow: hidden;
 }
 
@@ -297,7 +297,6 @@ Animations
 			transform: translateY(-50px) rotateX(90deg);
 			opacity: 0;
 		}
-
 }
 
 .anim-move-in{
@@ -333,6 +332,23 @@ Animations
 	animation-name: delay;
   animation-duration: 1.5s;
 }
+
+@keyframes highlight{
+
+	0%{
+		opacity: 0;
+		transform: rotate(180deg) scale(2,2)
+	}	
+
+	100%{
+	}
+}
+
+.anim-highlight{
+	animation-name: highlight;
+  animation-duration: 0.5s;
+}
+
 
 // To animate element movement on media query breakpoints
 .transitions,
