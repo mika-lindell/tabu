@@ -27,7 +27,7 @@ class Animation
 		# container.css('overflow', 'hidden')
 
 		container.css('opacity', '0')
-		container.css('display', 'block')
+		container.show()
 		targetHeight = container.height() + 'px'
 		container.css('height', '0px')
 
@@ -57,7 +57,7 @@ class Animation
 		container.css('opacity', '0')
 
 		cleanUp = ()->
-			container.css('display', 'none')
+			container.hide()
 			container.css('height', 'auto')
 			# container.css('overflow', oldOverflow)
 			root.done()
@@ -130,7 +130,7 @@ class Animation
 			container.removeClass('outro')
 			container.addClass('intro')
 
-		container.css('display', 'block')
+		container.show()
 
 		cleanUp = ()->
 			container.removeClass('intro')
@@ -159,7 +159,7 @@ class Animation
 			container.addClass('outro')
 
 		cleanUp = ()->
-			container.css('display', 'none')
+			container.hide()
 			container.removeClass('outro')
 			root.done.call()
 

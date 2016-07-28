@@ -18,7 +18,7 @@ class Dropdown extends HTMLElement
 		
 		@dropdown.addClass('dropdown-content')
 		@dropdown.addClass('layer-dialog')
-		@dropdown.css('display', 'none')
+		@dropdown.hide()
 
 		body.on('click', (ev)->
 			root.hide(ev, root)

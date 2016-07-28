@@ -194,23 +194,29 @@ class HTMLElement
 
 	width: ()->
 		if @css('display') is 'none'
-			@css('display', 'block')
+			@show()
 			width = @DOMElement.offsetWidth
-			@css('display', 'none')
+			@hide()
 			return width
 		return @DOMElement.offsetWidth
 
 	height: ()->
 		if @css('display') is 'none'
-			@css('display', 'block')
+			@show()
 			height = @DOMElement.offsetHeight
-			@css('display', 'none')
+			@hide()
 			return height
 		else
 			return @DOMElement.offsetHeight
 
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))
+
+	hide: ()->
+		@css('display', 'none')
+
+	show: (display = 'block')->
+		@css('display', display)
 
 	removeFromDOM: ()->
 		@DOMElement.outerHTML = ''

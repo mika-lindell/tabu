@@ -18,7 +18,7 @@ class Loader
 		@element.css('opacity', '0')
 
 		setDisplay = ()->
-			root.element.css('display', 'none')
+			root.element.hide()
 
 		# Use timeout so the transition has time to finish before hiding the element
 		setTimeout(setDisplay, @duration * 1000)
