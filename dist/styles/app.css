@@ -1593,7 +1593,7 @@
 .shades-text.text-black {
   color: #000000 !important; }
 
-.shades.white, button.shades.toolbar, button.shades.title {
+.shades.white, button.shades.title {
   background-color: #FFFFFF !important; }
 
 .shades-text.text-white {
@@ -1611,7 +1611,7 @@
 .black-text {
   color: #000000 !important; }
 
-.white, button.toolbar, button.title {
+.white, button.title {
   background-color: #FFFFFF !important; }
 
 .white-text {
@@ -6306,7 +6306,7 @@ Helpers
 .bolder, .item-card-badge {
   font-weight: 600; }
 
-.uppercase, .item-card-badge {
+.uppercase, button.toolbar, .item-card-badge {
   text-transform: uppercase; }
 
 .color-black, button.title, a.item-card-link {
@@ -6315,7 +6315,7 @@ Helpers
 .color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
 
-.color-white {
+.color-white, button.highlight {
   color: #FFF; }
 
 .overlay, noscript, #loader {
@@ -6421,6 +6421,9 @@ Loader
 Menu
 
 ***/
+.nav-wrapper {
+  padding: 0.4rem; }
+
 #visibility-on {
   display: none; }
 
@@ -6475,7 +6478,17 @@ Button styles
 
 button.toolbar {
   padding: 0 0.5rem;
-  box-shadow: none; }
+  box-shadow: none;
+  background-color: #FFF; }
+  button.toolbar:hover {
+    background-color: #FFF; }
+  button.toolbar i.material-icons, button.toolbar i.drag-handle {
+    line-height: 36px; }
+
+button.highlight {
+  background-color: #0277bd; }
+  button.highlight:hover {
+    background-color: #0288d1; }
 
 button.title {
   font-size: inherit;

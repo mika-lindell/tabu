@@ -410,6 +410,10 @@ Menu
 
 ***/
 
+.nav-wrapper{
+	padding: 0.4rem;
+}
+
 #visibility-on{
 	display: none;
 }
@@ -490,10 +494,32 @@ $action-buttons-gap: 0.6rem;
 button.toolbar{
 	padding: 0 0.5rem;
 	box-shadow: none;
+	background-color: $white;
 
 	@extend .font-size-small;
 	@extend .color-dark-grey;
-	@extend .white;
+	@extend .uppercase;
+
+	&:hover{
+		background-color: $white;
+	}
+
+	& i.material-icons{
+		line-height: 36px;
+	}
+
+}
+
+button.highlight{
+
+		background-color: color("light-blue", "darken-3");
+
+		@extend .color-white;
+
+		&:hover{
+			background-color:  color("light-blue", "darken-2");
+		}
+
 }
 
 button.title{
