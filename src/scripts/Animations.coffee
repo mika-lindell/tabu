@@ -64,23 +64,52 @@ class Animation
 
 		setTimeout(cleanUp, @duration * 1000)
 
-	heightFrom: (from)->
-		console.log "Animation: I'll play heightFrom now.", from
+	animateHeight: (from, to = null)->
 
 		root = @
 		container = @animate
 
-		to = container.height()
+		if not to?
+			to = container.height()
+
+		if not from?
+			from = container.height()
+
 		container.css('height', from + 'px')
 
 		play = ()->
-			console.log to, container.height(), container.height()-to
+			console.log "Animation: I'll animate height now.", from, to
 			container.css('height', to + 'px')
 
 		setTimeout(play, 0)
 		
 		cleanUp = ()->
 			container.css('height', 'auto')
+			root.done()
+
+		setTimeout(cleanUp, @duration * 1000)
+
+	animateWidth: (from, to = null)->
+		
+		root = @
+		container = @animate
+
+		if not to?
+			to = container.width()
+
+		if not from?
+			from = container.width()
+
+		container.css('width', from + 'px')
+
+		play = ()->
+			console.log "Animation: I'll animate width now.", from, to
+			container.css('width', to + 'px')
+
+		setTimeout(play, 0)
+		
+		cleanUp = ()->
+			#container.css('width', 'auto')
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
