@@ -32,7 +32,6 @@
 
     Helpers.prototype.getLocalisedTitle = function(callback) {
       return chrome.tabs.getSelected(null, function(tab) {
-        console.log(tab.title);
         if (tab.title != null) {
           return callback(tab.title);
         } else {
@@ -180,7 +179,7 @@
 
     Storage.prototype.getVisible = function(callback) {
       var data;
-      return data = this.get('visible', 'local', callback);
+      return data = this.get('settingVisible', 'local', callback);
     };
 
     Storage.prototype.setVisible = function(newValue) {
@@ -189,9 +188,25 @@
         newValue = true;
       }
       data = {
-        visible: newValue
+        settingVisible: newValue
       };
       return this.set(data, 'local');
+    };
+
+    Storage.prototype.getView = function(callback) {
+      var data;
+      return data = this.get('settingView', 'cloud', callback);
+    };
+
+    Storage.prototype.setView = function(newValue) {
+      var data;
+      if (newValue == null) {
+        newValue = 'topSites';
+      }
+      data = {
+        settingView: newValue
+      };
+      return this.set(data, 'cloud');
     };
 
     return Storage;
@@ -433,9 +448,9 @@
     HTMLElement.prototype.width = function() {
       var width;
       if (this.css('display') === 'none') {
-        this.css('display', 'block');
+        this.show();
         width = this.DOMElement.offsetWidth;
-        this.css('display', 'none');
+        this.hide();
         return width;
       }
       return this.DOMElement.offsetWidth;
@@ -444,9 +459,9 @@
     HTMLElement.prototype.height = function() {
       var height;
       if (this.css('display') === 'none') {
-        this.css('display', 'block');
+        this.show();
         height = this.DOMElement.offsetHeight;
-        this.css('display', 'none');
+        this.hide();
         return height;
       } else {
         return this.DOMElement.offsetHeight;
@@ -455,6 +470,17 @@
 
     HTMLElement.prototype.clone = function() {
       return new HTMLElement(this.DOMElement.cloneNode(true));
+    };
+
+    HTMLElement.prototype.hide = function() {
+      return this.css('display', 'none');
+    };
+
+    HTMLElement.prototype.show = function(display) {
+      if (display == null) {
+        display = 'block';
+      }
+      return this.css('display', display);
     };
 
     HTMLElement.prototype.removeFromDOM = function() {
@@ -889,7 +915,7 @@
       body = new HTMLElement('body');
       this.dropdown.addClass('dropdown-content');
       this.dropdown.addClass('layer-dialog');
-      this.dropdown.css('display', 'none');
+      this.dropdown.hide();
       body.on('click', function(ev) {
         return root.hide(ev, root);
       });
@@ -1023,7 +1049,7 @@
       root = this;
       container = this.animate;
       container.css('opacity', '0');
-      container.css('display', 'block');
+      container.show();
       targetHeight = container.height() + 'px';
       container.css('height', '0px');
       play = function() {
@@ -1045,7 +1071,7 @@
       container.css('height', '0px');
       container.css('opacity', '0');
       cleanUp = function() {
-        container.css('display', 'none');
+        container.hide();
         container.css('height', 'auto');
         return root.done();
       };
@@ -1115,7 +1141,7 @@
         container.removeClass('outro');
         container.addClass('intro');
       }
-      container.css('display', 'block');
+      container.show();
       cleanUp = function() {
         container.removeClass('intro');
         return root.done();
@@ -1140,7 +1166,7 @@
         container.addClass('outro');
       }
       cleanUp = function() {
-        container.css('display', 'none');
+        container.hide();
         container.removeClass('outro');
         return root.done.call();
       };
@@ -1179,7 +1205,7 @@
       root = this;
       this.element.css('opacity', '0');
       setDisplay = function() {
-        return root.element.css('display', 'none');
+        return root.element.hide();
       };
       return setTimeout(setDisplay, this.duration * 1000);
     };
@@ -1222,15 +1248,15 @@
       };
       this.storage = new Storage;
       getSavedStatus = function(data) {
-        if (data.visible != null) {
-          root.enabled = data.visible;
+        if (data.settingVisible != null) {
+          root.enabled = data.settingVisible;
           if (root.enabled) {
             return root.enable();
           } else {
             return root.disable(true);
           }
         } else {
-          return root.enabled = true;
+          return root.enable();
         }
       };
       this.storage.getVisible(getSavedStatus);
@@ -1253,7 +1279,6 @@
       this.animation.content.intro(instant);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
-      this.animation.button.done = function() {};
       this.animation.button.animateWidth(40, 100);
       this.enabled = true;
       console.log("Visibility: On");
@@ -1269,7 +1294,6 @@
       this.animation.content.outro(instant);
       this.enabler.css('opacity', 1);
       this.disabler.css('opacity', 0);
-      this.animation.button.done = function() {};
       this.animation.button.animateWidth(100, 40);
       this.enabled = false;
       console.log("Visibility: Off");
@@ -1289,12 +1313,16 @@
 
     Toolbars.topSitesSelect;
 
+    Toolbars.storage;
+
     function Toolbars() {
-      var root, speedDialSelect, topSitesSelect;
+      var getSavedStatus, root, speedDialSelect, topSitesSelect;
       this.speedDialContainer = new HTMLElement('#speed-dial');
       this.topSitesContainer = new HTMLElement('#top-sites');
-      root = this;
       speedDialSelect = new Dropdown('#speed-dial-select');
+      topSitesSelect = new Dropdown('#top-sites-select');
+      this.storage = new Storage;
+      root = this;
       speedDialSelect.addItem('Switch to Top Sites', function() {
         return root.topSites(root);
       }, 'compare_arrows');
@@ -1302,18 +1330,49 @@
       speedDialSelect.addItem('Add Link', function() {
         return console.log('Add');
       }, 'add', 'a');
-      topSitesSelect = new Dropdown('#top-sites-select');
       topSitesSelect.addItem('Switch to Speed Dial', function() {
         return root.speedDial(root);
       }, 'compare_arrows');
+      getSavedStatus = function(data) {
+        if (data.settingView != null) {
+          if (data.settingView === 'speedDial') {
+            return root.speedDial(root, true);
+          } else {
+            return root.topSites(root, true);
+          }
+        } else {
+          return root.topSites(root, true);
+        }
+      };
+      this.storage.getView(getSavedStatus);
     }
 
-    Toolbars.prototype.speedDial = function(root) {
-      return root.animateTransition(root.topSitesContainer, root.speedDialContainer);
+    Toolbars.prototype.speedDial = function(root, instant) {
+      if (instant == null) {
+        instant = false;
+      }
+      console.log('speedDial');
+      if (instant) {
+        root.speedDialContainer.show();
+        root.topSitesContainer.hide();
+      } else {
+        root.animateTransition(root.topSitesContainer, root.speedDialContainer);
+      }
+      return root.storage.setView('speedDial');
     };
 
-    Toolbars.prototype.topSites = function(root) {
-      return root.animateTransition(root.speedDialContainer, root.topSitesContainer);
+    Toolbars.prototype.topSites = function(root, instant) {
+      if (instant == null) {
+        instant = false;
+      }
+      console.log('topSites');
+      if (instant) {
+        root.speedDialContainer.hide();
+        root.topSitesContainer.show();
+      } else {
+        root.animateTransition(root.speedDialContainer, root.topSitesContainer);
+      }
+      return root.storage.setView('topSites');
     };
 
     Toolbars.prototype.animateTransition = function(from, to) {

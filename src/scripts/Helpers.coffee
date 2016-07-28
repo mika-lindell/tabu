@@ -27,7 +27,6 @@ class Helpers
 	#
 	getLocalisedTitle: (callback)->
 		chrome.tabs.getSelected(null, (tab)-> # null defaults to current window
-			console.log tab.title
 			if tab.title?
 				callback(tab.title)
 			else

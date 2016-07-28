@@ -6,15 +6,17 @@ class Toolbars
 	@speedDialSelect
 	@topSitesSelect
 
+	@storage
 
 	constructor: ()->
 
 		@speedDialContainer = new HTMLElement('#speed-dial')
 		@topSitesContainer = new HTMLElement('#top-sites')
+		speedDialSelect = new Dropdown('#speed-dial-select')
+		topSitesSelect = new Dropdown('#top-sites-select')
+		@storage = new Storage
 
 		root = @
-
-		speedDialSelect = new Dropdown('#speed-dial-select')
 
 		speedDialSelect.addItem('Switch to Top Sites', ()-> 
 			root.topSites(root)
@@ -26,27 +28,45 @@ class Toolbars
 					console.log 'Add'
 				, 'add', 'a')
 
-		topSitesSelect = new Dropdown('#top-sites-select')
-		
 		topSitesSelect.addItem('Switch to Speed Dial', ()-> 
 			root.speedDial(root)
 		, 'compare_arrows')
 
 
+		getSavedStatus = (data)->
 
-		# @customButton.on('click', ()->
-		# 	root.showMyPicks(root)
-		# )
+			if data.settingView?
 
-		# @recommendedButton.on('click', ()->
-		# 	root.showRecommended(root)
-		# )
+				if data.settingView is 'speedDial'
+					root.speedDial(root, true)
+				else
+					root.topSites(root, true)
 
-	speedDial: (root)->
-		root.animateTransition(root.topSitesContainer, root.speedDialContainer)
+			else
+				# Default to Top Sites
+				root.topSites(root, true)
 
-	topSites: (root)->
-		root.animateTransition(root.speedDialContainer, root.topSitesContainer)
+		@storage.getView(getSavedStatus) 
+
+	speedDial: (root, instant = false)->
+		console.log 'speedDial'
+		if instant
+			root.speedDialContainer.show()
+			root.topSitesContainer.hide()
+		else
+			root.animateTransition(root.topSitesContainer, root.speedDialContainer)
+
+		root.storage.setView('speedDial')
+
+	topSites: (root, instant = false)->
+		console.log 'topSites'
+		if instant
+			root.speedDialContainer.hide()
+			root.topSitesContainer.show()
+		else
+			root.animateTransition(root.speedDialContainer, root.topSitesContainer)
+
+		root.storage.setView('topSites')
 
 	animateTransition: (from, to)->
 		outro = new Animation(from)
