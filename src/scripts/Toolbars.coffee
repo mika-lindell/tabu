@@ -15,21 +15,24 @@ class Toolbars
 		root = @
 
 		speedDialSelect = new Dropdown('#speed-dial-select')
+
+		speedDialSelect.addItem('Switch to Top Sites', ()-> 
+			root.topSites(root)
+		, 'compare_arrows')
+
+		speedDialSelect.addDivider()
+
+		speedDialSelect.addItem('Add Link', ()-> 
+					console.log 'Add'
+				, 'add', 'a')
+
 		topSitesSelect = new Dropdown('#top-sites-select')
 		
 		topSitesSelect.addItem('Switch to Speed Dial', ()-> 
 			root.speedDial(root)
 		, 'compare_arrows')
 
-		speedDialSelect.addItem('Add Link', ()-> 
-			console.log 'Add'
-		, 'add')
 
-		speedDialSelect.addDivider()
-
-		speedDialSelect.addItem('Switch to Top Sites', ()-> 
-			root.topSites(root)
-		, 'compare_arrows')
 
 		# @customButton.on('click', ()->
 		# 	root.showMyPicks(root)

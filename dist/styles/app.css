@@ -6277,7 +6277,7 @@ Layers
 Font sizes
 
 ***/
-.font-size-small, .dropdown-content li.title, button.toolbar, .item-card-label-secondary {
+.font-size-small, .dropdown-content li.title, .hotkey, button.toolbar, .item-card-label-secondary {
   font-size: 0.8rem; }
 
 .font-size-regular {
@@ -6311,6 +6311,9 @@ Helpers
 
 .color-black, button.title, a.item-card-link {
   color: #000; }
+
+.color-medium-grey, .hotkey {
+  color: #8c8c8c; }
 
 .color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
@@ -6458,6 +6461,11 @@ body {
 footer {
   border-top: 1px solid #c7c7c7; }
 
+/***
+
+Dropdown
+
+***/
 .dropdown-content li.title {
   padding: 14px 16px;
   line-height: 0.8rem;

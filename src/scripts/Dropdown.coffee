@@ -59,7 +59,7 @@ class Dropdown extends HTMLElement
 			root.animation.fadeOut()
 			root.active = false
 
-	addItem: (title, callback, iconName = null)->
+	addItem: (title, callback, iconName = null, accesskey = null)->
 
 		item = new HTMLElement('li')
 		link = new HTMLElement('a')
@@ -72,7 +72,25 @@ class Dropdown extends HTMLElement
 			icon.addClass('material-icons')
 			icon.addClass('left')
 			link.append(icon)
-		
+
+		if accesskey?
+			link.attr('accesskey', accesskey)
+
+			hotkeys = new HTMLElement('span')
+			hotkeys.addClass('hotkey')
+			hotkeys.addClass('right')
+
+			os = new Helpers().getOs()
+
+			if os is "MacOS"
+				hotkeys.text("Ctrl+Alt+#{accesskey.toUpperCase()}")
+			else
+				hotkeys.text("Alt+#{accesskey.toUpperCase()}")
+
+			link.append(hotkeys)
+
+
+
 		item.append(link)
 
 		item.on('click', ()->

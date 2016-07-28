@@ -7,6 +7,7 @@ Colors & styles
 $black: #000;
 $white: #FFF;
 $light-grey: #c7c7c7;
+$medium-grey: #8c8c8c;
 $dark-grey: #5a5a5a;
 
 $border-light: 1px solid $light-grey;
@@ -209,6 +210,10 @@ Helpers
 
 .color-black{
 	color: $black;
+}
+
+.color-medium-grey{
+	color: $medium-grey;
 }
 
 .color-dark-grey{
@@ -459,6 +464,11 @@ footer{
 	border-top: $border-light;
 }
 
+/***
+
+Dropdown
+
+***/
 
 .dropdown-content li.title{
 
@@ -476,6 +486,12 @@ footer{
 	&:hover {
 	    background-color: inherit;
 	}
+}
+
+.hotkey{
+
+	@extend .font-size-small;
+	@extend .color-medium-grey;
 }
 
 /***

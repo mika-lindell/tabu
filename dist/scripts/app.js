@@ -938,10 +938,13 @@
       }
     };
 
-    Dropdown.prototype.addItem = function(title, callback, iconName) {
-      var icon, item, link;
+    Dropdown.prototype.addItem = function(title, callback, iconName, accesskey) {
+      var hotkeys, icon, item, link, os;
       if (iconName == null) {
         iconName = null;
+      }
+      if (accesskey == null) {
+        accesskey = null;
       }
       item = new HTMLElement('li');
       link = new HTMLElement('a');
@@ -952,6 +955,19 @@
         icon.addClass('material-icons');
         icon.addClass('left');
         link.append(icon);
+      }
+      if (accesskey != null) {
+        link.attr('accesskey', accesskey);
+        hotkeys = new HTMLElement('span');
+        hotkeys.addClass('hotkey');
+        hotkeys.addClass('right');
+        os = new Helpers().getOs();
+        if (os === "MacOS") {
+          hotkeys.text("Ctrl+Alt+" + (accesskey.toUpperCase()));
+        } else {
+          hotkeys.text("Alt+" + (accesskey.toUpperCase()));
+        }
+        link.append(hotkeys);
       }
       item.append(link);
       item.on('click', function() {
@@ -1233,16 +1249,16 @@
       this.topSitesContainer = new HTMLElement('#top-sites');
       root = this;
       speedDialSelect = new Dropdown('#speed-dial-select');
+      speedDialSelect.addItem('Switch to Top Sites', function() {
+        return root.topSites(root);
+      }, 'compare_arrows');
+      speedDialSelect.addDivider();
+      speedDialSelect.addItem('Add Link', function() {
+        return console.log('Add');
+      }, 'add', 'a');
       topSitesSelect = new Dropdown('#top-sites-select');
       topSitesSelect.addItem('Switch to Speed Dial', function() {
         return root.speedDial(root);
-      }, 'compare_arrows');
-      speedDialSelect.addItem('Add Link', function() {
-        return console.log('Add');
-      }, 'add');
-      speedDialSelect.addDivider();
-      speedDialSelect.addItem('Switch to Top Sites', function() {
-        return root.topSites(root);
       }, 'compare_arrows');
     }
 
