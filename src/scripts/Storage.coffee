@@ -86,7 +86,7 @@ class Storage
 	# @param [boolean] The callback function returning the data when operation is complete. 
 	#
 	getVisible: (callback)->
-		data = @get('visible', 'local', callback)
+		data = @get('settingVisible', 'local', callback)
 
 	# Shorthand for saving visibility -setting (are elements set visible or hidden?)
 	#
@@ -95,7 +95,25 @@ class Storage
 	setVisible: (newValue = true)->
 
 		data =
-			visible: newValue
+			settingVisible: newValue
 
 		@set(data, 'local')
+
+	# Shorthand for getting view -setting (what data is show in the topmost list?)
+	#
+	# @param [boolean] The callback function returning the data when operation is complete. 
+	#
+	getView: (callback)->
+		data = @get('settingView', 'cloud', callback)
+
+	# Shorthand for saving view -setting (what data is show in the topmost list?)
+	#
+	# @param [boolean] New value visibility -setting should be saved to.
+	#
+	setView: (newValue = 'topSites')->
+
+		data =
+			settingView: newValue
+
+		@set(data, 'cloud')
 
