@@ -63,6 +63,7 @@ module.exports = function(grunt) {
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',
+              'src/**/UserInput.coffee',
               'src/**/Dropdown.coffee',
               'src/**/Animations.coffee',
               'src/**/Loader.coffee',

@@ -74,6 +74,14 @@ class HTMLElement
 		else
 			return @DOMElement.getAttribute(attrName)
 
+
+	value: (newValue = null)->
+		if newValue?
+			@DOMElement.value = newValue
+		else
+			return @DOMElement.value
+
+
 	# Tests if element has specified attribute
 	#
 	# @param [String] Attribute to be tested
@@ -145,6 +153,17 @@ class HTMLElement
 		if name? and listener?
 			return @DOMElement.addEventListener(name, listener)
 
+	# Add child element as first item
+	#
+	# @param [HTMLElement] The element to be added
+	#
+	prepend: (element = null)->
+		if element?
+			if @firstChild()?
+				@insert(element, @firstChild())
+			else
+				@append(element)
+
 	# Add child element as last item
 	#
 	# @param [HTMLElement] The element to be added
@@ -164,17 +183,21 @@ class HTMLElement
 	insert: (element = null, target = null, beforeOrAfter = 'before')->
 		if element? and target?
 
-				if target instanceof Element then target = new HTMLElement(target)
+			if element instanceof HTMLElement
+				elementDOM = element.DOMElement
+			else
+				elementDOM = element
 
-				if beforeOrAfter is 'before'
-					@DOMElement.insertBefore(element.DOMElement, target.DOMElement)
-					return true
-				else
-					if target.DOMElement.nextSibling?
-						@DOMElement.insertBefore(element.DOMElement, target.DOMElement.nextSibling)
-						return true
-					else
-						return false
+			if target instanceof HTMLElement
+				targetDOM = target.DOMElement
+			else
+				targetDOM = target
+
+			if beforeOrAfter is 'before'
+				@DOMElement.insertBefore(elementDOM, targetDOM)
+			else
+				if targetDOM.nextSibling?
+					@DOMElement.insertBefore(elementDOM,targetDOM.nextSibling)
 
 	children: ()->
 
@@ -186,28 +209,37 @@ class HTMLElement
 
 		return children
 
-	top: ()->
-		return @DOMElement.offsetTop
+	firstChild: ()->
+		return new HTMLElement(@DOMElement.firstChild)
 
-	left: ()->
-		return @DOMElement.offsetLeft
+	childCount: ()->
+		return @DOMElement.childElementCount
 
-	width: ()->
-		if @css('display') is 'none'
-			@show()
-			width = @DOMElement.offsetWidth
-			@hide()
-			return width
-		return @DOMElement.offsetWidth
+	top: (unit = null)->
+		top = @DOMElement.offsetTop
+		return if unit? then "#{top}px" else top
 
-	height: ()->
-		if @css('display') is 'none'
-			@show()
-			height = @DOMElement.offsetHeight
-			@hide()
-			return height
-		else
-			return @DOMElement.offsetHeight
+	left: (unit = null)->
+		left = @DOMElement.offsetLeft
+		return if unit? then "#{left}px" else left
+
+	width: (unit = null)->
+
+		display = @css('display')
+
+		if display is 'none' then @show()
+		width = @DOMElement.offsetWidth
+		if display is 'none' then @hide()
+		return if unit? then "#{width}px" else width
+
+	height: (unit = null)->
+
+		display = @css('display')
+
+		if display is 'none' then @show()
+		height = @DOMElement.offsetHeight
+		if display is 'none' then @hide()
+		return if unit? then "#{height}px" else height
 
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))
@@ -217,6 +249,9 @@ class HTMLElement
 
 	show: (display = 'block')->
 		@css('display', display)
+
+	focus: ()->
+		@DOMElement.focus()
 
 	removeFromDOM: ()->
 		@DOMElement.outerHTML = ''

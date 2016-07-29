@@ -18,17 +18,17 @@ class Toolbars
 
 		root = @
 
-		speedDialSelect.addItem('Switch to Top Sites', ()-> 
+		speedDialSelect.addItem('Switch to Top Sites', 'menu-top-sites',()-> 
 			root.topSites(root)
 		, 'compare_arrows')
 
 		speedDialSelect.addDivider()
 
-		speedDialSelect.addItem('Add Link', ()-> 
+		speedDialSelect.addItem('Add Link', 'menu-add-link', ()-> 
 					console.log 'Add'
 				, 'add', 'a')
 
-		topSitesSelect.addItem('Switch to Speed Dial', ()-> 
+		topSitesSelect.addItem('Switch to Speed Dial', 'menu-speed-dial', ()-> 
 			root.speedDial(root)
 		, 'compare_arrows')
 

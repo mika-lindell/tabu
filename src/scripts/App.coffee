@@ -36,14 +36,14 @@ class App
 			list = new ItemCardList('#top-sites', root.dataStorage.topSites) # Create new list class
 			list.container.append list # Add list to DOM
 			list.setOrientation 'horizontal'
-			list.update() # Add items to the list
+			list.create() # Add items to the list
 
 			loader.hide() # Hide the loader
 
 		@dataStorage.latestBookmarks.done = ()->
 
 			list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks)
-			list.update()
+			list.create()
 
 		# @dataStorage.recentHistory.done = ()->
 
@@ -55,17 +55,18 @@ class App
 		@dataStorage.recentlyClosed.done = ()->
 
 			list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed)
-			list.update()
+			list.create()
+
+			list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed) # Create new list class
+			list_custom.enableEditing()
+			list_custom.setOrientation 'horizontal'
+			list_custom.create() # Add items to the list			
 
 		@dataStorage.otherDevices.done = ()->
 			
 			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
-			list.update()
+			list.create()
 
-			list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices) # Create new list class
-			list_custom.enableEditing()
-			list_custom.setOrientation 'horizontal'
-			list_custom.update() # Add items to the list			
 
 		@dataStorage.fetchAll()
 

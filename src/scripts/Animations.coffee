@@ -28,7 +28,7 @@ class Animation
 
 		container.css('opacity', '0')
 		container.show()
-		targetHeight = container.height() + 'px'
+		targetHeight = container.height('px')
 		container.css('height', '0px')
 
 		play = ()->
@@ -70,16 +70,16 @@ class Animation
 		container = @animate
 
 		if not to?
-			to = container.height()
+			to = container.height('px')
 
 		if not from?
-			from = container.height()
+			from = container.height('px')
 
-		container.css('height', from + 'px')
+		container.css('height', from)
 
 		play = ()->
 			console.log "Animation: I'll animate height now.", from, to
-			container.css('height', to + 'px')
+			container.css('height', to)
 
 		setTimeout(play, 0)
 		
@@ -95,16 +95,16 @@ class Animation
 		container = @animate
 
 		if not to?
-			to = container.width()
+			to = container.width('px')
 
 		if not from?
-			from = container.width()
+			from = container.width('px')
 
-		container.css('width', from + 'px')
+		container.css('width', from)
 
 		play = ()->
 			console.log "Animation: I'll animate width now.", from, to
-			container.css('width', to + 'px')
+			container.css('width', to)
 
 		setTimeout(play, 0)
 		

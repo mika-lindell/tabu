@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, Visibility,
+  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, UserInput, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -319,6 +319,17 @@
       }
     };
 
+    HTMLElement.prototype.value = function(newValue) {
+      if (newValue == null) {
+        newValue = null;
+      }
+      if (newValue != null) {
+        return this.DOMElement.value = newValue;
+      } else {
+        return this.DOMElement.value;
+      }
+    };
+
     HTMLElement.prototype.hasAttr = function(attrName) {
       if (attrName != null) {
         return this.DOMElement.hasAttribute(attrName);
@@ -385,6 +396,19 @@
       }
     };
 
+    HTMLElement.prototype.prepend = function(element) {
+      if (element == null) {
+        element = null;
+      }
+      if (element != null) {
+        if (this.firstChild() != null) {
+          return this.insert(element, this.firstChild());
+        } else {
+          return this.append(element);
+        }
+      }
+    };
+
     HTMLElement.prototype.append = function(element) {
       if (element == null) {
         element = null;
@@ -399,6 +423,7 @@
     };
 
     HTMLElement.prototype.insert = function(element, target, beforeOrAfter) {
+      var elementDOM, targetDOM;
       if (element == null) {
         element = null;
       }
@@ -409,18 +434,21 @@
         beforeOrAfter = 'before';
       }
       if ((element != null) && (target != null)) {
-        if (target instanceof Element) {
-          target = new HTMLElement(target);
+        if (element instanceof HTMLElement) {
+          elementDOM = element.DOMElement;
+        } else {
+          elementDOM = element;
+        }
+        if (target instanceof HTMLElement) {
+          targetDOM = target.DOMElement;
+        } else {
+          targetDOM = target;
         }
         if (beforeOrAfter === 'before') {
-          this.DOMElement.insertBefore(element.DOMElement, target.DOMElement);
-          return true;
+          return this.DOMElement.insertBefore(elementDOM, targetDOM);
         } else {
-          if (target.DOMElement.nextSibling != null) {
-            this.DOMElement.insertBefore(element.DOMElement, target.DOMElement.nextSibling);
-            return true;
-          } else {
-            return false;
+          if (targetDOM.nextSibling != null) {
+            return this.DOMElement.insertBefore(elementDOM, targetDOM.nextSibling);
           }
         }
       }
@@ -437,34 +465,77 @@
       return children;
     };
 
-    HTMLElement.prototype.top = function() {
-      return this.DOMElement.offsetTop;
+    HTMLElement.prototype.firstChild = function() {
+      return new HTMLElement(this.DOMElement.firstChild);
     };
 
-    HTMLElement.prototype.left = function() {
-      return this.DOMElement.offsetLeft;
+    HTMLElement.prototype.childCount = function() {
+      return this.DOMElement.childElementCount;
     };
 
-    HTMLElement.prototype.width = function() {
-      var width;
-      if (this.css('display') === 'none') {
+    HTMLElement.prototype.top = function(unit) {
+      var top;
+      if (unit == null) {
+        unit = null;
+      }
+      top = this.DOMElement.offsetTop;
+      if (unit != null) {
+        return top + "px";
+      } else {
+        return top;
+      }
+    };
+
+    HTMLElement.prototype.left = function(unit) {
+      var left;
+      if (unit == null) {
+        unit = null;
+      }
+      left = this.DOMElement.offsetLeft;
+      if (unit != null) {
+        return left + "px";
+      } else {
+        return left;
+      }
+    };
+
+    HTMLElement.prototype.width = function(unit) {
+      var display, width;
+      if (unit == null) {
+        unit = null;
+      }
+      display = this.css('display');
+      if (display === 'none') {
         this.show();
-        width = this.DOMElement.offsetWidth;
+      }
+      width = this.DOMElement.offsetWidth;
+      if (display === 'none') {
         this.hide();
+      }
+      if (unit != null) {
+        return width + "px";
+      } else {
         return width;
       }
-      return this.DOMElement.offsetWidth;
     };
 
-    HTMLElement.prototype.height = function() {
-      var height;
-      if (this.css('display') === 'none') {
+    HTMLElement.prototype.height = function(unit) {
+      var display, height;
+      if (unit == null) {
+        unit = null;
+      }
+      display = this.css('display');
+      if (display === 'none') {
         this.show();
-        height = this.DOMElement.offsetHeight;
+      }
+      height = this.DOMElement.offsetHeight;
+      if (display === 'none') {
         this.hide();
-        return height;
+      }
+      if (unit != null) {
+        return height + "px";
       } else {
-        return this.DOMElement.offsetHeight;
+        return height;
       }
     };
 
@@ -481,6 +552,10 @@
         display = 'block';
       }
       return this.css('display', display);
+    };
+
+    HTMLElement.prototype.focus = function() {
+      return this.DOMElement.focus();
     };
 
     HTMLElement.prototype.removeFromDOM = function() {
@@ -638,20 +713,16 @@
 
     ItemCard.containingList;
 
-    function ItemCard(title, url, containingList, id) {
-      var badge, color, dragHandle, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
-      if (id == null) {
-        id = null;
-      }
+    function ItemCard(title, url, containingList) {
+      var badge, color, dragHandle, id, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
       ItemCard.__super__.constructor.call(this, 'li');
       this.addClass('item-card');
-      if (id != null) {
-        this.attr('id', id);
-      }
       color = new HexColor(url);
       url = new Url(url);
       root = this;
       this.containingList = containingList;
+      id = this.containingList.baseId + "-" + (this.containingList.childCount());
+      this.attr('id', id);
       if (this.containingList.editable) {
         this.attr('draggable', 'true');
         this.on('dragstart', function() {
@@ -662,9 +733,7 @@
       link.attr('href', url.href);
       link.attr('draggable', 'false');
       link.addClass('item-card-link');
-      if (id != null) {
-        link.attr('id', id + '-link');
-      }
+      link.attr('id', id + '-link');
       dragHandle = new HTMLElement('i');
       dragHandle.text('more_vertmore_vert');
       dragHandle.addClass('drag-handle');
@@ -742,34 +811,32 @@
 
     ItemCardList.ghost;
 
-    ItemCardList.fragment;
-
     function ItemCardList(container, dataGetter) {
+      var root;
       ItemCardList.__super__.constructor.call(this, 'ul');
       this.addClass('item-card-list');
+      root = this;
       this.container = new HTMLElement(container);
       this.dataGetter = dataGetter;
       this.baseId = container.replace('#', '');
       this.editable = false;
       this.ghost = null;
       this.attr('id', this.baseId + "-list");
-      this.container.append(this);
     }
 
-    ItemCardList.prototype.update = function() {
-      var count, i, item, itemCard, itemCardId, j, len, parent, ref;
+    ItemCardList.prototype.create = function() {
+      var count, i, item, itemCard, j, len, parent, ref;
       this.fragment = document.createDocumentFragment();
       ref = this.dataGetter.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
-        itemCardId = this.baseId + "-" + i;
         if (item.heading != null) {
-          itemCard = new ItemCardHeading(item.heading, this, itemCardId);
+          itemCard = new ItemCardHeading(item.heading, this);
         } else {
-          itemCard = new ItemCard(item.title, item.url, this, itemCardId);
+          itemCard = new ItemCard(item.title, item.url, this);
         }
         item.itemCard = itemCard;
-        this.fragment.appendChild(itemCard.DOMElement);
+        this.append(itemCard);
       }
       count = this.dataGetter.data.length;
       if (count === 0) {
@@ -779,7 +846,22 @@
         }
       }
       this.attr('data-list-count', count);
-      return this.append(this.fragment);
+      return this.container.append(this);
+    };
+
+    ItemCardList.prototype.addItemByUserInput = function(formId) {
+      var empty, form;
+      if (formId == null) {
+        formId = 'user-input-add-new';
+      }
+      form = new UserInput(formId, 'Add Link');
+      form.addField('title', 'text', 'Title');
+      form.addField('url', 'url', 'Web Address');
+      form.addOkCancel('Add Link');
+      empty = new ItemCard('', '', this);
+      this.prepend(empty);
+      empty.append(form);
+      return form.show();
     };
 
     ItemCardList.prototype.getItemForElement = function(DOMElement) {
@@ -798,6 +880,9 @@
       var body, root;
       this.editable = true;
       root = this;
+      new HTMLElement('#menu-add-link').on('click', function(ev) {
+        return root.addItemByUserInput();
+      });
       this.attr('data-list-editable', '');
       this.on('dragover', function() {
         return dragOverUpdateCursor(event, root);
@@ -828,7 +913,7 @@
         this.ghost = from.clone();
         this.ghost.attr('id', 'ghost');
         this.ghost.css('position', 'fixed');
-        this.ghost.css('width', from.width() + 'px');
+        this.ghost.css('width', from.width('px'));
         this.updateGhost(ev, this.ghost);
         return this.append(this.ghost);
       }
@@ -892,6 +977,127 @@
 
   })(HTMLElement);
 
+  UserInput = (function(superClass) {
+    extend(UserInput, superClass);
+
+    UserInput.content;
+
+    UserInput.title;
+
+    UserInput.fields;
+
+    UserInput.done;
+
+    function UserInput(id, title) {
+      var body, root;
+      root = this;
+      UserInput.__super__.constructor.call(this, 'form');
+      this.attr('id', id);
+      this.addClass('user-input');
+      this.addClass('card');
+      this.css('position', 'absolute');
+      this.css('top', '0');
+      this.css('left', '0');
+      this.css('width', '100%');
+      this.fields = new Array();
+      this.content = new HTMLElement('div');
+      this.content.addClass('card-content');
+      this.heading = new HTMLElement('span');
+      this.heading.addClass('card-title');
+      this.heading.text(title);
+      this.content.append(this.heading);
+      this.append(this.content);
+      body = new HTMLElement('body');
+      body.on('keyup', function(ev) {
+        if (ev.code === 'Escape') {
+          return root.hide();
+        }
+      });
+    }
+
+    UserInput.prototype.addField = function(name, type, label, value) {
+      var field;
+      if (label == null) {
+        label = null;
+      }
+      if (value == null) {
+        value = null;
+      }
+      field = {
+        element: new HTMLElement('input'),
+        container: new HTMLElement('div'),
+        value: ''
+      };
+      field.container.addClass('input-field');
+      field.element.attr('id', name);
+      field.element.attr('name', name);
+      field.element.attr('type', type);
+      field.element.attr('tabindex', this.fields.count + 1);
+      if (label != null) {
+        field.label = new HTMLElement('label');
+        field.label.attr('for', name);
+        field.label.text(label);
+      }
+      if (value != null) {
+        field.value = value;
+        field.element.value(value);
+      }
+      field.element.on('change', function() {
+        field.value = field.element.value();
+        return console.log(field);
+      });
+      if (label != null) {
+        field.container.append(field.label);
+      }
+      field.container.append(field.element);
+      this.content.append(field.container);
+      return this.fields.push(field);
+    };
+
+    UserInput.prototype.addOkCancel = function(confirm, abort) {
+      var cancel, container, ok, root;
+      if (confirm == null) {
+        confirm = 'Ok';
+      }
+      if (abort == null) {
+        abort = 'Cancel';
+      }
+      root = this;
+      container = new HTMLElement('div');
+      container.addClass('card-action');
+      cancel = new HTMLElement('input');
+      ok = new HTMLElement('input');
+      cancel.attr('type', 'button');
+      cancel.attr('tabindex', this.fields.count + 2);
+      cancel.value(abort);
+      cancel.addClass('btn');
+      cancel.addClass('cancel');
+      cancel.on('click', function() {
+        return root.hide();
+      });
+      ok.attr('type', 'submit');
+      ok.attr('tabindex', this.fields.count + 1);
+      ok.value(confirm);
+      ok.addClass('btn');
+      ok.addClass('submit');
+      ok.on('click', function() {
+        root.hide();
+        return root.done(root.fields);
+      });
+      container.append(cancel);
+      container.append(ok);
+      return this.append(container);
+    };
+
+    UserInput.prototype.show = function() {
+      UserInput.__super__.show.call(this);
+      return this.fields[0].element.focus();
+    };
+
+    return UserInput;
+
+  })(HTMLElement);
+
   Dropdown = (function(superClass) {
     extend(Dropdown, superClass);
 
@@ -914,7 +1120,7 @@
       root = this;
       body = new HTMLElement('body');
       this.dropdown.addClass('dropdown-content');
-      this.dropdown.addClass('layer-dialog');
+      this.dropdown.addClass('layer-context-menu');
       this.dropdown.hide();
       body.on('click', function(ev) {
         return root.hide(ev, root);
@@ -946,8 +1152,8 @@
       }
       ev.stopPropagation();
       root.dropdown.css('top', this.top() + this.height() + 'px');
-      root.dropdown.css('left', this.left() + 'px');
-      root.dropdown.css('min-width', this.width() + 'px');
+      root.dropdown.css('left', this.left('px'));
+      root.dropdown.css('min-width', this.width('px'));
       root.addClass('active');
       root.animation.fadeIn();
       return root.active = true;
@@ -964,7 +1170,7 @@
       }
     };
 
-    Dropdown.prototype.addItem = function(title, callback, iconName, accesskey) {
+    Dropdown.prototype.addItem = function(title, id, callback, iconName, accesskey) {
       var hotkeys, icon, item, link, os;
       if (iconName == null) {
         iconName = null;
@@ -974,6 +1180,7 @@
       }
       item = new HTMLElement('li');
       link = new HTMLElement('a');
+      item.attr('id', id);
       link.text(title);
       if (iconName != null) {
         icon = new HTMLElement('i');
@@ -1050,7 +1257,7 @@
       container = this.animate;
       container.css('opacity', '0');
       container.show();
-      targetHeight = container.height() + 'px';
+      targetHeight = container.height('px');
       container.css('height', '0px');
       play = function() {
         container.css('height', targetHeight);
@@ -1086,15 +1293,15 @@
       root = this;
       container = this.animate;
       if (to == null) {
-        to = container.height();
+        to = container.height('px');
       }
       if (from == null) {
-        from = container.height();
+        from = container.height('px');
       }
-      container.css('height', from + 'px');
+      container.css('height', from);
       play = function() {
         console.log("Animation: I'll animate height now.", from, to);
-        return container.css('height', to + 'px');
+        return container.css('height', to);
       };
       setTimeout(play, 0);
       cleanUp = function() {
@@ -1112,15 +1319,15 @@
       root = this;
       container = this.animate;
       if (to == null) {
-        to = container.width();
+        to = container.width('px');
       }
       if (from == null) {
-        from = container.width();
+        from = container.width('px');
       }
-      container.css('width', from + 'px');
+      container.css('width', from);
       play = function() {
         console.log("Animation: I'll animate width now.", from, to);
-        return container.css('width', to + 'px');
+        return container.css('width', to);
       };
       setTimeout(play, 0);
       cleanUp = function() {
@@ -1323,14 +1530,14 @@
       topSitesSelect = new Dropdown('#top-sites-select');
       this.storage = new Storage;
       root = this;
-      speedDialSelect.addItem('Switch to Top Sites', function() {
+      speedDialSelect.addItem('Switch to Top Sites', 'menu-top-sites', function() {
         return root.topSites(root);
       }, 'compare_arrows');
       speedDialSelect.addDivider();
-      speedDialSelect.addItem('Add Link', function() {
+      speedDialSelect.addItem('Add Link', 'menu-add-link', function() {
         return console.log('Add');
       }, 'add', 'a');
-      topSitesSelect.addItem('Switch to Speed Dial', function() {
+      topSitesSelect.addItem('Switch to Speed Dial', 'menu-speed-dial', function() {
         return root.speedDial(root);
       }, 'compare_arrows');
       getSavedStatus = function(data) {
@@ -1479,27 +1686,27 @@
         list = new ItemCardList('#top-sites', root.dataStorage.topSites);
         list.container.append(list);
         list.setOrientation('horizontal');
-        list.update();
+        list.create();
         return loader.hide();
       };
       this.dataStorage.latestBookmarks.done = function() {
         var list;
         list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks);
-        return list.update();
+        return list.create();
       };
       this.dataStorage.recentlyClosed.done = function() {
-        var list;
-        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
-        return list.update();
-      };
-      this.dataStorage.otherDevices.done = function() {
         var list, list_custom;
-        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
-        list.update();
-        list_custom = new ItemCardList('#speed-dial', root.dataStorage.otherDevices);
+        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
+        list.create();
+        list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed);
         list_custom.enableEditing();
         list_custom.setOrientation('horizontal');
-        return list_custom.update();
+        return list_custom.create();
+      };
+      this.dataStorage.otherDevices.done = function() {
+        var list;
+        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
+        return list.create();
       };
       this.dataStorage.fetchAll();
       this.helpers.getLocalisedTitle(function(title) {

@@ -1,4 +1,4 @@
-/*
+/**
 *
 * Materialize settings & components
 *
@@ -4143,8 +4143,8 @@ textarea.materialize-textarea {
   input[type=number]:focus:not([readonly]),
   input[type=search]:focus:not([readonly]),
   textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #03a9f4;
-    box-shadow: 0 1px 0 0 #03a9f4; }
+    border-bottom: 1px solid #29b6f6;
+    box-shadow: 0 1px 0 0 #29b6f6; }
   input:not([type]):focus:not([readonly]) + label,
   input[type=text]:focus:not([readonly]) + label,
   input[type=password]:focus:not([readonly]) + label,
@@ -4158,7 +4158,7 @@ textarea.materialize-textarea {
   input[type=number]:focus:not([readonly]) + label,
   input[type=search]:focus:not([readonly]) + label,
   textarea.materialize-textarea:focus:not([readonly]) + label {
-    color: #03a9f4; }
+    color: #29b6f6; }
   input:not([type]).valid, input:not([type]):focus.valid,
   input[type=text].valid,
   input[type=text]:focus.valid,
@@ -4324,7 +4324,7 @@ textarea.materialize-textarea {
     font-size: 2rem;
     transition: color .2s; }
     .input-field .prefix.active {
-      color: #03a9f4; }
+      color: #29b6f6; }
   .input-field .prefix ~ input,
   .input-field .prefix ~ textarea {
     margin-left: 3rem;
@@ -6196,7 +6196,8 @@ input[type="text"] {
   background-color: #FFF;
   height: auto;
   padding: 0.5rem;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  border-radius: 2px; }
 
 .card-content {
   line-height: initial; }
@@ -6206,7 +6207,8 @@ input[type="text"] {
   display: block; }
 
 .input-field {
-  margin-top: 0.3rem; }
+  margin-top: 0.3rem;
+  color: #000; }
   .input-field label {
     position: static;
     margin-bottom: 0.3rem;
@@ -6277,7 +6279,7 @@ Layers
 .layer-default {
   z-index: 0; }
 
-.layer-context-menu, #add-new {
+.layer-context-menu, .user-input {
   z-index: 99; }
 
 .layer-loader, #loader {
@@ -6300,7 +6302,7 @@ Layers
 Font sizes
 
 ***/
-.font-size-small, .hotkey, .dropdown-content li.title, button.toolbar, .item-card-label-secondary {
+.font-size-small, .dropdown-content li.title, .hotkey, button.toolbar, .item-card-label-secondary {
   font-size: 0.8rem; }
 
 .font-size-regular {
@@ -6501,19 +6503,6 @@ footer {
 
 /***
 
-Forms
-
-***/
-#add-new {
-  width: 25%;
-  position: absolute;
-  z-index: 999999;
-  top: 162px; }
-  #add-new .card-action {
-    border-top: 1px solid rgba(255, 255, 255, 0.5); }
-
-/***
-
 Dropdown
 
 ***/
@@ -6573,6 +6562,10 @@ button.active,
 button.active:hover {
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
 
+.btn-link, .user-input .card-action .cancel {
+  box-shadow: none !important;
+  background-color: transparent !important; }
+
 #actions button {
   margin-bottom: 0.6rem;
   width: 47%; }
@@ -6585,6 +6578,22 @@ button.active:hover {
 
 #go-incognito i.material-icons, #go-incognito i.drag-handle {
   font-size: 1.35rem; }
+
+/***
+
+Forms
+
+***/
+.user-input {
+  display: none;
+  background-color: #0277bd; }
+  .user-input .card-title,
+  .user-input .card-content,
+  .user-input label {
+    color: #FFF; }
+  .user-input .card-action {
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    text-align: right; }
 
 /***
 
@@ -6616,7 +6625,8 @@ ul[data-list-editable] .drag-handle {
 
 .item-card {
   margin-bottom: 0.5rem;
-  border: 2px dashed transparent; }
+  border: 2px dashed transparent;
+  position: relative; }
   .item-card.dragged {
     border-color: #c7c7c7;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }

@@ -17,7 +17,7 @@ class Dropdown extends HTMLElement
 		body = new HTMLElement('body')
 		
 		@dropdown.addClass('dropdown-content')
-		@dropdown.addClass('layer-dialog')
+		@dropdown.addClass('layer-context-menu')
 		@dropdown.hide()
 
 		body.on('click', (ev)->
@@ -45,9 +45,9 @@ class Dropdown extends HTMLElement
 		ev.stopPropagation()
 
 		root.dropdown.css('top', @top() + @height() + 'px')
-		root.dropdown.css('left', @left() + 'px')
+		root.dropdown.css('left', @left('px'))
 
-		root.dropdown.css('min-width', @width() + 'px')
+		root.dropdown.css('min-width', @width('px'))
 
 		root.addClass('active')
 		root.animation.fadeIn()
@@ -59,11 +59,12 @@ class Dropdown extends HTMLElement
 			root.animation.fadeOut()
 			root.active = false
 
-	addItem: (title, callback, iconName = null, accesskey = null)->
+	addItem: (title, id, callback, iconName = null, accesskey = null)->
 
 		item = new HTMLElement('li')
 		link = new HTMLElement('a')
 
+		item.attr('id', id)
 		link.text(title)
 
 		if iconName? 

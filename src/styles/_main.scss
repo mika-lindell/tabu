@@ -61,7 +61,9 @@ input[type="text"]{
 	background-color: $white;
 	height: auto;
 	padding: 0.5rem;
-	box-sizing: border-box; 
+	box-sizing: border-box;
+	border-radius: 2px;
+
 }
 
 .card-content{
@@ -76,6 +78,7 @@ input[type="text"]{
 .input-field{ 
 
 	margin-top: 0.3rem;
+	color: $black;
 
 	label{
 		position: static;
@@ -521,32 +524,6 @@ footer{
 
 /***
 
-Forms
-
-***/
-
-#add-new{
-
-	width: 25%;
-  position: absolute;
-  z-index: 999999;
-  top: 162px;
-
-  @extend .layer-context-menu;
-
-	.card-action{
-		border-top: 1px solid rgba(255, 255, 255, 0.5);
-	}
-}
-
-.hotkey{
-
-	@extend .font-size-small;
-	@extend .color-medium-grey;
-}
-
-/***
-
 Dropdown
 
 ***/
@@ -653,7 +630,10 @@ button.active:hover{
 	box-shadow: $shadow-inset;
 }
 
-
+.btn-link{
+	box-shadow: none !important;
+	background-color: transparent !important;
+}
 
 #actions button{
 
@@ -685,18 +665,39 @@ button.active:hover{
 	font-size: 1.35rem;
 }
 
+/***
+
+Forms
+
+***/
+
+.user-input{
+
+	display: none;
+	background-color: color('light-blue', 'darken-3');
+
+	.card-title,
+	.card-content,
+	label{
+		color: $white;
+	}
+
+  @extend .layer-context-menu;
+
+	.card-action{
+		border-top: 1px solid rgba(255, 255, 255, 0.5);
+		text-align: right;
+		.cancel{
+			@extend .btn-link;
+		}
+	}
+}
 
 /***
 
 Item card styles
 
 ***/
-
-//  li[draggable]
-//  {
-//  	-webkit-user-drag: element !important;
-//  	-webkit-user-select: none !important;
-// }
 
 .drag-handle{
 	display: none; // Hide by default
@@ -737,6 +738,7 @@ ul[data-list-editable]{
 .item-card{
 	margin-bottom: 0.5rem;
 	border: 2px dashed transparent;
+	position: relative;
 
 	@extend .transitions;
 	@extend .hoverable;

@@ -9,15 +9,18 @@ class ItemCard extends HTMLElement
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
 	
-	constructor: (title, url, containingList ,id = null)->
+	constructor: (title, url, containingList)->
 		super('li')
 		@addClass('item-card')
-		if id? then @attr('id', id)
+		
 
 		color = new HexColor(url)
 		url = new Url(url)
 		root = @
 		@containingList = containingList
+
+		id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
+		@attr('id', id)
 
 		if @containingList.editable
 			# Enable drag-n-drop
@@ -27,13 +30,13 @@ class ItemCard extends HTMLElement
 				dragStart(event, root)
 			)
 
-
 		link = new HTMLElement('a')
 		link.attr('href', url.href)
 		# Disable DnD for links to remove its default DnD behavior
 		link.attr('draggable', 'false') 
 		link.addClass('item-card-link')
-		if id? then link.attr('id', id + '-link')
+		
+		link.attr('id', id + '-link')
 
 		dragHandle = new HTMLElement('i')
 		dragHandle.text('more_vertmore_vert')

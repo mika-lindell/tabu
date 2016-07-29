@@ -7,12 +7,13 @@ class ItemCardList extends HTMLElement
 	@baseId
 	@editable
 	@ghost
-	@fragment
-
 
 	constructor: (container, dataGetter)->
+
 		super('ul')
 		@addClass('item-card-list')
+
+		root = @
 
 		@container = new HTMLElement (container)
 		
@@ -23,23 +24,20 @@ class ItemCardList extends HTMLElement
 
 		@attr('id', "#{ @baseId }-list")
 
-		@container.append @
+	create: ()->
 
-	update: ()->	
 		# Create document fragment for not to cause reflow when appending elements (better performance)
 		@fragment = document.createDocumentFragment()
 
 		for item, i in @dataGetter.data
 
-			itemCardId = "#{ @baseId }-#{ i }"
-
 			if item.heading?
-				itemCard = new ItemCardHeading(item.heading, @, itemCardId)
+				itemCard = new ItemCardHeading(item.heading, @)
 			else
-				itemCard = new ItemCard(item.title, item.url, @, itemCardId)
+				itemCard = new ItemCard(item.title, item.url, @)
 
 			item.itemCard = itemCard
-			@fragment.appendChild(itemCard.DOMElement)
+			@append(itemCard)
 
 		count = @dataGetter.data.length
 
@@ -50,7 +48,19 @@ class ItemCardList extends HTMLElement
 		
 		@attr('data-list-count', count) # To list the count of children
 
-		@append(@fragment) 
+		@container.append @ 
+
+	addItemByUserInput: (formId = 'user-input-add-new')->
+
+		form = new UserInput(formId, 'Add Link')
+		form.addField('title', 'text', 'Title')
+		form.addField('url', 'url', 'Web Address')
+		form.addOkCancel('Add Link')
+
+		empty = new ItemCard('', '', @)
+		@prepend(empty)
+		empty.append(form)
+		form.show()
 
 	getItemForElement: (DOMElement)->
 
@@ -65,6 +75,10 @@ class ItemCardList extends HTMLElement
 		
 		@editable = true
 		root = @
+
+		new HTMLElement('#menu-add-link').on('click', (ev)-> 
+			root.addItemByUserInput()
+		)
 
 		@attr('data-list-editable', '')
 
@@ -87,6 +101,7 @@ class ItemCardList extends HTMLElement
 		body.on('dragover', @updateGhost)
 
 	setOrientation: (orientation = 'horizontal')->
+
 		if orientation is 'horizontal'
 			@container.addClass('horizontal-list')
 		else
@@ -99,7 +114,7 @@ class ItemCardList extends HTMLElement
 			@ghost = from.clone()
 			@ghost.attr('id', 'ghost')
 			@ghost.css('position', 'fixed')
-			@ghost.css('width', from.width() + 'px')
+			@ghost.css('width', from.width('px'))
 			@updateGhost(ev, @ghost)
 			@append(@ghost)
 
@@ -113,12 +128,14 @@ class ItemCardList extends HTMLElement
 			ghost.css('top', ev.clientY + 'px')
 
 	dragOverUpdateCursor = (ev, root)->
+
 		ev.preventDefault()
 		ev.dataTransfer.dropEffect = "move"
 
 		root.updateGhost(ev)
 
 	dragOver = (ev, root)->
+
 		ev.preventDefault()
 		ev.dataTransfer.dropEffect = "move"
 

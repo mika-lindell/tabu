@@ -1,4 +1,4 @@
-/*
+/**
 *
 * Materialize settings & components
 *
@@ -20,8 +20,7 @@ $navbar-height: 50px;
 $navbar-height-mobile: 50px;
 $navbar-font-color: #5a5a5a;
 $dropdown-color: #5a5a5a;
-$input-focus-color: color('light-blue', 'base');
-
+$input-focus-color: color('light-blue', 'lighten-1');
 
 // Reset
 @import "../../node_modules/materialize-css/sass/components/normalize";
