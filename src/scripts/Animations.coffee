@@ -95,16 +95,16 @@ class Animation
 		container = @animate
 
 		if not to?
-			to = container.width('px')
+			to = container.width()
 
 		if not from?
-			from = container.width('px')
+			from = container.width()
 
-		container.css('width', from)
+		container.css('width', from + 'px')
 
 		play = ()->
 			console.log "Animation: I'll animate width now.", from, to
-			container.css('width', to)
+			container.css('width', to + 'px')
 
 		setTimeout(play, 0)
 		

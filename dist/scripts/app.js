@@ -1413,15 +1413,15 @@
       root = this;
       container = this.animate;
       if (to == null) {
-        to = container.width('px');
+        to = container.width();
       }
       if (from == null) {
-        from = container.width('px');
+        from = container.width();
       }
-      container.css('width', from);
+      container.css('width', from + 'px');
       play = function() {
         console.log("Animation: I'll animate width now.", from, to);
-        return container.css('width', to);
+        return container.css('width', to + 'px');
       };
       setTimeout(play, 0);
       cleanUp = function() {
