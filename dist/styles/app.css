@@ -6279,7 +6279,7 @@ Layers
 .layer-default {
   z-index: 0; }
 
-.layer-context-menu, .user-input {
+.layer-context-menu, .user-input, .item-card.empty {
   z-index: 99; }
 
 .layer-loader, #loader {
@@ -6426,6 +6426,16 @@ Animations
 .anim-twist {
   animation-name: twist;
   animation-duration: 0.5s; }
+
+@keyframes width {
+  0% {
+    opacity: 0;
+    margin-right: -50px;
+    transform: scale(1, 0); } }
+.anim-width {
+  animation-fill-mode: forwards;
+  animation-name: width;
+  animation-duration: 0.2s; }
 
 .transitions, #visibility-on,
 #visibility-off, .item-card,
@@ -6626,7 +6636,8 @@ ul[data-list-editable] .drag-handle {
 .item-card {
   margin-bottom: 0.5rem;
   border: 2px dashed transparent;
-  position: relative; }
+  position: relative;
+  height: 60px; }
   .item-card.dragged {
     border-color: #c7c7c7;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }

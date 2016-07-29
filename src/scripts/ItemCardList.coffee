@@ -91,6 +91,8 @@ class ItemCardList extends HTMLElement
 		userInput.addOkCancel('Add Link')
 
 		empty = @addItem(null, null, 'first')
+		empty.element.addClass('empty')
+		empty.element.addClass('anim-width')
 		empty.element.append(userInput)
 
 		userInput.done = (fields)->

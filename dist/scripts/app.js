@@ -943,6 +943,8 @@
       userInput.addField('url', 'url', 'Web Address');
       userInput.addOkCancel('Add Link');
       empty = this.addItem(null, null, 'first');
+      empty.element.addClass('empty');
+      empty.element.addClass('anim-width');
       empty.element.append(userInput);
       userInput.done = function(fields) {
         empty.element.setTitle(fields[0].value);
@@ -1086,6 +1088,7 @@
       UserInput.__super__.constructor.call(this, 'form');
       this.attr('id', id);
       this.addClass('user-input');
+      this.addClass('layer-context-menu');
       this.addClass('card');
       this.css('position', 'absolute');
       this.css('top', '0');

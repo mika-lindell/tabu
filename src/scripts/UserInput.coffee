@@ -16,6 +16,7 @@ class UserInput extends HTMLElement
 		super('form')
 		@attr('id', id)
 		@addClass('user-input')
+		@addClass('layer-context-menu')
 		@addClass('card')
 
 		@css('position', 'absolute')

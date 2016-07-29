@@ -385,6 +385,22 @@ Animations
   animation-duration: 0.5s;
 }
 
+@keyframes width{
+
+	0%{
+		opacity: 0;
+		margin-right: -50px;
+		transform: scale(1, 0)
+	}	
+
+}
+
+.anim-width{
+	animation-fill-mode: forwards;
+	animation-name: width;
+  animation-duration: 0.2s;
+}
+
 
 // To animate element movement on media query breakpoints
 .transitions,
@@ -739,6 +755,7 @@ ul[data-list-editable]{
 	margin-bottom: 0.5rem;
 	border: 2px dashed transparent;
 	position: relative;
+	height: 60px;
 
 	@extend .transitions;
 	@extend .hoverable;
@@ -750,6 +767,11 @@ ul[data-list-editable]{
 
 	&:active{
 		box-shadow: $shadow-inset;
+	}
+
+	&.empty{
+		
+		@extend .layer-context-menu;
 	}
 }
 
