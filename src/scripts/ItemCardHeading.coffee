@@ -3,20 +3,21 @@
 class ItemCardHeading extends HTMLElement
 
 	@containingList
+	@id
 
 	# Construct new card heading.
 	#
 	# @param [String] Title of the card
 	#
-	constructor: (title, containingList ,id = null)->
+	constructor: (containingList, title, id = null)->
 		super('li')
 		@addClass('item-card-heading')
 
 		@containingList = containingList
+		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
 
 		heading = new HTMLElement('h6')
 		heading.text(title)
-		if id?
-			heading.attr('id', id)
+		heading.attr('id', @id)
 
 		@append(heading)

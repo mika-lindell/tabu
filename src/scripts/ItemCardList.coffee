@@ -2,6 +2,7 @@
 #
 class ItemCardList extends HTMLElement
 
+	@items
 	@container
 	@dataGetter
 	@baseId
@@ -11,33 +12,28 @@ class ItemCardList extends HTMLElement
 	constructor: (container, dataGetter)->
 
 		super('ul')
-		@addClass('item-card-list')
-
-		root = @
-
+		
 		@container = new HTMLElement (container)
+		@items = new Array()
 		
 		@dataGetter = dataGetter
 		@baseId = container.replace('#', '')
 		@editable = false
 		@ghost = null
 
+		root = @
+
+		@addClass('item-card-list')
 		@attr('id', "#{ @baseId }-list")
 
 	create: ()->
 
-		# Create document fragment for not to cause reflow when appending elements (better performance)
-		@fragment = document.createDocumentFragment()
-
 		for item, i in @dataGetter.data
 
 			if item.heading?
-				itemCard = new ItemCardHeading(item.heading, @)
+				@addHeading(item.heading)
 			else
-				itemCard = new ItemCard(item.title, item.url, @)
-
-			item.itemCard = itemCard
-			@append(itemCard)
+				@addItem(item.title, item.url)
 
 		count = @dataGetter.data.length
 
@@ -50,24 +46,66 @@ class ItemCardList extends HTMLElement
 
 		@container.append @ 
 
+	addHeading: (title, position = 'last')->
+
+		item = 
+			element: null
+			type: 'heading'
+
+		item.element = new ItemCardHeading(@, title)
+
+		if position is 'last'
+			@items.push item
+			@append item.element
+		else
+			@items.unshift item
+			@prepend item.element
+
+	addItem: (title = null, url = null, position = 'last')->
+
+		item = 
+			element: null
+			type: 'link'
+
+		if not title? or not url?
+			item.element = new ItemCard(@)
+		else
+			item.element = new ItemCard(@, title, url)
+
+		if position is 'last'
+			@items.push item
+			@append item.element
+		else
+			@items.unshift item
+			@prepend item.element
+
+		return item
+
+	removeItem: (item)->
+
 	addItemByUserInput: (formId = 'user-input-add-new')->
 
-		form = new UserInput(formId, 'Add Link')
-		form.addField('title', 'text', 'Title')
-		form.addField('url', 'url', 'Web Address')
-		form.addOkCancel('Add Link')
+		userInput = new UserInput(formId, 'Add Link')
+		userInput.addField('title', 'text', 'Title')
+		userInput.addField('url', 'url', 'Web Address')
+		userInput.addOkCancel('Add Link')
 
-		empty = new ItemCard('', '', @)
-		@prepend(empty)
-		empty.append(form)
-		form.show()
+		empty = @addItem(null, null, 'first')
+		empty.element.append(userInput)
+
+		userInput.done = (fields)->
+			empty.element.setTitle(fields[0].value)
+			empty.element.setUrl(fields[1].value)
+			userInput.hide()
+
+		userInput.show()
 
 	getItemForElement: (DOMElement)->
 
-		for item, i in @dataGetter.data
+		for item, i in @items
 
-			if item.itemCard.DOMElement is DOMElement
-				return item.itemCard
+			if item.element.DOMElement is DOMElement
+				return item.element
 
 		return null
 

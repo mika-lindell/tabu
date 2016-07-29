@@ -4,10 +4,14 @@ class UserInput extends HTMLElement
 	@title
 	@fields	
 	@done
+	@abort
 
 	constructor: (id, title)->
 
 		root = @
+
+		@done = ()->
+		@abort =  ()->
 
 		super('form')
 		@attr('id', id)
@@ -30,6 +34,12 @@ class UserInput extends HTMLElement
 
 		@content.append @heading		
 		@append @content
+
+		@.on('submit', (ev)->
+			ev.preventDefault()
+			root.hide()
+			root.done(root.fields)
+		)
 
 		body = new HTMLElement('body')
 		body.on('keyup', (ev)->
@@ -89,6 +99,7 @@ class UserInput extends HTMLElement
 		cancel.addClass('cancel')
 
 		cancel.on('click', ()->
+			root.abort()
 			root.hide()
 		)
 
@@ -97,11 +108,6 @@ class UserInput extends HTMLElement
 		ok.value(confirm)
 		ok.addClass('btn')
 		ok.addClass('submit')
-
-		ok.on('click', ()->
-			root.hide()
-			root.done(root.fields)
-		)
 
 		container.append(cancel)
 		container.append(ok)

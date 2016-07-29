@@ -3,24 +3,33 @@
 class ItemCard extends HTMLElement
 
 	@containingList
+	@elements
+
+	@title
+	@url
+	@color
+
+	@id
 
 	# Construct new card.
 	#
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
 	
-	constructor: (title, url, containingList)->
+	constructor: (containingList, title = null, url = null)->
+
 		super('li')
-		@addClass('item-card')
 		
-
-		color = new HexColor(url)
-		url = new Url(url)
-		root = @
 		@containingList = containingList
+		@elements = new Object
+		@color = null
+		@url = null
+		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
 
-		id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
-		@attr('id', id)
+		root = @
+
+		@addClass('item-card')
+		@attr('id', @id)
 
 		if @containingList.editable
 			# Enable drag-n-drop
@@ -30,47 +39,62 @@ class ItemCard extends HTMLElement
 				dragStart(event, root)
 			)
 
-		link = new HTMLElement('a')
-		link.attr('href', url.href)
-		# Disable DnD for links to remove its default DnD behavior
-		link.attr('draggable', 'false') 
-		link.addClass('item-card-link')
+		@elements.link = new HTMLElement('a')
 		
-		link.attr('id', id + '-link')
+		# Disable DnD for links to remove its default DnD behavior
+		@elements.link.attr('draggable', 'false') 
+		@elements.link.addClass('item-card-link')
+		@elements.link.attr('id', @id + '-link')
 
-		dragHandle = new HTMLElement('i')
-		dragHandle.text('more_vertmore_vert')
-		dragHandle.addClass('drag-handle')
+		@elements.dragHandle = new HTMLElement('i')
+		@elements.dragHandle.text('more_vertmore_vert')
+		@elements.dragHandle.addClass('drag-handle')
 
-		badge = new HTMLElement('span')
-		badge.text(url.withoutPrefix().substring(0, 2) )
-		badge.css('borderColor', color.url )
-		badge.addClass('item-card-badge')
+		@elements.badge = new HTMLElement('span')
+		@elements.badge.text('EE')
+		@elements.badge.addClass('item-card-badge')
 
-		labelContainer = new HTMLElement('div')
-		labelContainer.addClass('item-card-label-container')
+		@elements.labelContainer = new HTMLElement('div')
+		@elements.labelContainer.addClass('item-card-label-container')
 
-		labelTitle = new HTMLElement('span')
-		labelTitle.text(title)
-		labelTitle.addClass('item-card-label')
+		@elements.labelTitle = new HTMLElement('span')
+		@elements.labelTitle.addClass('item-card-label')
 
-		lineBreak = new HTMLElement('br')
+		@elements.lineBreak = new HTMLElement('br')
 
-		labelUrl = new HTMLElement('span')
-		labelUrl.text(url.hostname)
-		labelUrl.addClass('item-card-label-secondary')
+		@elements.labelUrl = new HTMLElement('span')
+		@elements.labelUrl.addClass('item-card-label-secondary')
 
-		link.append(dragHandle)
-		link.append(badge)
+		if title?
+			@setTitle(title)
 
-		labelContainer.append(labelTitle)
-		labelContainer.append(lineBreak)
-		labelContainer.append(labelUrl)
+		if url?
+			@setUrl(url)
 
-		link.append(labelContainer)
+		@elements.link.append(@elements.dragHandle)
+		@elements.link.append(@elements.badge)
 
-		@append(link)
+		@elements.labelContainer.append(@elements.labelTitle)
+		@elements.labelContainer.append(@elements.lineBreak)
+		@elements.labelContainer.append(@elements.labelUrl)
 
+		@elements.link.append(@elements.labelContainer)
+
+		@append(@elements.link)
+
+	setTitle: (title)->
+		@elements.labelTitle.text(title)
+
+	setUrl: (url)->
+		@color = new HexColor(url)
+		@url = new Url(url)
+
+		@elements.link.attr('href', @url.href)
+
+		@elements.badge.text(@url.withoutPrefix().substring(0, 2) )
+		@elements.badge.css('borderColor', @color.url )
+
+		@elements.labelUrl.text(@url.hostname)
 
 	dragStart = (ev, root)->
 

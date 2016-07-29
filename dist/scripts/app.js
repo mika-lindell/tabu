@@ -713,51 +713,83 @@
 
     ItemCard.containingList;
 
-    function ItemCard(title, url, containingList) {
-      var badge, color, dragHandle, id, labelContainer, labelTitle, labelUrl, lineBreak, link, root;
+    ItemCard.elements;
+
+    ItemCard.title;
+
+    ItemCard.url;
+
+    ItemCard.color;
+
+    ItemCard.id;
+
+    function ItemCard(containingList, title, url) {
+      var root;
+      if (title == null) {
+        title = null;
+      }
+      if (url == null) {
+        url = null;
+      }
       ItemCard.__super__.constructor.call(this, 'li');
-      this.addClass('item-card');
-      color = new HexColor(url);
-      url = new Url(url);
-      root = this;
       this.containingList = containingList;
-      id = this.containingList.baseId + "-" + (this.containingList.childCount());
-      this.attr('id', id);
+      this.elements = new Object;
+      this.color = null;
+      this.url = null;
+      this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
+      root = this;
+      this.addClass('item-card');
+      this.attr('id', this.id);
       if (this.containingList.editable) {
         this.attr('draggable', 'true');
         this.on('dragstart', function() {
           return dragStart(event, root);
         });
       }
-      link = new HTMLElement('a');
-      link.attr('href', url.href);
-      link.attr('draggable', 'false');
-      link.addClass('item-card-link');
-      link.attr('id', id + '-link');
-      dragHandle = new HTMLElement('i');
-      dragHandle.text('more_vertmore_vert');
-      dragHandle.addClass('drag-handle');
-      badge = new HTMLElement('span');
-      badge.text(url.withoutPrefix().substring(0, 2));
-      badge.css('borderColor', color.url);
-      badge.addClass('item-card-badge');
-      labelContainer = new HTMLElement('div');
-      labelContainer.addClass('item-card-label-container');
-      labelTitle = new HTMLElement('span');
-      labelTitle.text(title);
-      labelTitle.addClass('item-card-label');
-      lineBreak = new HTMLElement('br');
-      labelUrl = new HTMLElement('span');
-      labelUrl.text(url.hostname);
-      labelUrl.addClass('item-card-label-secondary');
-      link.append(dragHandle);
-      link.append(badge);
-      labelContainer.append(labelTitle);
-      labelContainer.append(lineBreak);
-      labelContainer.append(labelUrl);
-      link.append(labelContainer);
-      this.append(link);
+      this.elements.link = new HTMLElement('a');
+      this.elements.link.attr('draggable', 'false');
+      this.elements.link.addClass('item-card-link');
+      this.elements.link.attr('id', this.id + '-link');
+      this.elements.dragHandle = new HTMLElement('i');
+      this.elements.dragHandle.text('more_vertmore_vert');
+      this.elements.dragHandle.addClass('drag-handle');
+      this.elements.badge = new HTMLElement('span');
+      this.elements.badge.text('EE');
+      this.elements.badge.addClass('item-card-badge');
+      this.elements.labelContainer = new HTMLElement('div');
+      this.elements.labelContainer.addClass('item-card-label-container');
+      this.elements.labelTitle = new HTMLElement('span');
+      this.elements.labelTitle.addClass('item-card-label');
+      this.elements.lineBreak = new HTMLElement('br');
+      this.elements.labelUrl = new HTMLElement('span');
+      this.elements.labelUrl.addClass('item-card-label-secondary');
+      if (title != null) {
+        this.setTitle(title);
+      }
+      if (url != null) {
+        this.setUrl(url);
+      }
+      this.elements.link.append(this.elements.dragHandle);
+      this.elements.link.append(this.elements.badge);
+      this.elements.labelContainer.append(this.elements.labelTitle);
+      this.elements.labelContainer.append(this.elements.lineBreak);
+      this.elements.labelContainer.append(this.elements.labelUrl);
+      this.elements.link.append(this.elements.labelContainer);
+      this.append(this.elements.link);
     }
+
+    ItemCard.prototype.setTitle = function(title) {
+      return this.elements.labelTitle.text(title);
+    };
+
+    ItemCard.prototype.setUrl = function(url) {
+      this.color = new HexColor(url);
+      this.url = new Url(url);
+      this.elements.link.attr('href', this.url.href);
+      this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
+      this.elements.badge.css('borderColor', this.color.url);
+      return this.elements.labelUrl.text(this.url.hostname);
+    };
 
     dragStart = function(ev, root) {
       ev.dataTransfer.effectAllowed = "all";
@@ -776,7 +808,9 @@
 
     ItemCardHeading.containingList;
 
-    function ItemCardHeading(title, containingList, id) {
+    ItemCardHeading.id;
+
+    function ItemCardHeading(containingList, title, id) {
       var heading;
       if (id == null) {
         id = null;
@@ -784,11 +818,10 @@
       ItemCardHeading.__super__.constructor.call(this, 'li');
       this.addClass('item-card-heading');
       this.containingList = containingList;
+      this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
       heading = new HTMLElement('h6');
       heading.text(title);
-      if (id != null) {
-        heading.attr('id', id);
-      }
+      heading.attr('id', this.id);
       this.append(heading);
     }
 
@@ -800,6 +833,8 @@
     var dragEnd, dragOver, dragOverUpdateCursor;
 
     extend(ItemCardList, superClass);
+
+    ItemCardList.items;
 
     ItemCardList.container;
 
@@ -814,29 +849,27 @@
     function ItemCardList(container, dataGetter) {
       var root;
       ItemCardList.__super__.constructor.call(this, 'ul');
-      this.addClass('item-card-list');
-      root = this;
       this.container = new HTMLElement(container);
+      this.items = new Array();
       this.dataGetter = dataGetter;
       this.baseId = container.replace('#', '');
       this.editable = false;
       this.ghost = null;
+      root = this;
+      this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
     }
 
     ItemCardList.prototype.create = function() {
-      var count, i, item, itemCard, j, len, parent, ref;
-      this.fragment = document.createDocumentFragment();
+      var count, i, item, j, len, parent, ref;
       ref = this.dataGetter.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
         if (item.heading != null) {
-          itemCard = new ItemCardHeading(item.heading, this);
+          this.addHeading(item.heading);
         } else {
-          itemCard = new ItemCard(item.title, item.url, this);
+          this.addItem(item.title, item.url);
         }
-        item.itemCard = itemCard;
-        this.append(itemCard);
       }
       count = this.dataGetter.data.length;
       if (count === 0) {
@@ -849,28 +882,83 @@
       return this.container.append(this);
     };
 
+    ItemCardList.prototype.addHeading = function(title, position) {
+      var item;
+      if (position == null) {
+        position = 'last';
+      }
+      item = {
+        element: null,
+        type: 'heading'
+      };
+      item.element = new ItemCardHeading(this, title);
+      if (position === 'last') {
+        this.items.push(item);
+        return this.append(item.element);
+      } else {
+        this.items.unshift(item);
+        return this.prepend(item.element);
+      }
+    };
+
+    ItemCardList.prototype.addItem = function(title, url, position) {
+      var item;
+      if (title == null) {
+        title = null;
+      }
+      if (url == null) {
+        url = null;
+      }
+      if (position == null) {
+        position = 'last';
+      }
+      item = {
+        element: null,
+        type: 'link'
+      };
+      if ((title == null) || (url == null)) {
+        item.element = new ItemCard(this);
+      } else {
+        item.element = new ItemCard(this, title, url);
+      }
+      if (position === 'last') {
+        this.items.push(item);
+        this.append(item.element);
+      } else {
+        this.items.unshift(item);
+        this.prepend(item.element);
+      }
+      return item;
+    };
+
+    ItemCardList.prototype.removeItem = function(item) {};
+
     ItemCardList.prototype.addItemByUserInput = function(formId) {
-      var empty, form;
+      var empty, userInput;
       if (formId == null) {
         formId = 'user-input-add-new';
       }
-      form = new UserInput(formId, 'Add Link');
-      form.addField('title', 'text', 'Title');
-      form.addField('url', 'url', 'Web Address');
-      form.addOkCancel('Add Link');
-      empty = new ItemCard('', '', this);
-      this.prepend(empty);
-      empty.append(form);
-      return form.show();
+      userInput = new UserInput(formId, 'Add Link');
+      userInput.addField('title', 'text', 'Title');
+      userInput.addField('url', 'url', 'Web Address');
+      userInput.addOkCancel('Add Link');
+      empty = this.addItem(null, null, 'first');
+      empty.element.append(userInput);
+      userInput.done = function(fields) {
+        empty.element.setTitle(fields[0].value);
+        empty.element.setUrl(fields[1].value);
+        return userInput.hide();
+      };
+      return userInput.show();
     };
 
     ItemCardList.prototype.getItemForElement = function(DOMElement) {
       var i, item, j, len, ref;
-      ref = this.dataGetter.data;
+      ref = this.items;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
-        if (item.itemCard.DOMElement === DOMElement) {
-          return item.itemCard;
+        if (item.element.DOMElement === DOMElement) {
+          return item.element;
         }
       }
       return null;
@@ -988,9 +1076,13 @@
 
     UserInput.done;
 
+    UserInput.abort;
+
     function UserInput(id, title) {
       var body, root;
       root = this;
+      this.done = function() {};
+      this.abort = function() {};
       UserInput.__super__.constructor.call(this, 'form');
       this.attr('id', id);
       this.addClass('user-input');
@@ -1007,6 +1099,11 @@
       this.heading.text(title);
       this.content.append(this.heading);
       this.append(this.content);
+      this.on('submit', function(ev) {
+        ev.preventDefault();
+        root.hide();
+        return root.done(root.fields);
+      });
       body = new HTMLElement('body');
       body.on('keyup', function(ev) {
         if (ev.code === 'Escape') {
@@ -1073,6 +1170,7 @@
       cancel.addClass('btn');
       cancel.addClass('cancel');
       cancel.on('click', function() {
+        root.abort();
         return root.hide();
       });
       ok.attr('type', 'submit');
@@ -1080,10 +1178,6 @@
       ok.value(confirm);
       ok.addClass('btn');
       ok.addClass('submit');
-      ok.on('click', function() {
-        root.hide();
-        return root.done(root.fields);
-      });
       container.append(cancel);
       container.append(ok);
       return this.append(container);
