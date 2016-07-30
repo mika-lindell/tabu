@@ -785,7 +785,7 @@ ul[data-list-editable]{
 	height: 100%;
 	text-align: center;
 	height: $item-card-height;
-  line-height: $item-card-height;
+  line-height: 59px;
 
 
 	@extend .font-size-large;
@@ -904,7 +904,7 @@ li.item-card-heading{
 	}
 }
 
-[data-has-empty-list-as-child] > .no-items{
+[data-has-empty-list] > .no-items{
 	display: block;
 }
 

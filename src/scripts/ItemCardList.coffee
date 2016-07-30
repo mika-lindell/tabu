@@ -40,14 +40,17 @@ class ItemCardList extends HTMLElement
 
 		count = @dataGetter.data.length
 
+		@container.append @
+
 		# Add some information about the list to DOM as attributes, so we can target with CSS selectors
 		if count is 0
 			parent = @parent()
-			if parent? then parent.attr('data-has-empty-list-as-child', '') # To parent element that it's has empty list as child
+
+			if parent? then parent.attr('data-has-empty-list', '') # To parent element that it's has empty list as child
 		
 		@attr('data-list-count', count) # To list the count of children
 
-		@container.append @ 
+		
 
 	addHeading: (title, position = 'last')->
 
@@ -295,7 +298,7 @@ class ItemCardList extends HTMLElement
 
 		root.draggedItem = null
 
-		console.log  'Drop', title, url
+		console.log 'Drop', title, url
 
 
 	dragEnd = (ev, root)->

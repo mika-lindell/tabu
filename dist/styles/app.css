@@ -6658,7 +6658,7 @@ ul[data-list-editable] .drag-handle {
   height: 100%;
   text-align: center;
   height: 65px;
-  line-height: 65px; }
+  line-height: 59px; }
 
 .item-card {
   margin-bottom: 0.5rem;
@@ -6717,7 +6717,7 @@ li.item-card-heading {
     display: inline-block;
     margin-bottom: 1rem; }
 
-[data-has-empty-list-as-child] > .no-items {
+[data-has-empty-list] > .no-items {
   display: block; }
 
 /***

@@ -887,14 +887,14 @@
         }
       }
       count = this.dataGetter.data.length;
+      this.container.append(this);
       if (count === 0) {
         parent = this.parent();
         if (parent != null) {
-          parent.attr('data-has-empty-list-as-child', '');
+          parent.attr('data-has-empty-list', '');
         }
       }
-      this.attr('data-list-count', count);
-      return this.container.append(this);
+      return this.attr('data-list-count', count);
     };
 
     ItemCardList.prototype.addHeading = function(title, position) {
