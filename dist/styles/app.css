@@ -6427,14 +6427,14 @@ Animations
   animation-name: twist;
   animation-duration: 0.5s; }
 
-@keyframes width {
+@keyframes new-item {
   0% {
     opacity: 0;
     margin-right: -50px;
     transform: scale(1, 0); } }
-.anim-width {
+.anim-new-item {
   animation-fill-mode: forwards;
-  animation-name: width;
+  animation-name: new-item;
   animation-duration: 0.2s; }
 
 .transitions, #visibility-on,

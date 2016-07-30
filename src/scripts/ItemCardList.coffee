@@ -92,7 +92,7 @@ class ItemCardList extends HTMLElement
 
 		empty = @addItem(null, null, 'first')
 		empty.element.addClass('empty')
-		empty.element.addClass('anim-width')
+		empty.element.addClass('anim-new-item')
 		empty.element.append(userInput)
 
 		userInput.done = (fields)->

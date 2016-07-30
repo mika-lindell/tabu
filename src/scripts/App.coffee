@@ -8,6 +8,12 @@ class App
 	@dataStorage
 	@helpers
 	
+	@topSites
+	@latestBookmarks
+	# @recentHistory
+	@recentlyClosed
+	@otherDevices
+
 	# Construct new app
 	#
 	constructor: ()->
@@ -27,48 +33,56 @@ class App
 
 		root = @
 
-		@dataStorage = new DataStorage
+		@topSites = new DataGetter(chrome.topSites.get)
+		@latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks')
+		# @recentHistory = new DataGetter(chrome.history.search, 'recentHistory')
+		@recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed')
+		@otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices')
 
-		@dataStorage.topSites.done = ()->
+		@topSites.done = ()->
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
 			
-			list = new ItemCardList('#top-sites', root.dataStorage.topSites) # Create new list class
+			list = new ItemCardList('#top-sites', root.topSites) # Create new list class
 			list.container.append list # Add list to DOM
 			list.setOrientation 'horizontal'
 			list.create() # Add items to the list
 
 			loader.hide() # Hide the loader
 
-		@dataStorage.latestBookmarks.done = ()->
+		@latestBookmarks.done = ()->
 
-			list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks)
+			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks)
 			list.create()
 
-		# @dataStorage.recentHistory.done = ()->
+		# @recentHistory.done = ()->
 
 		# 	container = new HTMLElement ('#recent-history')
 		# 	list = new ItemCardList(root.dataStorage.recentHistory, 'recent-history')
 		# 	container.append list
 		# 	list.update()
 
-		@dataStorage.recentlyClosed.done = ()->
+		@.recentlyClosed.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed)
+			list = new ItemCardList('#recently-closed', root.recentlyClosed)
 			list.create()
 
-			list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed) # Create new list class
+			list_custom = new ItemCardList('#speed-dial', root.recentlyClosed) # Create new list class
 			list_custom.enableEditing()
 			list_custom.setOrientation 'horizontal'
 			list_custom.create() # Add items to the list			
 
-		@dataStorage.otherDevices.done = ()->
+		@otherDevices.done = ()->
 			
-			list = new ItemCardList('#other-devices', root.dataStorage.otherDevices)
+			list = new ItemCardList('#other-devices', root.otherDevices)
 			list.create()
 
 
-		@dataStorage.fetchAll()
+		@topSites.fetch()
+		@otherDevices.fetch()
+		@latestBookmarks.fetch()
+		# @recentHistory.fetch()
+		@recentlyClosed.fetch()
 
 		# Use localised version of the title of new tab page
 		@helpers.getLocalisedTitle((title)->

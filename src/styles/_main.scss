@@ -385,7 +385,7 @@ Animations
   animation-duration: 0.5s;
 }
 
-@keyframes width{
+@keyframes new-item{
 
 	0%{
 		opacity: 0;
@@ -395,9 +395,9 @@ Animations
 
 }
 
-.anim-width{
+.anim-new-item{
 	animation-fill-mode: forwards;
-	animation-name: width;
+	animation-name: new-item;
   animation-duration: 0.2s;
 }
 
@@ -770,7 +770,7 @@ ul[data-list-editable]{
 	}
 
 	&.empty{
-		
+
 		@extend .layer-context-menu;
 	}
 }

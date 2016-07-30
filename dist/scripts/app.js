@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Actions, Animation, App, DataGetter, DataStorage, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, UserInput, Visibility,
+  var $newTab, Actions, Animation, App, DataGetter, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, UserInput, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -679,33 +679,6 @@
 
   })();
 
-  DataStorage = (function() {
-    DataStorage.topSites;
-
-    DataStorage.latestBookmarks;
-
-    DataStorage.recentlyClosed;
-
-    DataStorage.otherDevices;
-
-    function DataStorage() {
-      this.topSites = new DataGetter(chrome.topSites.get);
-      this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
-      this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
-      this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
-    }
-
-    DataStorage.prototype.fetchAll = function() {
-      this.topSites.fetch();
-      this.otherDevices.fetch();
-      this.latestBookmarks.fetch();
-      return this.recentlyClosed.fetch();
-    };
-
-    return DataStorage;
-
-  })();
-
   ItemCard = (function(superClass) {
     var dragStart;
 
@@ -944,7 +917,7 @@
       userInput.addOkCancel('Add Link');
       empty = this.addItem(null, null, 'first');
       empty.element.addClass('empty');
-      empty.element.addClass('anim-width');
+      empty.element.addClass('anim-new-item');
       empty.element.append(userInput);
       userInput.done = function(fields) {
         empty.element.setTitle(fields[0].value);
@@ -1762,6 +1735,14 @@
 
     App.helpers;
 
+    App.topSites;
+
+    App.latestBookmarks;
+
+    App.recentlyClosed;
+
+    App.otherDevices;
+
     function App() {
       var root;
       console.log("App: I'm warming up...");
@@ -1776,36 +1757,42 @@
       		 *
        */
       root = this;
-      this.dataStorage = new DataStorage;
-      this.dataStorage.topSites.done = function() {
+      this.topSites = new DataGetter(chrome.topSites.get);
+      this.latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks');
+      this.recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
+      this.otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices');
+      this.topSites.done = function() {
         var list, loader;
         loader = new Loader;
-        list = new ItemCardList('#top-sites', root.dataStorage.topSites);
+        list = new ItemCardList('#top-sites', root.topSites);
         list.container.append(list);
         list.setOrientation('horizontal');
         list.create();
         return loader.hide();
       };
-      this.dataStorage.latestBookmarks.done = function() {
+      this.latestBookmarks.done = function() {
         var list;
-        list = new ItemCardList('#latest-bookmarks', root.dataStorage.latestBookmarks);
+        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks);
         return list.create();
       };
-      this.dataStorage.recentlyClosed.done = function() {
+      this.recentlyClosed.done = function() {
         var list, list_custom;
-        list = new ItemCardList('#recently-closed', root.dataStorage.recentlyClosed);
+        list = new ItemCardList('#recently-closed', root.recentlyClosed);
         list.create();
-        list_custom = new ItemCardList('#speed-dial', root.dataStorage.recentlyClosed);
+        list_custom = new ItemCardList('#speed-dial', root.recentlyClosed);
         list_custom.enableEditing();
         list_custom.setOrientation('horizontal');
         return list_custom.create();
       };
-      this.dataStorage.otherDevices.done = function() {
+      this.otherDevices.done = function() {
         var list;
-        list = new ItemCardList('#other-devices', root.dataStorage.otherDevices);
+        list = new ItemCardList('#other-devices', root.otherDevices);
         return list.create();
       };
-      this.dataStorage.fetchAll();
+      this.topSites.fetch();
+      this.otherDevices.fetch();
+      this.latestBookmarks.fetch();
+      this.recentlyClosed.fetch();
       this.helpers.getLocalisedTitle(function(title) {
         return document.title = title;
       });
