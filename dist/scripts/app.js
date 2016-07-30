@@ -817,6 +817,8 @@
 
     ItemCardList.editable;
 
+    ItemCardList.userInput;
+
     ItemCardList.ghost;
 
     function ItemCardList(container, dataGetter) {
@@ -831,6 +833,10 @@
       root = this;
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
+      this.userInput = new UserInput('user-input-add-new', 'Add Link');
+      this.userInput.addField('title', 'text', 'Title');
+      this.userInput.addField('url', 'url', 'Web Address');
+      this.userInput.addOkCancel('Add Link');
     }
 
     ItemCardList.prototype.create = function() {
@@ -906,25 +912,20 @@
 
     ItemCardList.prototype.removeItem = function(item) {};
 
-    ItemCardList.prototype.addItemByUserInput = function(formId) {
-      var empty, userInput;
-      if (formId == null) {
-        formId = 'user-input-add-new';
+    ItemCardList.prototype.addItemByUserInput = function(root) {
+      var empty;
+      if (!root.userInput.active) {
+        empty = root.addItem(null, null, 'first');
+        empty.element.addClass('empty');
+        empty.element.addClass('anim-new-item');
+        empty.element.append(root.userInput);
+        root.userInput.done = function(fields) {
+          empty.element.setTitle(fields[0].value);
+          empty.element.setUrl(fields[1].value);
+          return root.userInput.hide();
+        };
+        return root.userInput.show();
       }
-      userInput = new UserInput(formId, 'Add Link');
-      userInput.addField('title', 'text', 'Title');
-      userInput.addField('url', 'url', 'Web Address');
-      userInput.addOkCancel('Add Link');
-      empty = this.addItem(null, null, 'first');
-      empty.element.addClass('empty');
-      empty.element.addClass('anim-new-item');
-      empty.element.append(userInput);
-      userInput.done = function(fields) {
-        empty.element.setTitle(fields[0].value);
-        empty.element.setUrl(fields[1].value);
-        return userInput.hide();
-      };
-      return userInput.show();
     };
 
     ItemCardList.prototype.getItemForElement = function(DOMElement) {
@@ -944,7 +945,7 @@
       this.editable = true;
       root = this;
       new HTMLElement('#menu-add-link').on('click', function(ev) {
-        return root.addItemByUserInput();
+        return root.addItemByUserInput(root);
       });
       this.attr('data-list-editable', '');
       this.on('dragover', function() {
@@ -1043,6 +1044,8 @@
   UserInput = (function(superClass) {
     extend(UserInput, superClass);
 
+    UserInput.active;
+
     UserInput.content;
 
     UserInput.title;
@@ -1056,12 +1059,12 @@
     function UserInput(id, title) {
       var body, root;
       root = this;
+      this.active = false;
       this.done = function() {};
       this.abort = function() {};
       UserInput.__super__.constructor.call(this, 'form');
       this.attr('id', id);
       this.addClass('user-input');
-      this.addClass('layer-context-menu');
       this.addClass('card');
       this.css('position', 'absolute');
       this.css('top', '0');
@@ -1159,9 +1162,15 @@
       return this.append(container);
     };
 
-    UserInput.prototype.show = function() {
-      UserInput.__super__.show.call(this);
-      return this.fields[0].element.focus();
+    UserInput.prototype.show = function(display) {
+      UserInput.__super__.show.call(this, display);
+      this.fields[0].element.focus();
+      return this.active = true;
+    };
+
+    UserInput.prototype.hide = function() {
+      UserInput.__super__.hide.call(this);
+      return this.active = false;
     };
 
     return UserInput;

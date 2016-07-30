@@ -1,5 +1,6 @@
 class UserInput extends HTMLElement
 
+	@active
 	@content
 	@title
 	@fields	
@@ -10,13 +11,14 @@ class UserInput extends HTMLElement
 
 		root = @
 
+		@active = false
+
 		@done = ()->
 		@abort =  ()->
 
 		super('form')
 		@attr('id', id)
 		@addClass('user-input')
-		@addClass('layer-context-menu')
 		@addClass('card')
 
 		@css('position', 'absolute')
@@ -115,9 +117,14 @@ class UserInput extends HTMLElement
 
 		@append(container)
 
-	show: ()->
-		super()
+	show: (display)->
+		super(display)
 		@fields[0].element.focus()
+		@active = true
+
+	hide: ()->
+		super()
+		@active = false
 
 
 

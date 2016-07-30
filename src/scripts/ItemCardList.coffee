@@ -7,6 +7,7 @@ class ItemCardList extends HTMLElement
 	@dataGetter
 	@baseId
 	@editable
+	@userInput
 	@ghost
 
 	constructor: (container, dataGetter)->
@@ -25,6 +26,11 @@ class ItemCardList extends HTMLElement
 
 		@addClass('item-card-list')
 		@attr('id', "#{ @baseId }-list")
+
+		@userInput = new UserInput('user-input-add-new', 'Add Link')
+		@userInput.addField('title', 'text', 'Title')
+		@userInput.addField('url', 'url', 'Web Address')
+		@userInput.addOkCancel('Add Link')
 
 	create: ()->
 
@@ -83,24 +89,21 @@ class ItemCardList extends HTMLElement
 
 	removeItem: (item)->
 
-	addItemByUserInput: (formId = 'user-input-add-new')->
+	addItemByUserInput: (root)->
 
-		userInput = new UserInput(formId, 'Add Link')
-		userInput.addField('title', 'text', 'Title')
-		userInput.addField('url', 'url', 'Web Address')
-		userInput.addOkCancel('Add Link')
+		if not root.userInput.active
 
-		empty = @addItem(null, null, 'first')
-		empty.element.addClass('empty')
-		empty.element.addClass('anim-new-item')
-		empty.element.append(userInput)
+			empty = root.addItem(null, null, 'first')
+			empty.element.addClass('empty')
+			empty.element.addClass('anim-new-item')
+			empty.element.append(root.userInput)
 
-		userInput.done = (fields)->
-			empty.element.setTitle(fields[0].value)
-			empty.element.setUrl(fields[1].value)
-			userInput.hide()
+			root.userInput.done = (fields)->
+				empty.element.setTitle(fields[0].value)
+				empty.element.setUrl(fields[1].value)
+				root.userInput.hide()
 
-		userInput.show()
+			root.userInput.show()
 
 	getItemForElement: (DOMElement)->
 
@@ -117,7 +120,7 @@ class ItemCardList extends HTMLElement
 		root = @
 
 		new HTMLElement('#menu-add-link').on('click', (ev)-> 
-			root.addItemByUserInput()
+			root.addItemByUserInput(root)
 		)
 
 		@attr('data-list-editable', '')

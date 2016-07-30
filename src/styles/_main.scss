@@ -169,6 +169,10 @@ Layers
 	z-index: 0;
 }
 
+.layer-front{
+	z-index: 1;
+}
+
 .layer-context-menu{
 	z-index: 99;
 }
@@ -771,7 +775,7 @@ ul[data-list-editable]{
 
 	&.empty{
 
-		@extend .layer-context-menu;
+		@extend .layer-front;
 	}
 }
 

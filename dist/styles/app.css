@@ -6279,7 +6279,10 @@ Layers
 .layer-default {
   z-index: 0; }
 
-.layer-context-menu, .user-input, .item-card.empty {
+.layer-front, .item-card.empty {
+  z-index: 1; }
+
+.layer-context-menu, .user-input {
   z-index: 99; }
 
 .layer-loader, #loader {
