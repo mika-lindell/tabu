@@ -175,6 +175,12 @@ class ItemCardList extends HTMLElement
 			item.element.setUrl(fields[1].element.value())
 			item.element.removeClass('empty')
 			item.element.attr('draggable', 'true')
+			item.element.addClass('anim-highlight')
+
+			setTimeout(()->
+				item.element.removeClass('anim-highlight')
+			, 2000)
+
 			root.userInput.hide()
 
 		root.userInput.abort = ()->

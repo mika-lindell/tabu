@@ -70,16 +70,16 @@ class Animation
 		container = @animate
 
 		if not to?
-			to = container.height('px')
+			to = container.height()
 
 		if not from?
-			from = container.height('px')
+			from = container.height()
 
-		container.css('height', from)
+		container.css('height', from + 'px')
 
 		play = ()->
 			console.log "Animation: I'll animate height now.", from, to
-			container.css('height', to)
+			container.css('height', to + 'px')
 
 		setTimeout(play, 0)
 		

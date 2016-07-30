@@ -390,13 +390,9 @@ Animations
 }
 
 @keyframes pop-in{
-
 	0%{
 		transform: scale(1,0);
 	}	
-
-	100%{
-	}
 }
 
 .anim-pop-in{
@@ -405,11 +401,31 @@ Animations
   transform-origin: 0 0;
 }
 
-.anim-remove-item{
-	animation-fill-mode: forwards;
-	animation-name: remove-item;
-  animation-duration: 0.2s;
+@keyframes highlight{
+	0%{
+		opacity: 0;
+		transform: scale(1,0);
+		outline: 1px solid transparent;
+	}	
+	15%{
+		opacity: 1;
+		transform: scale(1,1);
+	}
+	50%{
+		outline: 1px solid color('light-blue', 'darken-3');
+		box-shadow: 0px 0px 20px 0px color('light-blue', 'darken-3');
+	}
+	100%{
+		outline: 1px solid transparent;
+	}
 }
+
+.anim-highlight{
+	animation-name: highlight;
+  animation-duration: 2s;
+  transform-origin: 0 0;
+}
+
 
 // To animate element movement on media query breakpoints
 .transitions,
@@ -724,6 +740,8 @@ Item card styles
 
 ***/
 
+$item-card-height: 65px;
+
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
@@ -766,8 +784,8 @@ ul[data-list-editable]{
 	width: 100%;
 	height: 100%;
 	text-align: center;
-	height: 61px;
-  line-height: 61px;
+	height: $item-card-height;
+  line-height: $item-card-height;
 
 
 	@extend .font-size-large;
@@ -779,7 +797,7 @@ ul[data-list-editable]{
 	margin-bottom: 0.5rem;
 	border: 2px dashed transparent;
 	position: relative;
-	height: 61px;
+	height: $item-card-height;
 
 	@extend .transitions;
 	@extend .hoverable;

@@ -1032,6 +1032,10 @@
         item.element.setUrl(fields[1].element.value());
         item.element.removeClass('empty');
         item.element.attr('draggable', 'true');
+        item.element.addClass('anim-highlight');
+        setTimeout(function() {
+          return item.element.removeClass('anim-highlight');
+        }, 2000);
         return root.userInput.hide();
       };
       root.userInput.abort = function() {
@@ -1518,15 +1522,15 @@
       root = this;
       container = this.animate;
       if (to == null) {
-        to = container.height('px');
+        to = container.height();
       }
       if (from == null) {
-        from = container.height('px');
+        from = container.height();
       }
-      container.css('height', from);
+      container.css('height', from + 'px');
       play = function() {
         console.log("Animation: I'll animate height now.", from, to);
-        return container.css('height', to);
+        return container.css('height', to + 'px');
       };
       setTimeout(play, 0);
       cleanUp = function() {
