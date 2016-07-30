@@ -114,7 +114,7 @@ class ItemCard extends HTMLElement
 
 		ev.stopPropagation()
 
-		ev.dataTransfer.effectAllowed = "copy"
+		ev.dataTransfer.effectAllowed = "move"
 
 		if root.containingItem? 
 

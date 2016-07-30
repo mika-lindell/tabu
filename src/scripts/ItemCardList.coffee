@@ -22,16 +22,12 @@ class ItemCardList extends HTMLElement
 		@baseId = container.replace('#', '')
 		@editable = false
 		@ghost = null
+		@userInput = null
 
 		root = @
 
 		@addClass('item-card-list')
 		@attr('id', "#{ @baseId }-list")
-
-		@userInput = new UserInput('user-input-add-new', 'Add Link')
-		@userInput.addField('title', 'text', 'Title')
-		@userInput.addField('url', 'text', 'Web Address')
-		@userInput.addOkCancel('Add Link')
 
 	create: ()->
 
@@ -94,15 +90,8 @@ class ItemCardList extends HTMLElement
 		index = @getIndex(item)
 
 		if index isnt -1
-			@items.splice(index, 1)
 			root.removeChild(item.element)
-			#item.element.addClass('anim-remove-item')
-
-			# setTimeout(()->
-			# 	root.removeChild(item.element)
-			# 	item = null
-			# 	if done? then done()
-			# , 200)
+			@items.splice(index, 1)
 
 	getIndex: (item)->
 		return @items.indexOf(item)
@@ -120,6 +109,11 @@ class ItemCardList extends HTMLElement
 		
 		@editable = true
 		root = @
+
+		@userInput = new UserInput('user-input-add-new', 'Add Link')
+		@userInput.addField('title', 'text', 'Title')
+		@userInput.addField('url', 'text', 'Web Address')
+		@userInput.addOkCancel('Add Link')
 
 		new HTMLElement('#menu-add-link').on('click', (ev)-> 
 			root.addItemByUserInput(root)
@@ -147,7 +141,23 @@ class ItemCardList extends HTMLElement
 
 		# So that the DnD ghost is updated outside the containing element
 		body = new HTMLElement('body')
-		body.on('dragover', @updateGhost)
+
+		body.on('dragover', (ev)->
+			ev.preventDefault()
+			ev.dataTransfer.dropEffect = "move"
+
+			if ev.dataTransfer.types.indexOf('text') isnt -1 or ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+				root.removeItem(root.draggedItem)
+				root.draggedItem = null				
+			else
+				root.updateGhost(ev, root)
+
+
+		)
+
+		# body.on('dragend', ()->
+		# 	root.dragEnd(event, root)
+		# )
 
 	addItemByUserInput: (root)->
 
@@ -204,10 +214,10 @@ class ItemCardList extends HTMLElement
 			@ghost.attr('id', 'ghost')
 			@ghost.css('position', 'fixed')
 			@ghost.css('width', from.width('px'))
-			@updateGhost(ev, @ghost)
+			@updateGhost(ev, null, @ghost)
 			@append(@ghost)
 
-	updateGhost: (ev, ghost = null)->
+	updateGhost: (ev, root = null, ghost = null)->
 
 		if not ghost?
 			ghost = new HTMLElement('#ghost')
@@ -228,11 +238,9 @@ class ItemCardList extends HTMLElement
 	dragOver = (ev, root)->
 
 		ev.preventDefault()
-		ev.stopPropagation()
 
 		parent = root
 		target = root.getItemForElement(ev.target.closest('li'))
-		if target? then target = target.element
 
 		if not root.draggedItem?
 			if ev.dataTransfer.types.indexOf('text') isnt -1 or ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
@@ -241,10 +249,12 @@ class ItemCardList extends HTMLElement
 				root.draggedItem.element.addClass('dragged')
 				root.draggedItem.element.addClass('empty')
 
+		if target? then target = target.element
+
 		if target isnt root.draggedItem.element and target? and target.containingList is parent and root.draggedItem?
+			
 			# Insert as last item if dragging: 
 			# - over last child
-			
 			if target.DOMElement is parent.DOMElement.lastElementChild
 				console.log 'DragOver: Append'
 				parent.append(root.draggedItem.element)
@@ -290,7 +300,7 @@ class ItemCardList extends HTMLElement
 		console.log 'DragEnd'
 
 		ev.preventDefault()
-		ev.stopPropagation()
+		#ev.stopPropagation()
 		
 		target = new HTMLElement(ev.target.closest('li'))
 

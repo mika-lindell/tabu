@@ -6442,15 +6442,15 @@ Animations
   0% {
     opacity: 0;
     transform: scale(1, 0);
-    outline: 1px solid transparent; }
+    outline: 2px solid transparent; }
   15% {
     opacity: 1;
     transform: scale(1, 1); }
   50% {
-    outline: 1px solid #0277bd;
+    outline: 2px solid #0288d1;
     box-shadow: 0px 0px 20px 0px #0277bd; }
   100% {
-    outline: 1px solid transparent; } }
+    outline: 2px solid transparent; } }
 .anim-highlight {
   animation-name: highlight;
   animation-duration: 2s;

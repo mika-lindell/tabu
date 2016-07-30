@@ -793,7 +793,7 @@
 
     dragStart = function(ev, root) {
       ev.stopPropagation();
-      ev.dataTransfer.effectAllowed = "copy";
+      ev.dataTransfer.effectAllowed = "move";
       if (root.containingItem != null) {
         root.containingList.attr('data-dragged-item', root.attr('id'));
         root.addClass('dragged');
@@ -869,13 +869,10 @@
       this.baseId = container.replace('#', '');
       this.editable = false;
       this.ghost = null;
+      this.userInput = null;
       root = this;
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
-      this.userInput = new UserInput('user-input-add-new', 'Add Link');
-      this.userInput.addField('title', 'text', 'Title');
-      this.userInput.addField('url', 'text', 'Web Address');
-      this.userInput.addOkCancel('Add Link');
     }
 
     ItemCardList.prototype.create = function() {
@@ -957,8 +954,8 @@
       root = this;
       index = this.getIndex(item);
       if (index !== -1) {
-        this.items.splice(index, 1);
-        return root.removeChild(item.element);
+        root.removeChild(item.element);
+        return this.items.splice(index, 1);
       }
     };
 
@@ -982,6 +979,10 @@
       var body, root;
       this.editable = true;
       root = this;
+      this.userInput = new UserInput('user-input-add-new', 'Add Link');
+      this.userInput.addField('title', 'text', 'Title');
+      this.userInput.addField('url', 'text', 'Web Address');
+      this.userInput.addOkCancel('Add Link');
       new HTMLElement('#menu-add-link').on('click', function(ev) {
         return root.addItemByUserInput(root);
       });
@@ -999,7 +1000,16 @@
         return dragEnd(event, root);
       });
       body = new HTMLElement('body');
-      return body.on('dragover', this.updateGhost);
+      return body.on('dragover', function(ev) {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move";
+        if (ev.dataTransfer.types.indexOf('text') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+          root.removeItem(root.draggedItem);
+          return root.draggedItem = null;
+        } else {
+          return root.updateGhost(ev, root);
+        }
+      });
     };
 
     ItemCardList.prototype.addItemByUserInput = function(root) {
@@ -1062,12 +1072,15 @@
         this.ghost.attr('id', 'ghost');
         this.ghost.css('position', 'fixed');
         this.ghost.css('width', from.width('px'));
-        this.updateGhost(ev, this.ghost);
+        this.updateGhost(ev, null, this.ghost);
         return this.append(this.ghost);
       }
     };
 
-    ItemCardList.prototype.updateGhost = function(ev, ghost) {
+    ItemCardList.prototype.updateGhost = function(ev, root, ghost) {
+      if (root == null) {
+        root = null;
+      }
       if (ghost == null) {
         ghost = null;
       }
@@ -1090,12 +1103,8 @@
     dragOver = function(ev, root) {
       var item, parent, target;
       ev.preventDefault();
-      ev.stopPropagation();
       parent = root;
       target = root.getItemForElement(ev.target.closest('li'));
-      if (target != null) {
-        target = target.element;
-      }
       if (root.draggedItem == null) {
         if (ev.dataTransfer.types.indexOf('text') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
           item = root.addItem('Add Link', 'New');
@@ -1103,6 +1112,9 @@
           root.draggedItem.element.addClass('dragged');
           root.draggedItem.element.addClass('empty');
         }
+      }
+      if (target != null) {
+        target = target.element;
       }
       if (target !== root.draggedItem.element && (target != null) && target.containingList === parent && (root.draggedItem != null)) {
         if (target.DOMElement === parent.DOMElement.lastElementChild) {
@@ -1146,7 +1158,6 @@
       var target;
       console.log('DragEnd');
       ev.preventDefault();
-      ev.stopPropagation();
       target = new HTMLElement(ev.target.closest('li'));
       root.removeAttr('data-dragged-item');
       target.removeClass('dragged');
