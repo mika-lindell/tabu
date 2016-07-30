@@ -86,8 +86,15 @@ class ItemCard extends HTMLElement
 		@elements.labelTitle.text(title)
 
 	setUrl: (url)->
-		@color = new HexColor(url)
-		@url = new Url(url)
+
+		dirty = new Url(url)
+
+		if dirty.hostname is window.location.hostname and dirty.protocol is 'chrome-extension:' 
+			@url = new Url('http://' + url)
+		else
+			@url = dirty
+
+		@color = new HexColor(@url)
 
 		@elements.link.attr('href', @url.href)
 
@@ -95,6 +102,7 @@ class ItemCard extends HTMLElement
 		@elements.badge.css('borderColor', @color.url )
 
 		@elements.labelUrl.text(@url.hostname)
+		console.log @url
 
 	dragStart = (ev, root)->
 

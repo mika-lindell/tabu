@@ -7,10 +7,12 @@ class HexColor
 	@url # color from url
 	@string # color from string
 
-	constructor: (string)->
+	constructor: (url)->
 
-		@url = @fromUrl(string)
-		@string = @fromString(string)
+		if url instanceof Url then url = url.href
+
+		@url = @fromUrl(url)
+		@string = @fromString(url)
 
 	# Generate hexadecimal color from url
 	# Ignores protocols and web prefixeses to create unique color for every address

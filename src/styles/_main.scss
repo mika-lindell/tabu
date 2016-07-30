@@ -389,32 +389,9 @@ Animations
   animation-duration: 0.5s;
 }
 
-@keyframes add-item{
-	0%{
-		opacity: 0;
-		width: 0;
-		transform: scale(1, 0)
-	}	
-	100%{
-		opacity: 1;
-	}
-}
-
 .anim-add-item{
-	animation-fill-mode: forwards;
-	animation-name: add-item;
-  animation-duration: 0.2s;
-}
-
-@keyframes remove-item{
-	0%{
-		opacity: 1;
-	}
-	100%{
-		opacity: 0;
-		width: 0;
-		transform: scale(1, 0)
-	}	
+	animation-name: move-in;
+  animation-duration: 0.3s;
 }
 
 .anim-remove-item{
@@ -800,6 +777,19 @@ ul[data-list-editable]{
 
 		@extend .layer-front;
 	}
+
+	&.new{
+
+		@extend .anim-add-item;
+
+	  // &::after{
+	  // 	content: 'fiber_new';
+	  // 	position: absolute;
+
+	  // 	@extend .material-icons;
+	  // }
+	}
+
 }
 
 .item-card-heading,

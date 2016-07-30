@@ -6430,25 +6430,10 @@ Animations
   animation-name: twist;
   animation-duration: 0.5s; }
 
-@keyframes add-item {
-  0% {
-    opacity: 0;
-    width: 0;
-    transform: scale(1, 0); }
-  100% {
-    opacity: 1; } }
-.anim-add-item {
-  animation-fill-mode: forwards;
-  animation-name: add-item;
-  animation-duration: 0.2s; }
+.anim-add-item, .item-card.new {
+  animation-name: move-in;
+  animation-duration: 0.3s; }
 
-@keyframes remove-item {
-  0% {
-    opacity: 1; }
-  100% {
-    opacity: 0;
-    width: 0;
-    transform: scale(1, 0); } }
 .anim-remove-item {
   animation-fill-mode: forwards;
   animation-name: remove-item;

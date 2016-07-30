@@ -220,9 +220,12 @@
 
     HexColor.string;
 
-    function HexColor(string) {
-      this.url = this.fromUrl(string);
-      this.string = this.fromString(string);
+    function HexColor(url) {
+      if (url instanceof Url) {
+        url = url.href;
+      }
+      this.url = this.fromUrl(url);
+      this.string = this.fromString(url);
     }
 
     HexColor.prototype.fromUrl = function(url) {
@@ -764,12 +767,19 @@
     };
 
     ItemCard.prototype.setUrl = function(url) {
-      this.color = new HexColor(url);
-      this.url = new Url(url);
+      var dirty;
+      dirty = new Url(url);
+      if (dirty.hostname === window.location.hostname && dirty.protocol === 'chrome-extension:') {
+        this.url = new Url('http://' + url);
+      } else {
+        this.url = dirty;
+      }
+      this.color = new HexColor(this.url);
       this.elements.link.attr('href', this.url.href);
       this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
       this.elements.badge.css('borderColor', this.color.url);
-      return this.elements.labelUrl.text(this.url.hostname);
+      this.elements.labelUrl.text(this.url.hostname);
+      return console.log(this.url);
     };
 
     dragStart = function(ev, root) {
@@ -927,14 +937,7 @@
       index = this.getIndex(item);
       if (index !== -1) {
         this.items.splice(index, 1);
-        item.element.addClass('anim-remove-item');
-        return setTimeout(function() {
-          root.removeChild(item.element);
-          item = null;
-          if (done != null) {
-            return done();
-          }
-        }, 200);
+        return root.removeChild(item.element);
       }
     };
 
@@ -959,12 +962,12 @@
       if (!root.userInput.active) {
         empty = root.addItem(null, null, 'first');
         empty.element.addClass('empty');
-        empty.element.addClass('anim-add-item');
         empty.element.append(root.userInput);
         root.userInput.done = function(fields) {
           empty.element.setTitle(fields[0].value);
           empty.element.setUrl(fields[1].value);
           empty.element.removeClass('empty');
+          empty.element.addClass('new');
           return root.userInput.hide();
         };
         root.userInput.abort = function() {

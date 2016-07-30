@@ -94,13 +94,14 @@ class ItemCardList extends HTMLElement
 
 		if index isnt -1
 			@items.splice(index, 1)
-			item.element.addClass('anim-remove-item')
+			root.removeChild(item.element)
+			#item.element.addClass('anim-remove-item')
 
-			setTimeout(()->
-				root.removeChild(item.element)
-				item = null
-				if done? then done()
-			, 200)
+			# setTimeout(()->
+			# 	root.removeChild(item.element)
+			# 	item = null
+			# 	if done? then done()
+			# , 200)
 
 	getIndex: (item)->
 		return @items.indexOf(item)
@@ -120,13 +121,13 @@ class ItemCardList extends HTMLElement
 
 			empty = root.addItem(null, null, 'first')
 			empty.element.addClass('empty')
-			empty.element.addClass('anim-add-item')
 			empty.element.append(root.userInput)
 
 			root.userInput.done = (fields)->
 				empty.element.setTitle(fields[0].value)
 				empty.element.setUrl(fields[1].value)
 				empty.element.removeClass('empty')
+				empty.element.addClass('new')
 				root.userInput.hide()
 
 			root.userInput.abort = ()->
