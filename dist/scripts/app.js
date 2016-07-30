@@ -1003,7 +1003,7 @@
       return body.on('dragover', function(ev) {
         ev.preventDefault();
         ev.dataTransfer.dropEffect = "move";
-        if (ev.dataTransfer.types.indexOf('text') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+        if (root.acceptFromOutsideSource(ev)) {
           root.removeItem(root.draggedItem);
           return root.draggedItem = null;
         } else {
@@ -1106,7 +1106,7 @@
       parent = root;
       target = root.getItemForElement(ev.target.closest('li'));
       if (root.draggedItem == null) {
-        if (ev.dataTransfer.types.indexOf('text') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+        if (root.acceptFromOutsideSource(ev)) {
           item = root.addItem('Add Link', 'New');
           root.draggedItem = item;
           root.draggedItem.element.addClass('dragged');
@@ -1164,6 +1164,14 @@
       root.ghost.removeFromDOM();
       root.ghost = null;
       return root.draggedItem = null;
+    };
+
+    ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
+      if (ev.dataTransfer.types.indexOf('text/plain') !== -1 || ev.dataTransfer.types.indexOf('text/html') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+        return true;
+      } else {
+        return false;
+      }
     };
 
     return ItemCardList;

@@ -143,10 +143,11 @@ class ItemCardList extends HTMLElement
 		body = new HTMLElement('body')
 
 		body.on('dragover', (ev)->
+
 			ev.preventDefault()
 			ev.dataTransfer.dropEffect = "move"
 
-			if ev.dataTransfer.types.indexOf('text') isnt -1 or ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+			if root.acceptFromOutsideSource(ev)
 				root.removeItem(root.draggedItem)
 				root.draggedItem = null				
 			else
@@ -243,7 +244,9 @@ class ItemCardList extends HTMLElement
 		target = root.getItemForElement(ev.target.closest('li'))
 
 		if not root.draggedItem?
-			if ev.dataTransfer.types.indexOf('text') isnt -1 or ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+
+			if root.acceptFromOutsideSource(ev)
+
 				item = root.addItem('Add Link', 'New')
 				root.draggedItem = item
 				root.draggedItem.element.addClass('dragged')
@@ -311,3 +314,13 @@ class ItemCardList extends HTMLElement
 		root.ghost = null
 
 		root.draggedItem = null
+
+	acceptFromOutsideSource: (ev)->
+
+		if ev.dataTransfer.types.indexOf('text/plain') isnt -1 or 
+		ev.dataTransfer.types.indexOf('text/html') isnt -1 or
+		ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+
+			return true
+		else
+			return false
