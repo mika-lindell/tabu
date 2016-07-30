@@ -58,7 +58,6 @@ class UserInput extends HTMLElement
 		field =
 		 element: new HTMLElement('input')
 		 container: new HTMLElement('div')
-		 value: ''
 
 		field.container.addClass('input-field')
 
@@ -76,10 +75,6 @@ class UserInput extends HTMLElement
 		if value?
 			field.value = value
 			field.element.value(value)
-
-		field.element.on('change', ()->
-			field.value = field.element.value()
-		)
 
 		if label? then field.container.append(field.label)
 		field.container.append(field.element)

@@ -6647,8 +6647,6 @@ ul[data-list-editable] .drag-handle {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card.empty {
     box-shadow: none !important; }
-    .item-card.empty a {
-      opacity: 0; }
 
 .item-card-heading,
 .no-items {

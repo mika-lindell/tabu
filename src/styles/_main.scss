@@ -772,9 +772,9 @@ ul[data-list-editable]{
 		box-shadow:none !important;
 		@extend .anim-add-item;
 
-		a{
-			opacity: 0;
-		}
+		// a{
+		// 	opacity: 0;
+		// }
 
 		@extend .layer-front;
 	}

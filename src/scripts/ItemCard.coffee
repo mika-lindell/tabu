@@ -3,6 +3,7 @@
 class ItemCard extends HTMLElement
 
 	@containingList
+	@containingItem
 	@elements
 
 	@title
@@ -16,11 +17,12 @@ class ItemCard extends HTMLElement
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
 	
-	constructor: (containingList, title = null, url = null)->
+	constructor: (containingList, containingItem = null,  title = null, url = null)->
 
 		super('li')
 		
 		@containingList = containingList
+		@containingItem = containingItem
 		@elements = new Object
 		@color = null
 		@url = null
@@ -51,7 +53,7 @@ class ItemCard extends HTMLElement
 		@elements.dragHandle.addClass('drag-handle')
 
 		@elements.badge = new HTMLElement('span')
-		@elements.badge.text('EE')
+		@elements.badge.text('NE')
 		@elements.badge.addClass('item-card-badge')
 
 		@elements.labelContainer = new HTMLElement('div')
@@ -107,13 +109,17 @@ class ItemCard extends HTMLElement
 
 		ev.stopPropagation()
 
-		ev.dataTransfer.effectAllowed = "all"
+		ev.dataTransfer.effectAllowed = "copy"
 
-		root.containingList.attr('data-dragged-item', root.attr('id'))
+		if root.containingItem? 
 
-		root.addClass('dragged')
-		
-		root.containingList.createGhost(ev, root)
+			root.containingList.attr('data-dragged-item', root.attr('id'))
+			root.addClass('dragged')
+			root.containingList.createGhost(ev, root)
+
+			root.containingList.draggedItem = root.containingItem
+
+
 
 		#ev.dataTransfer.setData('text/html', root.html())
 		ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)

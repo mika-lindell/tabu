@@ -8,6 +8,7 @@ class ItemCardList extends HTMLElement
 	@baseId
 	@editable
 	@userInput
+	@draggedItem
 	@ghost
 
 	constructor: (container, dataGetter)->
@@ -58,7 +59,7 @@ class ItemCardList extends HTMLElement
 			element: null
 			type: 'heading'
 
-		item.element = new ItemCardHeading(@, title)
+		item.element = new ItemCardHeading(@, item, title)
 
 		if position is 'last'
 			@items.push item
@@ -74,9 +75,9 @@ class ItemCardList extends HTMLElement
 			type: 'link'
 
 		if not title? or not url?
-			item.element = new ItemCard(@)
+			item.element = new ItemCard(@, item)
 		else
-			item.element = new ItemCard(@, title, url)
+			item.element = new ItemCard(@, item, title, url)
 
 		if position is 'last'
 			@items.push item
@@ -111,35 +112,9 @@ class ItemCardList extends HTMLElement
 		for item, i in @items
 
 			if item.element.DOMElement is DOMElement
-				return item.element
+				return item
 
 		return null
-
-	addItemByUserInput: (root)->
-
-		if not root.userInput.active
-
-			empty = root.addItem(null, null, 'first')
-			empty.element.addClass('empty')
-			empty.element.attr('draggable', 'false')
-			empty.element.append(root.userInput)
-
-			root.userInput.done = (fields)->
-				empty.element.setTitle(fields[0].value)
-				empty.element.setUrl(fields[1].value)
-				empty.element.removeClass('empty')
-				empty.element.attr('draggable', 'true')
-				root.userInput.hide()
-
-			root.userInput.abort = ()->
-				
-				root.removeItem(empty, ()->
-					root.userInput.hide()
-				)
-
-			root.userInput.show()
-
-
 
 	enableEditing: ->
 		
@@ -162,6 +137,10 @@ class ItemCardList extends HTMLElement
 			dragOver(event, root)
 		, 80))
 
+		@on('drop', ()->
+			drop(event, root)
+		)
+
 		@on('dragend', ()->
 			dragEnd(event, root)
 		)
@@ -169,6 +148,40 @@ class ItemCardList extends HTMLElement
 		# So that the DnD ghost is updated outside the containing element
 		body = new HTMLElement('body')
 		body.on('dragover', @updateGhost)
+
+	addItemByUserInput: (root)->
+
+		#if not root.userInput.active
+
+		empty = root.addItem(null, null, 'first')
+
+		root.showUserInputForItem(empty)
+
+	showUserInputForItem: (item, title = null, url = null)->
+
+		root = @
+
+		if title? then @userInput.fields[0].element.value(title)
+		if url? then @userInput.fields[1].element.value(url)
+
+		item.element.append(@userInput)
+		
+		item.element.addClass('empty')
+		item.element.removeClass('dragged')
+		item.element.attr('draggable', 'false')		
+
+		@userInput.done = (fields)->
+			item.element.setTitle(fields[0].element.value())
+			item.element.setUrl(fields[1].element.value())
+			item.element.removeClass('empty')
+			item.element.attr('draggable', 'true')
+			root.userInput.hide()
+
+		root.userInput.abort = ()->
+			root.userInput.hide()
+			root.removeItem(item)
+
+		root.userInput.show()
 
 	setOrientation: (orientation = 'horizontal')->
 
@@ -201,8 +214,8 @@ class ItemCardList extends HTMLElement
 
 		ev.preventDefault()
 		ev.stopPropagation()
-		
-		ev.dataTransfer.dropEffect = "move"
+
+		ev.dataTransfer.dropEffect = "copyLink"
 
 		root.updateGhost(ev)
 
@@ -211,49 +224,71 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 
-		ev.dataTransfer.dropEffect = "move"
-
 		parent = root
 		target = root.getItemForElement(ev.target.closest('li'))
+		if target? then target = target.element
 
-		draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')))
-		
-		if target isnt draggedItem and target? and target.containingList is parent and draggedItem?
+		if not root.draggedItem?
+			if ev.dataTransfer.types.indexOf('text') isnt -1 or ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+				item = root.addItem('Add Link', 'New')
+				root.draggedItem = item
+				root.draggedItem.element.addClass('dragged')
+
+		if target isnt root.draggedItem.element and target? and target.containingList is parent and root.draggedItem?
 			# Insert as last item if dragging: 
 			# - over last child
 			
 			if target.DOMElement is parent.DOMElement.lastElementChild
 				console.log 'DragOver: Append'
-				parent.append(draggedItem)
+				parent.append(root.draggedItem.element)
 			
-			else if target.top() < draggedItem.top() or target.left() < draggedItem.left()
+			else if target.top() < root.draggedItem.element.top() or target.left() < root.draggedItem.element.left()
 				# InsertBefore has to be first option for this to work
 				# Insert before if dragging:
 				# - Up
 				# - Left
 				console.log 'DragOver: insertBefore'
-				parent.insert(draggedItem, target)
+				parent.insert(root.draggedItem.element, target)
 
-			else if target.top() > draggedItem.top() or target.left() > draggedItem.left()
+			else if target.top() > root.draggedItem.element.top() or target.left() > root.draggedItem.element.left()
 				# Insert after if dragging:
 				# - Down
 				# - Right				
 				console.log 'DragOver: insertAfter'
 				if target.DOMElement.nextSibling
-					parent.insert(draggedItem, target, 'after')
+					parent.insert(root.draggedItem.element, target, 'after')
+
+	drop = (ev, root)->
+
+		ev.preventDefault()
+		ev.stopPropagation()
+
+		title = ev.dataTransfer.getData('text')
+		url = ev.dataTransfer.getData('text/uri-list')
+
+		if title is '' then title = null
+		if url is '' then url = null
+		if url? then title = null
+
+		if title? or url?
+			root.showUserInputForItem(root.draggedItem, title, url)
+
+		console.log  'Drop', title, url
+
 
 	dragEnd = (ev, root)->
 
-		console.log 'Drop'
+		console.log 'DragEnd'
 
 		ev.preventDefault()
 		ev.stopPropagation()
 		
-		parent = root
 		target = new HTMLElement(ev.target.closest('li'))
 
-		parent.removeAttr('data-dragged-item')
+		root.removeAttr('data-dragged-item')
 		target.removeClass('dragged')
 		
-		root.ghost.DOMElement.outerHTML = ''
+		root.ghost.removeFromDOM()
 		root.ghost = null
+
+		root.draggedItem = null

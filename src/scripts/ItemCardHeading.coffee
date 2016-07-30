@@ -2,18 +2,22 @@
 #
 class ItemCardHeading extends HTMLElement
 
+	# TODO: Create baseclass Item (or Card?) which extends HTMLElement and has shared functionality between ItemCardHeading and itemCard
 	@containingList
+	@containingItem
 	@id
 
 	# Construct new card heading.
 	#
 	# @param [String] Title of the card
 	#
-	constructor: (containingList, title, id = null)->
+	constructor: (containingList, containingItem = null, title, id = null)->
 		super('li')
 		@addClass('item-card-heading')
 
 		@containingList = containingList
+		@containingItem = containingItem
+		
 		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
 
 		heading = new HTMLElement('h6')

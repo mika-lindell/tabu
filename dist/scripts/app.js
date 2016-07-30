@@ -697,6 +697,8 @@
 
     ItemCard.containingList;
 
+    ItemCard.containingItem;
+
     ItemCard.elements;
 
     ItemCard.title;
@@ -707,8 +709,11 @@
 
     ItemCard.id;
 
-    function ItemCard(containingList, title, url) {
+    function ItemCard(containingList, containingItem, title, url) {
       var root;
+      if (containingItem == null) {
+        containingItem = null;
+      }
       if (title == null) {
         title = null;
       }
@@ -717,6 +722,7 @@
       }
       ItemCard.__super__.constructor.call(this, 'li');
       this.containingList = containingList;
+      this.containingItem = containingItem;
       this.elements = new Object;
       this.color = null;
       this.url = null;
@@ -738,7 +744,7 @@
       this.elements.dragHandle.text('more_vertmore_vert');
       this.elements.dragHandle.addClass('drag-handle');
       this.elements.badge = new HTMLElement('span');
-      this.elements.badge.text('EE');
+      this.elements.badge.text('NE');
       this.elements.badge.addClass('item-card-badge');
       this.elements.labelContainer = new HTMLElement('div');
       this.elements.labelContainer.addClass('item-card-label-container');
@@ -783,10 +789,13 @@
 
     dragStart = function(ev, root) {
       ev.stopPropagation();
-      ev.dataTransfer.effectAllowed = "all";
-      root.containingList.attr('data-dragged-item', root.attr('id'));
-      root.addClass('dragged');
-      root.containingList.createGhost(ev, root);
+      ev.dataTransfer.effectAllowed = "copy";
+      if (root.containingItem != null) {
+        root.containingList.attr('data-dragged-item', root.attr('id'));
+        root.addClass('dragged');
+        root.containingList.createGhost(ev, root);
+        root.containingList.draggedItem = root.containingItem;
+      }
       return ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
     };
 
@@ -799,16 +808,22 @@
 
     ItemCardHeading.containingList;
 
+    ItemCardHeading.containingItem;
+
     ItemCardHeading.id;
 
-    function ItemCardHeading(containingList, title, id) {
+    function ItemCardHeading(containingList, containingItem, title, id) {
       var heading;
+      if (containingItem == null) {
+        containingItem = null;
+      }
       if (id == null) {
         id = null;
       }
       ItemCardHeading.__super__.constructor.call(this, 'li');
       this.addClass('item-card-heading');
       this.containingList = containingList;
+      this.containingItem = containingItem;
       this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
       heading = new HTMLElement('h6');
       heading.text(title);
@@ -821,7 +836,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var dragEnd, dragOver, dragOverUpdateCursor;
+    var dragEnd, dragOver, dragOverUpdateCursor, drop;
 
     extend(ItemCardList, superClass);
 
@@ -836,6 +851,8 @@
     ItemCardList.editable;
 
     ItemCardList.userInput;
+
+    ItemCardList.draggedItem;
 
     ItemCardList.ghost;
 
@@ -888,7 +905,7 @@
         element: null,
         type: 'heading'
       };
-      item.element = new ItemCardHeading(this, title);
+      item.element = new ItemCardHeading(this, item, title);
       if (position === 'last') {
         this.items.push(item);
         return this.append(item.element);
@@ -914,9 +931,9 @@
         type: 'link'
       };
       if ((title == null) || (url == null)) {
-        item.element = new ItemCard(this);
+        item.element = new ItemCard(this, item);
       } else {
-        item.element = new ItemCard(this, title, url);
+        item.element = new ItemCard(this, item, title, url);
       }
       if (position === 'last') {
         this.items.push(item);
@@ -951,33 +968,10 @@
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
         if (item.element.DOMElement === DOMElement) {
-          return item.element;
+          return item;
         }
       }
       return null;
-    };
-
-    ItemCardList.prototype.addItemByUserInput = function(root) {
-      var empty;
-      if (!root.userInput.active) {
-        empty = root.addItem(null, null, 'first');
-        empty.element.addClass('empty');
-        empty.element.attr('draggable', 'false');
-        empty.element.append(root.userInput);
-        root.userInput.done = function(fields) {
-          empty.element.setTitle(fields[0].value);
-          empty.element.setUrl(fields[1].value);
-          empty.element.removeClass('empty');
-          empty.element.attr('draggable', 'true');
-          return root.userInput.hide();
-        };
-        root.userInput.abort = function() {
-          return root.removeItem(empty, function() {
-            return root.userInput.hide();
-          });
-        };
-        return root.userInput.show();
-      }
     };
 
     ItemCardList.prototype.enableEditing = function() {
@@ -994,11 +988,53 @@
       this.on('dragover', new Throttle(function() {
         return dragOver(event, root);
       }, 80));
+      this.on('drop', function() {
+        return drop(event, root);
+      });
       this.on('dragend', function() {
         return dragEnd(event, root);
       });
       body = new HTMLElement('body');
       return body.on('dragover', this.updateGhost);
+    };
+
+    ItemCardList.prototype.addItemByUserInput = function(root) {
+      var empty;
+      empty = root.addItem(null, null, 'first');
+      return root.showUserInputForItem(empty);
+    };
+
+    ItemCardList.prototype.showUserInputForItem = function(item, title, url) {
+      var root;
+      if (title == null) {
+        title = null;
+      }
+      if (url == null) {
+        url = null;
+      }
+      root = this;
+      if (title != null) {
+        this.userInput.fields[0].element.value(title);
+      }
+      if (url != null) {
+        this.userInput.fields[1].element.value(url);
+      }
+      item.element.append(this.userInput);
+      item.element.addClass('empty');
+      item.element.removeClass('dragged');
+      item.element.attr('draggable', 'false');
+      this.userInput.done = function(fields) {
+        item.element.setTitle(fields[0].element.value());
+        item.element.setUrl(fields[1].element.value());
+        item.element.removeClass('empty');
+        item.element.attr('draggable', 'true');
+        return root.userInput.hide();
+      };
+      root.userInput.abort = function() {
+        root.userInput.hide();
+        return root.removeItem(item);
+      };
+      return root.userInput.show();
     };
 
     ItemCardList.prototype.setOrientation = function(orientation) {
@@ -1039,45 +1075,74 @@
     dragOverUpdateCursor = function(ev, root) {
       ev.preventDefault();
       ev.stopPropagation();
-      ev.dataTransfer.dropEffect = "move";
+      ev.dataTransfer.dropEffect = "copyLink";
       return root.updateGhost(ev);
     };
 
     dragOver = function(ev, root) {
-      var draggedItem, parent, target;
+      var item, parent, target;
       ev.preventDefault();
       ev.stopPropagation();
-      ev.dataTransfer.dropEffect = "move";
       parent = root;
       target = root.getItemForElement(ev.target.closest('li'));
-      draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')));
-      if (target !== draggedItem && (target != null) && target.containingList === parent && (draggedItem != null)) {
+      if (target != null) {
+        target = target.element;
+      }
+      if (root.draggedItem == null) {
+        if (ev.dataTransfer.types.indexOf('text') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+          item = root.addItem('Add Link', 'New');
+          root.draggedItem = item;
+          root.draggedItem.element.addClass('dragged');
+        }
+      }
+      if (target !== root.draggedItem.element && (target != null) && target.containingList === parent && (root.draggedItem != null)) {
         if (target.DOMElement === parent.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
-          return parent.append(draggedItem);
-        } else if (target.top() < draggedItem.top() || target.left() < draggedItem.left()) {
+          return parent.append(root.draggedItem.element);
+        } else if (target.top() < root.draggedItem.element.top() || target.left() < root.draggedItem.element.left()) {
           console.log('DragOver: insertBefore');
-          return parent.insert(draggedItem, target);
-        } else if (target.top() > draggedItem.top() || target.left() > draggedItem.left()) {
+          return parent.insert(root.draggedItem.element, target);
+        } else if (target.top() > root.draggedItem.element.top() || target.left() > root.draggedItem.element.left()) {
           console.log('DragOver: insertAfter');
           if (target.DOMElement.nextSibling) {
-            return parent.insert(draggedItem, target, 'after');
+            return parent.insert(root.draggedItem.element, target, 'after');
           }
         }
       }
     };
 
-    dragEnd = function(ev, root) {
-      var parent, target;
-      console.log('Drop');
+    drop = function(ev, root) {
+      var title, url;
       ev.preventDefault();
       ev.stopPropagation();
-      parent = root;
+      title = ev.dataTransfer.getData('text');
+      url = ev.dataTransfer.getData('text/uri-list');
+      if (title === '') {
+        title = null;
+      }
+      if (url === '') {
+        url = null;
+      }
+      if (url != null) {
+        title = null;
+      }
+      if ((title != null) || (url != null)) {
+        root.showUserInputForItem(root.draggedItem, title, url);
+      }
+      return console.log('Drop', title, url);
+    };
+
+    dragEnd = function(ev, root) {
+      var target;
+      console.log('DragEnd');
+      ev.preventDefault();
+      ev.stopPropagation();
       target = new HTMLElement(ev.target.closest('li'));
-      parent.removeAttr('data-dragged-item');
+      root.removeAttr('data-dragged-item');
       target.removeClass('dragged');
-      root.ghost.DOMElement.outerHTML = '';
-      return root.ghost = null;
+      root.ghost.removeFromDOM();
+      root.ghost = null;
+      return root.draggedItem = null;
     };
 
     return ItemCardList;
@@ -1148,8 +1213,7 @@
       }
       field = {
         element: new HTMLElement('input'),
-        container: new HTMLElement('div'),
-        value: ''
+        container: new HTMLElement('div')
       };
       field.container.addClass('input-field');
       field.element.attr('id', name);
@@ -1168,9 +1232,6 @@
         field.value = value;
         field.element.value(value);
       }
-      field.element.on('change', function() {
-        return field.value = field.element.value();
-      });
       if (label != null) {
         field.container.append(field.label);
       }
