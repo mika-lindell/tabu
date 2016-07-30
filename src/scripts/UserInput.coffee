@@ -43,6 +43,9 @@ class UserInput extends HTMLElement
 			root.onConfirm()
 		)
 
+		@.on('dragover', @dragOver)
+		@.on('drop', @drop)
+
 		body = new HTMLElement('body')
 		body.on('keyup', (ev)->
 			if ev.code is 'Escape'
@@ -76,7 +79,6 @@ class UserInput extends HTMLElement
 
 		field.element.on('change', ()->
 			field.value = field.element.value()
-			console.log field
 		)
 
 		if label? then field.container.append(field.label)
@@ -134,4 +136,24 @@ class UserInput extends HTMLElement
 	onConfirm: ()->
 		@hide()
 		@done(@fields)
+
+	dragOver: (ev)->
+		# ev.preventDefault()
+		ev.stopPropagation()
+		# console.log 'Drag', ev
+		# ev.dataTransfer.dropEffect = 'copyLink'
+
+	drop: (ev)->
+		# ev.preventDefault()
+		ev.stopPropagation()
+		# console.log 'Drop', ev
+		# data = ev.dataTransfer.getData("text")
+		# uri = ev.dataTransfer.getData("text/uri-list")
+
+		# for field in root.fields
+		# 	if field.name is 'url'
+
+		# console.log data, uri
+
+		
 

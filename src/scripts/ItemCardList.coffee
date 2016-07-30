@@ -121,13 +121,14 @@ class ItemCardList extends HTMLElement
 
 			empty = root.addItem(null, null, 'first')
 			empty.element.addClass('empty')
+			empty.element.attr('draggable', 'false')
 			empty.element.append(root.userInput)
 
 			root.userInput.done = (fields)->
 				empty.element.setTitle(fields[0].value)
 				empty.element.setUrl(fields[1].value)
 				empty.element.removeClass('empty')
-				empty.element.addClass('new')
+				empty.element.attr('draggable', 'true')
 				root.userInput.hide()
 
 			root.userInput.abort = ()->
@@ -199,6 +200,8 @@ class ItemCardList extends HTMLElement
 	dragOverUpdateCursor = (ev, root)->
 
 		ev.preventDefault()
+		ev.stopPropagation()
+		
 		ev.dataTransfer.dropEffect = "move"
 
 		root.updateGhost(ev)
@@ -206,6 +209,8 @@ class ItemCardList extends HTMLElement
 	dragOver = (ev, root)->
 
 		ev.preventDefault()
+		ev.stopPropagation()
+
 		ev.dataTransfer.dropEffect = "move"
 
 		parent = root
@@ -213,7 +218,7 @@ class ItemCardList extends HTMLElement
 
 		draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')))
 		
-		if target isnt draggedItem and target? and target.containingList is parent
+		if target isnt draggedItem and target? and target.containingList is parent and draggedItem?
 			# Insert as last item if dragging: 
 			# - over last child
 			
@@ -242,6 +247,7 @@ class ItemCardList extends HTMLElement
 		console.log 'Drop'
 
 		ev.preventDefault()
+		ev.stopPropagation()
 		
 		parent = root
 		target = new HTMLElement(ev.target.closest('li'))

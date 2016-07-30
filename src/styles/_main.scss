@@ -770,24 +770,13 @@ ul[data-list-editable]{
 	&.empty{
 
 		box-shadow:none !important;
+		@extend .anim-add-item;
 
 		a{
 			opacity: 0;
 		}
 
 		@extend .layer-front;
-	}
-
-	&.new{
-
-		@extend .anim-add-item;
-
-	  // &::after{
-	  // 	content: 'fiber_new';
-	  // 	position: absolute;
-
-	  // 	@extend .material-icons;
-	  // }
 	}
 
 }

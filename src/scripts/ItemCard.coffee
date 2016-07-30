@@ -102,9 +102,10 @@ class ItemCard extends HTMLElement
 		@elements.badge.css('borderColor', @color.url )
 
 		@elements.labelUrl.text(@url.hostname)
-		console.log @url
 
 	dragStart = (ev, root)->
+
+		ev.stopPropagation()
 
 		ev.dataTransfer.effectAllowed = "all"
 

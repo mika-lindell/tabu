@@ -778,11 +778,11 @@
       this.elements.link.attr('href', this.url.href);
       this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
       this.elements.badge.css('borderColor', this.color.url);
-      this.elements.labelUrl.text(this.url.hostname);
-      return console.log(this.url);
+      return this.elements.labelUrl.text(this.url.hostname);
     };
 
     dragStart = function(ev, root) {
+      ev.stopPropagation();
       ev.dataTransfer.effectAllowed = "all";
       root.containingList.attr('data-dragged-item', root.attr('id'));
       root.addClass('dragged');
@@ -962,12 +962,13 @@
       if (!root.userInput.active) {
         empty = root.addItem(null, null, 'first');
         empty.element.addClass('empty');
+        empty.element.attr('draggable', 'false');
         empty.element.append(root.userInput);
         root.userInput.done = function(fields) {
           empty.element.setTitle(fields[0].value);
           empty.element.setUrl(fields[1].value);
           empty.element.removeClass('empty');
-          empty.element.addClass('new');
+          empty.element.attr('draggable', 'true');
           return root.userInput.hide();
         };
         root.userInput.abort = function() {
@@ -1037,6 +1038,7 @@
 
     dragOverUpdateCursor = function(ev, root) {
       ev.preventDefault();
+      ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
       return root.updateGhost(ev);
     };
@@ -1044,11 +1046,12 @@
     dragOver = function(ev, root) {
       var draggedItem, parent, target;
       ev.preventDefault();
+      ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
       parent = root;
       target = root.getItemForElement(ev.target.closest('li'));
       draggedItem = root.getItemForElement(document.getElementById(parent.attr('data-dragged-item')));
-      if (target !== draggedItem && (target != null) && target.containingList === parent) {
+      if (target !== draggedItem && (target != null) && target.containingList === parent && (draggedItem != null)) {
         if (target.DOMElement === parent.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
           return parent.append(draggedItem);
@@ -1068,6 +1071,7 @@
       var parent, target;
       console.log('Drop');
       ev.preventDefault();
+      ev.stopPropagation();
       parent = root;
       target = new HTMLElement(ev.target.closest('li'));
       parent.removeAttr('data-dragged-item');
@@ -1121,6 +1125,8 @@
         ev.preventDefault();
         return root.onConfirm();
       });
+      this.on('dragover', this.dragOver);
+      this.on('drop', this.drop);
       body = new HTMLElement('body');
       body.on('keyup', function(ev) {
         if (ev.code === 'Escape') {
@@ -1163,8 +1169,7 @@
         field.element.value(value);
       }
       field.element.on('change', function() {
-        field.value = field.element.value();
-        return console.log(field);
+        return field.value = field.element.value();
       });
       if (label != null) {
         field.container.append(field.label);
@@ -1224,6 +1229,14 @@
     UserInput.prototype.onConfirm = function() {
       this.hide();
       return this.done(this.fields);
+    };
+
+    UserInput.prototype.dragOver = function(ev) {
+      return ev.stopPropagation();
+    };
+
+    UserInput.prototype.drop = function(ev) {
+      return ev.stopPropagation();
     };
 
     return UserInput;

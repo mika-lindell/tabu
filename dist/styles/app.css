@@ -6430,7 +6430,7 @@ Animations
   animation-name: twist;
   animation-duration: 0.5s; }
 
-.anim-add-item, .item-card.new {
+.anim-add-item, .item-card.empty {
   animation-name: move-in;
   animation-duration: 0.3s; }
 
