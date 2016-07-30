@@ -6432,7 +6432,7 @@ Animations
 
 @keyframes pop-in {
   0% {
-    transform: scale(1, 0); } }
+    transform: scale(1, 0.2); } }
 .anim-pop-in {
   animation-name: pop-in;
   animation-duration: 0.2s;
