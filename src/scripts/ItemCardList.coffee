@@ -233,6 +233,7 @@ class ItemCardList extends HTMLElement
 				item = root.addItem('Add Link', 'New')
 				root.draggedItem = item
 				root.draggedItem.element.addClass('dragged')
+				root.draggedItem.element.addClass('empty')
 
 		if target isnt root.draggedItem.element and target? and target.containingList is parent and root.draggedItem?
 			# Insert as last item if dragging: 
@@ -272,6 +273,8 @@ class ItemCardList extends HTMLElement
 
 		if title? or url?
 			root.showUserInputForItem(root.draggedItem, title, url)
+
+		root.draggedItem = null
 
 		console.log  'Drop', title, url
 

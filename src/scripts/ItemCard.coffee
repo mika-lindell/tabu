@@ -67,6 +67,10 @@ class ItemCard extends HTMLElement
 		@elements.labelUrl = new HTMLElement('span')
 		@elements.labelUrl.addClass('item-card-label-secondary')
 
+		@elements.empty = new HTMLElement('div')
+		@elements.empty.addClass('item-card-empty')
+		@elements.empty.text('Add New Link')
+
 		if title?
 			@setTitle(title)
 
@@ -83,6 +87,7 @@ class ItemCard extends HTMLElement
 		@elements.link.append(@elements.labelContainer)
 
 		@append(@elements.link)
+		@append(@elements.empty)
 
 	setTitle: (title)->
 		@elements.labelTitle.text(title)

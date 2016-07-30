@@ -20,6 +20,7 @@ class UserInput extends HTMLElement
 		@attr('id', id)
 		@addClass('user-input')
 		@addClass('card')
+		@addClass('anim-pop-in')
 
 		@css('position', 'absolute')
 		@css('top', '0')
@@ -82,6 +83,10 @@ class UserInput extends HTMLElement
 
 		@fields.push field
 
+	clearFields: ()->
+
+		for field in @fields
+			field.element.value('')
 
 	addOkCancel: (confirm = 'Ok', abort= 'Cancel')->
 
@@ -131,6 +136,8 @@ class UserInput extends HTMLElement
 	onConfirm: ()->
 		@hide()
 		@done(@fields)
+		@clearFields()
+
 
 	dragOver: (ev)->
 		# ev.preventDefault()

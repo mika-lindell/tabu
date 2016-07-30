@@ -6311,7 +6311,7 @@ Font sizes
 .font-size-regular {
   font-size: 1.0rem; }
 
-.font-size-large, .no-items .headline {
+.font-size-large, .item-card-empty, .no-items .headline {
   font-size: 1.3rem; }
 
 /***
@@ -6343,7 +6343,7 @@ Helpers
 .color-medium-grey, .hotkey {
   color: #8c8c8c; }
 
-.color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-label-secondary, .no-items {
+.color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-empty, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
 
 .color-white, button.highlight {
@@ -6430,9 +6430,13 @@ Animations
   animation-name: twist;
   animation-duration: 0.5s; }
 
-.anim-add-item, .item-card.empty {
-  animation-name: move-in;
-  animation-duration: 0.3s; }
+@keyframes pop-in {
+  0% {
+    transform: scale(1, 0); } }
+.anim-pop-in {
+  animation-name: pop-in;
+  animation-duration: 0.2s;
+  transform-origin: 0 0; }
 
 .anim-remove-item {
   animation-fill-mode: forwards;
@@ -6635,11 +6639,19 @@ ul[data-list-editable] .drag-handle {
 [data-dragged-item] .item-card {
   box-shadow: none; }
 
+.item-card-empty {
+  display: none;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  height: 61px;
+  line-height: 61px; }
+
 .item-card {
   margin-bottom: 0.5rem;
   border: 2px dashed transparent;
   position: relative;
-  vertical-align: top; }
+  height: 61px; }
   .item-card.dragged {
     border-color: #c7c7c7;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
@@ -6647,6 +6659,10 @@ ul[data-list-editable] .drag-handle {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card.empty {
     box-shadow: none !important; }
+    .item-card.empty .item-card-empty {
+      display: block; }
+    .item-card.empty a {
+      display: none; }
 
 .item-card-heading,
 .no-items {

@@ -753,6 +753,9 @@
       this.elements.lineBreak = new HTMLElement('br');
       this.elements.labelUrl = new HTMLElement('span');
       this.elements.labelUrl.addClass('item-card-label-secondary');
+      this.elements.empty = new HTMLElement('div');
+      this.elements.empty.addClass('item-card-empty');
+      this.elements.empty.text('Add New Link');
       if (title != null) {
         this.setTitle(title);
       }
@@ -766,6 +769,7 @@
       this.elements.labelContainer.append(this.elements.labelUrl);
       this.elements.link.append(this.elements.labelContainer);
       this.append(this.elements.link);
+      this.append(this.elements.empty);
     }
 
     ItemCard.prototype.setTitle = function(title) {
@@ -1093,6 +1097,7 @@
           item = root.addItem('Add Link', 'New');
           root.draggedItem = item;
           root.draggedItem.element.addClass('dragged');
+          root.draggedItem.element.addClass('empty');
         }
       }
       if (target !== root.draggedItem.element && (target != null) && target.containingList === parent && (root.draggedItem != null)) {
@@ -1129,6 +1134,7 @@
       if ((title != null) || (url != null)) {
         root.showUserInputForItem(root.draggedItem, title, url);
       }
+      root.draggedItem = null;
       return console.log('Drop', title, url);
     };
 
@@ -1174,6 +1180,7 @@
       this.attr('id', id);
       this.addClass('user-input');
       this.addClass('card');
+      this.addClass('anim-pop-in');
       this.css('position', 'absolute');
       this.css('top', '0');
       this.css('left', '0');
@@ -1240,6 +1247,17 @@
       return this.fields.push(field);
     };
 
+    UserInput.prototype.clearFields = function() {
+      var field, j, len, ref, results;
+      ref = this.fields;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        field = ref[j];
+        results.push(field.element.value(''));
+      }
+      return results;
+    };
+
     UserInput.prototype.addOkCancel = function(confirm, abort) {
       var cancel, container, ok, root;
       if (confirm == null) {
@@ -1289,7 +1307,8 @@
 
     UserInput.prototype.onConfirm = function() {
       this.hide();
-      return this.done(this.fields);
+      this.done(this.fields);
+      return this.clearFields();
     };
 
     UserInput.prototype.dragOver = function(ev) {
