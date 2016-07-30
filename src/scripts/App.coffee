@@ -77,7 +77,6 @@ class App
 			list = new ItemCardList('#other-devices', root.otherDevices)
 			list.create()
 
-
 		@topSites.fetch()
 		@otherDevices.fetch()
 		@latestBookmarks.fetch()

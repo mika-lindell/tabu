@@ -40,17 +40,17 @@ class UserInput extends HTMLElement
 
 		@.on('submit', (ev)->
 			ev.preventDefault()
-			root.hide()
-			root.done(root.fields)
+			root.onConfirm()
 		)
 
 		body = new HTMLElement('body')
 		body.on('keyup', (ev)->
-			if ev.code is 'Escape' then root.hide()
+			if ev.code is 'Escape'
+				root.onAbort()
 		)
 		
 
-	addField: (name, type, label = null, value = null)->
+	addField: (name, type, label = null, value = null, required = true)->
 
 		field =
 		 element: new HTMLElement('input')
@@ -62,6 +62,7 @@ class UserInput extends HTMLElement
 		field.element.attr('id', name)
 		field.element.attr('name', name)
 		field.element.attr('type', type)
+		if required then field.element.attr('required', '')
 		field.element.attr('tabindex', @fields.count + 1)
 
 		if label?
@@ -102,8 +103,7 @@ class UserInput extends HTMLElement
 		cancel.addClass('cancel')
 
 		cancel.on('click', ()->
-			root.abort()
-			root.hide()
+			root.onAbort()
 		)
 
 		ok.attr('type', 'submit')
@@ -127,4 +127,11 @@ class UserInput extends HTMLElement
 		@active = false
 
 
+	onAbort: ()->
+		@abort()
+		@hide()
+
+	onConfirm: ()->
+		@hide()
+		@done(@fields)
 

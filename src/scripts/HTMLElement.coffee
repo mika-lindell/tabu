@@ -212,6 +212,13 @@ class HTMLElement
 	firstChild: ()->
 		return new HTMLElement(@DOMElement.firstChild)
 
+	removeChild: (element)->
+
+		if element instanceof Element
+			return @DOMElement.removeChild(element)
+		else
+			return @DOMElement.removeChild(element.DOMElement)
+
 	childCount: ()->
 		return @DOMElement.childElementCount
 

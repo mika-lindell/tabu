@@ -29,7 +29,7 @@ class ItemCardList extends HTMLElement
 
 		@userInput = new UserInput('user-input-add-new', 'Add Link')
 		@userInput.addField('title', 'text', 'Title')
-		@userInput.addField('url', 'url', 'Web Address')
+		@userInput.addField('url', 'text', 'Web Address')
 		@userInput.addOkCancel('Add Link')
 
 	create: ()->
@@ -87,23 +87,23 @@ class ItemCardList extends HTMLElement
 
 		return item
 
-	removeItem: (item)->
+	removeItem: (item, done = null)->
 
-	addItemByUserInput: (root)->
+		root = @
+		index = @getIndex(item)
 
-		if not root.userInput.active
+		if index isnt -1
+			@items.splice(index, 1)
+			item.element.addClass('anim-remove-item')
 
-			empty = root.addItem(null, null, 'first')
-			empty.element.addClass('empty')
-			empty.element.addClass('anim-new-item')
-			empty.element.append(root.userInput)
+			setTimeout(()->
+				root.removeChild(item.element)
+				item = null
+				if done? then done()
+			, 200)
 
-			root.userInput.done = (fields)->
-				empty.element.setTitle(fields[0].value)
-				empty.element.setUrl(fields[1].value)
-				root.userInput.hide()
-
-			root.userInput.show()
+	getIndex: (item)->
+		return @items.indexOf(item)
 
 	getItemForElement: (DOMElement)->
 
@@ -113,6 +113,31 @@ class ItemCardList extends HTMLElement
 				return item.element
 
 		return null
+
+	addItemByUserInput: (root)->
+
+		if not root.userInput.active
+
+			empty = root.addItem(null, null, 'first')
+			empty.element.addClass('empty')
+			empty.element.addClass('anim-add-item')
+			empty.element.append(root.userInput)
+
+			root.userInput.done = (fields)->
+				empty.element.setTitle(fields[0].value)
+				empty.element.setUrl(fields[1].value)
+				empty.element.removeClass('empty')
+				root.userInput.hide()
+
+			root.userInput.abort = ()->
+				
+				root.removeItem(empty, ()->
+					root.userInput.hide()
+				)
+
+			root.userInput.show()
+
+
 
 	enableEditing: ->
 		

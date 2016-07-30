@@ -469,6 +469,14 @@
       return new HTMLElement(this.DOMElement.firstChild);
     };
 
+    HTMLElement.prototype.removeChild = function(element) {
+      if (element instanceof Element) {
+        return this.DOMElement.removeChild(element);
+      } else {
+        return this.DOMElement.removeChild(element.DOMElement);
+      }
+    };
+
     HTMLElement.prototype.childCount = function() {
       return this.DOMElement.childElementCount;
     };
@@ -835,7 +843,7 @@
       this.attr('id', this.baseId + "-list");
       this.userInput = new UserInput('user-input-add-new', 'Add Link');
       this.userInput.addField('title', 'text', 'Title');
-      this.userInput.addField('url', 'url', 'Web Address');
+      this.userInput.addField('url', 'text', 'Web Address');
       this.userInput.addOkCancel('Add Link');
     }
 
@@ -910,22 +918,28 @@
       return item;
     };
 
-    ItemCardList.prototype.removeItem = function(item) {};
-
-    ItemCardList.prototype.addItemByUserInput = function(root) {
-      var empty;
-      if (!root.userInput.active) {
-        empty = root.addItem(null, null, 'first');
-        empty.element.addClass('empty');
-        empty.element.addClass('anim-new-item');
-        empty.element.append(root.userInput);
-        root.userInput.done = function(fields) {
-          empty.element.setTitle(fields[0].value);
-          empty.element.setUrl(fields[1].value);
-          return root.userInput.hide();
-        };
-        return root.userInput.show();
+    ItemCardList.prototype.removeItem = function(item, done) {
+      var index, root;
+      if (done == null) {
+        done = null;
       }
+      root = this;
+      index = this.getIndex(item);
+      if (index !== -1) {
+        this.items.splice(index, 1);
+        item.element.addClass('anim-remove-item');
+        return setTimeout(function() {
+          root.removeChild(item.element);
+          item = null;
+          if (done != null) {
+            return done();
+          }
+        }, 200);
+      }
+    };
+
+    ItemCardList.prototype.getIndex = function(item) {
+      return this.items.indexOf(item);
     };
 
     ItemCardList.prototype.getItemForElement = function(DOMElement) {
@@ -938,6 +952,28 @@
         }
       }
       return null;
+    };
+
+    ItemCardList.prototype.addItemByUserInput = function(root) {
+      var empty;
+      if (!root.userInput.active) {
+        empty = root.addItem(null, null, 'first');
+        empty.element.addClass('empty');
+        empty.element.addClass('anim-add-item');
+        empty.element.append(root.userInput);
+        root.userInput.done = function(fields) {
+          empty.element.setTitle(fields[0].value);
+          empty.element.setUrl(fields[1].value);
+          empty.element.removeClass('empty');
+          return root.userInput.hide();
+        };
+        root.userInput.abort = function() {
+          return root.removeItem(empty, function() {
+            return root.userInput.hide();
+          });
+        };
+        return root.userInput.show();
+      }
     };
 
     ItemCardList.prototype.enableEditing = function() {
@@ -1080,24 +1116,26 @@
       this.append(this.content);
       this.on('submit', function(ev) {
         ev.preventDefault();
-        root.hide();
-        return root.done(root.fields);
+        return root.onConfirm();
       });
       body = new HTMLElement('body');
       body.on('keyup', function(ev) {
         if (ev.code === 'Escape') {
-          return root.hide();
+          return root.onAbort();
         }
       });
     }
 
-    UserInput.prototype.addField = function(name, type, label, value) {
+    UserInput.prototype.addField = function(name, type, label, value, required) {
       var field;
       if (label == null) {
         label = null;
       }
       if (value == null) {
         value = null;
+      }
+      if (required == null) {
+        required = true;
       }
       field = {
         element: new HTMLElement('input'),
@@ -1108,6 +1146,9 @@
       field.element.attr('id', name);
       field.element.attr('name', name);
       field.element.attr('type', type);
+      if (required) {
+        field.element.attr('required', '');
+      }
       field.element.attr('tabindex', this.fields.count + 1);
       if (label != null) {
         field.label = new HTMLElement('label');
@@ -1149,8 +1190,7 @@
       cancel.addClass('btn');
       cancel.addClass('cancel');
       cancel.on('click', function() {
-        root.abort();
-        return root.hide();
+        return root.onAbort();
       });
       ok.attr('type', 'submit');
       ok.attr('tabindex', this.fields.count + 1);
@@ -1171,6 +1211,16 @@
     UserInput.prototype.hide = function() {
       UserInput.__super__.hide.call(this);
       return this.active = false;
+    };
+
+    UserInput.prototype.onAbort = function() {
+      this.abort();
+      return this.hide();
+    };
+
+    UserInput.prototype.onConfirm = function() {
+      this.hide();
+      return this.done(this.fields);
     };
 
     return UserInput;

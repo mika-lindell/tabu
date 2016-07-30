@@ -389,22 +389,39 @@ Animations
   animation-duration: 0.5s;
 }
 
-@keyframes new-item{
-
+@keyframes add-item{
 	0%{
 		opacity: 0;
-		margin-right: -50px;
+		width: 0;
 		transform: scale(1, 0)
 	}	
-
+	100%{
+		opacity: 1;
+	}
 }
 
-.anim-new-item{
+.anim-add-item{
 	animation-fill-mode: forwards;
-	animation-name: new-item;
+	animation-name: add-item;
   animation-duration: 0.2s;
 }
 
+@keyframes remove-item{
+	0%{
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+		width: 0;
+		transform: scale(1, 0)
+	}	
+}
+
+.anim-remove-item{
+	animation-fill-mode: forwards;
+	animation-name: remove-item;
+  animation-duration: 0.2s;
+}
 
 // To animate element movement on media query breakpoints
 .transitions,
@@ -759,7 +776,7 @@ ul[data-list-editable]{
 	margin-bottom: 0.5rem;
 	border: 2px dashed transparent;
 	position: relative;
-	height: 60px;
+	vertical-align: top;
 
 	@extend .transitions;
 	@extend .hoverable;
@@ -774,6 +791,12 @@ ul[data-list-editable]{
 	}
 
 	&.empty{
+
+		box-shadow:none !important;
+
+		a{
+			opacity: 0;
+		}
 
 		@extend .layer-front;
 	}
