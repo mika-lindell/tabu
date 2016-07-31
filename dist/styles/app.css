@@ -6775,6 +6775,9 @@ Responsive - breakpoints are the same as Materialize.css uses
     width: 33%; } }
 @media only screen and (min-width: 1200px) {
   .item-card-label-container {
-    width: 74%; } }
+    width: 74%; }
+
+  .horizontal-list li {
+    width: 25%; } }
 
 /*# sourceMappingURL=app.css.map */

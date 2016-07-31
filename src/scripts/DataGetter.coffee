@@ -20,7 +20,7 @@ class DataGetter
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
 	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, recentHistory, otherDevices or recentlyClosed
 	#
-	constructor: (api, dataType = 'topSites', limit = 15)->
+	constructor: (api, dataType = 'topSites', limit = 16)->
 		@api = api
 		@limit = limit
 		@dataType = dataType
