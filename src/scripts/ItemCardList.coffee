@@ -44,8 +44,10 @@ class ItemCardList extends HTMLElement
 
 	create: ()->
 
+		console.log @data
+
 		for i of @data
-			if @data[i].heading?
+			if @data[i].heading
 				@addHeading(@data[i].heading)
 			else
 				@addItem(@data[i].title, @data[i].url)
@@ -103,15 +105,23 @@ class ItemCardList extends HTMLElement
 		@updateStatus()
 		return item
 
-	saveItem: (item)->
+	save: ()->
 
-		data =
-			title: item.element.title
-			url: item.element.url.href
+		saveThis = new Array()
 
-		console.log data
+		for i of @items
 
-		@storage.setListItem(@baseId, @items.length, data)
+			data =
+				url: @items[i].element.url.href
+
+			if @items[i].type is 'heading'
+				data.heading = @items[i].element.title
+			else
+				data.title = @items[i].element.title
+
+			saveThis.push data
+
+		@storage.setSpeedDial(saveThis)
 
 
 	removeItem: (item, done = null)->
@@ -225,7 +235,7 @@ class ItemCardList extends HTMLElement
 				item.element.removeClass('anim-highlight')
 			, 2000)
 
-			root.saveItem(item)
+			root.save()
 			root.userInput.hide()
 
 		root.userInput.abort = ()->
@@ -287,6 +297,7 @@ class ItemCardList extends HTMLElement
 				root.draggedItem.element.addClass('empty')
 
 		if target is null and ev.target is root.DOMElement
+
 			if root.draggedItem.element.DOMElement isnt root.lastChild().DOMElement
 				# Insert as last item if dragging: 
 				# - over empty space at the end of list
@@ -294,7 +305,7 @@ class ItemCardList extends HTMLElement
 				root.append(root.draggedItem.element)
 
 		else if target? and root.draggedItem? and target isnt root.draggedItem.element and target.containingList is root
-			console.log 'here'
+
 			# Insert as last item if dragging: 
 			# - over last child
 			if target.DOMElement is root.DOMElement.lastElementChild
@@ -353,6 +364,8 @@ class ItemCardList extends HTMLElement
 		root.ghost = null
 
 		root.draggedItem = null
+
+		root.save()
 
 	acceptFromOutsideSource: (ev)->
 

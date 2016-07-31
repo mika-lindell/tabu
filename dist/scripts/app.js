@@ -217,41 +217,16 @@
       return this.set(data, 'cloud');
     };
 
-    Storage.prototype.getListItemCount = function(callback) {
-      return this.get(list + "ItemCount", 'cloud', callback);
+    Storage.prototype.getSpeedDial = function(callback) {
+      return this.get('speedDial', 'cloud', callback);
     };
 
-    Storage.prototype.setListItemCount = function(newValue) {
-      var data, obj;
-      data = (
-        obj = {},
-        obj[list + "ItemCount"] = newValue,
-        obj
-      );
+    Storage.prototype.setSpeedDial = function(newValue) {
+      var data;
+      data = {
+        speedDial: newValue
+      };
       return this.set(data, 'cloud');
-    };
-
-    Storage.prototype.getListItem = function(list, index, callback) {
-      return this.get(list + "-item" + index, 'cloud', callback);
-    };
-
-    Storage.prototype.setListItem = function(list, index, newValue) {
-      var data, obj;
-      data = (
-        obj = {},
-        obj[list + "-item" + index] = newValue,
-        obj
-      );
-      return this.set(data, 'cloud');
-    };
-
-    Storage.prototype.getListItems = function(list, callback) {
-      var getThese, i, j;
-      getThese = new Array();
-      for (i = j = 0; j < 20; i = ++j) {
-        getThese.push(list + "-item" + i);
-      }
-      return this.get(getThese, 'cloud', callback);
     };
 
     return Storage;
@@ -953,8 +928,9 @@
 
     ItemCardList.prototype.create = function() {
       var i;
+      console.log(this.data);
       for (i in this.data) {
-        if (this.data[i].heading != null) {
+        if (this.data[i].heading) {
           this.addHeading(this.data[i].heading);
         } else {
           this.addItem(this.data[i].title, this.data[i].url);
@@ -1033,14 +1009,21 @@
       return item;
     };
 
-    ItemCardList.prototype.saveItem = function(item) {
-      var data;
-      data = {
-        title: item.element.title,
-        url: item.element.url.href
-      };
-      console.log(data);
-      return this.storage.setListItem(this.baseId, this.items.length, data);
+    ItemCardList.prototype.save = function() {
+      var data, i, saveThis;
+      saveThis = new Array();
+      for (i in this.items) {
+        data = {
+          url: this.items[i].element.url.href
+        };
+        if (this.items[i].type === 'heading') {
+          data.heading = this.items[i].element.title;
+        } else {
+          data.title = this.items[i].element.title;
+        }
+        saveThis.push(data);
+      }
+      return this.storage.setSpeedDial(saveThis);
     };
 
     ItemCardList.prototype.removeItem = function(item, done) {
@@ -1145,7 +1128,7 @@
         setTimeout(function() {
           return item.element.removeClass('anim-highlight');
         }, 2000);
-        root.saveItem(item);
+        root.save();
         return root.userInput.hide();
       };
       root.userInput.abort = function() {
@@ -1221,7 +1204,6 @@
           return root.append(root.draggedItem.element);
         }
       } else if ((target != null) && (root.draggedItem != null) && target !== root.draggedItem.element && target.containingList === root) {
-        console.log('here');
         if (target.DOMElement === root.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
           return root.append(root.draggedItem.element);
@@ -1268,7 +1250,8 @@
       target.removeClass('dragged');
       root.ghost.removeFromDOM();
       root.ghost = null;
-      return root.draggedItem = null;
+      root.draggedItem = null;
+      return root.save();
     };
 
     ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
@@ -2061,9 +2044,9 @@
         list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.');
         return list.create();
       };
-      this.storage.getListItems('speed-dial', function(data) {
+      this.storage.getSpeedDial(function(data) {
         var list;
-        list = new ItemCardList('#speed-dial', data, 'No links in here yet.');
+        list = new ItemCardList('#speed-dial', data.speedDial, 'No links yet.');
         list.enableEditing();
         list.setOrientation('horizontal');
         return list.create();

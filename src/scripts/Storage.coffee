@@ -125,30 +125,14 @@ class Storage
 		@set(data, 'cloud')
 
 
-	getListItemCount: (callback)->
-		@get("#{list}ItemCount", 'cloud', callback)
+	getSpeedDial: (callback)->
 
-	setListItemCount: (newValue)->
+		@get('speedDial', 'cloud', callback)
+
+
+	setSpeedDial: (newValue)->
 
 		data =
-			"#{list}ItemCount": newValue
+			speedDial: newValue
 
 		@set(data, 'cloud')
-
-
-	getListItem: (list, index, callback)->
-		@get("#{list}-item#{index}", 'cloud', callback)
-
-	setListItem: (list, index, newValue)->
-		data =
-			"#{list}-item#{index}": newValue
-		@set(data, 'cloud')
-
-	getListItems: (list, callback)->
-
-		getThese = new Array()
-
-		for i in [0...20]
-			getThese.push "#{list}-item#{i}"
-
-		@get(getThese, 'cloud', callback)
