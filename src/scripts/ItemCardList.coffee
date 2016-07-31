@@ -282,13 +282,20 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 
-		ev.dataTransfer.dropEffect = "copyLink"
+		# Disable all DnD if currently have add link dialog open
+		if root.userInput.active 
+			ev.dataTransfer.dropEffect = "none"
+		else
+			ev.dataTransfer.dropEffect = "copyLink"
 
 		root.updateGhost(ev)
 
 	dragOver = (ev, root)->
 
 		ev.preventDefault()
+
+		# Disable all DnD if currently have add link dialog open
+		if root.userInput.active then return
 
 		target = root.getItemForElement(ev.target.closest('li'))
 		changed = false

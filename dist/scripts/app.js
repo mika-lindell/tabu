@@ -1194,13 +1194,20 @@
     dragOverUpdateCursor = function(ev, root) {
       ev.preventDefault();
       ev.stopPropagation();
-      ev.dataTransfer.dropEffect = "copyLink";
+      if (root.userInput.active) {
+        ev.dataTransfer.dropEffect = "none";
+      } else {
+        ev.dataTransfer.dropEffect = "copyLink";
+      }
       return root.updateGhost(ev);
     };
 
     dragOver = function(ev, root) {
       var changed, item, target;
       ev.preventDefault();
+      if (root.userInput.active) {
+        return;
+      }
       target = root.getItemForElement(ev.target.closest('li'));
       changed = false;
       if (root.draggedItem == null) {
