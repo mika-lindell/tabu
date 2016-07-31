@@ -1242,7 +1242,7 @@
         }
       }
       if (changed) {
-        return root.swapItems(target.element.index, root.draggedItem.element.index);
+        return root.updateNewItemPosition(root.draggedItem, target.element.index);
       }
     };
 
@@ -1289,20 +1289,17 @@
       }
     };
 
-    ItemCardList.prototype.swapItems = function(a, b) {
-      var i, results, temp;
-      console.log('Swap:');
-      console.log('A:', this.items[a].element.title, this.items[a].element.index, 'B:', this.items[b].element.title, this.items[b].element.index);
-      temp = this.items[a];
-      this.items[a] = this.items[b];
-      this.items[b] = temp;
-      this.items[a].element.index = a;
-      this.items[b].element.index = b;
-      console.log('A:', this.items[a].element.title, this.items[a].element.index, 'B:', this.items[b].element.title, this.items[b].element.index);
-      console.log('Items:');
+    ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
+      var i, results;
+      this.items.splice(item.element.index, 1);
+      this.items.splice(newIndex, 0, item);
+      for (i in this.items) {
+        this.items[i].element.index = i;
+      }
+      console.log('updateNewItemPosition:');
       results = [];
       for (i in this.items) {
-        results.push(console.log(this.items[i].element.title, this.items[i].element.index));
+        results.push(console.log(this.items[i].element.title, '	', this.items[i].element.index));
       }
       return results;
     };

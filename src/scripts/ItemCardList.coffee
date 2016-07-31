@@ -345,7 +345,7 @@ class ItemCardList extends HTMLElement
 					root.insert(root.draggedItem.element, target.element, 'after')
 					changed = true
 
-		if changed then root.swapItems(target.element.index, root.draggedItem.element.index)			
+		if changed then root.updateNewItemPosition(root.draggedItem, target.element.index)			
 
 	drop = (ev, root)->
 
@@ -396,23 +396,20 @@ class ItemCardList extends HTMLElement
 		else
 			return false
 
-	swapItems: (a, b)->
 
-		console.log 'Swap:'
+	updateNewItemPosition: (item, newIndex)->
 
-		console.log 'A:', @items[a].element.title, @items[a].element.index, 'B:', @items[b].element.title, @items[b].element.index
-
-		temp = @items[a]
-		@items[a] = @items[b]
-		@items[b] = temp
-
-		@items[a].element.index = a
-		@items[b].element.index = b
-
-		console.log 'A:', @items[a].element.title, @items[a].element.index, 'B:', @items[b].element.title, @items[b].element.index
-
-		console.log 'Items:'
+		# Remove from old position
+		@items.splice(item.element.index, 1)
+		# Insert to new position
+		@items.splice(newIndex, 0, item)
 
 		for i of @items
-			console.log @items[i].element.title, @items[i].element.index
+			@items[i].element.index = i
+
+		console.log 'updateNewItemPosition:'
+
+		for i of @items
+			console.log @items[i].element.title, '	', @items[i].element.index
+
 
