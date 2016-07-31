@@ -25,6 +25,7 @@ class ItemCard extends HTMLElement
 		@containingItem = containingItem
 		@elements = new Object
 		@color = null
+		@title = null
 		@url = null
 		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
 
@@ -90,6 +91,7 @@ class ItemCard extends HTMLElement
 		@append(@elements.empty)
 
 	setTitle: (title)->
+		@title = title
 		@elements.labelTitle.text(title)
 
 	setUrl: (url)->

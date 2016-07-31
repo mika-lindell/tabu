@@ -11,6 +11,7 @@ class ItemCardList extends HTMLElement
 	@draggedItem
 	@ghost
 	@noItems
+	@storage
 
 	constructor: (container, data, empty = "I looked, but I couldn't find any.")->
 
@@ -25,6 +26,7 @@ class ItemCardList extends HTMLElement
 		@editable = false
 		@ghost = null
 		@userInput = null
+		@storage = null
 
 		root = @
 
@@ -81,7 +83,7 @@ class ItemCardList extends HTMLElement
 		@updateStatus()
 		return item
 
-	addItem: (title = null, url = null, position = 'last')->
+	addItem: (title = null, url = null, position = 'last', save = true)->
 
 		item = 
 			element: null
@@ -101,6 +103,18 @@ class ItemCardList extends HTMLElement
 
 		@updateStatus()
 		return item
+
+	saveItem: (item)->
+
+		data =
+			type: item.type
+			title: item.element.title
+			url: item.element.url.href
+
+		console.log data
+
+		@storage.setListItem(@baseId, @items.length, data)
+
 
 	removeItem: (item, done = null)->
 
@@ -133,6 +147,8 @@ class ItemCardList extends HTMLElement
 		@userInput.addField('title', 'text', 'Title')
 		@userInput.addField('url', 'text', 'Web Address')
 		@userInput.addOkCancel('Add Link')
+
+		@storage = new Storage()
 
 		new HTMLElement('#menu-add-link').on('click', (ev)-> 
 			root.addItemByUserInput(root)
@@ -211,6 +227,7 @@ class ItemCardList extends HTMLElement
 				item.element.removeClass('anim-highlight')
 			, 2000)
 
+			root.saveItem(item)
 			root.userInput.hide()
 
 		root.userInput.abort = ()->

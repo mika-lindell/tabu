@@ -139,7 +139,7 @@ class Storage
 	getListItem: (list, index, callback)->
 		@get("#{list}-item#{index}", 'cloud', callback)
 
-	setListItem: (list, index, callback)->
+	setListItem: (list, index, newValue)->
 		data =
 			"#{list}-item#{index}": newValue
 		@set(data, 'cloud')

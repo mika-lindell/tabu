@@ -235,7 +235,7 @@
       return this.get(list + "-item" + index, 'cloud', callback);
     };
 
-    Storage.prototype.setListItem = function(list, index, callback) {
+    Storage.prototype.setListItem = function(list, index, newValue) {
       var data, obj;
       data = (
         obj = {},
@@ -783,6 +783,7 @@
       this.containingItem = containingItem;
       this.elements = new Object;
       this.color = null;
+      this.title = null;
       this.url = null;
       this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
       root = this;
@@ -831,6 +832,7 @@
     }
 
     ItemCard.prototype.setTitle = function(title) {
+      this.title = title;
       return this.elements.labelTitle.text(title);
     };
 
@@ -920,6 +922,8 @@
 
     ItemCardList.noItems;
 
+    ItemCardList.storage;
+
     function ItemCardList(container, data, empty) {
       var icon, root;
       if (empty == null) {
@@ -934,6 +938,7 @@
       this.editable = false;
       this.ghost = null;
       this.userInput = null;
+      this.storage = null;
       root = this;
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
@@ -996,7 +1001,7 @@
       return item;
     };
 
-    ItemCardList.prototype.addItem = function(title, url, position) {
+    ItemCardList.prototype.addItem = function(title, url, position, save) {
       var item;
       if (title == null) {
         title = null;
@@ -1006,6 +1011,9 @@
       }
       if (position == null) {
         position = 'last';
+      }
+      if (save == null) {
+        save = true;
       }
       item = {
         element: null,
@@ -1025,6 +1033,17 @@
       }
       this.updateStatus();
       return item;
+    };
+
+    ItemCardList.prototype.saveItem = function(item) {
+      var data;
+      data = {
+        type: item.type,
+        title: item.element.title,
+        url: item.element.url.href
+      };
+      console.log(data);
+      return this.storage.setListItem(this.baseId, this.items.length, data);
     };
 
     ItemCardList.prototype.removeItem = function(item, done) {
@@ -1065,6 +1084,7 @@
       this.userInput.addField('title', 'text', 'Title');
       this.userInput.addField('url', 'text', 'Web Address');
       this.userInput.addOkCancel('Add Link');
+      this.storage = new Storage();
       new HTMLElement('#menu-add-link').on('click', function(ev) {
         return root.addItemByUserInput(root);
       });
@@ -1128,6 +1148,7 @@
         setTimeout(function() {
           return item.element.removeClass('anim-highlight');
         }, 2000);
+        root.saveItem(item);
         return root.userInput.hide();
       };
       root.userInput.abort = function() {
