@@ -767,14 +767,22 @@ Item card styles
 
 $item-card-height: 65px;
 
+.item-card-list{
+	min-height: $item-card-height + 10px;
+  position: relative;
+
+  @extend .layer-front;
+}
+
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
 	vertical-align: middle;
 	color: $light-grey;
 
-	padding-right: 1em;
-	letter-spacing: -1.23em;
+  padding-right: 0.5rem;
+  /* letter-spacing: -1.23em; */
+
 
 	@extend .material-icons
 }
@@ -819,7 +827,6 @@ ul[data-list-editable]{
 }
 
 .item-card{
-	margin-bottom: 0.5rem;
 	border: 2px dashed transparent;
 	position: relative;
 	height: $item-card-height;
@@ -837,7 +844,7 @@ ul[data-list-editable]{
 	}
 
 	&.empty{
-
+		background-color: $white;
 		box-shadow:none !important;
 		// @extend .anim-add-item;
 
@@ -916,9 +923,12 @@ li.item-card-heading{
 
 // To display the 'no items in this list' -message when the list has no items =)
 .no-items{
-	display: none;
+	position: absolute;
 	padding-right: 1.5rem;
+	padding-left: 0.5rem;
+	top: 50%;
 
+	@extend .animated;
 	@extend .color-dark-grey;
 
 	.headline{
@@ -927,10 +937,6 @@ li.item-card-heading{
 
 		@extend .font-size-large;
 	}
-}
-
-[data-has-empty-list] > .no-items{
-	display: block;
 }
 
 /***

@@ -5,9 +5,10 @@ class App
 	@visibility
 	@toolbars
 	@actions
-	@dataStorage
 	@helpers
+	@storage
 	
+	@speedDial
 	@topSites
 	@latestBookmarks
 	# @recentHistory
@@ -24,6 +25,7 @@ class App
 		@toolbars = new Toolbars() # This will init top sites toolbar functionality
 		@actions = new Actions() # This will init action buttons
 		@helpers = new Helpers()
+		@storage = new Storage()
 
 		###
 		#
@@ -43,7 +45,7 @@ class App
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
 			
-			list = new ItemCardList('#top-sites', root.topSites) # Create new list class
+			list = new ItemCardList('#top-sites', root.topSites.data) # Create new list class
 			list.container.append list # Add list to DOM
 			list.setOrientation 'horizontal'
 			list.create() # Add items to the list
@@ -52,7 +54,7 @@ class App
 
 		@latestBookmarks.done = ()->
 
-			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks)
+			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, 'It seems you have no bookmarks.')
 			list.create()
 
 		# @recentHistory.done = ()->
@@ -62,21 +64,28 @@ class App
 		# 	container.append list
 		# 	list.update()
 
-		@.recentlyClosed.done = ()->
+		@recentlyClosed.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.recentlyClosed)
+			list = new ItemCardList('#recently-closed', root.recentlyClosed.data)
 			list.create()
-
-			list_custom = new ItemCardList('#speed-dial', root.recentlyClosed) # Create new list class
-			list_custom.enableEditing()
-			list_custom.setOrientation 'horizontal'
-			list_custom.create() # Add items to the list			
 
 		@otherDevices.done = ()->
 			
-			list = new ItemCardList('#other-devices', root.otherDevices)
+			list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.')
 			list.create()
 
+		# Get all the data after preparations are done
+		# Speed dial is stored in the cloud storage and hence retrieved via storage API
+		@storage.getListItems('speed-dial', (data)->
+
+			list = new ItemCardList('#speed-dial', data, 'No links in here yet.') # Create new list class
+			list.enableEditing()
+			list.setOrientation 'horizontal'
+			list.create() # Add items to the list	
+
+		)
+
+		# Rest of the data are retrieved via dedicated API calls
 		@topSites.fetch()
 		@otherDevices.fetch()
 		@latestBookmarks.fetch()

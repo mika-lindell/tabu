@@ -6279,7 +6279,7 @@ Layers
 .layer-default {
   z-index: 0; }
 
-.layer-front, .item-card.empty {
+.layer-front, .item-card-list, .item-card.empty {
   z-index: 1; }
 
 .layer-context-menu, .user-input {
@@ -6396,14 +6396,16 @@ Animations
     opacity: 0; } }
 .anim-move-in, .intro .item-card,
 .intro .item-card-heading,
-.intro .animated {
+.intro .animated,
+.intro .no-items {
   animation-fill-mode: forwards;
   animation-name: move-in;
   animation-duration: 0.3s; }
 
 .anim-move-out, .outro .item-card,
 .outro .item-card-heading,
-.outro .animated {
+.outro .animated,
+.outro .no-items {
   animation-fill-mode: forwards;
   animation-name: move-out;
   animation-duration: 0.3s; }
@@ -6472,7 +6474,8 @@ Animations
 
 .transitions, #visibility-on,
 #visibility-off, .item-card,
-.animated {
+.animated,
+.no-items {
   transition: all 0.3s; }
 
 /***
@@ -6643,13 +6646,17 @@ Forms
 Item card styles
 
 ***/
+.item-card-list {
+  min-height: 75px;
+  position: relative; }
+
 .drag-handle {
   display: none;
   cursor: move;
   vertical-align: middle;
   color: #c7c7c7;
-  padding-right: 1em;
-  letter-spacing: -1.23em; }
+  padding-right: 0.5rem;
+  /* letter-spacing: -1.23em; */ }
 
 #ghost {
   transition: none;
@@ -6675,7 +6682,6 @@ ul[data-list-editable] .drag-handle {
   line-height: 59px; }
 
 .item-card {
-  margin-bottom: 0.5rem;
   border: 2px dashed transparent;
   position: relative;
   height: 65px; }
@@ -6685,6 +6691,7 @@ ul[data-list-editable] .drag-handle {
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card.empty {
+    background-color: #FFF;
     box-shadow: none !important; }
     .item-card.empty .item-card-empty {
       display: block; }
@@ -6725,14 +6732,13 @@ li.item-card-heading {
   margin-left: 0.7rem; }
 
 .no-items {
-  display: none;
-  padding-right: 1.5rem; }
+  position: absolute;
+  padding-right: 1.5rem;
+  padding-left: 0.5rem;
+  top: 50%; }
   .no-items .headline {
     display: inline-block;
     margin-bottom: 1rem; }
-
-[data-has-empty-list] > .no-items {
-  display: block; }
 
 /***
 

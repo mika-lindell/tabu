@@ -105,43 +105,53 @@
   })();
 
   Storage = (function() {
-    function Storage() {}
+    var instance;
+
+    instance = null;
+
+    function Storage() {
+      if (!instance) {
+        instance = this;
+      }
+      return instance;
+    }
 
     Storage.prototype.get = function(key, area, callback) {
-      var getComplete;
+      var done;
       if (area == null) {
         area = 'cloud';
       }
       if (callback == null) {
         callback = null;
       }
-      console.log("Storage: I'm trying to get " + area + " data...");
-      getComplete = function(result) {
-        return console.log("Storage: Ok, got " + area + " data ->", result);
+      console.log("Storage: I'm trying to get " + area + " data", key);
+      done = function(data) {
+        console.log("Storage: Ok, got " + area + " data ->", key, data);
+        return callback(data);
       };
       if (callback == null) {
         callback = getComplete;
       }
       if (area === 'local') {
-        return chrome.storage.local.get(key, callback);
+        return chrome.storage.local.get(key, done);
       } else {
-        return chrome.storage.sync.get(key, callback);
+        return chrome.storage.sync.get(key, done);
       }
     };
 
     Storage.prototype.set = function(items, area) {
-      var setComplete;
+      var done;
       if (area == null) {
         area = 'cloud';
       }
-      console.log("Storage: I'm trying to save " + area + " data...");
-      setComplete = function() {
-        return console.log("Storage: Ok, saved " + area + " data.");
+      console.log("Storage: I'm trying to save " + area + " data...", items);
+      done = function() {
+        return console.log("Storage: Ok, saved " + area + " data.", items);
       };
       if (area === 'local') {
-        return chrome.storage.local.set(items, setComplete);
+        return chrome.storage.local.set(items, done);
       } else {
-        return chrome.storage.sync.set(items, setComplete);
+        return chrome.storage.sync.set(items, done);
       }
     };
 
@@ -150,9 +160,9 @@
       if (area == null) {
         area = 'cloud';
       }
-      console.log("Storage: I'm trying to remove data from " + area + " storage...");
-      removeComplete = function() {
-        return console.log("Storage: Ok, removed data from " + area + " storage.");
+      console.log("Storage: I'm trying to remove data from " + area + " storage...", items);
+      removeComplete = function(data) {
+        return console.log("Storage: Ok, removed data from " + area + " storage.", items, data);
       };
       if (area === 'local') {
         return chrome.storage.local.remove(items, removeComplete);
@@ -178,8 +188,7 @@
     };
 
     Storage.prototype.getVisible = function(callback) {
-      var data;
-      return data = this.get('settingVisible', 'local', callback);
+      return this.get('settingVisible', 'local', callback);
     };
 
     Storage.prototype.setVisible = function(newValue) {
@@ -194,8 +203,7 @@
     };
 
     Storage.prototype.getView = function(callback) {
-      var data;
-      return data = this.get('settingView', 'cloud', callback);
+      return this.get('settingView', 'cloud', callback);
     };
 
     Storage.prototype.setView = function(newValue) {
@@ -207,6 +215,43 @@
         settingView: newValue
       };
       return this.set(data, 'cloud');
+    };
+
+    Storage.prototype.getListItemCount = function(callback) {
+      return this.get(list + "ItemCount", 'cloud', callback);
+    };
+
+    Storage.prototype.setListItemCount = function(newValue) {
+      var data, obj;
+      data = (
+        obj = {},
+        obj[list + "ItemCount"] = newValue,
+        obj
+      );
+      return this.set(data, 'cloud');
+    };
+
+    Storage.prototype.getListItem = function(list, index, callback) {
+      return this.get(list + "-item" + index, 'cloud', callback);
+    };
+
+    Storage.prototype.setListItem = function(list, index, callback) {
+      var data, obj;
+      data = (
+        obj = {},
+        obj[list + "-item" + index] = newValue,
+        obj
+      );
+      return this.set(data, 'cloud');
+    };
+
+    Storage.prototype.getListItems = function(list, callback) {
+      var getThese, i, j;
+      getThese = new Array();
+      for (i = j = 0; j < 20; i = ++j) {
+        getThese.push(list + "-item" + i);
+      }
+      return this.get(getThese, 'cloud', callback);
     };
 
     return Storage;
@@ -376,17 +421,6 @@
       }
     };
 
-    HTMLElement.prototype.removeClass = function(className) {
-      if (className == null) {
-        className = null;
-      }
-      if (className != null) {
-        return this.DOMElement.classList.remove(className);
-      } else {
-        return false;
-      }
-    };
-
     HTMLElement.prototype.on = function(name, listener) {
       if (name == null) {
         name = null;
@@ -469,7 +503,31 @@
     };
 
     HTMLElement.prototype.firstChild = function() {
-      return new HTMLElement(this.DOMElement.firstChild);
+      var element;
+      element = this.DOMElement.firstElementChild;
+      if (element) {
+        return new HTMLElement(element);
+      } else {
+        return null;
+      }
+    };
+
+    HTMLElement.prototype.lastChild = function() {
+      var element;
+      element = this.DOMElement.lastElementChild;
+      if (element) {
+        return new HTMLElement(element);
+      } else {
+        return null;
+      }
+    };
+
+    HTMLElement.prototype.hasChild = function(element) {
+      if (element instanceof Element) {
+        return this.DOMElement.contains(element);
+      } else {
+        return this.DOMElement.contains(element.DOMElement);
+      }
     };
 
     HTMLElement.prototype.removeChild = function(element) {
@@ -741,7 +799,7 @@
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
       this.elements.dragHandle = new HTMLElement('i');
-      this.elements.dragHandle.text('more_vertmore_vert');
+      this.elements.dragHandle.text('drag_handle');
       this.elements.dragHandle.addClass('drag-handle');
       this.elements.badge = new HTMLElement('span');
       this.elements.badge.text('NE');
@@ -848,7 +906,7 @@
 
     ItemCardList.container;
 
-    ItemCardList.dataGetter;
+    ItemCardList.data;
 
     ItemCardList.baseId;
 
@@ -860,12 +918,18 @@
 
     ItemCardList.ghost;
 
-    function ItemCardList(container, dataGetter) {
-      var root;
+    ItemCardList.noItems;
+
+    function ItemCardList(container, data, empty) {
+      var icon, root;
+      if (empty == null) {
+        empty = "I looked, but I couldn't find any.";
+      }
       ItemCardList.__super__.constructor.call(this, 'ul');
       this.container = new HTMLElement(container);
+      this.noItems = new HTMLElement('p');
       this.items = new Array();
-      this.dataGetter = dataGetter;
+      this.data = data;
       this.baseId = container.replace('#', '');
       this.editable = false;
       this.ghost = null;
@@ -873,11 +937,18 @@
       root = this;
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
+      this.noItems.addClass('no-items');
+      icon = new HTMLElement('i');
+      icon.addClass('material-icons');
+      icon.addClass('left');
+      icon.text('sentiment_neutral');
+      this.noItems.text(empty);
+      this.noItems.append(icon);
     }
 
     ItemCardList.prototype.create = function() {
-      var count, i, item, j, len, parent, ref;
-      ref = this.dataGetter.data;
+      var i, item, j, len, ref;
+      ref = this.data;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         item = ref[i];
         if (item.heading != null) {
@@ -886,15 +957,23 @@
           this.addItem(item.title, item.url);
         }
       }
-      count = this.dataGetter.data.length;
       this.container.append(this);
-      if (count === 0) {
-        parent = this.parent();
-        if (parent != null) {
-          parent.attr('data-has-empty-list', '');
+      return this.updateStatus();
+    };
+
+    ItemCardList.prototype.updateStatus = function() {
+      var messageVisible;
+      messageVisible = this.container.hasChild(this.noItems);
+      if (this.items.length === 0) {
+        if (!messageVisible) {
+          this.noItems.css('top', this.top('px'));
+          return this.container.prepend(this.noItems);
+        }
+      } else {
+        if (messageVisible) {
+          return this.container.removeChild(this.noItems);
         }
       }
-      return this.attr('data-list-count', count);
     };
 
     ItemCardList.prototype.addHeading = function(title, position) {
@@ -909,11 +988,13 @@
       item.element = new ItemCardHeading(this, item, title);
       if (position === 'last') {
         this.items.push(item);
-        return this.append(item.element);
+        this.append(item.element);
       } else {
         this.items.unshift(item);
-        return this.prepend(item.element);
+        this.prepend(item.element);
       }
+      this.updateStatus();
+      return item;
     };
 
     ItemCardList.prototype.addItem = function(title, url, position) {
@@ -943,6 +1024,7 @@
         this.items.unshift(item);
         this.prepend(item.element);
       }
+      this.updateStatus();
       return item;
     };
 
@@ -955,7 +1037,8 @@
       index = this.getIndex(item);
       if (index !== -1) {
         root.removeChild(item.element);
-        return this.items.splice(index, 1);
+        this.items.splice(index, 1);
+        return this.updateStatus();
       }
     };
 
@@ -1101,10 +1184,12 @@
     };
 
     dragOver = function(ev, root) {
-      var item, parent, target;
+      var item, target;
       ev.preventDefault();
-      parent = root;
       target = root.getItemForElement(ev.target.closest('li'));
+      if (target != null) {
+        target = target.element;
+      }
       if (root.draggedItem == null) {
         if (root.acceptFromOutsideSource(ev)) {
           item = root.addItem('Add Link', 'New');
@@ -1113,20 +1198,23 @@
           root.draggedItem.element.addClass('empty');
         }
       }
-      if (target != null) {
-        target = target.element;
-      }
-      if (target !== root.draggedItem.element && (target != null) && target.containingList === parent && (root.draggedItem != null)) {
-        if (target.DOMElement === parent.DOMElement.lastElementChild) {
+      if (target === null && ev.target === root.DOMElement) {
+        if (root.draggedItem.element.DOMElement !== root.lastChild().DOMElement) {
           console.log('DragOver: Append');
-          return parent.append(root.draggedItem.element);
+          return root.append(root.draggedItem.element);
+        }
+      } else if ((target != null) && (root.draggedItem != null) && target !== root.draggedItem.element && target.containingList === root) {
+        console.log('here');
+        if (target.DOMElement === root.DOMElement.lastElementChild) {
+          console.log('DragOver: Append');
+          return root.append(root.draggedItem.element);
         } else if (target.top() < root.draggedItem.element.top() || target.left() < root.draggedItem.element.left()) {
           console.log('DragOver: insertBefore');
-          return parent.insert(root.draggedItem.element, target);
+          return root.insert(root.draggedItem.element, target);
         } else if (target.top() > root.draggedItem.element.top() || target.left() > root.draggedItem.element.left()) {
           console.log('DragOver: insertAfter');
           if (target.DOMElement.nextSibling) {
-            return parent.insert(root.draggedItem.element, target, 'after');
+            return root.insert(root.draggedItem.element, target, 'after');
           }
         }
       }
@@ -1500,7 +1588,6 @@
 
     Animation.prototype.slideIn = function() {
       var cleanUp, container, root;
-      console.log("Animation: I'll play slideIn now.");
       root = this;
       container = this.animate;
       container.addClass('anim-slide-in');
@@ -1515,7 +1602,6 @@
 
     Animation.prototype.slideOut = function() {
       var cleanUp, container, root;
-      console.log("Animation: I'll play slideOut now.");
       root = this;
       container = this.animate;
       container.css('opacity', '0');
@@ -1544,7 +1630,6 @@
       }
       container.css('height', from + 10 + 'px');
       play = function() {
-        console.log("Animation: I'll animate height now.", from, to);
         return container.css('height', to + 'px');
       };
       setTimeout(play, 10);
@@ -1571,7 +1656,6 @@
       }
       container.css('width', from + 'px');
       play = function() {
-        console.log("Animation: I'll animate width now.", from, to);
         return container.css('width', to + 'px');
       };
       setTimeout(play, 0);
@@ -1586,7 +1670,6 @@
       if (instant == null) {
         instant = false;
       }
-      console.log("Animation: I'll play intro now.", 'Instant?', instant);
       root = this;
       container = this.animate;
       if (!instant) {
@@ -1610,7 +1693,6 @@
       if (instant == null) {
         instant = false;
       }
-      console.log("Animation: I'll play outro now.", 'Instant?', instant);
       root = this;
       container = this.animate;
       if (!instant) {
@@ -1780,7 +1862,7 @@
       }, 'compare_arrows');
       speedDialSelect.addDivider();
       speedDialSelect.addItem('Add Link', 'menu-add-link', function() {
-        return console.log('Add');
+        return false;
       }, 'add', 'a');
       topSitesSelect.addItem('Switch to Speed Dial', 'menu-speed-dial', function() {
         return root.speedDial(root);
@@ -1803,7 +1885,6 @@
       if (instant == null) {
         instant = false;
       }
-      console.log('speedDial');
       if (instant) {
         root.speedDialContainer.show();
         root.topSitesContainer.hide();
@@ -1906,9 +1987,11 @@
 
     App.actions;
 
-    App.dataStorage;
-
     App.helpers;
+
+    App.storage;
+
+    App.speedDial;
 
     App.topSites;
 
@@ -1925,6 +2008,7 @@
       this.toolbars = new Toolbars();
       this.actions = new Actions();
       this.helpers = new Helpers();
+      this.storage = new Storage();
 
       /*
       		 *
@@ -1939,7 +2023,7 @@
       this.topSites.done = function() {
         var list, loader;
         loader = new Loader;
-        list = new ItemCardList('#top-sites', root.topSites);
+        list = new ItemCardList('#top-sites', root.topSites.data);
         list.container.append(list);
         list.setOrientation('horizontal');
         list.create();
@@ -1947,23 +2031,26 @@
       };
       this.latestBookmarks.done = function() {
         var list;
-        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks);
+        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, 'It seems you have no bookmarks.');
         return list.create();
       };
       this.recentlyClosed.done = function() {
-        var list, list_custom;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed);
-        list.create();
-        list_custom = new ItemCardList('#speed-dial', root.recentlyClosed);
-        list_custom.enableEditing();
-        list_custom.setOrientation('horizontal');
-        return list_custom.create();
+        var list;
+        list = new ItemCardList('#recently-closed', root.recentlyClosed.data);
+        return list.create();
       };
       this.otherDevices.done = function() {
         var list;
-        list = new ItemCardList('#other-devices', root.otherDevices);
+        list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.');
         return list.create();
       };
+      this.storage.getListItems('speed-dial', function(data) {
+        var list;
+        list = new ItemCardList('#speed-dial', data, 'No links in here yet.');
+        list.enableEditing();
+        list.setOrientation('horizontal');
+        return list.create();
+      });
       this.topSites.fetch();
       this.otherDevices.fetch();
       this.latestBookmarks.fetch();

@@ -6,7 +6,12 @@
 #
 class Storage
 	
+	instance = null
+
 	constructor: ()->
+		# Make this singleton
+		if not instance then instance = this
+		return instance
 
 	# Get key/value-pairs from local or cloud storage.
 	#
@@ -18,18 +23,20 @@ class Storage
 	#
 	get: (key, area = 'cloud', callback = null)->
 
-		console.log "Storage: I'm trying to get #{area} data..."
+		console.log "Storage: I'm trying to get #{area} data", key
 
-		getComplete = (result)->
-			console.log "Storage: Ok, got #{area} data ->", result
+		done = (data)->
+			console.log "Storage: Ok, got #{area} data ->", key, data
+			callback(data)
+
 
 		if not callback?  # if callback is undefined or null
 			callback = getComplete
 
 		if area is 'local'
-			chrome.storage.local.get(key, callback)
+			chrome.storage.local.get(key, done)
 		else
-			chrome.storage.sync.get(key, callback)
+			chrome.storage.sync.get(key, done)
 
 	# Set key/value-pairs to local or cloud storage.
 	#
@@ -38,15 +45,15 @@ class Storage
 	#
 	set: (items, area = 'cloud')->
 
-		console.log "Storage: I'm trying to save #{area} data..."
+		console.log "Storage: I'm trying to save #{area} data...", items
 
-		setComplete = ()->
-			console.log "Storage: Ok, saved #{area} data."
+		done = ()->
+			console.log "Storage: Ok, saved #{area} data.", items
 
 		if area is 'local'
-			chrome.storage.local.set(items, setComplete)
+			chrome.storage.local.set(items, done)
 		else
-			chrome.storage.sync.set(items, setComplete)
+			chrome.storage.sync.set(items, done)
 
 	# Remove key/value-pairs to local or cloud storage.
 	#
@@ -55,10 +62,10 @@ class Storage
 	#
 	remove: (items, area = 'cloud')->
 
-		console.log "Storage: I'm trying to remove data from #{area} storage..."
+		console.log "Storage: I'm trying to remove data from #{area} storage...", items
 
-		removeComplete = ()->
-			console.log "Storage: Ok, removed data from #{area} storage."
+		removeComplete = (data)->
+			console.log "Storage: Ok, removed data from #{area} storage.", items, data
 
 		if area is 'local'
 			chrome.storage.local.remove(items, removeComplete)
@@ -86,7 +93,7 @@ class Storage
 	# @param [boolean] The callback function returning the data when operation is complete. 
 	#
 	getVisible: (callback)->
-		data = @get('settingVisible', 'local', callback)
+		@get('settingVisible', 'local', callback)
 
 	# Shorthand for saving visibility -setting (are elements set visible or hidden?)
 	#
@@ -104,7 +111,7 @@ class Storage
 	# @param [boolean] The callback function returning the data when operation is complete. 
 	#
 	getView: (callback)->
-		data = @get('settingView', 'cloud', callback)
+		@get('settingView', 'cloud', callback)
 
 	# Shorthand for saving view -setting (what data is show in the topmost list?)
 	#
@@ -117,3 +124,31 @@ class Storage
 
 		@set(data, 'cloud')
 
+
+	getListItemCount: (callback)->
+		@get("#{list}ItemCount", 'cloud', callback)
+
+	setListItemCount: (newValue)->
+
+		data =
+			"#{list}ItemCount": newValue
+
+		@set(data, 'cloud')
+
+
+	getListItem: (list, index, callback)->
+		@get("#{list}-item#{index}", 'cloud', callback)
+
+	setListItem: (list, index, callback)->
+		data =
+			"#{list}-item#{index}": newValue
+		@set(data, 'cloud')
+
+	getListItems: (list, callback)->
+
+		getThese = new Array()
+
+		for i in [0...20]
+			getThese.push "#{list}-item#{i}"
+
+		@get(getThese, 'cloud', callback)

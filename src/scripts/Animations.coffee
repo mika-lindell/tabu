@@ -18,7 +18,6 @@ class Animation
 		@animate.css('animation-duration',  "#{@duration}s")
 
 	slideIn: ()->
-		console.log "Animation: I'll play slideIn now."
 
 		root = @
 		container = @animate
@@ -34,7 +33,6 @@ class Animation
 		setTimeout(cleanUp, @duration * 1000)
 
 	slideOut: ()->
-		console.log "Animation: I'll play slideOut now."
 
 		root = @
 		container = @animate
@@ -65,7 +63,6 @@ class Animation
 		container.css('height', from + 10 + 'px')
 
 		play = ()->
-			console.log "Animation: I'll animate height now.", from, to
 			container.css('height', to + 'px')
 
 		setTimeout(play, 10)
@@ -91,7 +88,6 @@ class Animation
 		container.css('width', from + 'px')
 
 		play = ()->
-			console.log "Animation: I'll animate width now.", from, to
 			container.css('width', to + 'px')
 
 		setTimeout(play, 0)
@@ -107,8 +103,6 @@ class Animation
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
 	intro: (instant = false)->
-
-		console.log "Animation: I'll play intro now.", 'Instant?', instant
 
 		root = @
 		container = @animate
@@ -135,8 +129,6 @@ class Animation
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
 	outro: (instant = false)->
-
-		console.log "Animation: I'll play outro now.", 'Instant?', instant
 
 		root = @
 		container = @animate

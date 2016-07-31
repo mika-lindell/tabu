@@ -1,24 +1,26 @@
-# Generate list of itemCards from DataGetter
+# Generate list of itemCards from given data
 #
 class ItemCardList extends HTMLElement
 
 	@items
 	@container
-	@dataGetter
+	@data
 	@baseId
 	@editable
 	@userInput
 	@draggedItem
 	@ghost
+	@noItems
 
-	constructor: (container, dataGetter)->
+	constructor: (container, data, empty = "I looked, but I couldn't find any.")->
 
 		super('ul')
 		
 		@container = new HTMLElement (container)
+		@noItems = new HTMLElement('p')
 		@items = new Array()
 		
-		@dataGetter = dataGetter
+		@data = data
 		@baseId = container.replace('#', '')
 		@editable = false
 		@ghost = null
@@ -29,28 +31,38 @@ class ItemCardList extends HTMLElement
 		@addClass('item-card-list')
 		@attr('id', "#{ @baseId }-list")
 
+		@noItems.addClass('no-items')
+		icon = new HTMLElement('i')
+		icon.addClass('material-icons')
+		icon.addClass('left')
+		icon.text('sentiment_neutral')
+		
+		@noItems.text(empty)
+		@noItems.append(icon)
+
 	create: ()->
 
-		for item, i in @dataGetter.data
+		for item, i in @data
 
 			if item.heading?
 				@addHeading(item.heading)
 			else
 				@addItem(item.title, item.url)
 
-		count = @dataGetter.data.length
-
 		@container.append @
+		@updateStatus()
 
-		# Add some information about the list to DOM as attributes, so we can target with CSS selectors
-		if count is 0
-			parent = @parent()
+	updateStatus: ()->
 
-			if parent? then parent.attr('data-has-empty-list', '') # To parent element that it's has empty list as child
-		
-		@attr('data-list-count', count) # To list the count of children
+		messageVisible = @container.hasChild(@noItems)
 
-		
+		if @items.length is 0
+			if not messageVisible
+				@noItems.css('top', @top('px'))
+				@container.prepend(@noItems)
+		else
+			if messageVisible then @container.removeChild(@noItems)
+
 
 	addHeading: (title, position = 'last')->
 
@@ -66,6 +78,9 @@ class ItemCardList extends HTMLElement
 		else
 			@items.unshift item
 			@prepend item.element
+
+		@updateStatus()
+		return item
 
 	addItem: (title = null, url = null, position = 'last')->
 
@@ -85,6 +100,7 @@ class ItemCardList extends HTMLElement
 			@items.unshift item
 			@prepend item.element
 
+		@updateStatus()
 		return item
 
 	removeItem: (item, done = null)->
@@ -95,6 +111,7 @@ class ItemCardList extends HTMLElement
 		if index isnt -1
 			root.removeChild(item.element)
 			@items.splice(index, 1)
+			@updateStatus()
 
 	getIndex: (item)->
 		return @items.indexOf(item)
@@ -243,8 +260,8 @@ class ItemCardList extends HTMLElement
 
 		ev.preventDefault()
 
-		parent = root
 		target = root.getItemForElement(ev.target.closest('li'))
+		if target? then target = target.element
 
 		if not root.draggedItem?
 
@@ -255,15 +272,20 @@ class ItemCardList extends HTMLElement
 				root.draggedItem.element.addClass('dragged')
 				root.draggedItem.element.addClass('empty')
 
-		if target? then target = target.element
+		if target is null and ev.target is root.DOMElement
+			if root.draggedItem.element.DOMElement isnt root.lastChild().DOMElement
+				# Insert as last item if dragging: 
+				# - over empty space at the end of list
+				console.log 'DragOver: Append'
+				root.append(root.draggedItem.element)
 
-		if target isnt root.draggedItem.element and target? and target.containingList is parent and root.draggedItem?
-			
+		else if target? and root.draggedItem? and target isnt root.draggedItem.element and target.containingList is root
+			console.log 'here'
 			# Insert as last item if dragging: 
 			# - over last child
-			if target.DOMElement is parent.DOMElement.lastElementChild
+			if target.DOMElement is root.DOMElement.lastElementChild
 				console.log 'DragOver: Append'
-				parent.append(root.draggedItem.element)
+				root.append(root.draggedItem.element)
 			
 			else if target.top() < root.draggedItem.element.top() or target.left() < root.draggedItem.element.left()
 				# InsertBefore has to be first option for this to work
@@ -271,7 +293,7 @@ class ItemCardList extends HTMLElement
 				# - Up
 				# - Left
 				console.log 'DragOver: insertBefore'
-				parent.insert(root.draggedItem.element, target)
+				root.insert(root.draggedItem.element, target)
 
 			else if target.top() > root.draggedItem.element.top() or target.left() > root.draggedItem.element.left()
 				# Insert after if dragging:
@@ -279,7 +301,7 @@ class ItemCardList extends HTMLElement
 				# - Right				
 				console.log 'DragOver: insertAfter'
 				if target.DOMElement.nextSibling
-					parent.insert(root.draggedItem.element, target, 'after')
+					root.insert(root.draggedItem.element, target, 'after')
 
 	drop = (ev, root)->
 

@@ -25,8 +25,8 @@ class Toolbars
 		speedDialSelect.addDivider()
 
 		speedDialSelect.addItem('Add Link', 'menu-add-link', ()-> 
-					console.log 'Add'
-				, 'add', 'a')
+			return false
+		, 'add', 'a')
 
 		topSitesSelect.addItem('Switch to Speed Dial', 'menu-speed-dial', ()-> 
 			root.speedDial(root)
@@ -49,7 +49,7 @@ class Toolbars
 		@storage.getView(getSavedStatus) 
 
 	speedDial: (root, instant = false)->
-		console.log 'speedDial'
+
 		if instant
 			root.speedDialContainer.show()
 			root.topSitesContainer.hide()

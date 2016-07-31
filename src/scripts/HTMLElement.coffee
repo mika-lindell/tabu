@@ -132,18 +132,6 @@ class HTMLElement
 		if className? and @DOMElement.classList.contains(className)
 			@DOMElement.classList.remove(className)
 
-	# Test if element has specified CSS class
-	#
-	# @param [String] Class to be tested
-	#
-	# @return [Boolean]
-	# 
-	removeClass: (className = null)->
-		if className?
-			return @DOMElement.classList.remove(className)
-		else
-			return false
-
 	# Set event listener to an event
 	#
 	# @param [String] Name of the event
@@ -210,7 +198,28 @@ class HTMLElement
 		return children
 
 	firstChild: ()->
-		return new HTMLElement(@DOMElement.firstChild)
+		element = @DOMElement.firstElementChild
+
+		if element
+			return new HTMLElement(element)
+		else
+			return null
+
+	lastChild: ()->
+		element = @DOMElement.lastElementChild
+
+		if element
+			return new HTMLElement(element)
+		else
+			return null
+
+
+	hasChild: (element)->
+
+		if element instanceof Element
+			return @DOMElement.contains(element)
+		else
+			return @DOMElement.contains(element.DOMElement)
 
 	removeChild: (element)->
 
@@ -218,6 +227,7 @@ class HTMLElement
 			return @DOMElement.removeChild(element)
 		else
 			return @DOMElement.removeChild(element.DOMElement)
+
 
 	childCount: ()->
 		return @DOMElement.childElementCount
