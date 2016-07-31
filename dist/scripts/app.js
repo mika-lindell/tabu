@@ -952,14 +952,12 @@
     }
 
     ItemCardList.prototype.create = function() {
-      var i, item, j, len, ref;
-      ref = this.data;
-      for (i = j = 0, len = ref.length; j < len; i = ++j) {
-        item = ref[i];
-        if (item.heading != null) {
-          this.addHeading(item.heading);
+      var i;
+      for (i in this.data) {
+        if (this.data[i].heading != null) {
+          this.addHeading(this.data[i].heading);
         } else {
-          this.addItem(item.title, item.url);
+          this.addItem(this.data[i].title, this.data[i].url);
         }
       }
       this.container.append(this);
@@ -1038,7 +1036,6 @@
     ItemCardList.prototype.saveItem = function(item) {
       var data;
       data = {
-        type: item.type,
         title: item.element.title,
         url: item.element.url.href
       };

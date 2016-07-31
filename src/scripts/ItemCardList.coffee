@@ -44,12 +44,11 @@ class ItemCardList extends HTMLElement
 
 	create: ()->
 
-		for item, i in @data
-
-			if item.heading?
-				@addHeading(item.heading)
+		for i of @data
+			if @data[i].heading?
+				@addHeading(@data[i].heading)
 			else
-				@addItem(item.title, item.url)
+				@addItem(@data[i].title, @data[i].url)
 
 		@container.append @
 		@updateStatus()
@@ -107,7 +106,6 @@ class ItemCardList extends HTMLElement
 	saveItem: (item)->
 
 		data =
-			type: item.type
 			title: item.element.title
 			url: item.element.url.href
 
