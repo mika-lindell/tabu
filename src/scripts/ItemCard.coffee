@@ -52,7 +52,7 @@ class ItemCard extends HTMLElement
 		@elements.link.attr('id', @id + '-link')
 
 		@elements.dragHandle = new HTMLElement('i')
-		@elements.dragHandle.text('drag_handle')
+		@elements.dragHandle.html('..<br>..<br>..<br>..')
 		@elements.dragHandle.addClass('drag-handle')
 
 		@elements.badge = new HTMLElement('span')

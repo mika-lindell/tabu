@@ -2185,8 +2185,7 @@ video.responsive-video {
   color: rgba(255, 255, 255, 0.7); }
   .breadcrumb i,
   .breadcrumb [class^="mdi-"], .breadcrumb [class*="mdi-"],
-  .breadcrumb i.material-icons,
-  .breadcrumb i.drag-handle {
+  .breadcrumb i.material-icons {
     display: inline-block;
     float: left;
     font-size: 24px; }
@@ -2598,7 +2597,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons, .drag-handle {
+.material-icons {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -3050,8 +3049,7 @@ nav {
     color: #5a5a5a; }
   nav i,
   nav [class^="mdi-"], nav [class*="mdi-"],
-  nav i.material-icons,
-  nav i.drag-handle {
+  nav i.material-icons {
     display: block;
     font-size: 2rem;
     height: 50px;
@@ -3979,7 +3977,7 @@ a.waves-effect .waves-ripple {
     height: 32px;
     width: 32px;
     border-radius: 50%; }
-  .chip i.material-icons, .chip i.drag-handle {
+  .chip i.material-icons {
     cursor: pointer;
     float: right;
     font-size: 16px;
@@ -4354,11 +4352,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ .drag-handle {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ .drag-handle {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6224,7 +6222,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(./assets/material-design-icons/Material-Design-Icons.woff2) format("woff2"); }
-.material-icons, .drag-handle {
+.material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6239,21 +6237,18 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
-i.material-icons.bugged, i.bugged.drag-handle {
+i.material-icons.bugged {
   max-width: 1.1em;
   overflow: hidden; }
 
-nav i.material-icons, nav i.drag-handle,
-.section-toolbar i.material-icons,
-.section-toolbar i.drag-handle {
+nav i.material-icons,
+.section-toolbar i.material-icons {
   font-size: 1.5rem; }
-  nav i.material-icons.left, nav i.left.drag-handle,
-  .section-toolbar i.material-icons.left,
-  .section-toolbar i.left.drag-handle {
+  nav i.material-icons.left,
+  .section-toolbar i.material-icons.left {
     margin-right: 5px; }
-  nav i.material-icons.right, nav i.right.drag-handle,
-  .section-toolbar i.material-icons.right,
-  .section-toolbar i.right.drag-handle {
+  nav i.material-icons.right,
+  .section-toolbar i.material-icons.right {
     margin-left: 0px; }
 
 /***
@@ -6578,7 +6573,7 @@ button.toolbar {
   position: relative; }
   button.toolbar:hover {
     background-color: #FFF; }
-  button.toolbar i.material-icons, button.toolbar i.drag-handle {
+  button.toolbar i.material-icons {
     position: absolute;
     left: 9px;
     top: 0px;
@@ -6601,7 +6596,7 @@ button.title {
   margin-left: -0.7rem;
   height: auto;
   min-width: 220px; }
-  button.title i.material-icons, button.title i.drag-handle {
+  button.title i.material-icons {
     font-size: inherit; }
 
 button.active,
@@ -6622,7 +6617,7 @@ button.active:hover {
     margin-right: 0;
     margin-left: 0.6rem; }
 
-#go-incognito i.material-icons, #go-incognito i.drag-handle {
+#go-incognito i.material-icons {
   font-size: 1.35rem; }
 
 /***
@@ -6653,9 +6648,12 @@ Item card styles
 .drag-handle {
   display: none;
   cursor: move;
-  vertical-align: middle;
+  vertical-align: top;
   color: #c7c7c7;
+  font-size: 24px;
   padding-right: 0.5rem;
+  line-height: 7px;
+  margin-top: 2px;
   /* letter-spacing: -1.23em; */ }
 
 #ghost {

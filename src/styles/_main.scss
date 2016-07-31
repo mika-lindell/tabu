@@ -777,14 +777,17 @@ $item-card-height: 65px;
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
-	vertical-align: middle;
+	vertical-align: top;
 	color: $light-grey;
+	font-size: 24px;
 
   padding-right: 0.5rem;
+  line-height: 7px;
+  margin-top: 2px;
   /* letter-spacing: -1.23em; */
 
 
-	@extend .material-icons
+	//@extend .material-icons
 }
 
 // DnD ghost element styles
@@ -1000,5 +1003,8 @@ Responsive - breakpoints are the same as Materialize.css uses
 @media only screen and (min-width: 1200px){
 	.item-card-label-container{
 		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+	.horizontal-list li{
+		width: 25%; // 3 items in arow instead of 2 in horiz lists
 	}
 }

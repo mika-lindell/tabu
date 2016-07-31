@@ -630,7 +630,7 @@
         dataType = 'topSites';
       }
       if (limit == null) {
-        limit = 15;
+        limit = 16;
       }
       this.api = api;
       this.limit = limit;
@@ -782,7 +782,7 @@
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
       this.elements.dragHandle = new HTMLElement('i');
-      this.elements.dragHandle.text('drag_handle');
+      this.elements.dragHandle.html('..<br>..<br>..<br>..');
       this.elements.dragHandle.addClass('drag-handle');
       this.elements.badge = new HTMLElement('span');
       this.elements.badge.text('NE');
