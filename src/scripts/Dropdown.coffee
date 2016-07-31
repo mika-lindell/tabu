@@ -50,13 +50,13 @@ class Dropdown extends HTMLElement
 		root.dropdown.css('min-width', @width('px'))
 
 		root.addClass('active')
-		root.animation.fadeIn()
+		root.animation.slideIn()
 		root.active = true
 
 	hide: (ev, root = null)->
 		if root.active
 			root.removeClass('active')
-			root.animation.fadeOut()
+			root.animation.slideOut()
 			root.active = false
 
 	addItem: (title, id, callback, iconName = null, accesskey = null)->

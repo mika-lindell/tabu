@@ -16,7 +16,7 @@ class ItemCard extends HTMLElement
 	#
 	# @param [String] Title of the card
 	# @param [String] Url of the link related to this card
-	
+	#
 	constructor: (containingList, containingItem = null,  title = null, url = null)->
 
 		super('li')

@@ -1203,7 +1203,7 @@
       this.attr('id', id);
       this.addClass('user-input');
       this.addClass('card');
-      this.addClass('anim-pop-in');
+      this.addClass('anim-slide-in');
       this.css('position', 'absolute');
       this.css('top', '0');
       this.css('left', '0');
@@ -1403,7 +1403,7 @@
       root.dropdown.css('left', this.left('px'));
       root.dropdown.css('min-width', this.width('px'));
       root.addClass('active');
-      root.animation.fadeIn();
+      root.animation.slideIn();
       return root.active = true;
     };
 
@@ -1413,7 +1413,7 @@
       }
       if (root.active) {
         root.removeClass('active');
-        root.animation.fadeOut();
+        root.animation.slideOut();
         return root.active = false;
       }
     };
@@ -1495,39 +1495,34 @@
       }
       this.duration = duration;
       this.animate.css('transition', "all " + this.duration + "s");
-      this.animate.css('overflow', 'hidden');
+      this.animate.css('animation-duration', this.duration + "s");
     }
 
-    Animation.prototype.fadeIn = function() {
-      var cleanUp, container, play, root, targetHeight;
-      console.log("Animation: I'll play fadeIn now.");
+    Animation.prototype.slideIn = function() {
+      var cleanUp, container, root;
+      console.log("Animation: I'll play slideIn now.");
       root = this;
       container = this.animate;
-      container.css('opacity', '0');
+      container.addClass('anim-slide-in');
       container.show();
-      targetHeight = container.height('px');
-      container.css('height', '0px');
-      play = function() {
-        container.css('height', targetHeight);
-        return container.css('opacity', '1');
-      };
-      setTimeout(play, 10);
+      container.css('opacity', '1');
       cleanUp = function() {
+        container.removeClass('anim-slide-in');
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.fadeOut = function() {
+    Animation.prototype.slideOut = function() {
       var cleanUp, container, root;
-      console.log("Animation: I'll play fadeOut now.");
+      console.log("Animation: I'll play slideOut now.");
       root = this;
       container = this.animate;
-      container.css('height', '0px');
       container.css('opacity', '0');
+      container.addClass('anim-slide-out');
       cleanUp = function() {
         container.hide();
-        container.css('height', 'auto');
+        container.removeClass('anim-slide-out');
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1540,19 +1535,21 @@
       }
       root = this;
       container = this.animate;
+      container.css('overflow', 'hidden');
       if (to == null) {
         to = container.height();
       }
       if (from == null) {
         from = container.height();
       }
-      container.css('height', from + 'px');
+      container.css('height', from + 10 + 'px');
       play = function() {
         console.log("Animation: I'll animate height now.", from, to);
         return container.css('height', to + 'px');
       };
-      setTimeout(play, 0);
+      setTimeout(play, 10);
       cleanUp = function() {
+        container.css('overflow', 'visible');
         container.css('height', 'auto');
         return root.done();
       };

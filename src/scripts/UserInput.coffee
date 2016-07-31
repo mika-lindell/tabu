@@ -20,7 +20,7 @@ class UserInput extends HTMLElement
 		@attr('id', id)
 		@addClass('user-input')
 		@addClass('card')
-		@addClass('anim-pop-in')
+		@addClass('anim-slide-in')
 
 		@css('position', 'absolute')
 		@css('top', '0')

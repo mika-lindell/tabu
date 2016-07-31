@@ -15,51 +15,36 @@ class Animation
 		@duration = duration
 
 		@animate.css('transition', "all #{@duration}s")
-		@animate.css('overflow', 'hidden')
+		@animate.css('animation-duration',  "#{@duration}s")
 
-	fadeIn: ()->
-		console.log "Animation: I'll play fadeIn now."
+	slideIn: ()->
+		console.log "Animation: I'll play slideIn now."
 
 		root = @
 		container = @animate
 
-		# oldOverflow = container.css('overflow')
-		# container.css('overflow', 'hidden')
-
-		container.css('opacity', '0')
+		container.addClass('anim-slide-in')
 		container.show()
-		targetHeight = container.height('px')
-		container.css('height', '0px')
-
-		play = ()->
-			
-			container.css('height', targetHeight)
-			container.css('opacity', '1')
-
-		setTimeout(play, 10)
+		container.css('opacity', '1')
 
 		cleanUp = ()->
-			# container.css('overflow', oldOverflow)
+			container.removeClass('anim-slide-in')
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
 
-	fadeOut: ()->
-		console.log "Animation: I'll play fadeOut now."
+	slideOut: ()->
+		console.log "Animation: I'll play slideOut now."
 
 		root = @
 		container = @animate
 
-		# oldOverflow = container.css('overflow')
-		# container.css('overflow', 'hidden')
-
-		container.css('height', '0px')
 		container.css('opacity', '0')
-
+		container.addClass('anim-slide-out')
+		
 		cleanUp = ()->
 			container.hide()
-			container.css('height', 'auto')
-			# container.css('overflow', oldOverflow)
+			container.removeClass('anim-slide-out')
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -69,21 +54,24 @@ class Animation
 		root = @
 		container = @animate
 
+		container.css('overflow', 'hidden')
+
 		if not to?
 			to = container.height()
 
 		if not from?
 			from = container.height()
 
-		container.css('height', from + 'px')
+		container.css('height', from + 10 + 'px')
 
 		play = ()->
 			console.log "Animation: I'll animate height now.", from, to
 			container.css('height', to + 'px')
 
-		setTimeout(play, 0)
+		setTimeout(play, 10)
 		
 		cleanUp = ()->
+			container.css('overflow', 'visible')
 			container.css('height', 'auto')
 			root.done()
 
@@ -109,7 +97,6 @@ class Animation
 		setTimeout(play, 0)
 		
 		cleanUp = ()->
-			#container.css('width', 'auto')
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)

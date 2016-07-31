@@ -389,16 +389,36 @@ Animations
   animation-duration: 0.5s;
 }
 
-@keyframes pop-in{
+@keyframes slide-in{
 	0%{
+		transform: scale(1, 0.2);
+	}	
+	100%{
+		transform: scale(1, 1);
+	}	
+}
+
+.anim-slide-in{
+	animation-fill-mode: forwards;
+	animation-name: slide-in;
+  animation-duration: 0.2s;
+  transform-origin: 0% 0%;
+}
+
+@keyframes slide-out{
+	0%{
+		transform: scale(1, 1);
+	}	
+	100%{
 		transform: scale(1, 0.2);
 	}	
 }
 
-.anim-pop-in{
-	animation-name: pop-in;
+.anim-slide-out{
+	animation-fill-mode: forwards;
+	animation-name: slide-out;
   animation-duration: 0.2s;
-  transform-origin: 0 0;
+  transform-origin: 0% 0%;
 }
 
 @keyframes highlight{
@@ -569,21 +589,26 @@ Dropdown
 
 ***/
 
-.dropdown-content li.title{
+.dropdown-content{
 
-  padding: 14px 16px;
+	// opacity: 1;
 
-  line-height: 0.8rem;
+ li.title{
 
-  height: 0.8rem;
-  min-height: 0.1rem;
-  cursor: initial;
+	  padding: 14px 16px;
 
-	@extend .font-size-small;
-	@extend .color-dark-grey;
+	  line-height: 0.8rem;
 
-	&:hover {
-	    background-color: inherit;
+	  height: 0.8rem;
+	  min-height: 0.1rem;
+	  cursor: initial;
+
+		@extend .font-size-small;
+		@extend .color-dark-grey;
+
+		&:hover {
+		    background-color: inherit;
+		}
 	}
 }
 
