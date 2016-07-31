@@ -44,13 +44,13 @@ class ItemCardList extends HTMLElement
 
 	create: ()->
 
-		console.log @data
-
 		for i of @data
 			if @data[i].heading
-				@addHeading(@data[i].heading)
+				item = @addHeading(@data[i].heading)
 			else
-				@addItem(@data[i].title, @data[i].url)
+				item = @addItem(@data[i].title, @data[i].url)
+
+			item.element.index = i
 
 		@container.append @
 		@updateStatus()
@@ -96,9 +96,15 @@ class ItemCardList extends HTMLElement
 			item.element = new ItemCard(@, item, title, url)
 
 		if position is 'last'
+			item.element.index = @items.length
 			@items.push item
 			@append item.element
 		else
+			# Shift the index of all elements
+			for i of @items
+				@items[i].element.index++
+
+			item.element.index = 0
 			@items.unshift item
 			@prepend item.element
 
@@ -121,7 +127,7 @@ class ItemCardList extends HTMLElement
 
 			saveThis.push data
 
-		@storage.setSpeedDial(saveThis)
+		@storage.setList(@baseId, saveThis)
 
 
 	removeItem: (item, done = null)->
@@ -285,7 +291,7 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 
 		target = root.getItemForElement(ev.target.closest('li'))
-		if target? then target = target.element
+		changed = false
 
 		if not root.draggedItem?
 
@@ -303,30 +309,36 @@ class ItemCardList extends HTMLElement
 				# - over empty space at the end of list
 				console.log 'DragOver: Append'
 				root.append(root.draggedItem.element)
+				changed = true
 
-		else if target? and root.draggedItem? and target isnt root.draggedItem.element and target.containingList is root
+		else if target? and root.draggedItem? and target.element isnt root.draggedItem.element and target.element.containingList is root
 
 			# Insert as last item if dragging: 
 			# - over last child
-			if target.DOMElement is root.DOMElement.lastElementChild
+			if target.element.DOMElement is root.DOMElement.lastElementChild
 				console.log 'DragOver: Append'
 				root.append(root.draggedItem.element)
+				changed = true
 			
-			else if target.top() < root.draggedItem.element.top() or target.left() < root.draggedItem.element.left()
+			else if target.element.top() < root.draggedItem.element.top() or target.element.left() < root.draggedItem.element.left()
 				# InsertBefore has to be first option for this to work
 				# Insert before if dragging:
 				# - Up
 				# - Left
 				console.log 'DragOver: insertBefore'
-				root.insert(root.draggedItem.element, target)
+				root.insert(root.draggedItem.element, target.element)
+				changed = true
 
-			else if target.top() > root.draggedItem.element.top() or target.left() > root.draggedItem.element.left()
+			else if target.element.top() > root.draggedItem.element.top() or target.element.left() > root.draggedItem.element.left()
 				# Insert after if dragging:
 				# - Down
 				# - Right				
 				console.log 'DragOver: insertAfter'
-				if target.DOMElement.nextSibling
-					root.insert(root.draggedItem.element, target, 'after')
+				if target.element.DOMElement.nextSibling
+					root.insert(root.draggedItem.element, target.element, 'after')
+					changed = true
+
+		if changed then root.swapItems(target.element.index, root.draggedItem.element.index)			
 
 	drop = (ev, root)->
 
@@ -355,10 +367,10 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		#ev.stopPropagation()
 		
-		target = new HTMLElement(ev.target.closest('li'))
+		target = root.getItemForElement(ev.target.closest('li'))
 
 		root.removeAttr('data-dragged-item')
-		target.removeClass('dragged')
+		target.element.removeClass('dragged')
 		
 		root.ghost.removeFromDOM()
 		root.ghost = null
@@ -376,3 +388,24 @@ class ItemCardList extends HTMLElement
 			return true
 		else
 			return false
+
+	swapItems: (a, b)->
+
+		console.log 'Swap:'
+
+		console.log 'A:', @items[a].element.title, @items[a].element.index, 'B:', @items[b].element.title, @items[b].element.index
+
+		temp = @items[a]
+		@items[a] = @items[b]
+		@items[b] = temp
+
+		@items[a].element.index = a
+		@items[b].element.index = b
+
+		console.log 'A:', @items[a].element.title, @items[a].element.index, 'B:', @items[b].element.title, @items[b].element.index
+
+		console.log 'Items:'
+
+		for i of @items
+			console.log @items[i].element.title, @items[i].element.index
+

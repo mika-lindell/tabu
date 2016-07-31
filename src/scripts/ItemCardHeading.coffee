@@ -6,6 +6,7 @@ class ItemCardHeading extends HTMLElement
 	@containingList
 	@containingItem
 	@id
+	@index
 
 	# Construct new card heading.
 	#
@@ -17,8 +18,9 @@ class ItemCardHeading extends HTMLElement
 
 		@containingList = containingList
 		@containingItem = containingItem
-		
-		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
+
+		@index = @containingList.childCount()
+		@id = "#{ @containingList.baseId }-#{ @index }"
 
 		heading = new HTMLElement('h6')
 		heading.text(title)

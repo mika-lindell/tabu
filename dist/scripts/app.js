@@ -217,15 +217,19 @@
       return this.set(data, 'cloud');
     };
 
-    Storage.prototype.getSpeedDial = function(callback) {
-      return this.get('speedDial', 'cloud', callback);
+    Storage.prototype.getList = function(id, callback) {
+      return this.get(id, 'cloud', function(data) {
+        return callback(data[id]);
+      });
     };
 
-    Storage.prototype.setSpeedDial = function(newValue) {
-      var data;
-      data = {
-        speedDial: newValue
-      };
+    Storage.prototype.setList = function(id, newValue) {
+      var data, obj;
+      data = (
+        obj = {},
+        obj["" + id] = newValue,
+        obj
+      );
       return this.set(data, 'cloud');
     };
 
@@ -740,6 +744,8 @@
 
     ItemCard.color;
 
+    ItemCard.index;
+
     ItemCard.id;
 
     function ItemCard(containingList, containingItem, title, url) {
@@ -760,7 +766,8 @@
       this.color = null;
       this.title = null;
       this.url = null;
-      this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
+      this.index = this.containingList.childCount();
+      this.id = this.containingList.baseId + "-" + this.index;
       root = this;
       this.addClass('item-card');
       this.attr('id', this.id);
@@ -851,6 +858,8 @@
 
     ItemCardHeading.id;
 
+    ItemCardHeading.index;
+
     function ItemCardHeading(containingList, containingItem, title, id) {
       var heading;
       if (containingItem == null) {
@@ -863,7 +872,8 @@
       this.addClass('item-card-heading');
       this.containingList = containingList;
       this.containingItem = containingItem;
-      this.id = this.containingList.baseId + "-" + (this.containingList.childCount());
+      this.index = this.containingList.childCount();
+      this.id = this.containingList.baseId + "-" + this.index;
       heading = new HTMLElement('h6');
       heading.text(title);
       heading.attr('id', this.id);
@@ -927,14 +937,14 @@
     }
 
     ItemCardList.prototype.create = function() {
-      var i;
-      console.log(this.data);
+      var i, item;
       for (i in this.data) {
         if (this.data[i].heading) {
-          this.addHeading(this.data[i].heading);
+          item = this.addHeading(this.data[i].heading);
         } else {
-          this.addItem(this.data[i].title, this.data[i].url);
+          item = this.addItem(this.data[i].title, this.data[i].url);
         }
+        item.element.index = i;
       }
       this.container.append(this);
       return this.updateStatus();
@@ -976,7 +986,7 @@
     };
 
     ItemCardList.prototype.addItem = function(title, url, position, save) {
-      var item;
+      var i, item;
       if (title == null) {
         title = null;
       }
@@ -999,9 +1009,14 @@
         item.element = new ItemCard(this, item, title, url);
       }
       if (position === 'last') {
+        item.element.index = this.items.length;
         this.items.push(item);
         this.append(item.element);
       } else {
+        for (i in this.items) {
+          this.items[i].element.index++;
+        }
+        item.element.index = 0;
         this.items.unshift(item);
         this.prepend(item.element);
       }
@@ -1023,7 +1038,7 @@
         }
         saveThis.push(data);
       }
-      return this.storage.setSpeedDial(saveThis);
+      return this.storage.setList(this.baseId, saveThis);
     };
 
     ItemCardList.prototype.removeItem = function(item, done) {
@@ -1184,12 +1199,10 @@
     };
 
     dragOver = function(ev, root) {
-      var item, target;
+      var changed, item, target;
       ev.preventDefault();
       target = root.getItemForElement(ev.target.closest('li'));
-      if (target != null) {
-        target = target.element;
-      }
+      changed = false;
       if (root.draggedItem == null) {
         if (root.acceptFromOutsideSource(ev)) {
           item = root.addItem('Add Link', 'New');
@@ -1201,21 +1214,28 @@
       if (target === null && ev.target === root.DOMElement) {
         if (root.draggedItem.element.DOMElement !== root.lastChild().DOMElement) {
           console.log('DragOver: Append');
-          return root.append(root.draggedItem.element);
+          root.append(root.draggedItem.element);
+          changed = true;
         }
-      } else if ((target != null) && (root.draggedItem != null) && target !== root.draggedItem.element && target.containingList === root) {
-        if (target.DOMElement === root.DOMElement.lastElementChild) {
+      } else if ((target != null) && (root.draggedItem != null) && target.element !== root.draggedItem.element && target.element.containingList === root) {
+        if (target.element.DOMElement === root.DOMElement.lastElementChild) {
           console.log('DragOver: Append');
-          return root.append(root.draggedItem.element);
-        } else if (target.top() < root.draggedItem.element.top() || target.left() < root.draggedItem.element.left()) {
+          root.append(root.draggedItem.element);
+          changed = true;
+        } else if (target.element.top() < root.draggedItem.element.top() || target.element.left() < root.draggedItem.element.left()) {
           console.log('DragOver: insertBefore');
-          return root.insert(root.draggedItem.element, target);
-        } else if (target.top() > root.draggedItem.element.top() || target.left() > root.draggedItem.element.left()) {
+          root.insert(root.draggedItem.element, target.element);
+          changed = true;
+        } else if (target.element.top() > root.draggedItem.element.top() || target.element.left() > root.draggedItem.element.left()) {
           console.log('DragOver: insertAfter');
-          if (target.DOMElement.nextSibling) {
-            return root.insert(root.draggedItem.element, target, 'after');
+          if (target.element.DOMElement.nextSibling) {
+            root.insert(root.draggedItem.element, target.element, 'after');
+            changed = true;
           }
         }
+      }
+      if (changed) {
+        return root.swapItems(target.element.index, root.draggedItem.element.index);
       }
     };
 
@@ -1245,9 +1265,9 @@
       var target;
       console.log('DragEnd');
       ev.preventDefault();
-      target = new HTMLElement(ev.target.closest('li'));
+      target = root.getItemForElement(ev.target.closest('li'));
       root.removeAttr('data-dragged-item');
-      target.removeClass('dragged');
+      target.element.removeClass('dragged');
       root.ghost.removeFromDOM();
       root.ghost = null;
       root.draggedItem = null;
@@ -1260,6 +1280,24 @@
       } else {
         return false;
       }
+    };
+
+    ItemCardList.prototype.swapItems = function(a, b) {
+      var i, results, temp;
+      console.log('Swap:');
+      console.log('A:', this.items[a].element.title, this.items[a].element.index, 'B:', this.items[b].element.title, this.items[b].element.index);
+      temp = this.items[a];
+      this.items[a] = this.items[b];
+      this.items[b] = temp;
+      this.items[a].element.index = a;
+      this.items[b].element.index = b;
+      console.log('A:', this.items[a].element.title, this.items[a].element.index, 'B:', this.items[b].element.title, this.items[b].element.index);
+      console.log('Items:');
+      results = [];
+      for (i in this.items) {
+        results.push(console.log(this.items[i].element.title, this.items[i].element.index));
+      }
+      return results;
     };
 
     return ItemCardList;
@@ -2044,9 +2082,9 @@
         list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.');
         return list.create();
       };
-      this.storage.getSpeedDial(function(data) {
+      this.storage.getList('speed-dial', function(data) {
         var list;
-        list = new ItemCardList('#speed-dial', data.speedDial, 'No links yet.');
+        list = new ItemCardList('#speed-dial', data, 'No links yet.');
         list.enableEditing();
         list.setOrientation('horizontal');
         return list.create();

@@ -125,14 +125,16 @@ class Storage
 		@set(data, 'cloud')
 
 
-	getSpeedDial: (callback)->
+	getList: (id, callback)->
 
-		@get('speedDial', 'cloud', callback)
+		@get(id, 'cloud', (data)->
+			callback(data[id])
+		)
 
 
-	setSpeedDial: (newValue)->
+	setList: (id, newValue)->
 
 		data =
-			speedDial: newValue
+			"#{id}": newValue
 
 		@set(data, 'cloud')

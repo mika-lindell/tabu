@@ -76,9 +76,9 @@ class App
 
 		# Get all the data after preparations are done
 		# Speed dial is stored in the cloud storage and hence retrieved via storage API
-		@storage.getSpeedDial((data)->
+		@storage.getList('speed-dial', (data)->
 
-			list = new ItemCardList('#speed-dial', data.speedDial, 'No links yet.') # Create new list class
+			list = new ItemCardList('#speed-dial', data, 'No links yet.') # Create new list class
 			list.enableEditing()
 			list.setOrientation 'horizontal'
 			list.create() # Add items to the list	

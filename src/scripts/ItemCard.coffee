@@ -9,6 +9,7 @@ class ItemCard extends HTMLElement
 	@title
 	@url
 	@color
+	@index
 
 	@id
 
@@ -27,7 +28,8 @@ class ItemCard extends HTMLElement
 		@color = null
 		@title = null
 		@url = null
-		@id = "#{ @containingList.baseId }-#{ @containingList.childCount() }"
+		@index = @containingList.childCount()
+		@id = "#{ @containingList.baseId }-#{ @index }"
 
 		root = @
 
@@ -126,7 +128,4 @@ class ItemCard extends HTMLElement
 
 			root.containingList.draggedItem = root.containingItem
 
-
-
-		#ev.dataTransfer.setData('text/html', root.html())
 		ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)
