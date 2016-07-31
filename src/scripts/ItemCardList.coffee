@@ -58,8 +58,7 @@ class ItemCardList extends HTMLElement
 
 		if @items.length is 0
 			if not messageVisible
-				@noItems.css('top', @top('px'))
-				@container.prepend(@noItems)
+				@container.insert(@noItems, @container.firstChild(), 'after')
 		else
 			if messageVisible then @container.removeChild(@noItems)
 

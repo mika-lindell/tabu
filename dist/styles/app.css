@@ -6734,8 +6734,7 @@ li.item-card-heading {
 .no-items {
   position: absolute;
   padding-right: 1.5rem;
-  padding-left: 0.5rem;
-  top: 50%; }
+  padding-left: 0.5rem; }
   .no-items .headline {
     display: inline-block;
     margin-bottom: 1rem; }

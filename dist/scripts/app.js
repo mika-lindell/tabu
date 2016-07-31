@@ -966,8 +966,7 @@
       messageVisible = this.container.hasChild(this.noItems);
       if (this.items.length === 0) {
         if (!messageVisible) {
-          this.noItems.css('top', this.top('px'));
-          return this.container.prepend(this.noItems);
+          return this.container.insert(this.noItems, this.container.firstChild(), 'after');
         }
       } else {
         if (messageVisible) {
