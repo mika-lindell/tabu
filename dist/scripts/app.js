@@ -887,7 +887,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var actionsDragOverHandler, bodyDragOverHandler, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler;
+    var actionsDragOverHandler, bodyDragOverHandler, deleteDropHandler, dragDropCleanUp, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler;
 
     extend(ItemCardList, superClass);
 
@@ -994,17 +994,20 @@
       this.editActions.edit = new HTMLElement('li');
       this.editActions.edit.addClass('edit-actions-edit');
       this.editActions.edit.text('Edit');
+      this.editActions["delete"] = new HTMLElement('li');
+      this.editActions["delete"].addClass('edit-actions-delete');
+      this.editActions["delete"].text('Delete');
+      this.editActions.container.append(this.editActions.edit);
+      this.editActions.container.append(this.editActions["delete"]);
       this.editActions.container.on('dragover', function() {
         return actionsDragOverHandler(event, root);
       });
       this.editActions.edit.on('drop', function() {
         return editDropHandler(event, root);
       });
-      this.editActions["delete"] = new HTMLElement('li');
-      this.editActions["delete"].addClass('edit-actions-delete');
-      this.editActions["delete"].text('Delete');
-      this.editActions.container.append(this.editActions.edit);
-      this.editActions.container.append(this.editActions["delete"]);
+      this.editActions["delete"].on('drop', function() {
+        return deleteDropHandler(event, root);
+      });
       this.body.append(this.editActions.container);
       new HTMLElement('#menu-add-link').on('click', function() {
         return root.addItemByUserInput(root);
@@ -1097,16 +1100,14 @@
       return this.storage.setList(this.baseId, saveThis);
     };
 
-    ItemCardList.prototype.removeItem = function(item, done) {
+    ItemCardList.prototype.removeItem = function(item) {
       var index, root;
-      if (done == null) {
-        done = null;
-      }
       root = this;
       index = this.getIndexOf(item);
       if (index !== -1) {
         root.removeChild(item.element);
         this.items.splice(index, 1);
+        this.updateNewItemPosition(null);
         return this.ifTheListHasNoItems();
       }
     };
@@ -1226,8 +1227,10 @@
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
       var i, results;
-      this.items.splice(item.element.index, 1);
-      this.items.splice(newIndex, 0, item);
+      if (item != null) {
+        this.items.splice(item.element.index, 1);
+        this.items.splice(newIndex, 0, item);
+      }
       for (i in this.items) {
         this.items[i].element.index = i;
       }
@@ -1252,25 +1255,19 @@
         this.ghost.attr('id', 'ghost');
         this.ghost.css('position', 'fixed');
         this.ghost.css('width', from.width('px'));
-        this.updateGhost(ev, null, this.ghost);
+        this.updateGhost(ev);
         return this.body.append(this.ghost);
       }
     };
 
-    ItemCardList.prototype.updateGhost = function(ev, root, ghost) {
-      if (root == null) {
-        root = null;
-      }
-      if (ghost == null) {
-        ghost = null;
-      }
-      if (ghost == null) {
-        ghost = new HTMLElement('#ghost');
-      }
-      if (ghost.DOMElement != null) {
-        ghost.css('left', ev.clientX + 20 + 'px');
-        return ghost.css('top', ev.clientY + 'px');
-      }
+    ItemCardList.prototype.updateGhost = function(ev) {
+      this.ghost.css('left', ev.clientX + 20 + 'px');
+      return this.ghost.css('top', ev.clientY + 'px');
+    };
+
+    ItemCardList.prototype.deleteGhost = function() {
+      this.ghost.removeFromDOM();
+      return this.ghost = null;
     };
 
     dragOverUpdateCursor = function(ev, root) {
@@ -1358,10 +1355,7 @@
       target = root.getItemForElement(ev.target.closest('li'));
       root.removeAttr('data-dragged-item');
       target.element.removeClass('dragged');
-      root.ghost.removeFromDOM();
-      root.ghost = null;
-      root.draggedItem = null;
-      root.hideEditActions();
+      dragDropCleanUp(root);
       return root.save();
     };
 
@@ -1369,7 +1363,7 @@
       ev.preventDefault();
       ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
-      return root.updateGhost(ev, root);
+      return root.updateGhost(ev);
     };
 
     editDropHandler = function(ev, root) {
@@ -1379,6 +1373,16 @@
       return root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href);
     };
 
+    deleteDropHandler = function(ev, root) {
+      console.log('deleteDropHandler');
+      ev.preventDefault();
+      ev.stopPropagation();
+      ev.dataTransfer.dropEffect = "move";
+      root.removeItem(root.draggedItem);
+      dragDropCleanUp(root);
+      return root.save();
+    };
+
     bodyDragOverHandler = function(ev, root) {
       ev.preventDefault();
       ev.dataTransfer.dropEffect = "none";
@@ -1386,8 +1390,14 @@
         root.removeItem(root.draggedItem);
         return root.draggedItem = null;
       } else {
-        return root.updateGhost(ev, root);
+        return root.updateGhost(ev);
       }
+    };
+
+    dragDropCleanUp = function(root) {
+      root.deleteGhost();
+      root.draggedItem = null;
+      return root.hideEditActions();
     };
 
     return ItemCardList;

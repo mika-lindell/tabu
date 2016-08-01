@@ -117,7 +117,13 @@ class ItemCardList extends HTMLElement
 		@editActions.edit.addClass('edit-actions-edit')
 		@editActions.edit.text('Edit')
 
+		@editActions.delete = new HTMLElement('li')
+		@editActions.delete.addClass('edit-actions-delete')
+		@editActions.delete.text('Delete')
 
+		@editActions.container.append @editActions.edit
+		@editActions.container.append @editActions.delete
+		
 		@editActions.container.on('dragover', ()->
 			actionsDragOverHandler(event, root)
 		)
@@ -126,12 +132,10 @@ class ItemCardList extends HTMLElement
 			editDropHandler(event, root)
 		)
 
-		@editActions.delete = new HTMLElement('li')
-		@editActions.delete.addClass('edit-actions-delete')
-		@editActions.delete.text('Delete')
+		@editActions.delete.on('drop', ()->
+			deleteDropHandler(event, root)
+		)
 
-		@editActions.container.append @editActions.edit
-		@editActions.container.append @editActions.delete
 		@body.append @editActions.container
 
 		new HTMLElement('#menu-add-link').on('click', ()-> 
@@ -210,7 +214,7 @@ class ItemCardList extends HTMLElement
 
 		@storage.setList(@baseId, saveThis)
 
-	removeItem: (item, done = null)->
+	removeItem: (item)->
 
 		root = @
 		index = @getIndexOf(item)
@@ -218,6 +222,7 @@ class ItemCardList extends HTMLElement
 		if index isnt -1
 			root.removeChild(item.element)
 			@items.splice(index, 1)
+			@updateNewItemPosition(null)
 			@ifTheListHasNoItems()
 
 	getIndexOf: (item)->
@@ -315,10 +320,11 @@ class ItemCardList extends HTMLElement
 
 	updateNewItemPosition: (item, newIndex)->
 
-		# Remove from old position
-		@items.splice(item.element.index, 1)
-		# Insert to new position
-		@items.splice(newIndex, 0, item)
+		if item?
+			# Remove from old position
+			@items.splice(item.element.index, 1)
+			# Insert to new position
+			@items.splice(newIndex, 0, item)
 
 		for i of @items
 			@items[i].element.index = i
@@ -343,17 +349,16 @@ class ItemCardList extends HTMLElement
 			@ghost.attr('id', 'ghost')
 			@ghost.css('position', 'fixed')
 			@ghost.css('width', from.width('px'))
-			@updateGhost(ev, null, @ghost)
+			@updateGhost(ev)
 			@body.append(@ghost)
 
-	updateGhost: (ev, root = null, ghost = null)->
+	updateGhost: (ev)->
+		@ghost.css('left', ev.clientX + 20  + 'px')
+		@ghost.css('top', ev.clientY + 'px')
 
-		if not ghost?
-			ghost = new HTMLElement('#ghost')
-
-		if ghost.DOMElement?
-			ghost.css('left', ev.clientX + 20  + 'px')
-			ghost.css('top', ev.clientY + 'px')
+	deleteGhost: ()->
+		@ghost.removeFromDOM()
+		@ghost = null
 
 	dragOverUpdateCursor = (ev, root)->
 
@@ -451,18 +456,13 @@ class ItemCardList extends HTMLElement
 		console.log 'dragEndHandler'
 
 		ev.preventDefault()
-		#ev.stopPropagation()
 		
 		target = root.getItemForElement(ev.target.closest('li'))
 
 		root.removeAttr('data-dragged-item')
 		target.element.removeClass('dragged')
 		
-		root.ghost.removeFromDOM()
-		root.ghost = null
-
-		root.draggedItem = null
-		root.hideEditActions()
+		dragDropCleanUp(root)
 
 		root.save()
 
@@ -471,7 +471,7 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 		ev.dataTransfer.dropEffect = "move"
-		root.updateGhost(ev, root)
+		root.updateGhost(ev)
 
 	editDropHandler = (ev, root)->
 
@@ -481,6 +481,21 @@ class ItemCardList extends HTMLElement
 		ev.dataTransfer.dropEffect = "move"
 		root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href)
 
+	deleteDropHandler = (ev, root)->
+
+		console.log 'deleteDropHandler'
+
+		ev.preventDefault()
+		ev.stopPropagation()
+
+		ev.dataTransfer.dropEffect = "move"
+
+		root.removeItem(root.draggedItem)
+
+		dragDropCleanUp(root)
+
+		root.save()
+		
 	bodyDragOverHandler = (ev, root)->
 
 		ev.preventDefault()
@@ -491,7 +506,16 @@ class ItemCardList extends HTMLElement
 			root.removeItem(root.draggedItem)
 			root.draggedItem = null				
 		else
-			root.updateGhost(ev, root)
+			root.updateGhost(ev)
+
+	dragDropCleanUp = (root)->
+
+		root.deleteGhost()
+
+		root.draggedItem = null
+		root.hideEditActions()
+
+
 
 
 

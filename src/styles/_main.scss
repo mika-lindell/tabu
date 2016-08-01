@@ -775,9 +775,9 @@ $item-card-height: 65px;
 	position: fixed;
 	top: 0;
 	left: 50%;
-	width: 300px;
+	width: 400px;
 	margin-top: 0;
-	margin-left: -150px;
+	margin-left: -200px;
 	box-shadow: $shadow-outset-small;
 	border-radius: 0 0 2px 2px;
 	overflow: hidden;
@@ -804,7 +804,7 @@ $item-card-height: 65px;
 
 	& .edit-actions-edit{
 
-		width: 200px;
+		width: 300px;
 		background-color: color('green', 'darken-1');
 
 		&:hover{
