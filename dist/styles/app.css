@@ -6616,6 +6616,8 @@ button.title {
     box-shadow: none;
     background-color: #0277bd;
     color: #FFF; }
+    button.title.active i.material-icons, button.title.active:hover i.material-icons {
+      opacity: 0; }
   button.title i.material-icons {
     font-size: inherit; }
 

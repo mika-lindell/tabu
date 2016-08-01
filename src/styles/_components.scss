@@ -125,6 +125,10 @@ button.title{
 		box-shadow: none;
 		background-color: color('light-blue', 'darken-3');
 		color: $white;
+
+		i.material-icons{
+			opacity: 0;
+		}
 	}
 
 	i.material-icons{
