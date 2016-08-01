@@ -1,0 +1,21 @@
+/***
+
+Colors & styles
+
+***/
+
+$black: #000;
+$white: #FFF;
+$light-grey: #c7c7c7;
+$medium-grey: #8c8c8c;
+$dark-grey: #5a5a5a;
+
+$border-light: 1px solid $light-grey;
+
+$shadow-inset: inset 0 0 7px rgba(0, 0, 0, 0.25);
+$shadow-outset-triangle: rgba(0, 0, 0, 0.1) 2px 2px 5px;;
+$shadow-outset-small: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+$shadow-outset-large: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+$section-heading-margin: 0.7rem;
+$action-buttons-gap: 0.6rem;

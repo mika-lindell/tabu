@@ -1,0 +1,104 @@
+/***
+
+Layers
+
+***/
+
+.layer-behind {
+	z-index: -1;
+}
+
+.layer-default{
+	z-index: 0;
+}
+
+.layer-front{
+	z-index: 1;
+}
+
+.layer-context-menu{
+	z-index: 99;
+}
+
+.layer-loader{
+	z-index: 199;
+}
+
+.layer-noscript{
+	z-index: 299;
+}
+
+.layer-menu{
+	z-index: 399;
+}
+
+.layer-overlay{
+	z-index: 499;
+}
+
+.layer-dialog{
+	z-index: 599;
+}
+
+
+
+/***
+
+Helpers
+
+***/
+
+.thinner{
+	font-weight: 200;
+}
+
+.thin{
+	font-weight: 300;
+}
+
+.regular{
+	font-weight: 400;
+}
+
+.bold{
+	font-weight: 500;
+}
+
+.bolder{
+	font-weight: 600;
+}
+
+.uppercase{
+	text-transform: uppercase;
+}
+
+.color-black{
+	color: $black;
+}
+
+.color-medium-grey{
+	color: $medium-grey;
+}
+
+.color-dark-grey{
+	color: $dark-grey;
+}
+
+.color-white{
+	color: $white;
+}
+
+.overlay{
+	position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  @extend .valign-wrapper;
+
+	.valign{
+		width: 100%;
+	}
+
+}

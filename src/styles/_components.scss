@@ -1,0 +1,210 @@
+/***
+
+Dropdown
+
+***/
+
+.dropdown-content{
+
+	overflow-y: visible;
+	box-shadow: $shadow-outset-large;
+
+	&::before{
+	  content: "";
+	  position: absolute;
+	  box-shadow: $shadow-outset-triangle;
+	  transform: rotate(225deg);
+	  top: -10px;
+	  right: 15px;
+	  border-width: 10px;
+	  border-style: solid;
+	  border-color: transparent #FFF #FFF transparent;
+	}
+
+ li.title{
+
+	  padding: 14px 16px;
+
+	  line-height: 0.8rem;
+
+	  height: 0.8rem;
+	  min-height: 0.1rem;
+	  cursor: initial;
+
+		@extend .font-size-small;
+		@extend .color-dark-grey;
+
+		&:hover {
+		    background-color: inherit;
+		}
+	}
+}
+
+.hotkey{
+
+	@extend .font-size-small;
+	@extend .color-medium-grey;
+}
+
+/***
+
+Button styles
+
+***/
+
+.btn.teal{
+	background-color: color('teal', 'lighten-1');
+
+	&:hover{
+		background-color: color('teal', 'lighten-2');
+	}
+
+	&:active{
+		background-color: color('teal', 'lighten-1');
+	}
+}
+
+.btn:active,
+.btn-large:active{
+		background-color: color('light-blue', 'darken-3');
+		box-shadow: $shadow-inset;
+	}
+
+button.toolbar{
+	padding: 0 0.5rem;
+	padding-left: 2.2rem;
+	box-shadow: none;
+	background-color: $white;
+	position: relative;
+
+	@extend .font-size-small;
+	@extend .color-dark-grey;
+	@extend .uppercase;
+
+	&:hover{
+		background-color: $white;
+	}
+
+	& i.material-icons{
+
+  	position: absolute;
+  	left: 9px;
+  	top: 0px;
+
+		line-height: 36px;
+		height: 36px;
+	}
+
+}
+
+button.title{
+	font-size: inherit;
+	text-transform: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	text-align: left;
+	box-shadow: none;
+	padding: 0.5rem 0.5rem;
+	margin-left: -$section-heading-margin;
+	height: auto;
+	min-width: 220px;
+
+	background-color: $white;
+
+	@extend .color-black;
+
+	&:hover{
+		background-color: $white;
+	}
+
+	&.active,
+	&.active:hover{
+		box-shadow: none;
+		background-color: color('light-blue', 'darken-3');
+		color: $white;
+	}
+
+	i.material-icons{
+		font-size: inherit;
+	}
+}
+
+.btn.submit{
+	background-color: color('teal', 'lighten-1');
+
+	&:hover{
+		background-color: color('teal', 'lighten-2');
+	}
+
+	&:active{
+		background-color: color('teal', 'lighten-1');
+	}
+}
+
+.btn-link{
+	box-shadow: none !important;
+	background-color: transparent !important;
+}
+
+#actions button{
+
+	margin-bottom: $action-buttons-gap;
+	width: 47%;
+
+	&:first-child{
+		margin-left: 0;
+		margin-right: $action-buttons-gap;
+	}
+
+	&:last-child{
+		margin-right: 0;
+		margin-left: $action-buttons-gap;
+	}
+}
+
+#go-incognito i.material-icons{
+	font-size: 1.35rem;
+}
+
+/***
+
+Forms
+
+***/
+
+.user-input{
+
+	display: none;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	margin: 0;
+	width: 100%;
+	
+	background-color: color('light-blue', 'darken-3');
+	box-shadow: $shadow-outset-large;
+
+	&.centered{
+		width: 400px;
+		left: 50%;
+		margin-left: -200px;
+	}
+
+	.card-title,
+	.card-content,
+	label{
+		color: $white;
+	}
+
+  @extend .layer-context-menu;
+
+	.card-action{
+		border-top: 1px solid rgba(255, 255, 255, 0.5);
+		text-align: right;
+		.cancel{
+			@extend .btn-link;
+		}
+	}
+}

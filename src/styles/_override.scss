@@ -1,0 +1,71 @@
+/***
+
+To cancel stylesheet injection made by Chrome
+
+***/
+
+body{
+	font-family: Roboto;
+	font-size: 100%;
+}
+
+/***
+
+Override Materialize.css
+
+***/
+
+// We don't want Materialize JS as it uses jQuery
+// Hence we need some styles overwritten
+select{
+	display: inline-block;
+  background-color: $white;
+  padding: 5px 10px;
+  border: $border-light;
+  border-radius: 3px;
+  width: auto;
+  height: auto;
+}
+
+nav{
+	box-shadow: none;
+}
+
+i.left{
+	margin-right: 10px;
+}
+
+i.right{
+	margin-left: 10px;
+}
+
+input[type="url"],
+input[type="text"]{
+	background-color: $white;
+	height: auto;
+	padding: 0.5rem;
+	box-sizing: border-box;
+	border-radius: 2px;
+
+}
+
+.card-content{
+  line-height: initial;
+}
+
+.card-title{
+	margin-bottom: 1rem;
+	display: block;
+}
+
+.input-field{ 
+
+	margin-top: 0.3rem;
+	color: $black;
+
+	label{
+		position: static;
+		margin-bottom: 0.3rem;
+	  display: inline-block;
+	}
+}

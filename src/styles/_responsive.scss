@@ -1,0 +1,68 @@
+
+/***
+
+Responsive - breakpoints are the same as Materialize.css uses
+
+***/
+
+
+@media only screen and (min-width: 600px){
+
+	.container-large{
+		width: 90%;
+	}
+
+	#actions button{
+		width: 40%;
+	}	
+
+	.item-card-label-container{
+		width: 66%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+
+	.horizontal-list li{
+		width: 50%; // 2 items in arow instead of 1 in horiz lists
+	}
+
+
+
+}
+
+@media only screen and (min-width: 992px){
+	
+	#actions button{
+
+		margin-right: $action-buttons-gap / 2;
+		margin-left: $action-buttons-gap / 2;	
+
+		margin-bottom: 0;
+		width: auto;
+		min-width: 180px;
+
+		&:first-child{
+			margin-right: $action-buttons-gap / 2;
+		}
+
+		&:last-child{
+			margin-left: $action-buttons-gap / 2;
+		}
+	}	
+
+	.item-card-label-container{
+		width: 69%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+
+	.horizontal-list li{
+		width: 33%; // 3 items in arow instead of 2 in horiz lists
+	}
+
+}
+
+@media only screen and (min-width: 1200px){
+	.item-card-label-container{
+		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
+	}
+	.horizontal-list li{
+		width: 25%; // 3 items in arow instead of 2 in horiz lists
+	}
+}

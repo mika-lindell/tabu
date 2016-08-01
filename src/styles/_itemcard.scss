@@ -1,0 +1,250 @@
+/***
+
+Item card styles
+
+***/
+
+$item-card-height: 65px;
+
+.edit-actions{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	width: 400px;
+	margin-top: 0;
+	margin-left: -200px;
+	box-shadow: $shadow-outset-small;
+	border-radius: 0 0 2px 2px;
+	overflow: hidden;
+
+	@extend .layer-context-menu;
+	@extend .hoverable;
+
+	li{
+		display: inline-block;
+		text-align: center;
+		height: 60px;
+		line-height: 60px;
+		color: $white;
+		//text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.55);
+		border: 2px dashed transparent;
+
+		&::before{
+			margin-right: 0.5rem;
+			margin-top: -0.2rem;
+    	vertical-align: middle;
+
+			@extend .material-icons;
+		}
+	}
+
+	.edit-actions-edit{
+
+		width: 300px;
+		background-color: color('light-blue', 'darken-3');
+
+		&:hover{
+			border-color: color('light-blue', 'lighten-4'); 
+		}
+
+		&::before{
+			content: 'edit';
+		}
+
+	}
+
+	.edit-actions-delete{
+		width: 100px;
+		background-color: color('red', 'darken-2');
+
+		&:hover{
+			border-color: color('red', 'lighten-4'); 
+		}
+
+		&::before{
+			content: 'delete';
+		}
+
+	}
+
+}
+
+.item-card-list{
+	min-height: $item-card-height + 10px;
+  position: relative;
+
+  @extend .layer-front;
+}
+
+.drag-handle{
+	display: none; // Hide by default
+	cursor: move;
+	vertical-align: top;
+	color: $light-grey;
+	font-size: 24px;
+
+  padding-right: 0.5rem;
+  line-height: 7px;
+  margin-top: 2px;
+  /* letter-spacing: -1.23em; */
+
+
+	//@extend .material-icons
+}
+
+// DnD ghost element styles
+#ghost{
+	.drag-handle{
+		display: none;
+	}
+	transition: none;
+	border: none;
+	background-color: white;
+	opacity: 0.7;
+	box-shadow: $shadow-outset-large;
+
+	z-index: 9999999999999999999999;
+
+}
+
+ul[data-list-editable]{
+	.drag-handle{
+		display: inline-block; // Show handle only if drag is enabled
+	}
+}
+
+[data-dragged-item]{
+	.item-card{
+		box-shadow: none;
+	}
+}
+
+.item-card-empty{
+
+	display: none;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	height: $item-card-height;
+  line-height: 59px;
+
+	@extend .font-size-large;
+	@extend .color-dark-grey;
+
+}
+
+.item-card{
+	border: 2px dashed transparent;
+	position: relative;
+	height: $item-card-height;
+	list-style-type: none;
+
+	@extend .transitions;
+	@extend .hoverable;
+
+	&.dragged{
+		border-color: $light-grey;
+		box-shadow: $shadow-inset;
+	}
+
+	&:active{
+		box-shadow: $shadow-inset;
+	}
+
+	&.editing{
+		box-shadow:none !important;
+	}
+
+	&.empty{
+		background-color: $white;
+
+		.item-card-empty{
+			display: block;
+		}
+
+		a{
+			display: none;
+		}
+
+		@extend .layer-front;
+	}
+
+}
+
+.item-card-heading,
+.no-items {
+  padding-top: 0.6rem;
+}
+
+a.item-card-link{
+	display: block;
+	padding: 0.5rem;
+	border-radius: 2px;
+
+	@extend .color-black;
+}
+
+.item-card-badge{
+	display: inline-block;
+	border-width: 0.4rem;
+	border-style: solid;
+	margin-right: 0.6rem;
+	width: 3.0rem;
+	height: 3.0rem;
+	opacity: 0.75;
+	line-height: 2.3rem;
+
+	@extend .center;
+	@extend .bolder;
+	@extend .uppercase;
+	@extend .circle;
+}
+
+.item-card-label-container{
+	display: inline-block;
+	vertical-align: middle;
+	width: 80%; // For truncate to work (with text-overflow: ellipsis;)
+
+	@extend .truncate;
+}
+
+.item-card-label{
+
+}
+
+.item-card-label-secondary{
+	@extend .font-size-small;
+	@extend .color-dark-grey;
+}
+
+// Styles for horizontal lists
+.horizontal-list{
+	li{
+		display: inline-block;
+		padding-right: 1rem;
+		width: 100%; 
+	}
+}
+
+li.item-card-heading{
+	display: block;
+	margin-left: $section-heading-margin;
+}
+
+// To display the 'no items in this list' -message when the list has no items =)
+.no-items{
+	position: absolute;
+	padding-right: 1.5rem;
+	padding-left: 0.5rem;
+
+	@extend .animated;
+	@extend .color-dark-grey;
+
+	.headline{
+		display: inline-block;
+		margin-bottom: 1rem;
+
+		@extend .font-size-large;
+	}
+}
