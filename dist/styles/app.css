@@ -2107,11 +2107,11 @@ ul {
 .z-depth-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22); }
 
-.hoverable, .item-card {
+.hoverable, .edit-actions, .item-card {
   transition: box-shadow .25s;
   box-shadow: 0; }
 
-.hoverable:hover, .item-card:hover {
+.hoverable:hover, .edit-actions:hover, .item-card:hover {
   transition: box-shadow .25s;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
@@ -2597,7 +2597,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons {
+.material-icons, .edit-actions li::before {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -4352,11 +4352,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6222,7 +6222,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(./assets/material-design-icons/Material-Design-Icons.woff2) format("woff2"); }
-.material-icons {
+.material-icons, .edit-actions li::before {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6277,7 +6277,7 @@ Layers
 .layer-front, .item-card-list, .item-card.empty {
   z-index: 1; }
 
-.layer-context-menu, .user-input {
+.layer-context-menu, .user-input, .edit-actions {
   z-index: 99; }
 
 .layer-loader, #loader {
@@ -6436,18 +6436,18 @@ Animations
   animation-fill-mode: forwards;
   animation-name: slide-in;
   animation-duration: 0.2s;
-  transform-origin: 0% 0%; }
+  transform-origin: 0 0; }
 
 @keyframes slide-out {
   0% {
-    transform: scale(1, 1); }
+    transform: scale(1, 1) translate(0px, 0px); }
   100% {
-    transform: scale(1, 0.2); } }
+    transform: scale(1, 0) translate(0px, -40px); } }
 .anim-slide-out {
   animation-fill-mode: forwards;
   animation-name: slide-out;
   animation-duration: 0.2s;
-  transform-origin: 0% 0%; }
+  transform-origin: 0 0; }
 
 @keyframes highlight {
   0% {
@@ -6627,7 +6627,9 @@ Forms
 ***/
 .user-input {
   display: none;
-  background-color: #0277bd; }
+  margin: 0;
+  background-color: #0277bd;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
   .user-input .card-title,
   .user-input .card-content,
   .user-input label {
@@ -6641,6 +6643,43 @@ Forms
 Item card styles
 
 ***/
+.edit-actions {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 300px;
+  margin-top: 0;
+  margin-left: -150px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 2px 2px;
+  overflow: hidden; }
+  .edit-actions li {
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    color: #FFF;
+    border: 2px dashed transparent; }
+    .edit-actions li::before {
+      margin-right: 0.5rem;
+      margin-top: -0.2rem;
+      vertical-align: middle; }
+  .edit-actions .edit-actions-edit {
+    width: 200px;
+    background-color: #43A047; }
+    .edit-actions .edit-actions-edit:hover {
+      border-color: #C8E6C9; }
+    .edit-actions .edit-actions-edit::before {
+      content: 'edit'; }
+  .edit-actions .edit-actions-delete {
+    width: 100px;
+    background-color: #E53935; }
+    .edit-actions .edit-actions-delete:hover {
+      border-color: #FFCDD2; }
+    .edit-actions .edit-actions-delete::before {
+      content: 'delete'; }
+
 .item-card-list {
   min-height: 75px;
   position: relative; }
@@ -6661,7 +6700,8 @@ Item card styles
   border: none;
   background-color: white;
   opacity: 0.7;
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 9999999999999999999999; }
   #ghost .drag-handle {
     display: none; }
 
@@ -6682,15 +6722,17 @@ ul[data-list-editable] .drag-handle {
 .item-card {
   border: 2px dashed transparent;
   position: relative;
-  height: 65px; }
+  height: 65px;
+  list-style-type: none; }
   .item-card.dragged {
     border-color: #c7c7c7;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
-  .item-card.empty {
-    background-color: #FFF;
+  .item-card.editing {
     box-shadow: none !important; }
+  .item-card.empty {
+    background-color: #FFF; }
     .item-card.empty .item-card-empty {
       display: block; }
     .item-card.empty a {

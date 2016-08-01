@@ -13,7 +13,8 @@ $dark-grey: #5a5a5a;
 $border-light: 1px solid $light-grey;
 
 $shadow-inset: inset 0 0 7px rgba(0, 0, 0, 0.25);
-$shadow-outset: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$shadow-outset-small: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+$shadow-outset-large: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 /***
 
@@ -402,15 +403,15 @@ Animations
 	animation-fill-mode: forwards;
 	animation-name: slide-in;
   animation-duration: 0.2s;
-  transform-origin: 0% 0%;
+  transform-origin: 0 0;
 }
 
 @keyframes slide-out{
 	0%{
-		transform: scale(1, 1);
+		transform: scale(1, 1) translate(0px, 0px);
 	}	
 	100%{
-		transform: scale(1, 0.2);
+		transform: scale(1, 0) translate(0px, -40px);
 	}	
 }
 
@@ -418,7 +419,7 @@ Animations
 	animation-fill-mode: forwards;
 	animation-name: slide-out;
   animation-duration: 0.2s;
-  transform-origin: 0% 0%;
+  transform-origin: 0 0;
 }
 
 @keyframes highlight{
@@ -740,7 +741,9 @@ Forms
 .user-input{
 
 	display: none;
+	margin: 0;
 	background-color: color('light-blue', 'darken-3');
+	box-shadow: $shadow-outset-large;
 
 	.card-title,
 	.card-content,
@@ -766,6 +769,68 @@ Item card styles
 ***/
 
 $item-card-height: 65px;
+
+.edit-actions{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	width: 300px;
+	margin-top: 0;
+	margin-left: -150px;
+	box-shadow: $shadow-outset-small;
+	border-radius: 0 0 2px 2px;
+	overflow: hidden;
+
+	@extend .layer-context-menu;
+	@extend .hoverable;
+
+	& li{
+		display: inline-block;
+		text-align: center;
+		height: 60px;
+		line-height: 60px;
+		color: $white;
+		border: 2px dashed transparent;
+
+		&::before{
+			margin-right: 0.5rem;
+			margin-top: -0.2rem;
+    	vertical-align: middle;
+			@extend .material-icons;
+		}
+
+	}
+
+	& .edit-actions-edit{
+
+		width: 200px;
+		background-color: color('green', 'darken-1');
+
+		&:hover{
+			border-color: color('green', 'lighten-4'); 
+		}
+
+		&::before{
+			content: 'edit';
+		}
+
+	}
+	& .edit-actions-delete{
+		width: 100px;
+		background-color: color('red', 'darken-1');
+
+		&:hover{
+			border-color: color('red', 'lighten-4'); 
+		}
+
+		&::before{
+			content: 'delete';
+		}
+
+	}
+
+}
 
 .item-card-list{
 	min-height: $item-card-height + 10px;
@@ -799,7 +864,10 @@ $item-card-height: 65px;
 	border: none;
 	background-color: white;
 	opacity: 0.7;
-	box-shadow: $shadow-outset;
+	box-shadow: $shadow-outset-large;
+
+	z-index: 9999999999999999999999;
+
 }
 
 ul[data-list-editable]{
@@ -823,7 +891,6 @@ ul[data-list-editable]{
 	height: $item-card-height;
   line-height: 59px;
 
-
 	@extend .font-size-large;
 	@extend .color-dark-grey;
 
@@ -833,6 +900,7 @@ ul[data-list-editable]{
 	border: 2px dashed transparent;
 	position: relative;
 	height: $item-card-height;
+	list-style-type: none;
 
 	@extend .transitions;
 	@extend .hoverable;
@@ -846,10 +914,12 @@ ul[data-list-editable]{
 		box-shadow: $shadow-inset;
 	}
 
+	&.editing{
+		box-shadow:none !important;
+	}
+
 	&.empty{
 		background-color: $white;
-		box-shadow:none !important;
-		// @extend .anim-add-item;
 
 		.item-card-empty{
 			display: block;

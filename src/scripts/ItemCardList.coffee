@@ -1,35 +1,52 @@
 # Generate list of itemCards from given data
 #
 class ItemCardList extends HTMLElement
-
-	@items
-	@container
-	@data
+	
 	@baseId
+	
+	@items
+	@data
+	@storage
+
 	@editable
+	@editActions
 	@userInput
+
 	@draggedItem
 	@ghost
+
+	@container
 	@noItems
-	@storage
+	@body
+	
 
 	constructor: (container, data, empty = "I looked, but I couldn't find any.")->
 
 		super('ul')
-		
-		@container = new HTMLElement (container)
-		@noItems = new HTMLElement('p')
-		@items = new Array()
-		
-		@data = data
-		@baseId = container.replace('#', '')
-		@editable = false
-		@ghost = null
-		@userInput = null
-		@storage = null
 
 		root = @
 
+		@baseId = container.replace('#', '')
+
+		@items = new Array()
+		@data = data
+		@storage = null
+
+		@editable = false
+
+		@editActions =
+			container: null
+			edit: null
+			delete: null
+		@userInput = 
+			link: null
+
+		@draggedItem = null
+		@ghost = null
+
+		@container = new HTMLElement (container)
+		@noItems = new HTMLElement('p')
+		
 		@addClass('item-card-list')
 		@attr('id', "#{ @baseId }-list")
 
@@ -53,18 +70,82 @@ class ItemCardList extends HTMLElement
 			item.element.index = i
 
 		@container.append @
-		@updateStatus()
+		@ifTheListHasNoItems()
 
-	updateStatus: ()->
+	enableEditing: ->
 
-		messageVisible = @container.hasChild(@noItems)
+		root = @
 
-		if @items.length is 0
-			if not messageVisible
-				@container.insert(@noItems, @container.firstChild(), 'after')
-		else
-			if messageVisible then @container.removeChild(@noItems)
+		@storage = new Storage()
 
+		@editable = true
+		
+		# This will update the cursor during DragOver, as throttlig this operation would cause flicker
+		@on('dragover', ()->
+			dragOverUpdateCursor(event, root)
+		)
+		# Human hand-eye-coordination only need things to be updated at ~ 100ms interval for the action to feel responsive
+		# Hence throttle execution of this event handler to save resources
+		@on('dragover', new Throttle(()->
+			dragOverHandler(event, root)
+		, 80))
+
+		@on('drop', ()->
+			dropHandler(event, root)
+		)
+
+		@on('dragend', ()->
+			dragEndHandler(event, root)
+		)
+
+		# So that the DnD ghost is updated outside the containing element
+		@body = new HTMLElement('body')
+
+		@body.on('dragover', ()->
+			bodyDragOverHandler(event, root)
+		)
+
+		@userInput.link = new UserInput('user-input-add-new', '')
+		@userInput.link.addField('title', 'text', 'Title')
+		@userInput.link.addField('url', 'text', 'Web Address')
+		@userInput.link.addOkCancel('')
+
+		@editActions.container = new HTMLElement('ul')
+		@editActions.container.addClass('edit-actions')
+
+		@editActions.edit = new HTMLElement('li')
+		@editActions.edit.addClass('edit-actions-edit')
+		@editActions.edit.text('Edit')
+
+
+		@editActions.container.on('dragover', ()->
+			actionsDragOverHandler(event, root)
+		)
+
+		@editActions.edit.on('drop', ()->
+			editDropHandler(event, root)
+		)
+
+		@editActions.delete = new HTMLElement('li')
+		@editActions.delete.addClass('edit-actions-delete')
+		@editActions.delete.text('Delete')
+
+		@editActions.container.append @editActions.edit
+		@editActions.container.append @editActions.delete
+		@body.append @editActions.container
+
+		new HTMLElement('#menu-add-link').on('click', ()-> 
+			root.addItemByUserInput(root)
+		)
+
+		@attr('data-list-editable', '')
+
+
+	showEditActions: ()->
+		new Animation(@editActions.container, 0.2).slideIn()
+
+	hideEditActions: ()->
+		new Animation(@editActions.container, 0.2).slideOut()
 
 	addHeading: (title, position = 'last')->
 
@@ -81,7 +162,7 @@ class ItemCardList extends HTMLElement
 			@items.unshift item
 			@prepend item.element
 
-		@updateStatus()
+		@ifTheListHasNoItems()
 		return item
 
 	addItem: (title = null, url = null, position = 'last', save = true)->
@@ -108,7 +189,7 @@ class ItemCardList extends HTMLElement
 			@items.unshift item
 			@prepend item.element
 
-		@updateStatus()
+		@ifTheListHasNoItems()
 		return item
 
 	save: ()->
@@ -129,18 +210,17 @@ class ItemCardList extends HTMLElement
 
 		@storage.setList(@baseId, saveThis)
 
-
 	removeItem: (item, done = null)->
 
 		root = @
-		index = @getIndex(item)
+		index = @getIndexOf(item)
 
 		if index isnt -1
 			root.removeChild(item.element)
 			@items.splice(index, 1)
-			@updateStatus()
+			@ifTheListHasNoItems()
 
-	getIndex: (item)->
+	getIndexOf: (item)->
 		return @items.indexOf(item)
 
 	getItemForElement: (DOMElement)->
@@ -152,103 +232,69 @@ class ItemCardList extends HTMLElement
 
 		return null
 
-	enableEditing: ->
-		
-		@editable = true
-		root = @
-
-		@userInput = new UserInput('user-input-add-new', 'Add Link')
-		@userInput.addField('title', 'text', 'Title')
-		@userInput.addField('url', 'text', 'Web Address')
-		@userInput.addOkCancel('Add Link')
-
-		@storage = new Storage()
-
-		new HTMLElement('#menu-add-link').on('click', (ev)-> 
-			root.addItemByUserInput(root)
-		)
-
-		@attr('data-list-editable', '')
-
-		# This will update the cursor during DragOver, as throttlig this operation would cause flicker
-		@on('dragover', ()->
-			dragOverUpdateCursor(event, root)
-		)
-		# Human hand-eye-coordination only need things to be updated at ~ 100ms interval for the action to feel responsive
-		# Hence throttle execution of this event handler to save resources
-		@on('dragover', new Throttle(()->
-			dragOver(event, root)
-		, 80))
-
-		@on('drop', ()->
-			drop(event, root)
-		)
-
-		@on('dragend', ()->
-			dragEnd(event, root)
-		)
-
-		# So that the DnD ghost is updated outside the containing element
-		body = new HTMLElement('body')
-
-		body.on('dragover', (ev)->
-
-			ev.preventDefault()
-			ev.dataTransfer.dropEffect = "move"
-
-			if root.acceptFromOutsideSource(ev)
-				root.removeItem(root.draggedItem)
-				root.draggedItem = null				
-			else
-				root.updateGhost(ev, root)
-
-
-		)
-
-		# body.on('dragend', ()->
-		# 	root.dragEnd(event, root)
-		# )
-
 	addItemByUserInput: (root)->
 
-		#if not root.userInput.active
+		# Make sure only one at a time can be added
+		if root.userInput.link.active is false
 
-		empty = root.addItem(null, null, 'first')
+			empty = root.addItem(null, null, 'first')
 
-		root.showUserInputForItem(empty)
+			root.showUserInputForItem(empty)
 
-	showUserInputForItem: (item, title = null, url = null)->
+	showUserInputForItem: (item, action='addLink', title = null, url = null)->
 
 		root = @
+		userInput = @userInput.link	
 
-		if title? then @userInput.fields[0].element.value(title)
-		if url? then @userInput.fields[1].element.value(url)
+		if userInput?
 
-		item.element.append(@userInput)
-		
-		item.element.addClass('empty')
-		item.element.removeClass('dragged')
-		item.element.attr('draggable', 'false')		
+			if action is 'addLink'
+				userInput.setTitle('Add Link')
+				userInput.setOkLabel('Add Link')
+			if action is 'editLink'
+				userInput.setTitle('Edit Link')
+				userInput.setOkLabel('Save')
 
-		@userInput.done = (fields)->
-			item.element.setTitle(fields[0].element.value())
-			item.element.setUrl(fields[1].element.value())
-			item.element.removeClass('empty')
-			item.element.attr('draggable', 'true')
-			item.element.addClass('anim-highlight')
+			if title? then userInput.fields[0].element.value(title)
+			if url? then userInput.fields[1].element.value(url)
 
-			setTimeout(()->
-				item.element.removeClass('anim-highlight')
-			, 2000)
+			item.element.append(userInput)
+			
+			item.element.addClass('editing')
+			if action is 'addLink' then item.element.addClass('empty')
 
-			root.save()
-			root.userInput.hide()
+			item.element.removeClass('dragged')
+			item.element.attr('draggable', 'false')		
 
-		root.userInput.abort = ()->
-			root.userInput.hide()
-			root.removeItem(item)
+			userInput.done = (fields)->
 
-		root.userInput.show()
+				item.element.removeClass('editing')
+				if action is 'addLink' then item.element.removeClass('empty')
+
+				item.element.setTitle(fields[0].element.value())
+				item.element.setUrl(fields[1].element.value())
+
+				item.element.attr('draggable', 'true')
+
+				item.element.addClass('anim-highlight')
+
+				setTimeout(()->
+					item.element.removeClass('anim-highlight')
+				, 2000)
+
+				root.save()
+				userInput.hide()
+
+			userInput.abort = ()->
+
+				userInput.hide()
+
+				item.element.removeClass('editing')
+
+				if action is 'addLink' then root.removeItem(item)
+				if action is 'editLink' then item.element.attr('draggable', 'true')
+
+			userInput.show()
 
 	setOrientation: (orientation = 'horizontal')->
 
@@ -257,6 +303,38 @@ class ItemCardList extends HTMLElement
 		else
 			@container.removeClass('horizontal-list')
 
+	ifTheListHasNoItems: ()->
+
+		messageVisible = @container.hasChild(@noItems)
+
+		if @items.length is 0
+			if not messageVisible
+				@container.insert(@noItems, @container.firstChild(), 'after')
+		else
+			if messageVisible then @container.removeChild(@noItems)
+
+	updateNewItemPosition: (item, newIndex)->
+
+		# Remove from old position
+		@items.splice(item.element.index, 1)
+		# Insert to new position
+		@items.splice(newIndex, 0, item)
+
+		for i of @items
+			@items[i].element.index = i
+
+		for i of @items
+			console.log @items[i].element.title, '	', @items[i].element.index
+
+	acceptFromOutsideSource: (ev)->
+
+		if ev.dataTransfer.types.indexOf('text/plain') isnt -1 or 
+		ev.dataTransfer.types.indexOf('text/html') isnt -1 or
+		ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+
+			return true
+		else
+			return false
 
 	createGhost: (ev, from)->
 
@@ -266,7 +344,7 @@ class ItemCardList extends HTMLElement
 			@ghost.css('position', 'fixed')
 			@ghost.css('width', from.width('px'))
 			@updateGhost(ev, null, @ghost)
-			@append(@ghost)
+			@body.append(@ghost)
 
 	updateGhost: (ev, root = null, ghost = null)->
 
@@ -290,9 +368,10 @@ class ItemCardList extends HTMLElement
 
 		root.updateGhost(ev)
 
-	dragOver = (ev, root)->
+	dragOverHandler = (ev, root)->
 
 		ev.preventDefault()
+		ev.stopPropagation()
 
 		# Disable all DnD if currently have add link dialog open
 		if root.userInput.active then return
@@ -314,7 +393,7 @@ class ItemCardList extends HTMLElement
 			if root.draggedItem.element.DOMElement isnt root.lastChild().DOMElement
 				# Insert as last item if dragging: 
 				# - over empty space at the end of list
-				console.log 'DragOver: Append'
+				console.log 'dragOverHandler: Append'
 				root.append(root.draggedItem.element)
 				changed = true
 
@@ -323,7 +402,7 @@ class ItemCardList extends HTMLElement
 			# Insert as last item if dragging: 
 			# - over last child
 			if target.element.DOMElement is root.DOMElement.lastElementChild
-				console.log 'DragOver: Append'
+				console.log 'dragOverHandler: Append'
 				root.append(root.draggedItem.element)
 				changed = true
 			
@@ -332,7 +411,7 @@ class ItemCardList extends HTMLElement
 				# Insert before if dragging:
 				# - Up
 				# - Left
-				console.log 'DragOver: insertBefore'
+				console.log 'dragOverHandler: insertBefore'
 				root.insert(root.draggedItem.element, target.element)
 				changed = true
 
@@ -340,14 +419,14 @@ class ItemCardList extends HTMLElement
 				# Insert after if dragging:
 				# - Down
 				# - Right				
-				console.log 'DragOver: insertAfter'
+				console.log 'dragOverHandler: insertAfter'
 				if target.element.DOMElement.nextSibling
 					root.insert(root.draggedItem.element, target.element, 'after')
 					changed = true
 
 		if changed then root.updateNewItemPosition(root.draggedItem, target.element.index)			
 
-	drop = (ev, root)->
+	dropHandler = (ev, root)->
 
 		ev.preventDefault()
 		ev.stopPropagation()
@@ -360,16 +439,16 @@ class ItemCardList extends HTMLElement
 		if url? then title = null
 
 		if title? or url?
-			root.showUserInputForItem(root.draggedItem, title, url)
+			root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
 
 		root.draggedItem = null
 
-		console.log 'Drop', title, url
+		console.log 'dropHandler', title, url
 
 
-	dragEnd = (ev, root)->
+	dragEndHandler = (ev, root)->
 
-		console.log 'DragEnd'
+		console.log 'dragEndHandler'
 
 		ev.preventDefault()
 		#ev.stopPropagation()
@@ -383,33 +462,37 @@ class ItemCardList extends HTMLElement
 		root.ghost = null
 
 		root.draggedItem = null
+		root.hideEditActions()
 
 		root.save()
 
-	acceptFromOutsideSource: (ev)->
+	actionsDragOverHandler = (ev, root)->
 
-		if ev.dataTransfer.types.indexOf('text/plain') isnt -1 or 
-		ev.dataTransfer.types.indexOf('text/html') isnt -1 or
-		ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+		ev.preventDefault()
+		ev.stopPropagation()
+		ev.dataTransfer.dropEffect = "move"
+		root.updateGhost(ev, root)
 
-			return true
+	editDropHandler = (ev, root)->
+
+		ev.preventDefault()
+		ev.stopPropagation()
+
+		ev.dataTransfer.dropEffect = "move"
+		root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href)
+
+	bodyDragOverHandler = (ev, root)->
+
+		ev.preventDefault()
+		ev.dataTransfer.dropEffect = "none"
+
+		# Make sure the placeholder items are removed when dragging from outside source and focus leaves editable list
+		if root.acceptFromOutsideSource(ev)
+			root.removeItem(root.draggedItem)
+			root.draggedItem = null				
 		else
-			return false
+			root.updateGhost(ev, root)
 
 
-	updateNewItemPosition: (item, newIndex)->
-
-		# Remove from old position
-		@items.splice(item.element.index, 1)
-		# Insert to new position
-		@items.splice(newIndex, 0, item)
-
-		for i of @items
-			@items[i].element.index = i
-
-		console.log 'updateNewItemPosition:'
-
-		for i of @items
-			console.log @items[i].element.title, '	', @items[i].element.index
 
 

@@ -41,7 +41,7 @@ class ItemCard extends HTMLElement
 			@attr('draggable', 'true')
 			
 			@on('dragstart', ()->
-				dragStart(event, root)
+				dragStartHandler(event, root)
 			)
 
 		@elements.link = new HTMLElement('a')
@@ -114,7 +114,9 @@ class ItemCard extends HTMLElement
 
 		@elements.labelUrl.text(@url.hostname)
 
-	dragStart = (ev, root)->
+	dragStartHandler = (ev, root)->
+
+		console.log 'dragStartHandler'
 
 		ev.stopPropagation()
 
@@ -127,5 +129,7 @@ class ItemCard extends HTMLElement
 			root.containingList.createGhost(ev, root)
 
 			root.containingList.draggedItem = root.containingItem
+			root.containingList.showEditActions()
 
+		# To hide the default drag image we set it to empty element
 		ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)

@@ -35,11 +35,11 @@ class App
 
 		root = @
 
-		@topSites = new DataGetter(chrome.topSites.get)
-		@latestBookmarks = new DataGetter(chrome.bookmarks.getRecent, 'latestBookmarks')
-		# @recentHistory = new DataGetter(chrome.history.search, 'recentHistory')
-		@recentlyClosed = new DataGetter(chrome.sessions.getRecentlyClosed, 'recentlyClosed')
-		@otherDevices = new DataGetter(chrome.sessions.getDevices, 'otherDevices')
+		@topSites = new ChromeAPI(chrome.topSites.get)
+		@latestBookmarks = new ChromeAPI(chrome.bookmarks.getRecent, 'latestBookmarks')
+		# @recentHistory = new ChromeAPI(chrome.history.search, 'recentHistory')
+		@recentlyClosed = new ChromeAPI(chrome.sessions.getRecentlyClosed, 'recentlyClosed')
+		@otherDevices = new ChromeAPI(chrome.sessions.getDevices, 'otherDevices')
 
 		@topSites.done = ()->
 

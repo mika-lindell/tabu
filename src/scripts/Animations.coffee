@@ -17,6 +17,8 @@ class Animation
 		@animate.css('transition', "all #{@duration}s")
 		@animate.css('animation-duration',  "#{@duration}s")
 
+		return @
+
 	slideIn: ()->
 
 		root = @

@@ -1,22 +1,34 @@
 class UserInput extends HTMLElement
 
 	@active
+
 	@content
-	@title
+	@heading
+	@actions
+
 	@fields	
+
 	@done
 	@abort
 
 	constructor: (id, title)->
 
+		super('form')
+
 		root = @
 
 		@active = false
+		@content = new HTMLElement('div')
+		@heading = new HTMLElement('span')
+		@actions =
+			ok: null
+			cancel: null
+
+		@fields = new Array()
 
 		@done = ()->
 		@abort =  ()->
 
-		super('form')
 		@attr('id', id)
 		@addClass('user-input')
 		@addClass('card')
@@ -26,13 +38,9 @@ class UserInput extends HTMLElement
 		@css('top', '0')
 		@css('left', '0')
 		@css('width', '100%')
-
-		@fields = new Array()
-
-		@content = new HTMLElement('div')
+		
 		@content.addClass('card-content')
 
-		@heading = new HTMLElement('span')
 		@heading.addClass('card-title')
 		@heading.text(title)
 
@@ -95,29 +103,35 @@ class UserInput extends HTMLElement
 		container =  new HTMLElement('div')
 		container.addClass('card-action')
 
-		cancel = new HTMLElement('input')
-		ok = new HTMLElement('input')
+		@actions.cancel = new HTMLElement('input')
+		@actions.ok = new HTMLElement('input')
 
-		cancel.attr('type', 'button')
-		cancel.attr('tabindex', @fields.count + 2)
-		cancel.value(abort)
-		cancel.addClass('btn')
-		cancel.addClass('cancel')
+		@actions.cancel.attr('type', 'button')
+		@actions.cancel.attr('tabindex', @fields.count + 2)
+		@actions.cancel.value(abort)
+		@actions.cancel.addClass('btn')
+		@actions.cancel.addClass('cancel')
 
-		cancel.on('click', ()->
+		@actions.cancel.on('click', ()->
 			root.onAbort()
 		)
 
-		ok.attr('type', 'submit')
-		ok.attr('tabindex', @fields.count + 1)
-		ok.value(confirm)
-		ok.addClass('btn')
-		ok.addClass('submit')
+		@actions.ok.attr('type', 'submit')
+		@actions.ok.attr('tabindex', @fields.count + 1)
+		@actions.ok.value(confirm)
+		@actions.ok.addClass('btn')
+		@actions.ok.addClass('submit')
 
-		container.append(cancel)
-		container.append(ok)
+		container.append(@actions.cancel)
+		container.append(@actions.ok)
 
 		@append(container)
+
+	setTitle: (title)->
+		@heading.text(title)
+
+	setOkLabel: (label)->
+		@actions.ok.attr('value', label)
 
 	show: (display)->
 		super(display)
@@ -128,11 +142,11 @@ class UserInput extends HTMLElement
 		super()
 		@active = false
 
-
 	onAbort: ()->
-		@abort()
 		@hide()
-
+		@abort(@fields)
+		@clearFields()
+		
 	onConfirm: ()->
 		@hide()
 		@done(@fields)

@@ -1,6 +1,6 @@
 # Used to retrieve data from async chrome API
 #
-class DataGetter
+class ChromeAPI
 
 	@api
 	@limit
@@ -29,7 +29,7 @@ class DataGetter
 	#
 	fetch: (api)->
 		@status = 'loading'
-		console.log "DataGetter: I'm calling to chrome API about #{@dataType}..."
+		console.log "ChromeAPI: I'm calling to chrome API about #{@dataType}..."
 
 		root = @ # Reference the class so we can access it in getter-function
 
@@ -46,7 +46,7 @@ class DataGetter
 			root.status = 'ready'
 			root.done()
 
-			console.log "DataGetter: Ok, got #{root.dataType} ->", root.data
+			console.log "ChromeAPI: Ok, got #{root.dataType} ->", root.data
 
 		if @dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
 			
