@@ -256,17 +256,26 @@ class ItemCardList extends HTMLElement
 			if action is 'addLink'
 				userInput.setTitle('Add Link')
 				userInput.setOkLabel('Add Link')
-			if action is 'editLink'
+			else if action is 'editLink'
 				userInput.setTitle('Edit Link')
 				userInput.setOkLabel('Save')
 
-			if title? then userInput.fields[0].element.value(title)
-			if url? then userInput.fields[1].element.value(url)
+			if title?
+				userInput.fields[0].element.value(title)
 
-			item.element.append(userInput)
+			if url?
+				userInput.fields[1].element.value(url)
+
+			if action is 'editLink'
+				userInput.addClass('centered')
+				root.body.append(userInput)
+			else
+				item.element.append(userInput)
 			
+			if action is 'addLink'
+				item.element.addClass('empty')
+
 			item.element.addClass('editing')
-			if action is 'addLink' then item.element.addClass('empty')
 
 			item.element.removeClass('dragged')
 			item.element.attr('draggable', 'false')		
@@ -274,7 +283,11 @@ class ItemCardList extends HTMLElement
 			userInput.done = (fields)->
 
 				item.element.removeClass('editing')
-				if action is 'addLink' then item.element.removeClass('empty')
+
+				if action is 'addLink'
+					item.element.removeClass('empty')
+				else if action is 'editLink'
+					userInput.removeClass('centered')
 
 				item.element.setTitle(fields[0].element.value())
 				item.element.setUrl(fields[1].element.value())
@@ -296,8 +309,11 @@ class ItemCardList extends HTMLElement
 
 				item.element.removeClass('editing')
 
-				if action is 'addLink' then root.removeItem(item)
-				if action is 'editLink' then item.element.attr('draggable', 'true')
+				if action is 'addLink'
+					root.removeItem(item)
+				else if action is 'editLink'
+					item.element.attr('draggable', 'true')
+					userInput.removeClass('centered')
 
 			userInput.show()
 
@@ -353,8 +369,9 @@ class ItemCardList extends HTMLElement
 			@body.append(@ghost)
 
 	updateGhost: (ev)->
-		@ghost.css('left', ev.clientX + 20  + 'px')
-		@ghost.css('top', ev.clientY + 'px')
+		if @ghost? 
+			@ghost.css('left', ev.clientX + 20  + 'px')
+			@ghost.css('top', ev.clientY + 'px')
 
 	deleteGhost: ()->
 		@ghost.removeFromDOM()

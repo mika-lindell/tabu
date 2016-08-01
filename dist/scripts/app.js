@@ -1153,8 +1153,7 @@
         if (action === 'addLink') {
           userInput.setTitle('Add Link');
           userInput.setOkLabel('Add Link');
-        }
-        if (action === 'editLink') {
+        } else if (action === 'editLink') {
           userInput.setTitle('Edit Link');
           userInput.setOkLabel('Save');
         }
@@ -1164,17 +1163,24 @@
         if (url != null) {
           userInput.fields[1].element.value(url);
         }
-        item.element.append(userInput);
-        item.element.addClass('editing');
+        if (action === 'editLink') {
+          userInput.addClass('centered');
+          root.body.append(userInput);
+        } else {
+          item.element.append(userInput);
+        }
         if (action === 'addLink') {
           item.element.addClass('empty');
         }
+        item.element.addClass('editing');
         item.element.removeClass('dragged');
         item.element.attr('draggable', 'false');
         userInput.done = function(fields) {
           item.element.removeClass('editing');
           if (action === 'addLink') {
             item.element.removeClass('empty');
+          } else if (action === 'editLink') {
+            userInput.removeClass('centered');
           }
           item.element.setTitle(fields[0].element.value());
           item.element.setUrl(fields[1].element.value());
@@ -1190,10 +1196,10 @@
           userInput.hide();
           item.element.removeClass('editing');
           if (action === 'addLink') {
-            root.removeItem(item);
-          }
-          if (action === 'editLink') {
-            return item.element.attr('draggable', 'true');
+            return root.removeItem(item);
+          } else if (action === 'editLink') {
+            item.element.attr('draggable', 'true');
+            return userInput.removeClass('centered');
           }
         };
         return userInput.show();
@@ -1261,8 +1267,10 @@
     };
 
     ItemCardList.prototype.updateGhost = function(ev) {
-      this.ghost.css('left', ev.clientX + 20 + 'px');
-      return this.ghost.css('top', ev.clientY + 'px');
+      if (this.ghost != null) {
+        this.ghost.css('left', ev.clientX + 20 + 'px');
+        return this.ghost.css('top', ev.clientY + 'px');
+      }
     };
 
     ItemCardList.prototype.deleteGhost = function() {
@@ -1439,10 +1447,6 @@
       this.addClass('user-input');
       this.addClass('card');
       this.addClass('anim-slide-in');
-      this.css('position', 'absolute');
-      this.css('top', '0');
-      this.css('left', '0');
-      this.css('width', '100%');
       this.content.addClass('card-content');
       this.heading.addClass('card-title');
       this.heading.text(title);

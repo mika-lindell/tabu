@@ -33,11 +33,6 @@ class UserInput extends HTMLElement
 		@addClass('user-input')
 		@addClass('card')
 		@addClass('anim-slide-in')
-
-		@css('position', 'absolute')
-		@css('top', '0')
-		@css('left', '0')
-		@css('width', '100%')
 		
 		@content.addClass('card-content')
 

@@ -741,9 +741,22 @@ Forms
 .user-input{
 
 	display: none;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	
 	margin: 0;
+	width: 100%;
+	
 	background-color: color('light-blue', 'darken-3');
 	box-shadow: $shadow-outset-large;
+
+	&.centered{
+		width: 400px;
+		left: 50%;
+		margin-left: -200px;
+	}
 
 	.card-title,
 	.card-content,
@@ -785,7 +798,7 @@ $item-card-height: 65px;
 	@extend .layer-context-menu;
 	@extend .hoverable;
 
-	& li{
+	li{
 		display: inline-block;
 		text-align: center;
 		height: 60px;
@@ -797,12 +810,12 @@ $item-card-height: 65px;
 			margin-right: 0.5rem;
 			margin-top: -0.2rem;
     	vertical-align: middle;
+
 			@extend .material-icons;
 		}
-
 	}
 
-	& .edit-actions-edit{
+	.edit-actions-edit{
 
 		width: 300px;
 		background-color: color('green', 'darken-1');
@@ -816,7 +829,8 @@ $item-card-height: 65px;
 		}
 
 	}
-	& .edit-actions-delete{
+
+	.edit-actions-delete{
 		width: 100px;
 		background-color: color('red', 'darken-1');
 
