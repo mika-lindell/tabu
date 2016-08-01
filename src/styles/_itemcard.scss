@@ -24,8 +24,8 @@ $item-card-height: 65px;
 	li{
 		display: inline-block;
 		text-align: center;
-		height: 60px;
-		line-height: 60px;
+		height: 70px;
+		line-height: 70px;
 		color: $white;
 		//text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.55);
 		border: 2px dashed transparent;
@@ -41,11 +41,11 @@ $item-card-height: 65px;
 
 	.edit-actions-edit{
 
-		width: 300px;
-		background-color: color('light-blue', 'darken-3');
+		width: 290px;
+		background-color: color('green', 'darken-3');
 
 		&:hover{
-			border-color: color('light-blue', 'lighten-4'); 
+			border-color: color('green', 'lighten-4'); 
 		}
 
 		&::before{
@@ -55,7 +55,7 @@ $item-card-height: 65px;
 	}
 
 	.edit-actions-delete{
-		width: 100px;
+		width: 110px;
 		background-color: color('red', 'darken-2');
 
 		&:hover{
@@ -63,7 +63,7 @@ $item-card-height: 65px;
 		}
 
 		&::before{
-			content: 'delete';
+			content: 'delete_forever';
 		}
 
 	}

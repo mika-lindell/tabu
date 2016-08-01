@@ -936,7 +936,11 @@
         link: null
       };
       this.draggedItem = null;
-      this.ghost = null;
+      this.ghost = {
+        element: null,
+        initialX: null,
+        initialY: null
+      };
       this.container = new HTMLElement(container);
       this.noItems = new HTMLElement('p');
       this.addClass('item-card-list');
@@ -1257,25 +1261,31 @@
 
     ItemCardList.prototype.createGhost = function(ev, from) {
       if (from != null) {
-        this.ghost = from.clone();
-        this.ghost.attr('id', 'ghost');
-        this.ghost.css('position', 'fixed');
-        this.ghost.css('width', from.width('px'));
+        this.ghost.element = from.clone();
+        this.ghost.element.attr('id', 'ghost');
+        this.ghost.element.css('position', 'fixed');
+        this.ghost.element.css('width', from.width('px'));
+        this.ghost.element.css('left', ev.clientX + 20 + 'px');
+        this.ghost.element.css('top', ev.clientY + 'px');
+        this.ghost.initialX = ev.clientX;
+        this.ghost.initialY = ev.clientY;
         this.updateGhost(ev);
-        return this.body.append(this.ghost);
+        return this.body.append(this.ghost.element);
       }
     };
 
     ItemCardList.prototype.updateGhost = function(ev) {
-      if (this.ghost != null) {
-        this.ghost.css('left', ev.clientX + 20 + 'px');
-        return this.ghost.css('top', ev.clientY + 'px');
+      var x, y;
+      if (this.ghost.element != null) {
+        x = ev.clientX - this.ghost.initialX;
+        y = ev.clientY - this.ghost.initialY;
+        return this.ghost.element.css('transform', "translate(" + x + "px, " + y + "px)");
       }
     };
 
     ItemCardList.prototype.deleteGhost = function() {
-      this.ghost.removeFromDOM();
-      return this.ghost = null;
+      this.ghost.element.removeFromDOM();
+      return this.ghost.element = null;
     };
 
     dragOverUpdateCursor = function(ev, root) {

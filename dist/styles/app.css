@@ -6551,7 +6551,7 @@ Dropdown
     box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 5px;
     transform: rotate(225deg);
     top: -10px;
-    right: 15px;
+    right: 14px;
     border-width: 10px;
     border-style: solid;
     border-color: transparent #FFF #FFF transparent; }
@@ -6588,7 +6588,7 @@ button.toolbar {
   background-color: #FFF;
   position: relative;
   overflow: hidden; }
-  button.toolbar:hover {
+  button.toolbar:hover, button.toolbar:focus {
     background-color: #FFF; }
   button.toolbar i.material-icons {
     position: absolute;
@@ -6608,8 +6608,9 @@ button.title {
   margin-left: -0.7rem;
   height: auto;
   min-width: 220px;
+  opacity: 1;
   background-color: #FFF; }
-  button.title:hover {
+  button.title:hover, button.title:focus {
     background-color: #FFF; }
   button.title.active, button.title.active:hover {
     box-shadow: none;
@@ -6687,8 +6688,8 @@ Item card styles
   .edit-actions li {
     display: inline-block;
     text-align: center;
-    height: 60px;
-    line-height: 60px;
+    height: 70px;
+    line-height: 70px;
     color: #FFF;
     border: 2px dashed transparent; }
     .edit-actions li::before {
@@ -6696,19 +6697,19 @@ Item card styles
       margin-top: -0.2rem;
       vertical-align: middle; }
   .edit-actions .edit-actions-edit {
-    width: 300px;
-    background-color: #0277bd; }
+    width: 290px;
+    background-color: #2E7D32; }
     .edit-actions .edit-actions-edit:hover {
-      border-color: #b3e5fc; }
+      border-color: #C8E6C9; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
   .edit-actions .edit-actions-delete {
-    width: 100px;
+    width: 110px;
     background-color: #D32F2F; }
     .edit-actions .edit-actions-delete:hover {
       border-color: #FFCDD2; }
     .edit-actions .edit-actions-delete::before {
-      content: 'delete'; }
+      content: 'delete_forever'; }
 
 .item-card-list {
   min-height: 75px;

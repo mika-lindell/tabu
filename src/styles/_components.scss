@@ -15,7 +15,7 @@ Dropdown
 	  box-shadow: $shadow-outset-triangle;
 	  transform: rotate(225deg);
 	  top: -10px;
-	  right: 15px;
+	  right: 14px;
 	  border-width: 10px;
 	  border-style: solid;
 	  border-color: transparent #FFF #FFF transparent;
@@ -82,7 +82,8 @@ button.toolbar{
 	@extend .color-dark-grey;
 	@extend .uppercase;
 
-	&:hover{
+	&:hover,
+	&:focus{
 		background-color: $white;
 	}
 
@@ -109,12 +110,13 @@ button.title{
 	margin-left: -$section-heading-margin;
 	height: auto;
 	min-width: 220px;
+	opacity: 1;
 
 	background-color: $white;
-
 	@extend .color-black;
 
-	&:hover{
+	&:hover,
+	&:focus{
 		background-color: $white;
 	}
 

@@ -42,7 +42,10 @@ class ItemCardList extends HTMLElement
 			link: null
 
 		@draggedItem = null
-		@ghost = null
+		@ghost = 
+			element: null
+			initialX: null
+			initialY: null
 
 		@container = new HTMLElement (container)
 		@noItems = new HTMLElement('p')
@@ -361,21 +364,31 @@ class ItemCardList extends HTMLElement
 	createGhost: (ev, from)->
 
 		if from?
-			@ghost = from.clone()
-			@ghost.attr('id', 'ghost')
-			@ghost.css('position', 'fixed')
-			@ghost.css('width', from.width('px'))
+			@ghost.element = from.clone()
+			@ghost.element.attr('id', 'ghost')
+			@ghost.element.css('position', 'fixed')
+			@ghost.element.css('width', from.width('px'))
+
+			@ghost.element.css('left', ev.clientX + 20  + 'px')
+			@ghost.element.css('top', ev.clientY + 'px')
+
+			@ghost.initialX = ev.clientX
+			@ghost.initialY = ev.clientY
+
 			@updateGhost(ev)
-			@body.append(@ghost)
+			@body.append(@ghost.element)
 
 	updateGhost: (ev)->
-		if @ghost? 
-			@ghost.css('left', ev.clientX + 20  + 'px')
-			@ghost.css('top', ev.clientY + 'px')
+
+		if @ghost.element? 
+			x = ev.clientX - @ghost.initialX
+			y = ev.clientY - @ghost.initialY
+
+			@ghost.element.css('transform',"translate(#{x}px, #{y}px)")
 
 	deleteGhost: ()->
-		@ghost.removeFromDOM()
-		@ghost = null
+		@ghost.element.removeFromDOM()
+		@ghost.element = null
 
 	dragOverUpdateCursor = (ev, root)->
 
