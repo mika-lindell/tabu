@@ -6586,7 +6586,8 @@ button.toolbar {
   padding-left: 2.2rem;
   box-shadow: none;
   background-color: #FFF;
-  position: relative; }
+  position: relative;
+  overflow: hidden; }
   button.toolbar:hover {
     background-color: #FFF; }
   button.toolbar i.material-icons {

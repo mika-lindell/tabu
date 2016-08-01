@@ -76,6 +76,7 @@ button.toolbar{
 	box-shadow: none;
 	background-color: $white;
 	position: relative;
+	overflow: hidden;
 
 	@extend .font-size-small;
 	@extend .color-dark-grey;
