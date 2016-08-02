@@ -155,17 +155,18 @@ ul[data-list-editable]{
 		box-shadow: $shadow-inset;
 	}
 
+	// When item card has no content
 	&.empty{
-		background-color: $white;
 
+		// Show the ålaceholder message
 		.item-card-empty{
 			display: block;
 		}
-
+		// Hide rest of the content
 		a{
 			display: none;
 		}
-
+		
 		@extend .layer-front;
 	}
 }

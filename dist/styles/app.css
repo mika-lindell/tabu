@@ -6758,12 +6758,10 @@ ul[data-list-editable] .drag-handle {
   list-style-type: none; }
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
-  .item-card.empty {
-    background-color: #FFF; }
-    .item-card.empty .item-card-empty {
-      display: block; }
-    .item-card.empty a {
-      display: none; }
+  .item-card.empty .item-card-empty {
+    display: block; }
+  .item-card.empty a {
+    display: none; }
 
 .drag-in-progress .item-card {
   box-shadow: none; }

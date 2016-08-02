@@ -1337,6 +1337,7 @@
           root.draggedItem = item;
           root.draggedItem.element.addClass('dragged');
           root.draggedItem.element.addClass('empty');
+          root.addClass('drag-in-progress');
         }
       }
       if (target === null && ev.target === root.DOMElement) {
@@ -1438,6 +1439,7 @@
       ev.dataTransfer.dropEffect = "none";
       if (root.acceptFromOutsideSource(ev)) {
         root.removeItem(root.draggedItem);
+        root.removeClass('drag-in-progress');
         return root.draggedItem = null;
       } else {
         return root.updateGhost(ev);
@@ -1828,7 +1830,7 @@
       if (from == null) {
         from = container.height();
       }
-      container.css('height', from + 10 + 'px');
+      container.css('height', from + 15 + 'px');
       play = function() {
         return container.css('height', to + 'px');
       };

@@ -62,7 +62,7 @@ class Animation
 		if not from?
 			from = container.height()
 
-		container.css('height', from + 10 + 'px')
+		container.css('height', from + 15 + 'px')
 
 		play = ()->
 			container.css('height', to + 'px')

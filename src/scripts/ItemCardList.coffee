@@ -445,6 +445,7 @@ class ItemCardList extends HTMLElement
 				root.draggedItem = item
 				root.draggedItem.element.addClass('dragged')
 				root.draggedItem.element.addClass('empty')
+				root.addClass('drag-in-progress')
 
 		if target is null and ev.target is root.DOMElement
 
@@ -571,6 +572,7 @@ class ItemCardList extends HTMLElement
 		# Make sure the placeholder items are removed when dragging from outside source and focus leaves editable list
 		if root.acceptFromOutsideSource(ev)
 			root.removeItem(root.draggedItem)
+			root.removeClass('drag-in-progress')
 			root.draggedItem = null				
 		else
 			root.updateGhost(ev)
