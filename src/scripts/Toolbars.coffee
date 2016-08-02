@@ -59,7 +59,7 @@ class Toolbars
 		root.storage.setView('speedDial')
 
 	topSites: (root, instant = false)->
-		console.log 'topSites'
+
 		if instant
 			root.speedDialContainer.hide()
 			root.topSitesContainer.show()

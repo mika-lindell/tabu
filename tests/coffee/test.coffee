@@ -43,7 +43,7 @@ module.exports =
 	'it should have section headings': (browser)->
 		browser.expect.element("#top-sites").to.be.present
 		browser.expect.element("#top-sites").text.to.contain('Top Sites')
-		
+
 		browser.expect.element("#latest-bookmarks").to.be.present
 		browser.expect.element("#latest-bookmarks").text.to.contain('Latest Bookmarks')
 		
@@ -56,6 +56,13 @@ module.exports =
 		browser.expect.element("#other-devices").to.be.present
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
+	'top sites should be visible by default': (browser)->
+		browser.expect.element("#top-sites").to.have.css('display', 'block')
+
+	'speed dial should be hidden by default': (browser)->
+		browser.expect.element("#top-sites").to.have.css('display', 'none')
+
+
 	###	
 	#
 	# TOP SITES
@@ -64,9 +71,9 @@ module.exports =
 
 	'Top sites should have only default items': (browser)->
 
-		browser.expect.element("#top-sites-recommended-0").to.be.present
-		browser.expect.element("#top-sites-recommended-1").to.be.present
-		browser.expect.element("#top-sites-recommended-2").not.to.be.present 
+		browser.expect.element("#top-sites-0").to.be.present
+		browser.expect.element("#top-sites-1").to.be.present
+		browser.expect.element("#top-sites-2").not.to.be.present 
 
 
 
@@ -123,7 +130,7 @@ module.exports =
 			browser.expect.element("#latest-bookmarks-#{ i }-link").to.have.attribute("href").which.equals(site.url)	
 
 	'Latest Boomarks should have "no-items"-message hidden': (browser)->
-		browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'none')
+		browser.expect.element("#latest-bookmarks > .no-items").not.to.be.present
 
 	###	
 	#
@@ -196,7 +203,7 @@ module.exports =
 		browser.execute(openWin, [], done)
 
 	'Recently Closed should have "no-items"-message hidden': (browser)->
-		browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'none')
+		browser.expect.element("#recently-closed > .no-items").not.to.be.present
 
 	###	
 	#
@@ -222,27 +229,38 @@ module.exports =
 	'it should have navbar': (browser)->
 		browser.expect.element(".nav-wrapper").to.be.present
 
-	'navbar should have visibility off -button': (browser)->
+	'navbar should have visibility toggle-button': (browser)->
+		browser.expect.element("#visibility-toggle").to.be.present
+		browser.expect.element("#visibility-toggle").to.have.css('display', 'block')
+
+	'visibility toggle-button should be in "turn off"-mode': (browser)->
 		browser.expect.element("#visibility-off").to.be.present
-		browser.expect.element("#visibility-off").text.to.contain('HIDE US')
+		browser.expect.element("#visibility-off").text.to.contain('HIDE ALL')
 		browser.expect.element("#visibility-off").to.have.css('display', 'block')
 
-	'visibility-on -button should be hidden': (browser)->
+	'visibility toggle-button should have visibility_off-icon': (browser)->
+		browser.expect.element("#visibility-off > i.material-icons").to.be.present
+		browser.expect.element("#visibility-off > i.material-icons").text.to.equal('visibility_off')
+
+	'visibility_on-icon should be hidden': (browser)->
 		browser.expect.element("#visibility-on").to.be.present
 		browser.expect.element("#visibility-on").to.have.css('display', 'none')
 
-	'clicking visibility off -button should hide all elements': (browser)->
+	'clicking visibility toggle -button should hide all elements': (browser)->
 		browser.expect.element("#content-container").to.have.css('display', 'block')
-		browser.click("#visibility-off")
+		browser.click("#visibility-toggle")
 		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
 		browser.pause(500) # REMOVE
 
-	'clicking visibility off -button should hide it': (browser)->
+	'clicking visibility toggle-button should make visibility_off-icon to disappear': (browser)->
 		browser.expect.element("#visibility-off").to.have.css('display', 'none')
 
-	'clicking visibility off -button should make visibility on -button appear': (browser)->
-		browser.expect.element("#visibility-on").text.to.contain('SEE US')
+	'clicking visibility toggle-button should make visibility_on-icon to appear': (browser)->
 		browser.expect.element("#visibility-on").to.have.css('display', 'block')
+
+	'visibility toggle-button should have visibility_on-icon': (browser)->
+		browser.expect.element("#visibility-on > i.material-icons").to.be.present
+		browser.expect.element("#visibility-on > i.material-icons").text.to.equal('visibility_on')
 
 	###	
 	#
@@ -262,16 +280,16 @@ module.exports =
 		browser.expect.element("#content-container").to.have.css('display', 'none')
 		browser.pause(500) # Give the extension some time to load JS
 
-	'clicking visibility on -button should make all elements visible': (browser)->
+	'clicking visibility toggle-button should make all elements visible': (browser)->
 		browser.expect.element("#content-container").to.have.css('display', 'none')
-		browser.click("#visibility-on")
+		browser.click("#visibility-toggle")
 		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
 		browser.pause(500) # REMOVE
 
-	'clicking visibility on -button should hide it': (browser)->
+	'clicking visibility toggle-button should make visibility_on-icon to disappear': (browser)->
 		browser.expect.element("#visibility-on").to.have.css('display', 'none')
 
-	'clicking visibility on -button should make visibility-off -button appear': (browser)->
+	'clicking visibility toggle-button should make visibility_off-icon to appear': (browser)->
 		browser.expect.element("#visibility-off").to.have.css('display', 'block')
 
 	'the state of visibility:on should persist between sessions': (browser)->
@@ -293,7 +311,11 @@ module.exports =
 
 	'it should have button to view bookmarks': (browser)->
 		browser.expect.element("#view-bookmarks").to.be.present
-		browser.expect.element("#view-bookmarks").text.to.contain('BOOKMARKS')
+		browser.expect.element("#view-bookmarks").text.to.contain("BOOKMARKS")
+
+	'bookmarks-button should have correct-icon': (browser)->
+		browser.expect.element("#view-bookmarks > i.material-icons").to.be.present
+		browser.expect.element("#view-bookmarks > i.material-icons").text.to.equal('star')
 
 	'clicking bookmark button should take to bookmark-page': (browser)->	
 		browser.click("#view-bookmarks")
@@ -312,6 +334,10 @@ module.exports =
 	'it should have button to view history': (browser)->
 		browser.expect.element("#view-history").to.be.present
 		browser.expect.element("#view-history").text.to.contain('HISTORY')
+
+	'history-button should have correct-icon': (browser)->
+		browser.expect.element("#view-history > i.material-icons").to.be.present
+		browser.expect.element("#view-history > i.material-icons").text.to.equal('history')
 
 	'clicking history button should take to history-page': (browser)->		
 		
@@ -332,6 +358,10 @@ module.exports =
 		browser.expect.element("#view-downloads").to.be.present
 		browser.expect.element("#view-downloads").text.to.contain('DOWNLOADS')
 
+	'downloads-button should have correct-icon': (browser)->
+		browser.expect.element("#view-downloads > i.material-icons").to.be.present
+		browser.expect.element("#view-downloads > i.material-icons").text.to.equal('file_download')
+
 	'clicking downloads button should take to downloads-page': (browser)->		
 		browser.click("#view-downloads")
 		browser.expect.element("downloads-manager").to.be.present.after(500)
@@ -349,6 +379,10 @@ module.exports =
 	'it should have button to open incognito-window': (browser)->
 		browser.expect.element("#go-incognito").to.be.present
 		browser.expect.element("#go-incognito").text.to.contain('GO INCOGNITO')
+
+	'incognito-button should have correct-icon': (browser)->
+		browser.expect.element("#go-incognito > i.material-icons").to.be.present
+		browser.expect.element("#go-incognito > i.material-icons").text.to.equal('open_in_new')
 
 	'clicking the incognito-button should open incognito-window': (browser)->
 
@@ -371,17 +405,17 @@ module.exports =
 
 	'Top Sites should have 2 new items': (browser)->
 
-		browser.expect.element("#top-sites-recommended-0").to.be.present
-		browser.expect.element("#top-sites-recommended-0-link").text.to.contain('Verohallinto')
-		browser.expect.element("#top-sites-recommended-0-link").text.to.contain('www.vero.fi')
+		browser.expect.element("#top-sites-0").to.be.present
+		browser.expect.element("#top-sites-0-link").text.to.contain('Verohallinto')
+		browser.expect.element("#top-sites-0-link").text.to.contain('www.vero.fi')
 	
-		browser.expect.element("#top-sites-recommended-1").to.be.present
-		browser.expect.element("#top-sites-recommended-1-link").text.to.contain('Henkilöasiakkaat - kela.fi')
-		browser.expect.element("#top-sites-recommended-1-link").text.to.contain('www.kela.fi')
+		browser.expect.element("#top-sites-1").to.be.present
+		browser.expect.element("#top-sites-1-link").text.to.contain('Henkilöasiakkaat - kela.fi')
+		browser.expect.element("#top-sites-1-link").text.to.contain('www.kela.fi')
 		
-		browser.expect.element("#top-sites-recommended-2").to.be.present
-		browser.expect.element("#top-sites-recommended-3").to.be.present
-		browser.expect.element("#top-sites-recommended-4").not.to.be.present 
+		browser.expect.element("#top-sites-2").to.be.present
+		browser.expect.element("#top-sites-3").to.be.present
+		browser.expect.element("#top-sites-4").not.to.be.present 
 
 	###	
 	#
@@ -393,14 +427,14 @@ module.exports =
 
 		done = (result)->
 			href = result.value
-			browser.click("#top-sites-recommended-0-link")
+			browser.click("#top-sites-0-link")
 			browser.assert.urlContains(href)
 			browser.back()
 
 			browser.expect.element("#app").to.be.present.after(500)
 			browser.pause(500) # Give the extension some time to load JS
 		
-		browser.getAttribute("#top-sites-recommended-0-link", 'href', done)
+		browser.getAttribute("#top-sites-0-link", 'href', done)
 
 	'clicking link in Latest Bookmarks should take to correct destination': (browser)->
 
@@ -447,22 +481,22 @@ module.exports =
 	#
 	###
 
-	'Only custom Top Sites should have drag and drop enabled': (browser)->
-		browser.expect.element("#top-sites-custom-list").to.have.attribute('data-list-editable')
-		browser.expect.element("#top-sites-recommended-list").not.to.have.attribute('data-list-editable')
+	'Only Speed Dial should be data-list-editable': (browser)->
+		browser.expect.element("#speed-dial").to.have.attribute('data-list-editable')
+		browser.expect.element("#top-sites-list").not.to.have.attribute('data-list-editable')
 		browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-editable')
 		browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-editable')
 		browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable')
 
-	'Custom Top Sites should have visual cue about drag and drop': (browser)->
-		browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.have.css('display', 'inline-block')
-		browser.expect.element('#top-sites-custom-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons')
-		browser.expect.element('#top-sites-custom-0-link > i.drag-handle').text.to.equal('more_vertmore_vert')
+	'Speed Dial should have visual cue about drag and drop': (browser)->
+		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.be.present
+		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.have.css('display', 'inline-block')
+		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons')
+		browser.expect.element('#speed-dial-0-link > i.drag-handle').text.to.equal('more_vertmore_vert')
 
 	'TODO: Other lists should not have visual cue about drag and drop': (browser)->
-		browser.expect.element('#top-sites-recommended-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#top-sites-recommended-0-link > i.drag-handle').to.have.css('display', 'none')
+		browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present
+		browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('display', 'none')
 	
 		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present
 		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.have.css('display', 'none')

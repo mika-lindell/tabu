@@ -2100,7 +2100,6 @@
       if (instant == null) {
         instant = false;
       }
-      console.log('topSites');
       if (instant) {
         root.speedDialContainer.hide();
         root.topSitesContainer.show();

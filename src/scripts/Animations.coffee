@@ -62,7 +62,7 @@ class Animation
 		if not from?
 			from = container.height()
 
-		container.css('height', from + 15 + 'px')
+		container.css('height', from + 15 + 'px') # this 15px is just arbitraty number - need to understand why and fix it!
 
 		play = ()->
 			container.css('height', to + 'px')
