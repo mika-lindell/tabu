@@ -169,6 +169,7 @@ class HTMLElement
 	# @param [Mixed] The element at the insertion point
 	#
 	insert: (element = null, target = null, beforeOrAfter = 'before')->
+
 		if element? and target?
 
 			if element instanceof HTMLElement
@@ -182,10 +183,15 @@ class HTMLElement
 				targetDOM = target
 
 			if beforeOrAfter is 'before'
+
 				@DOMElement.insertBefore(elementDOM, targetDOM)
-			else
-				if targetDOM.nextSibling?
-					@DOMElement.insertBefore(elementDOM,targetDOM.nextSibling)
+
+			else if beforeOrAfter is 'after'
+
+				if targetDOM.nextElementSibling? # There is an element after the target, so insert before it (to fake after)
+					@DOMElement.insertBefore(elementDOM, targetDOM.nextElementSibling)
+				else
+					@DOMElement.appendChild(elementDOM) # Target is the last child so we have to use append instead
 
 	children: ()->
 

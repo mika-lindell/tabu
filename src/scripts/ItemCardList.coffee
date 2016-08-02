@@ -278,6 +278,7 @@ class ItemCardList extends HTMLElement
 			if action is 'addLink'
 				item.element.addClass('empty')
 
+			root.addClass('edit-in-progress')
 			item.element.addClass('editing')
 
 			item.element.removeClass('dragged')
@@ -285,6 +286,7 @@ class ItemCardList extends HTMLElement
 
 			userInput.done = (fields)->
 
+				root.removeClass('edit-in-progress')
 				item.element.removeClass('editing')
 
 				if action is 'addLink'
@@ -310,6 +312,7 @@ class ItemCardList extends HTMLElement
 
 				userInput.hide()
 
+				root.removeClass('edit-in-progress')
 				item.element.removeClass('editing')
 
 				if action is 'addLink'
@@ -339,8 +342,6 @@ class ItemCardList extends HTMLElement
 
 	updateNewItemPosition: (item, newIndex)->
 
-		console.log 'updateNewItemPosition', item
-
 		if item?
 			# Remove from old position
 			@items.splice(item.element.index, 1)
@@ -350,8 +351,12 @@ class ItemCardList extends HTMLElement
 		for i of @items
 			@items[i].element.index = i
 
+		log = new Array()
+
 		for i of @items
-			console.log @items[i].element.title, '	', @items[i].element.index
+			log.push "#{@items[i].element.index}: #{@items[i].element.title}"
+
+		console.log 'updateNewItemPosition', log
 
 	acceptFromOutsideSource: (ev)->
 
@@ -507,16 +512,23 @@ class ItemCardList extends HTMLElement
 
 	editDropHandler = (ev, root)->
 
-		console.log 'editDropHandler', root.draggedItem.element.origIndex
+		console.log 'editDropHandler'
 
 		ev.preventDefault()
 		ev.stopPropagation()
 
 		ev.dataTransfer.dropEffect = "move"
 
+		origIndex = root.draggedItem.element.origIndex
+
 		# Operation is to edit content, undo all position changes
-		root.insert(root.draggedItem.element, root.items[root.draggedItem.element.origIndex].element, 'after')
-		root.updateNewItemPosition(root.draggedItem, root.draggedItem.element.origIndex)
+
+		if parseInt(origIndex) is 0
+			root.prepend(root.draggedItem.element)
+		else
+			root.insert(root.draggedItem.element, root.items[origIndex].element, 'after')
+
+		root.updateNewItemPosition(root.draggedItem, origIndex)
 
 		root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href)
 

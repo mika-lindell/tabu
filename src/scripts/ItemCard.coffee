@@ -29,7 +29,7 @@ class ItemCard extends HTMLElement
 		@color = null
 		@title = null
 		@url = null
-		@index = @containingList.childCount()
+		@index = @containingList.childCount() # 0-based
 		@origIndex = @index
 		@id = "#{ @containingList.baseId }-#{ @index }"
 

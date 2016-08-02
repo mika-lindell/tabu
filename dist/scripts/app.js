@@ -462,9 +462,11 @@
         }
         if (beforeOrAfter === 'before') {
           return this.DOMElement.insertBefore(elementDOM, targetDOM);
-        } else {
-          if (targetDOM.nextSibling != null) {
-            return this.DOMElement.insertBefore(elementDOM, targetDOM.nextSibling);
+        } else if (beforeOrAfter === 'after') {
+          if (targetDOM.nextElementSibling != null) {
+            return this.DOMElement.insertBefore(elementDOM, targetDOM.nextElementSibling);
+          } else {
+            return this.DOMElement.appendChild(elementDOM);
           }
         }
       }
@@ -1180,10 +1182,12 @@
         if (action === 'addLink') {
           item.element.addClass('empty');
         }
+        root.addClass('edit-in-progress');
         item.element.addClass('editing');
         item.element.removeClass('dragged');
         item.element.attr('draggable', 'false');
         userInput.done = function(fields) {
+          root.removeClass('edit-in-progress');
           item.element.removeClass('editing');
           if (action === 'addLink') {
             item.element.removeClass('empty');
@@ -1202,6 +1206,7 @@
         };
         userInput.abort = function() {
           userInput.hide();
+          root.removeClass('edit-in-progress');
           item.element.removeClass('editing');
           if (action === 'addLink') {
             return root.removeItem(item);
@@ -1240,8 +1245,7 @@
     };
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
-      var i, results;
-      console.log('updateNewItemPosition', item);
+      var i, log;
       if (item != null) {
         this.items.splice(item.element.index, 1);
         this.items.splice(newIndex, 0, item);
@@ -1249,11 +1253,11 @@
       for (i in this.items) {
         this.items[i].element.index = i;
       }
-      results = [];
+      log = new Array();
       for (i in this.items) {
-        results.push(console.log(this.items[i].element.title, '	', this.items[i].element.index));
+        log.push(this.items[i].element.index + ": " + this.items[i].element.title);
       }
-      return results;
+      return console.log('updateNewItemPosition', log);
     };
 
     ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
@@ -1390,12 +1394,18 @@
     };
 
     editDropHandler = function(ev, root) {
-      console.log('editDropHandler', root.draggedItem.element.origIndex);
+      var origIndex;
+      console.log('editDropHandler');
       ev.preventDefault();
       ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
-      root.insert(root.draggedItem.element, root.items[root.draggedItem.element.origIndex].element, 'after');
-      root.updateNewItemPosition(root.draggedItem, root.draggedItem.element.origIndex);
+      origIndex = root.draggedItem.element.origIndex;
+      if (parseInt(origIndex) === 0) {
+        root.prepend(root.draggedItem.element);
+      } else {
+        root.insert(root.draggedItem.element, root.items[origIndex].element, 'after');
+      }
+      root.updateNewItemPosition(root.draggedItem, origIndex);
       return root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href);
     };
 
