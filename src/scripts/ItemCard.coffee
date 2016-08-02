@@ -10,6 +10,7 @@ class ItemCard extends HTMLElement
 	@url
 	@color
 	@index
+	@origIndex
 
 	@id
 
@@ -29,6 +30,7 @@ class ItemCard extends HTMLElement
 		@title = null
 		@url = null
 		@index = @containingList.childCount()
+		@origIndex = @index
 		@id = "#{ @containingList.baseId }-#{ @index }"
 
 		root = @
@@ -124,7 +126,9 @@ class ItemCard extends HTMLElement
 
 		if root.containingItem? 
 
-			root.containingList.attr('data-dragged-item', root.attr('id'))
+			root.origIndex = root.index
+
+			root.containingList.addClass('drag-in-progress')
 			root.addClass('dragged')
 			root.containingList.createGhost(ev, root)
 

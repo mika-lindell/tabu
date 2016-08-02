@@ -746,6 +746,8 @@
 
     ItemCard.index;
 
+    ItemCard.origIndex;
+
     ItemCard.id;
 
     function ItemCard(containingList, containingItem, title, url) {
@@ -767,6 +769,7 @@
       this.title = null;
       this.url = null;
       this.index = this.containingList.childCount();
+      this.origIndex = this.index;
       this.id = this.containingList.baseId + "-" + this.index;
       root = this;
       this.addClass('item-card');
@@ -838,7 +841,8 @@
       ev.stopPropagation();
       ev.dataTransfer.effectAllowed = "move";
       if (root.containingItem != null) {
-        root.containingList.attr('data-dragged-item', root.attr('id'));
+        root.origIndex = root.index;
+        root.containingList.addClass('drag-in-progress');
         root.addClass('dragged');
         root.containingList.createGhost(ev, root);
         root.containingList.draggedItem = root.containingItem;
@@ -1237,6 +1241,7 @@
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
       var i, results;
+      console.log('updateNewItemPosition', item);
       if (item != null) {
         this.items.splice(item.element.index, 1);
         this.items.splice(newIndex, 0, item);
@@ -1371,7 +1376,7 @@
       console.log('dragEndHandler');
       ev.preventDefault();
       target = root.getItemForElement(ev.target.closest('li'));
-      root.removeAttr('data-dragged-item');
+      root.removeClass('drag-in-progress');
       target.element.removeClass('dragged');
       dragDropCleanUp(root);
       return root.save();
@@ -1385,9 +1390,12 @@
     };
 
     editDropHandler = function(ev, root) {
+      console.log('editDropHandler', root.draggedItem.element.origIndex);
       ev.preventDefault();
       ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
+      root.insert(root.draggedItem.element, root.items[root.draggedItem.element.origIndex].element, 'after');
+      root.updateNewItemPosition(root.draggedItem, root.draggedItem.element.origIndex);
       return root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href);
     };
 

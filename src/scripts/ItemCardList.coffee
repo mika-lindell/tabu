@@ -339,6 +339,8 @@ class ItemCardList extends HTMLElement
 
 	updateNewItemPosition: (item, newIndex)->
 
+		console.log 'updateNewItemPosition', item
+
 		if item?
 			# Remove from old position
 			@items.splice(item.element.index, 1)
@@ -489,7 +491,7 @@ class ItemCardList extends HTMLElement
 		
 		target = root.getItemForElement(ev.target.closest('li'))
 
-		root.removeAttr('data-dragged-item')
+		root.removeClass('drag-in-progress')
 		target.element.removeClass('dragged')
 		
 		dragDropCleanUp(root)
@@ -505,10 +507,17 @@ class ItemCardList extends HTMLElement
 
 	editDropHandler = (ev, root)->
 
+		console.log 'editDropHandler', root.draggedItem.element.origIndex
+
 		ev.preventDefault()
 		ev.stopPropagation()
 
 		ev.dataTransfer.dropEffect = "move"
+
+		# Operation is to edit content, undo all position changes
+		root.insert(root.draggedItem.element, root.items[root.draggedItem.element.origIndex].element, 'after')
+		root.updateNewItemPosition(root.draggedItem, root.draggedItem.element.origIndex)
+
 		root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href)
 
 	deleteDropHandler = (ev, root)->

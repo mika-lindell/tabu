@@ -6741,9 +6741,6 @@ Item card styles
 ul[data-list-editable] .drag-handle {
   display: inline-block; }
 
-[data-dragged-item] .item-card {
-  box-shadow: none; }
-
 .item-card-empty {
   display: none;
   width: 100%;

@@ -23,6 +23,11 @@ class Dropdown extends HTMLElement
 		body.on('click', (ev)->
 			root.hide(ev, root)
 		)
+
+		# window.addEventListener('blur', (ev)->
+		# 	root.hide(ev, root)
+		# )
+		
 		body.append(@dropdown)
 
 		@items = new Array()
