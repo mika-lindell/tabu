@@ -893,7 +893,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var actionsDragOverHandler, bodyDragOverHandler, deleteDropHandler, dragDropCleanUp, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler;
+    var actionsDragOverHandler, bodyDragOverHandler, deleteDropHandler, dragDropCleanUp, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler, initDragOverEffect;
 
     extend(ItemCardList, superClass);
 
@@ -1004,9 +1004,11 @@
       this.editActions.edit = new HTMLElement('li');
       this.editActions.edit.addClass('edit-actions-edit');
       this.editActions.edit.text('Edit');
+      initDragOverEffect(this.editActions.edit);
       this.editActions["delete"] = new HTMLElement('li');
       this.editActions["delete"].addClass('edit-actions-delete');
       this.editActions["delete"].text('Delete');
+      initDragOverEffect(this.editActions["delete"]);
       this.editActions.container.append(this.editActions.edit);
       this.editActions.container.append(this.editActions["delete"]);
       this.editActions.container.on('dragover', function() {
@@ -1295,6 +1297,18 @@
     ItemCardList.prototype.deleteGhost = function() {
       this.ghost.element.removeFromDOM();
       return this.ghost.element = null;
+    };
+
+    initDragOverEffect = function(element) {
+      element.on('dragenter', function() {
+        return element.addClass('drag-over');
+      });
+      element.on('dragleave', function() {
+        return element.removeClass('drag-over');
+      });
+      return element.on('drop', function() {
+        return element.removeClass('drag-over');
+      });
     };
 
     dragOverUpdateCursor = function(ev, root) {

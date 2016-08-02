@@ -6342,7 +6342,7 @@ Helpers
 .bolder, .item-card-badge {
   font-weight: 600; }
 
-.uppercase, button.toolbar, .item-card-badge {
+.uppercase, button.toolbar, .edit-actions li, .item-card-badge {
   text-transform: uppercase; }
 
 .color-black, button.title, a.item-card-link {
@@ -6442,7 +6442,7 @@ Animations
   0% {
     transform: scale(1, 1) translate(0px, 0px); }
   100% {
-    transform: scale(1, 0) translate(0px, -40px); } }
+    transform: scale(1, 0) translate(0px, -80px); } }
 .anim-slide-out {
   animation-fill-mode: forwards;
   animation-name: slide-out;
@@ -6463,10 +6463,10 @@ Animations
   transform-origin: 0 0; }
 
 .transitions, #visibility-on,
-#visibility-off, .item-card,
+#visibility-off, .edit-actions li, .item-card,
 .animated,
 .no-items {
-  transition: all 0.3s; }
+  transition: all 0.2s; }
 
 /***
 
@@ -6685,28 +6685,35 @@ Item card styles
   .edit-actions li {
     display: inline-block;
     text-align: center;
-    height: 70px;
-    line-height: 70px;
-    color: #FFF;
+    height: 100px;
+    line-height: 100px;
     border: 2px dashed transparent; }
     .edit-actions li::before {
       margin-right: 0.5rem;
       margin-top: -0.2rem;
       vertical-align: middle; }
   .edit-actions .edit-actions-edit {
-    width: 290px;
-    background-color: #2E7D32; }
-    .edit-actions .edit-actions-edit:hover {
-      border-color: #C8E6C9; }
+    width: 270px;
+    color: #1B5E20;
+    background-color: #E8F5E9;
+    border-color: #A5D6A7; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
+    .edit-actions .edit-actions-edit.drag-over {
+      color: #FFF;
+      background-color: #2E7D32;
+      border-color: #2E7D32; }
   .edit-actions .edit-actions-delete {
-    width: 110px;
-    background-color: #D32F2F; }
-    .edit-actions .edit-actions-delete:hover {
-      border-color: #FFCDD2; }
+    width: 130px;
+    color: #B71C1C;
+    background-color: #FFEBEE;
+    border-color: #EF9A9A; }
     .edit-actions .edit-actions-delete::before {
       content: 'delete_forever'; }
+    .edit-actions .edit-actions-delete.drag-over {
+      color: #FFF;
+      background-color: #C62828;
+      border-color: #C62828; }
 
 .item-card-list {
   min-height: 75px;

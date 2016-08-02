@@ -119,10 +119,12 @@ class ItemCardList extends HTMLElement
 		@editActions.edit = new HTMLElement('li')
 		@editActions.edit.addClass('edit-actions-edit')
 		@editActions.edit.text('Edit')
+		initDragOverEffect @editActions.edit
 
 		@editActions.delete = new HTMLElement('li')
 		@editActions.delete.addClass('edit-actions-delete')
 		@editActions.delete.text('Delete')
+		initDragOverEffect @editActions.delete
 
 		@editActions.container.append @editActions.edit
 		@editActions.container.append @editActions.delete
@@ -396,6 +398,20 @@ class ItemCardList extends HTMLElement
 	deleteGhost: ()->
 		@ghost.element.removeFromDOM()
 		@ghost.element = null
+
+	initDragOverEffect = (element)->
+
+		element.on('dragenter',()->
+			element.addClass('drag-over')
+		)
+
+		element.on('dragleave',()->
+			element.removeClass('drag-over')
+		)
+
+		element.on('drop',()->
+			element.removeClass('drag-over')
+		)
 
 	dragOverUpdateCursor = (ev, root)->
 

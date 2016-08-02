@@ -112,7 +112,7 @@ Animations
 		transform: scale(1, 1) translate(0px, 0px);
 	}	
 	100%{
-		transform: scale(1, 0) translate(0px, -40px);
+		transform: scale(1, 0) translate(0px, -80px);
 	}	
 }
 
@@ -152,7 +152,7 @@ Animations
 // To animate element movement on media query breakpoints
 .transitions,
 .animated{
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 // When under element .outro in hierarchy, outro-animation is played
