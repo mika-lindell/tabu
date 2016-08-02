@@ -6348,10 +6348,10 @@ Helpers
 .color-black, button.title, a.item-card-link {
   color: #000; }
 
-.color-medium-grey, .hotkey {
+.color-medium-grey {
   color: #8c8c8c; }
 
-.color-dark-grey, .dropdown-content li.title, button.toolbar, .item-card-empty, .item-card-label-secondary, .no-items {
+.color-dark-grey, .dropdown-content li.title, .hotkey, button.toolbar, .item-card-empty, .item-card-label-secondary, .no-items {
   color: #5a5a5a; }
 
 .color-white {
@@ -6723,7 +6723,7 @@ Item card styles
   display: none;
   cursor: move;
   vertical-align: top;
-  color: #c7c7c7;
+  color: #8c8c8c;
   font-size: 24px;
   padding-right: 0.5rem;
   line-height: 7px;
