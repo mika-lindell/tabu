@@ -108,7 +108,7 @@ class ItemCardList extends HTMLElement
 			bodyDragOverHandler(event, root)
 		)
 
-		@userInput.link = new UserInput('user-input-add-new', '')
+		@userInput.link = new UserInput('user-input-add-link', '')
 		@userInput.link.addField('title', 'text', 'Title')
 		@userInput.link.addField('url', 'text', 'Web Address')
 		@userInput.link.addOkCancel('')

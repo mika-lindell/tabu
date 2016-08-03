@@ -995,7 +995,7 @@
       this.body.on('dragover', function() {
         return bodyDragOverHandler(event, root);
       });
-      this.userInput.link = new UserInput('user-input-add-new', '');
+      this.userInput.link = new UserInput('user-input-add-link', '');
       this.userInput.link.addField('title', 'text', 'Title');
       this.userInput.link.addField('url', 'text', 'Web Address');
       this.userInput.link.addOkCancel('');

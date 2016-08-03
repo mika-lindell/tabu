@@ -56,7 +56,7 @@ module.exports =
 		browser.expect.element("#other-devices").to.be.present
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
-	'list for all sections should have been created': ()->
+	'list for all sections should have been created': (browser)->
 		browser.expect.element("#speed-dial-list").to.be.present
 		browser.expect.element("#top-sites-list").to.be.present
 		browser.expect.element("#latest-bookmarks-list").to.be.present
@@ -309,6 +309,8 @@ module.exports =
 		browser.back()
 		browser.url("http://www.kela.fi")
 		browser.pause(1000)
+		browser.url("http://www.vero.fi")
+		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
 
@@ -569,6 +571,7 @@ module.exports =
 
 	'Speed dial should have status message displayed if it has no items': (browser)->
 		browser.expect.element("#speed-dial > .no-items").to.be.present
+	
 
 	###
 	#
@@ -609,12 +612,31 @@ module.exports =
 		browser.expect.element("#menu-speed-dial").not.to.be.visible
 		browser.expect.element("#menu-add-link").not.to.be.visible
 
+	'Clicking "Add Link" in "Speed Dial" dropdown menu should open the Add Link dialog': (browser)->
+		browser.expect.element('#user-input-add-link').not.to.be.present
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.click("#menu-add-link")
+		browser.expect.element('#user-input-add-link').to.be.present
+		browser.pause(500)
+		browser.expect.element('#user-input-add-link').to.be.visible
 
 	###	
 	#
 	# DRAG AND DROP
 	#
 	###
+
+	'Clicking Add Link': (browser)->
+
+	'TODO: Status should persist': (browser)->
+
+	'TODO: Clicking link': (browser)->
+
+	
+
+	'TODO: to top sites': (browser)->
 
 
 	'TODO: Should be able to reorganize custom speed dial by drag and drop': (browser)->
