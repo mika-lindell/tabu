@@ -1727,7 +1727,7 @@
         link.append(icon);
       }
       if (accesskey != null) {
-        link.attr('accesskey', accesskey);
+        item.attr('accesskey', accesskey);
         hotkeys = new HTMLElement('span');
         hotkeys.addClass('hotkey');
         hotkeys.addClass('right');
@@ -1740,7 +1740,7 @@
         link.append(hotkeys);
       }
       item.append(link);
-      item.on('click', function() {
+      link.on('click', function() {
         return callback.call();
       });
       this.dropdown.append(item);

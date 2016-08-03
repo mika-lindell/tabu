@@ -27,7 +27,7 @@ class Dropdown extends HTMLElement
 		# window.addEventListener('blur', (ev)->
 		# 	root.hide(ev, root)
 		# )
-		
+
 		body.append(@dropdown)
 
 		@items = new Array()
@@ -80,7 +80,7 @@ class Dropdown extends HTMLElement
 			link.append(icon)
 
 		if accesskey?
-			link.attr('accesskey', accesskey)
+			item.attr('accesskey', accesskey)
 
 			hotkeys = new HTMLElement('span')
 			hotkeys.addClass('hotkey')
@@ -99,7 +99,7 @@ class Dropdown extends HTMLElement
 
 		item.append(link)
 
-		item.on('click', ()->
+		link.on('click', ()->
 			callback.call()
 		)
 

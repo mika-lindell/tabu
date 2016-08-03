@@ -46,8 +46,12 @@ Menu
 #visibility-on,
 #visibility-off{
 	opacity: 0;
-	overflow: hidden;
+
 	white-space: nowrap;
+	display: inline-block;
+
+  height: 36px;
+  width: 36px;
 
 	@extend .transitions;
 

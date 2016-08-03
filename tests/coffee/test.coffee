@@ -9,7 +9,7 @@ module.exports =
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without
-		browser.expect.element("#app").to.be.present.after(1000)
+		browser.expect.element("#app").to.be.present.after(500)
 		browser.pause(500)
 
 	after: (browser)->
@@ -56,12 +56,21 @@ module.exports =
 		browser.expect.element("#other-devices").to.be.present
 		browser.expect.element("#other-devices").text.to.contain('Other Devices')
 
-	'top sites should be visible by default': (browser)->
-		browser.expect.element("#top-sites").to.have.css('display', 'block')
+	'list for all sections should have been created': ()->
+		browser.expect.element("#speed-dial-list").to.be.present
+		browser.expect.element("#top-sites-list").to.be.present
+		browser.expect.element("#latest-bookmarks-list").to.be.present
+		browser.expect.element("#recently-closed-list").to.be.present
+		browser.expect.element("#other-devices-list").to.be.present
+
+	'top sites, latest bookmarks, recently closed and other devices should be visible by default': (browser)->
+		browser.expect.element("#top-sites").to.be.visible
+		browser.expect.element("#latest-bookmarks-list").to.be.visible
+		browser.expect.element("#recently-closed-list").to.be.visible
+		browser.expect.element("#other-devices-list").to.be.visible
 
 	'speed dial should be hidden by default': (browser)->
-		browser.expect.element("#top-sites").to.have.css('display', 'none')
-
+		browser.expect.element("#speed-dial").not.to.be.visible
 
 	###	
 	#
@@ -104,7 +113,7 @@ module.exports =
 		browser.expect.element("#latest-bookmarks-0").not.to.be.present
 		
 	'Latest Boomarks should have "no-items"-message visible': (browser)->
-		browser.expect.element("#latest-bookmarks > .no-items").to.have.css('display', 'block')
+		browser.expect.element("#latest-bookmarks > .no-items").to.be.visible
 
 	'Latest Boomarks should list recently added bookmarks': (browser)->
 
@@ -118,7 +127,7 @@ module.exports =
 		# Refresh to load the generated data
 		browser.pause(500)
 		browser.refresh()
-		browser.expect.element("#app").to.be.present.after(1000)
+		browser.expect.element("#app").to.be.present.after(500)
 		
 
 		if !browser.globals.sites?
@@ -170,8 +179,7 @@ module.exports =
 		browser.expect.element("#recently-closed-0").not.to.be.present
 
 	'Recently Closed should have "no-items"-message visible': (browser)->
-		browser.expect.element("#recently-closed > .no-items").to.have.css('display', 'block')
-
+		browser.expect.element("#recently-closed > .no-items").to.be.visible
 	'Recently Closed should have 1 item': (browser)->
 		
 		openWin = (data)->
@@ -215,7 +223,7 @@ module.exports =
 		browser.expect.element("#other-devices-0").not.to.be.present
 
 	'Other Devices  should have "no-items"-message visible': (browser)->
-		browser.expect.element("#other-devices > .no-items").to.have.css('display', 'block')
+		browser.expect.element("#other-devices > .no-items").to.be.visible
 
 	'TODO: it should display items from other devices': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
@@ -231,12 +239,12 @@ module.exports =
 
 	'navbar should have visibility toggle-button': (browser)->
 		browser.expect.element("#visibility-toggle").to.be.present
-		browser.expect.element("#visibility-toggle").to.have.css('display', 'block')
+		browser.expect.element("#visibility-toggle").to.be.visible
 
 	'visibility toggle-button should be in "turn off"-mode': (browser)->
 		browser.expect.element("#visibility-off").to.be.present
 		browser.expect.element("#visibility-off").text.to.contain('HIDE ALL')
-		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+		browser.expect.element("#visibility-off").to.be.visible
 
 	'visibility toggle-button should have visibility_off-icon': (browser)->
 		browser.expect.element("#visibility-off > i.material-icons").to.be.present
@@ -244,19 +252,20 @@ module.exports =
 
 	'visibility_on-icon should be hidden': (browser)->
 		browser.expect.element("#visibility-on").to.be.present
-		browser.expect.element("#visibility-on").to.have.css('display', 'none')
+		browser.expect.element("#visibility-on").not.to.be.visible
 
-	'clicking visibility toggle -button should hide all elements': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'block')
+	'clicking visibility toggle-button should hide all elements': (browser)->
+		browser.expect.element("#content-container").to.be.visible
 		browser.click("#visibility-toggle")
-		browser.expect.element("#content-container").to.have.css('display', 'none').after(500)
+		browser.pause(500)
+		browser.expect.element("#content-container").not.to.be.visible
 		browser.pause(500) # REMOVE
 
 	'clicking visibility toggle-button should make visibility_off-icon to disappear': (browser)->
-		browser.expect.element("#visibility-off").to.have.css('display', 'none')
+		browser.expect.element("#visibility-off").not.to.be.visible
 
 	'clicking visibility toggle-button should make visibility_on-icon to appear': (browser)->
-		browser.expect.element("#visibility-on").to.have.css('display', 'block')
+		browser.expect.element("#visibility-on").to.be.visible
 
 	'visibility toggle-button should have visibility_on-icon': (browser)->
 		browser.expect.element("#visibility-on > i.material-icons").to.be.present
@@ -274,33 +283,37 @@ module.exports =
 		browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
 		browser.back()
 		browser.back()
-		browser.expect.element("#app").to.be.present.after(1000)
+		browser.expect.element("#app").to.be.present.after(500)
 
-		browser.expect.element("#visibility-on").to.have.css('display', 'block')
-		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.expect.element("#visibility-on").to.be.visible
+		browser.expect.element("#content-container").not.to.be.visible
 		browser.pause(500) # Give the extension some time to load JS
 
 	'clicking visibility toggle-button should make all elements visible': (browser)->
-		browser.expect.element("#content-container").to.have.css('display', 'none')
+		browser.expect.element("#content-container").not.to.be.visible
 		browser.click("#visibility-toggle")
-		browser.expect.element("#content-container").to.have.css('display', 'block').after(500)
+		browser.expect.element("#content-container").to.be.visible.after(500)
 		browser.pause(500) # REMOVE
 
 	'clicking visibility toggle-button should make visibility_on-icon to disappear': (browser)->
-		browser.expect.element("#visibility-on").to.have.css('display', 'none')
+		browser.expect.element("#visibility-on").not.to.be.visible
 
 	'clicking visibility toggle-button should make visibility_off-icon to appear': (browser)->
-		browser.expect.element("#visibility-off").to.have.css('display', 'block')
+		browser.expect.element("#visibility-off").to.be.visible
 
 	'the state of visibility:on should persist between sessions': (browser)->
 		browser.url("http://www.kela.fi")
+		browser.pause(1000)
 		browser.click('[href="/aitiyspakkaus"]')
 		browser.back()
 		browser.back()
-		browser.expect.element("#app").to.be.present.after(1000)
+		browser.url("http://www.kela.fi")
+		browser.pause(1000)
+		browser.back()
+		browser.expect.element("#app").to.be.present.after(500)
 
-		browser.expect.element("#visibility-off").to.have.css('display', 'block')
-		browser.expect.element("#content-container").to.have.css('display', 'block')
+		browser.expect.element("#visibility-off").to.be.visible
+		browser.expect.element("#content-container").to.be.visible
 		browser.pause(500) # Give the extension some time to load JS
 
 	###	
@@ -475,37 +488,137 @@ module.exports =
 		
 		browser.getAttribute("#recently-closed-0-link", 'href', done)
 	
+	###
+	#
+	# SHOULD NOT BE EDITABLE
+	#
+	###
+
+	'Top sites, recent bookmarks, recently closed and other devices shouldn not be editable': (browser)->
+		browser.expect.element("#top-sites-list").not.to.have.attribute('data-list-editable')
+		browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-editable')
+		browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-editable')
+		browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable')
+
+	'Top sites, recent bookmarks, recently closed and other devices should not have visual cue about drag and drop': (browser)->
+		browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present
+		browser.expect.element('#top-sites-0-link > i.drag-handle').not.to.be.visible
+	
+		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present
+		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').not.to.be.visible
+
+		browser.expect.element('#recently-closed-0-link > i.drag-handle').to.be.present
+		browser.expect.element('#recently-closed-0-link > i.drag-handle').not.to.be.visible
+
+
+	###
+	#
+	# DROPDOWN MENUS, TOP SITES
+	#
+	###
+
+	'Dropdown menus should be hidden by default': (browser)->
+		browser.expect.element("#menu-top-sites").not.to.be.visible
+		browser.expect.element("#menu-add-link").not.to.be.visible
+		browser.expect.element("#menu-speed-dial").not.to.be.visible
+
+	'Top sites should have button to show dropdown menu': (browser)->
+		browser.expect.element("#top-sites-select").to.be.present
+
+	'Clicking the "Top Sites" button should show dropdown menu with correct items': (browser)->
+		browser.moveToElement('#top-sites-select', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.expect.element("#menu-speed-dial").to.be.visible
+		browser.expect.element("#menu-speed-dial").text.to.contain('Switch to Speed Dial')
+
+		browser.expect.element("#menu-top-sites").not.to.be.visible
+		browser.expect.element("#menu-add-link").not.to.be.visible
+
+	'Clicking the "Top Sites" button again should show hide the dropdown menu': (browser)->
+		browser.moveToElement('#top-sites-select', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.expect.element("#menu-speed-dial").not.to.be.visible
+
+	###
+	#
+	# SPEED DIAL
+	#
+	###
+
+	'Choosing switch to speed dial from top sites dropdown menu should display speed dial': (browser)->
+		browser.moveToElement('#top-sites-select', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.expect.element("#menu-speed-dial").to.be.visible
+		browser.click("#menu-speed-dial")
+		browser.expect.element("#speed-dial").to.be.visible
+		browser.expect.element("#speed-dial-list").to.be.visible
+
+	'Speed dial should be editable': (browser)->
+		browser.pause(500)
+		browser.expect.element("#speed-dial-list").to.have.attribute('data-list-editable')
+
+	'Speed dial should have no items by default': (browser)->
+		browser.expect.element("#speed-dial-0").not.to.be.present
+		browser.expect.element("#speed-dial-1").not.to.be.present
+
+	'Speed dial should have status message displayed if it has no items': (browser)->
+		browser.expect.element("#speed-dial > .no-items").to.be.present
+
+	###
+	#
+	# DROPDOWN MENUS, SPEED DIAL
+	#
+	###
+
+	'Dropdown menus should be hidden by default': (browser)->
+		browser.expect.element("#menu-top-sites").not.to.be.visible
+		browser.expect.element("#menu-add-link").not.to.be.visible
+		browser.expect.element("#menu-speed-dial").not.to.be.visible
+
+	'Speed dial should have button to show dropdown menu': (browser)->
+		browser.expect.element("#speed-dial-select").to.be.present
+		browser.expect.element("#speed-dial-select").to.be.visible
+
+	'Clicking the "Speed Dial" button should show dropdown menu with correct items': (browser)->
+		browser.moveToElement('#speed-dial-select', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.expect.element("#menu-top-sites").to.be.visible
+		browser.expect.element("#menu-top-sites").text.to.contain('Switch to Top Sites')
+		browser.expect.element("#menu-add-link").to.be.visible
+		browser.expect.element("#menu-add-link").text.to.contain('Add Link')
+
+		browser.expect.element("#menu-speed-dial").not.to.be.visible
+
+	'Add Link-menu item should have hotkey Alt+A assigned to it': (browser)->
+		browser.expect.element("#menu-add-link").to.have.attribute('accesskey').which.contains('a')
+		browser.expect.element("#menu-add-link").text.to.contain('Alt+A')
+
+	'Clicking the "Speed Dial" button again should show hide the dropdown menu': (browser)->
+		browser.moveToElement('#speed-dial-select', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.pause(500)
+		browser.expect.element("#menu-speed-dial").not.to.be.visible
+		browser.expect.element("#menu-add-link").not.to.be.visible
+
+
 	###	
 	#
 	# DRAG AND DROP
 	#
 	###
 
-	'Only Speed Dial should be data-list-editable': (browser)->
-		browser.expect.element("#speed-dial").to.have.attribute('data-list-editable')
-		browser.expect.element("#top-sites-list").not.to.have.attribute('data-list-editable')
-		browser.expect.element("#latest-bookmarks-list").not.to.have.attribute('data-list-editable')
-		browser.expect.element("#recently-closed-list").not.to.have.attribute('data-list-editable')
-		browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable')
 
-	'Speed Dial should have visual cue about drag and drop': (browser)->
-		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.have.css('display', 'inline-block')
-		browser.expect.element('#speed-dial-0-link > i.drag-handle').to.have.css('font-family', 'Material Icons')
-		browser.expect.element('#speed-dial-0-link > i.drag-handle').text.to.equal('more_vertmore_vert')
-
-	'TODO: Other lists should not have visual cue about drag and drop': (browser)->
-		browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#top-sites-0-link > i.drag-handle').to.have.css('display', 'none')
-	
-		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.have.css('display', 'none')
-
-		browser.expect.element('#recently-closed-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#recently-closed-0-link > i.drag-handle').to.have.css('display', 'none')
-
-	'TODO: Should be able to reorganize custom Top Sites by drag and drop': (browser)->
-		# Seems like this is a problem as we are using HTML5 native DnD?
+	'TODO: Should be able to reorganize custom speed dial by drag and drop': (browser)->
+		# Seems like this is a problem as we are using HTML5 native DnD and testing it isn't working?
 		# A workaround?
 
 	'TODO: It should create ghost of the dragged element for the duration of the DnD operation': (browser)->
