@@ -551,6 +551,14 @@ module.exports = {
     browser.pause(500);
     return browser.expect.element('#user-input-add-link').to.be.visible;
   },
+  'should be able to add new link via the add link dialog': function(browser) {
+    var keys;
+    keys = ['Google', browser.Keys.TAB, 'www.google.fi'];
+    browser.keys(keys);
+    browser.pause(500);
+    browser.click("#user-input-add-link > .card-action > input[type='submit']");
+    return browser.pause(5000);
+  },
 
   /*	
   	 *

@@ -622,6 +622,16 @@ module.exports =
 		browser.pause(500)
 		browser.expect.element('#user-input-add-link').to.be.visible
 
+
+	'should be able to add new link via the add link dialog': (browser)->
+
+		keys = ['Google', browser.Keys.TAB, 'www.google.fi']
+
+		browser.keys(keys)
+		browser.pause(500)
+		browser.click("#user-input-add-link > .card-action > input[type='submit']")
+		browser.pause(5000)
+
 	###	
 	#
 	# DRAG AND DROP

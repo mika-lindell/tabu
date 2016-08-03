@@ -69,7 +69,7 @@ class UserInput extends HTMLElement
 		field.element.attr('name', name)
 		field.element.attr('type', type)
 		if required then field.element.attr('required', '')
-		field.element.attr('tabindex', @fields.count + 1)
+		field.element.attr('tabindex', @fields.length + 1)
 
 		if label?
 			field.label = new HTMLElement('label')

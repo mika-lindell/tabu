@@ -1021,7 +1021,7 @@
         return deleteDropHandler(event, root);
       });
       this.body.append(this.editActions.container);
-      new HTMLElement('#menu-add-link').on('click', function() {
+      new HTMLElement('#menu-add-link').on('click', function(ev) {
         return root.addItemByUserInput(root);
       });
       return this.attr('data-list-editable', '');
@@ -1532,7 +1532,7 @@
       if (required) {
         field.element.attr('required', '');
       }
-      field.element.attr('tabindex', this.fields.count + 1);
+      field.element.attr('tabindex', this.fields.length + 1);
       if (label != null) {
         field.label = new HTMLElement('label');
         field.label.attr('for', name);

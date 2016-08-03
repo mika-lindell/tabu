@@ -143,7 +143,7 @@ class ItemCardList extends HTMLElement
 
 		@body.append @editActions.container
 
-		new HTMLElement('#menu-add-link').on('click', ()-> 
+		new HTMLElement('#menu-add-link').on('click', (ev)-> 
 			root.addItemByUserInput(root)
 		)
 
