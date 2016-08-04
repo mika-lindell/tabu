@@ -17,6 +17,8 @@ Item card styles
 	border-radius: 0 0 2px 2px;
 	overflow: hidden;
 	border: $dropzone-border;
+  border-top: none;
+  background-color: color('light-blue', 'darken-3');
 
 	@extend .layer-context-menu;
 	@extend .hoverable;
@@ -28,7 +30,7 @@ Item card styles
     display: block;
     text-align: center;
     padding: 0.6rem;
-    background-color: #0277bd;
+    background-color: color('light-blue', 'darken-3');
     color: white;
     text-transform: uppercase;
 	}
@@ -38,12 +40,13 @@ Item card styles
 		text-align: center;
 		height: 70px;
 		line-height: 70px;
-		// border: 2px dashed transparent;
+		border-radius: 2px;
+
 		@extend .uppercase;
 		@extend .transitions;
 
 		&:nth-child(odd){
-			border-right: $dropzone-border;
+			margin-right: 10px;
 		}
 
 		&::before{
@@ -62,7 +65,7 @@ Item card styles
 
 	.edit-actions-edit{
 
-		width: 265px;
+		width: 250px;
 		color: color('green', 'darken-4');
 		background-color: color('green', 'lighten-5');
 		// border-color: color('green', 'lighten-3');
@@ -80,7 +83,7 @@ Item card styles
 	}
 
 	.edit-actions-delete{
-		width: 130px;
+		width: 120px;
 		color: color('red', 'darken-4');
 		background-color: color('red', 'lighten-5');
 		// border-color: color('red', 'lighten-3');
