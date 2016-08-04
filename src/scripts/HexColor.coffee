@@ -54,15 +54,14 @@ class HexColor
 
 		return colour;
 
+	# Works, kind of. Not exactly as it should tho -> the max value affects in funny ways
 	getWithMaxBrightness: (hexCode, max)->
 
 		from = getBrightness(hexCode)
 
 		change = Math.round((max - from) * 100) / 100 
 
-		console.log change, max, from
-
-		if change is 0
+		if change >= 0
 			return hexCode
 		else
 			return setLuminance(hexCode, change)

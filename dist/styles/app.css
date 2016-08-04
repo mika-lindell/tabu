@@ -6682,39 +6682,45 @@ Item card styles
   margin-left: -200px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border-radius: 0 0 2px 2px;
-  overflow: hidden; }
+  overflow: hidden;
+  border: 2px dashed #0277bd; }
+  .edit-actions::before {
+    content: 'Drop Here To';
+    display: block;
+    text-align: center;
+    padding: 0.6rem;
+    background-color: #0277bd;
+    color: white;
+    text-transform: uppercase; }
   .edit-actions li {
     display: inline-block;
     text-align: center;
-    height: 100px;
-    line-height: 100px;
-    border: 2px dashed transparent; }
+    height: 70px;
+    line-height: 70px; }
+    .edit-actions li:nth-child(odd) {
+      border-right: 2px dashed #0277bd; }
     .edit-actions li::before {
       margin-right: 0.5rem;
       margin-top: -0.2rem;
       vertical-align: middle; }
   .edit-actions .edit-actions-edit {
-    width: 270px;
+    width: 265px;
     color: #1B5E20;
-    background-color: #E8F5E9;
-    border-color: #A5D6A7; }
+    background-color: #E8F5E9; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
     .edit-actions .edit-actions-edit.drag-over {
       color: #FFF;
-      background-color: #2E7D32;
-      border-color: #2E7D32; }
+      background-color: #2E7D32; }
   .edit-actions .edit-actions-delete {
     width: 130px;
     color: #B71C1C;
-    background-color: #FFEBEE;
-    border-color: #EF9A9A; }
+    background-color: #FFEBEE; }
     .edit-actions .edit-actions-delete::before {
       content: 'delete_forever'; }
     .edit-actions .edit-actions-delete.drag-over {
       color: #FFF;
-      background-color: #C62828;
-      border-color: #C62828; }
+      background-color: #C62828; }
 
 .item-card-list {
   min-height: 75px;
@@ -6794,8 +6800,7 @@ a.item-card-link {
   opacity: 0.75;
   line-height: 3.1rem;
   border-radius: 2px;
-  color: #FFF;
-  text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8); }
+  color: #FFF; }
 
 .item-card-label-container {
   display: inline-block;

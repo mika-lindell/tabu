@@ -284,8 +284,7 @@
       var change, from;
       from = getBrightness(hexCode);
       change = Math.round((max - from) * 100) / 100;
-      console.log(change, max, from);
-      if (change === 0) {
+      if (change >= 0) {
         return hexCode;
       } else {
         return setLuminance(hexCode, change);
@@ -878,7 +877,7 @@
       this.color = new HexColor(this.url);
       this.elements.link.attr('href', this.url.href);
       this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
-      this.elements.badge.css('backgroundColor', this.color.getWithMaxBrightness(this.color.url, 0.7));
+      this.elements.badge.css('backgroundColor', this.color.getWithMaxBrightness(this.color.url, 0.5));
       return this.elements.labelUrl.text(this.url.hostname);
     };
 
@@ -1367,7 +1366,7 @@
     };
 
     dragOverHandler = function(ev, root) {
-      var changed, item, target;
+      var changed, item, last, target;
       ev.preventDefault();
       ev.stopPropagation();
       if (root.userInput.active) {
@@ -1385,7 +1384,8 @@
         }
       }
       if (target === null && ev.target === root.DOMElement) {
-        if (root.draggedItem.element.DOMElement !== root.lastChild().DOMElement) {
+        last = root.lastChild();
+        if (root.draggedItem.element.DOMElement !== last.DOMElement && last.left() < ev.clientX && last.top() < ev.clientY) {
           console.log('dragOverHandler: Append');
           root.append(root.draggedItem.element);
           changed = true;
@@ -1407,7 +1407,7 @@
           }
         }
       }
-      if (changed) {
+      if (changed && (target != null)) {
         return root.updateNewItemPosition(root.draggedItem, target.element.index);
       }
     };

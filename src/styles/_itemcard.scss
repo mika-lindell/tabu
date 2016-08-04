@@ -5,7 +5,6 @@ Item card styles
 ***/
 
 
-
 .edit-actions{
 	display: none;
 	position: fixed;
@@ -17,18 +16,35 @@ Item card styles
 	box-shadow: $shadow-outset-small;
 	border-radius: 0 0 2px 2px;
 	overflow: hidden;
+	border: $dropzone-border;
 
 	@extend .layer-context-menu;
 	@extend .hoverable;
 
+
+
+	&::before{
+		content: 'Drop Here To';
+    display: block;
+    text-align: center;
+    padding: 0.6rem;
+    background-color: #0277bd;
+    color: white;
+    text-transform: uppercase;
+	}
+
 	li{
 		display: inline-block;
 		text-align: center;
-		height: 100px;
-		line-height: 100px;
-		border: 2px dashed transparent;
+		height: 70px;
+		line-height: 70px;
+		// border: 2px dashed transparent;
 		@extend .uppercase;
 		@extend .transitions;
+
+		&:nth-child(odd){
+			border-right: $dropzone-border;
+		}
 
 		&::before{
 			margin-right: 0.5rem;
@@ -46,10 +62,10 @@ Item card styles
 
 	.edit-actions-edit{
 
-		width: 270px;
+		width: 265px;
 		color: color('green', 'darken-4');
 		background-color: color('green', 'lighten-5');
-		border-color: color('green', 'lighten-3');
+		// border-color: color('green', 'lighten-3');
 
 		&::before{
 			content: 'edit';
@@ -58,7 +74,7 @@ Item card styles
 		&.drag-over{
 			color: $white;
 			background-color: color('green', 'darken-3');
-			border-color: color('green', 'darken-3');
+			// border-color: color('green', 'darken-3');
 		}
 
 	}
@@ -67,7 +83,7 @@ Item card styles
 		width: 130px;
 		color: color('red', 'darken-4');
 		background-color: color('red', 'lighten-5');
-		border-color: color('red', 'lighten-3');
+		// border-color: color('red', 'lighten-3');
 
 		&::before{
 			content: 'delete_forever';
@@ -76,7 +92,7 @@ Item card styles
 		&.drag-over{
 			color: $white;
 			background-color: color('red', 'darken-3');
-			border-color: color('red', 'darken-3');
+			// border-color: color('red', 'darken-3');
 		}
 
 	}
@@ -221,7 +237,7 @@ a.item-card-link{
   line-height: 3.1rem;
   border-radius: 2px;
   color: $white;
-  text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  // text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
 
 	@extend .center;
 	@extend .bolder;

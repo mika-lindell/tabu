@@ -112,7 +112,7 @@ class ItemCard extends HTMLElement
 		@elements.link.attr('href', @url.href)
 
 		@elements.badge.text(@url.withoutPrefix().substring(0, 2) )
-		@elements.badge.css('backgroundColor', @color.getWithMaxBrightness(@color.url, 0.7))
+		@elements.badge.css('backgroundColor', @color.getWithMaxBrightness(@color.url, 0.5))
 
 		@elements.labelUrl.text(@url.hostname)
 
