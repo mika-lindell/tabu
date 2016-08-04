@@ -60,9 +60,16 @@ Responsive - breakpoints are the same as Materialize.css uses
 
 @media only screen and (min-width: 1200px){
 	.item-card-label-container{
-		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
+		width: 65%; // For truncate to work (with text-overflow: ellipsis;)
 	}
 	.horizontal-list li{
 		width: 25%; // 3 items in arow instead of 2 in horiz lists
+	}
+}
+
+
+@media only screen and (min-width: 1500px){
+	.item-card-label-container{
+		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
 	}
 }
