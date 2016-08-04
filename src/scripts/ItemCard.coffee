@@ -96,6 +96,7 @@ class ItemCard extends HTMLElement
 
 	setTitle: (title)->
 		@title = title
+		if @title.trim().replace(/\s/g, '') is '' then @title = url.hostname
 		@elements.labelTitle.text(title)
 
 	setUrl: (url)->

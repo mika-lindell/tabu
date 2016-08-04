@@ -863,6 +863,9 @@
 
     ItemCard.prototype.setTitle = function(title) {
       this.title = title;
+      if (this.title.trim().replace(/\s/g, '') === '') {
+        this.title = url.hostname;
+      }
       return this.elements.labelTitle.text(title);
     };
 
