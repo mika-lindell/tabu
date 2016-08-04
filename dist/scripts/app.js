@@ -238,6 +238,8 @@
   })();
 
   HexColor = (function() {
+    var getBrightness, setLuminance;
+
     HexColor.parser;
 
     HexColor.url;
@@ -276,6 +278,48 @@
       	  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
        */
       return colour;
+    };
+
+    HexColor.prototype.getWithMaxBrightness = function(hexCode, max) {
+      var change, from;
+      from = getBrightness(hexCode);
+      change = Math.round((max - from) * 100) / 100;
+      console.log(change, max, from);
+      if (change === 0) {
+        return hexCode;
+      } else {
+        return setLuminance(hexCode, change);
+      }
+    };
+
+    getBrightness = function(hexCode) {
+      var brightness, c_b, c_g, c_r;
+      hexCode = hexCode.replace('#', '');
+      c_r = parseInt(hexCode.substr(0, 2), 16);
+      c_g = parseInt(hexCode.substr(2, 2), 16);
+      c_b = parseInt(hexCode.substr(4, 2), 16);
+      brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000 / 255;
+      return Math.round(brightness * 100) / 100;
+    };
+
+    setLuminance = function(hexCode, lum) {
+      var c, i, rgb;
+      hexCode = String(hexCode).replace(/[^0-9a-f]/gi, '');
+      if (hexCode.length < 6) {
+        hexCode = hexCode[0] + hexCode[0] + hexCode[1] + hexCode[1] + hexCode[2] + hexCode[2];
+      }
+      lum = lum || 0;
+      rgb = '#';
+      c = void 0;
+      i = void 0;
+      i = 0;
+      while (i < 3) {
+        c = parseInt(hexCode.substr(i * 2, 2), 16);
+        c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+        rgb += ('00' + c).substr(c.length);
+        i++;
+      }
+      return rgb;
     };
 
     return HexColor;
@@ -834,7 +878,7 @@
       this.color = new HexColor(this.url);
       this.elements.link.attr('href', this.url.href);
       this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
-      this.elements.badge.css('borderColor', this.color.url);
+      this.elements.badge.css('backgroundColor', this.color.getWithMaxBrightness(this.color.url, 0.7));
       return this.elements.labelUrl.text(this.url.hostname);
     };
 

@@ -2403,7 +2403,7 @@ td, th {
       min-height: 84px;
       padding-left: 72px;
       position: relative; }
-      .collection .collection-item.avatar .circle, .collection .collection-item.avatar .item-card-badge {
+      .collection .collection-item.avatar .circle {
         position: absolute;
         width: 42px;
         height: 42px;
@@ -2411,7 +2411,7 @@ td, th {
         left: 15px;
         display: inline-block;
         vertical-align: middle; }
-      .collection .collection-item.avatar i.circle, .collection .collection-item.avatar i.item-card-badge {
+      .collection .collection-item.avatar i.circle {
         font-size: 18px;
         line-height: 42px;
         color: #fff;
@@ -2579,7 +2579,7 @@ input[type=range] + .thumb {
   -ms-user-select: none;
   user-select: none; }
 
-.circle, .item-card-badge {
+.circle {
   border-radius: 50%; }
 
 .center-block {
@@ -5337,7 +5337,7 @@ input[type=range]:focus::-ms-fill-upper {
   overflow: hidden;
   border-color: inherit; }
 
-.gap-patch .circle, .gap-patch .item-card-badge {
+.gap-patch .circle {
   width: 1000%;
   left: -450%; }
 
@@ -5348,7 +5348,7 @@ input[type=range]:focus::-ms-fill-upper {
   height: 100%;
   overflow: hidden;
   border-color: inherit; }
-  .circle-clipper .circle, .circle-clipper .item-card-badge {
+  .circle-clipper .circle {
     width: 200%;
     height: 100%;
     border-width: 3px;
@@ -5363,23 +5363,23 @@ input[type=range]:focus::-ms-fill-upper {
     top: 0;
     right: 0;
     bottom: 0; }
-  .circle-clipper.left .circle, .circle-clipper.left .item-card-badge {
+  .circle-clipper.left .circle {
     left: 0;
     border-right-color: transparent !important;
     -webkit-transform: rotate(129deg);
     transform: rotate(129deg); }
-  .circle-clipper.right .circle, .circle-clipper.right .item-card-badge {
+  .circle-clipper.right .circle {
     left: -100%;
     border-left-color: transparent !important;
     -webkit-transform: rotate(-129deg);
     transform: rotate(-129deg); }
 
-.active .circle-clipper.left .circle, .active .circle-clipper.left .item-card-badge {
+.active .circle-clipper.left .circle {
   /* duration: ARCTIME */
   -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
 
-.active .circle-clipper.right .circle, .active .circle-clipper.right .item-card-badge {
+.active .circle-clipper.right .circle {
   /* duration: ARCTIME */
   -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
   animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
@@ -6499,7 +6499,6 @@ Menu
 #visibility-off {
   opacity: 0;
   white-space: nowrap;
-  display: inline-block;
   height: 36px;
   width: 36px; }
 
@@ -6757,7 +6756,8 @@ ul[data-list-editable] .drag-handle {
   border: 2px dashed transparent;
   position: relative;
   height: 65px;
-  list-style-type: none; }
+  list-style-type: none;
+  margin: 0.5rem 0; }
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card.empty .item-card-empty {
@@ -6788,13 +6788,14 @@ a.item-card-link {
 
 .item-card-badge {
   display: inline-block;
-  border-width: 0.4rem;
-  border-style: solid;
   margin-right: 0.6rem;
   width: 3.0rem;
   height: 3.0rem;
   opacity: 0.75;
-  line-height: 2.3rem; }
+  line-height: 3.1rem;
+  border-radius: 2px;
+  color: #FFF;
+  text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8); }
 
 .item-card-label-container {
   display: inline-block;

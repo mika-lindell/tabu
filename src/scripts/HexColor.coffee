@@ -54,6 +54,47 @@ class HexColor
 
 		return colour;
 
+	getWithMaxBrightness: (hexCode, max)->
 
+		from = getBrightness(hexCode)
+
+		change = Math.round((max - from) * 100) / 100 
+
+		console.log change, max, from
+
+		if change is 0
+			return hexCode
+		else
+			return setLuminance(hexCode, change)
+
+	# http://www.webmasterworld.com/forum88/9769.htm
+	getBrightness = (hexCode) ->
+	  # strip off any leading #
+	  hexCode = hexCode.replace('#', '')
+	  c_r = parseInt(hexCode.substr(0, 2), 16)
+	  c_g = parseInt(hexCode.substr(2, 2), 16)
+	  c_b = parseInt(hexCode.substr(4, 2), 16)
+	  brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000 / 255
+	  return Math.round(brightness * 100) / 100
+
+
+	#https://www.sitepoint.com/javascript-generate-lighter-darker-color/
+	setLuminance = (hexCode, lum) ->
+	  # validate hexCode string
+	  hexCode = String(hexCode).replace(/[^0-9a-f]/gi, '')
+	  if hexCode.length < 6
+	    hexCode = hexCode[0] + hexCode[0] + hexCode[1] + hexCode[1] + hexCode[2] + hexCode[2]
+	  lum = lum or 0
+	  # convert to decimal and change luminosity
+	  rgb = '#'
+	  c = undefined
+	  i = undefined
+	  i = 0
+	  while i < 3
+	    c = parseInt(hexCode.substr(i * 2, 2), 16)
+	    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16)
+	    rgb += ('00' + c).substr(c.length)
+	    i++
+	  return rgb
 
   
