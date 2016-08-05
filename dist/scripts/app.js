@@ -1293,19 +1293,16 @@
     };
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
-      var i, log;
+      var i, results;
       if (item != null) {
         this.items.splice(item.element.index, 1);
         this.items.splice(newIndex, 0, item);
       }
+      results = [];
       for (i in this.items) {
-        this.items[i].element.index = i;
+        results.push(this.items[i].element.index = i);
       }
-      log = new Array();
-      for (i in this.items) {
-        log.push(this.items[i].element.index + ": " + this.items[i].element.title);
-      }
-      return console.log('updateNewItemPosition', log);
+      return results;
     };
 
     ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
@@ -1336,7 +1333,8 @@
       if (this.ghost.element != null) {
         x = ev.clientX - this.ghost.initialX;
         y = ev.clientY - this.ghost.initialY;
-        return this.ghost.element.css('transform', "translate(" + x + "px, " + y + "px)");
+        this.ghost.element.css('left', ev.clientX + 20 + 'px');
+        return this.ghost.element.css('top', ev.clientY + 'px');
       }
     };
 
@@ -2062,7 +2060,7 @@
       this.animation.content.intro(instant);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
-      this.animation.button.animateWidth(40, 100);
+      this.animation.button.animateWidth(40, 110);
       this.enabled = true;
       console.log("Visibility: On");
       return this.storage.setVisible(this.enabled);
@@ -2077,7 +2075,7 @@
       this.animation.content.outro(instant);
       this.enabler.css('opacity', 1);
       this.disabler.css('opacity', 0);
-      this.animation.button.animateWidth(100, 40);
+      this.animation.button.animateWidth(110, 40);
       this.enabled = false;
       console.log("Visibility: Off");
       return this.storage.setVisible(this.enabled);

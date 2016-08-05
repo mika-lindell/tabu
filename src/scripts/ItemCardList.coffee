@@ -353,12 +353,12 @@ class ItemCardList extends HTMLElement
 		for i of @items
 			@items[i].element.index = i
 
-		log = new Array()
+		# log = new Array()
 
-		for i of @items
-			log.push "#{@items[i].element.index}: #{@items[i].element.title}"
+		# for i of @items
+		# 	log.push "#{@items[i].element.index}: #{@items[i].element.title}"
 
-		console.log 'updateNewItemPosition', log
+		# console.log 'updateNewItemPosition', log
 
 	acceptFromOutsideSource: (ev)->
 
@@ -393,7 +393,8 @@ class ItemCardList extends HTMLElement
 			x = ev.clientX - @ghost.initialX
 			y = ev.clientY - @ghost.initialY
 
-			@ghost.element.css('transform',"translate(#{x}px, #{y}px)")
+			@ghost.element.css('left', ev.clientX + 20  + 'px')
+			@ghost.element.css('top', ev.clientY + 'px')
 
 	deleteGhost: ()->
 		@ghost.element.removeFromDOM()

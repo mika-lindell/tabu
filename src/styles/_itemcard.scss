@@ -103,7 +103,7 @@ Item card styles
 }
 
 .item-card-list{
-	min-height: $item-card-height + 10px;
+	min-height: $item-card-height + 0.5rem;
   position: relative;
 
   @extend .layer-front;
@@ -114,15 +114,13 @@ Item card styles
 	cursor: move;
 	vertical-align: top;
 	color: $medium-grey;
-	font-size: 24px;
 
-  padding-right: 0.5rem;
-  line-height: 7px;
-  margin-top: 2px;
-  /* letter-spacing: -1.23em; */
+	font-size: 1.6rem;
+	padding-right: 0.5rem;
+	line-height: 0.5rem;
+	vertical-align: middle;
+	height: 3rem;
 
-
-	//@extend .material-icons
 }
 
 // DnD ghost element styles
@@ -130,6 +128,7 @@ Item card styles
 	.drag-handle{
 		display: none;
 	}
+
 	transition: none;
 	border: none;
 	background-color: white;
