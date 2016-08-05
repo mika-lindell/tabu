@@ -125,10 +125,9 @@ module.exports =
 		browser.execute(createBS, [browser.globals.sites])
 
 		# Refresh to load the generated data
-		browser.pause(500)
 		browser.refresh()
+		browser.pause(500)
 		browser.expect.element("#app").to.be.present.after(500)
-		
 
 		if !browser.globals.sites?
 			throw new Error('Test failed: no array.') 
@@ -183,7 +182,7 @@ module.exports =
 	'Recently Closed should have 1 item': (browser)->
 		
 		openWin = (data)->
-			window.open('http://www.vero.fi', '_blank')
+			window.open('http://www.te-palvelut.fi/te/fi/', '_blank')
 
 		testRecentlyClosed = (result)->
 			# Create entry to Recently Closed
@@ -194,12 +193,13 @@ module.exports =
 			
 			# Refresh to load the generated data
 			browser.refresh()
+			browser.pause(500)
 			browser.expect.element("#app").to.be.present.after(500)
 
 			# Test if the item was added
 			browser.expect.element("#recently-closed-0").to.be.present
-			browser.expect.element("#recently-closed-0-link").text.to.contain('Verohallinto')
-			browser.expect.element("#recently-closed-0-link").text.to.contain('www.vero.fi')
+			browser.expect.element("#recently-closed-0-link").text.to.contain('Etusivu- TE-palvelut')
+			browser.expect.element("#recently-closed-0-link").text.to.contain('www.te-palvelut.fi')
 
 			browser.expect.element("#recently-closed-1").not.to.be.present
 
@@ -279,8 +279,8 @@ module.exports =
 
 	'the state of visibility:off should persist between sessions': (browser)->
 		
-		browser.url("http://www.vero.fi")
-		browser.click('[href="/fi-FI/Henkiloasiakkaat"]')
+		browser.url("http://www.te-palvelut.fi/te/fi/")
+		browser.click('[href="/te/fi/tyonhakijalle/loyda_toita/index.html"]')
 		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
@@ -309,7 +309,7 @@ module.exports =
 		browser.back()
 		browser.url("http://www.kela.fi")
 		browser.pause(1000)
-		browser.url("http://www.vero.fi")
+		browser.url("http://www.te-palvelut.fi/te/fi/")
 		browser.back()
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
@@ -421,8 +421,8 @@ module.exports =
 	'Top Sites should have 2 new items': (browser)->
 
 		browser.expect.element("#top-sites-0").to.be.present
-		browser.expect.element("#top-sites-0-link").text.to.contain('Verohallinto')
-		browser.expect.element("#top-sites-0-link").text.to.contain('www.vero.fi')
+		browser.expect.element("#top-sites-0-link").text.to.contain('Etusivu- TE-palvelut')
+		browser.expect.element("#top-sites-0-link").text.to.contain('www.te-palvelut.fi')
 	
 		browser.expect.element("#top-sites-1").to.be.present
 		browser.expect.element("#top-sites-1-link").text.to.contain('Henkilöasiakkaat - kela.fi')
