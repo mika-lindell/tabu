@@ -6706,7 +6706,8 @@ Item card styles
     text-align: center;
     height: 70px;
     line-height: 70px;
-    border-radius: 2px; }
+    border-radius: 2px;
+    border: 2px dashed transparent; }
     .edit-actions li:nth-child(odd) {
       margin-right: 10px; }
     .edit-actions li::before {
@@ -6716,7 +6717,8 @@ Item card styles
   .edit-actions .edit-actions-edit {
     width: 250px;
     color: #1B5E20;
-    background-color: #E8F5E9; }
+    background-color: #E8F5E9;
+    border-color: #2E7D32; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
     .edit-actions .edit-actions-edit.drag-over {
@@ -6725,7 +6727,8 @@ Item card styles
   .edit-actions .edit-actions-delete {
     width: 120px;
     color: #B71C1C;
-    background-color: #FFEBEE; }
+    background-color: #FFEBEE;
+    border-color: #C62828; }
     .edit-actions .edit-actions-delete::before {
       content: 'delete_forever'; }
     .edit-actions .edit-actions-delete.drag-over {
