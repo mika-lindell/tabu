@@ -20,10 +20,21 @@ class ChromeAPI
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
 	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, recentHistory, otherDevices or recentlyClosed
 	#
-	constructor: (api, dataType = 'topSites', limit = 16)->
-		@api = api
+	constructor: (dataType = 'topSites', limit = 16)->
+
 		@limit = limit
 		@dataType = dataType
+
+		if dataType is 'topSites'
+			@api = chrome.topSites.get
+		else if dataType is 'latestBookmarks'
+			@api = chrome.bookmarks.getRecent
+		# else if dataType is 'recentHistory'
+		# 	@api = chrome.history.search
+		else if dataType is 'recentlyClosed'
+			@api = chrome.sessions.getRecentlyClosed
+		else if dataType is 'otherDevices'
+			@api = chrome.sessions.getDevices
 
 	# Get the data from chrome API
 	#
