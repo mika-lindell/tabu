@@ -458,7 +458,7 @@ class ItemCardList extends HTMLElement
 				console.log 'dragOverHandler: Append'
 				root.append(root.draggedItem.element)
 				changed = true
-
+		
 		else if target? and root.draggedItem? and target.element isnt root.draggedItem.element and target.element.containingList is root
 
 			# Insert as last item if dragging: 
@@ -485,7 +485,7 @@ class ItemCardList extends HTMLElement
 				if target.element.DOMElement.nextSibling
 					root.insert(root.draggedItem.element, target.element, 'after')
 					changed = true
-
+			
 		if changed and target? then root.updateNewItemPosition(root.draggedItem, target.element.index)			
 
 	dropHandler = (ev, root)->

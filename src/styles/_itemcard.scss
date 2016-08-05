@@ -149,7 +149,8 @@ ul[data-list-editable]{
 	height: 100%;
 	text-align: center;
 	height: $item-card-height;
-  line-height: 59px;
+  line-height: $item-card-height;
+  overflow: hidden;
 
 	@extend .font-size-large;
 	@extend .color-dark-grey;
@@ -218,8 +219,10 @@ ul[data-list-editable]{
 
 a.item-card-link{
 	display: block;
-	padding: 0.5rem;
+	height: $item-card-height;
+	padding: $item-card-padding;
 	border-radius: 2px;
+	overflow: hidden;
 
 	@extend .color-black;
 }

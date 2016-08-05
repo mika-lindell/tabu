@@ -6769,7 +6769,8 @@ ul[data-list-editable] .drag-handle {
   height: 100%;
   text-align: center;
   height: 4.2rem;
-  line-height: 59px; }
+  line-height: 4.2rem;
+  overflow: hidden; }
 
 .item-card {
   border: 2px dashed transparent;
@@ -6802,8 +6803,10 @@ ul[data-list-editable] .drag-handle {
 
 a.item-card-link {
   display: block;
+  height: 4.2rem;
   padding: 0.5rem;
-  border-radius: 2px; }
+  border-radius: 2px;
+  overflow: hidden; }
 
 .item-card-badge {
   display: inline-block;
