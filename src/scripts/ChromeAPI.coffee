@@ -50,10 +50,12 @@ class ChromeAPI
 				data = root.flatten(result)
 			else if root.dataType is 'recentHistory'
 				data = root.unique(result, 'url', 'title')
-				data = data.slice(0, root.limit) # Limit the amount of data stored
 			else
 				data = result
 
+			if root.dataType is 'recentHistory' or root.dataType is 'recentlyClosed'
+				data = data.slice(0, root.limit) # Limit the amount of data stored
+				
 			root.data = data
 			root.status = 'ready'
 			root.done()

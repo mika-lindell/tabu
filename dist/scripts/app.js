@@ -701,9 +701,11 @@
           data = root.flatten(result);
         } else if (root.dataType === 'recentHistory') {
           data = root.unique(result, 'url', 'title');
-          data = data.slice(0, root.limit);
         } else {
           data = result;
+        }
+        if (root.dataType === 'recentHistory' || root.dataType === 'recentlyClosed') {
+          data = data.slice(0, root.limit);
         }
         root.data = data;
         root.status = 'ready';
