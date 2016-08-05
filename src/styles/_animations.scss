@@ -134,8 +134,8 @@ Animations
 		// transform: scale(1, 1);
 	}
 	50%{
-		outline: 2px solid color('light-blue', 'darken-2');
-		box-shadow: 0px 0px 20px 0px color('light-blue', 'darken-3');
+		outline: 2px solid $light-blue-darken-2;
+		box-shadow: 0px 0px 20px 0px $light-blue-darken-3;
 	}
 	100%{
 		outline: 2px solid transparent;

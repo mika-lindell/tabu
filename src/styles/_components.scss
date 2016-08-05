@@ -53,20 +53,20 @@ Button styles
 ***/
 
 .btn.teal{
-	background-color: color('teal', 'lighten-1');
+	background-color: $teal-lighten-1;
 
 	&:hover{
-		background-color: color('teal', 'lighten-2');
+		background-color: $teal-lighten-2;
 	}
 
 	&:active{
-		background-color: color('teal', 'lighten-1');
+		background-color: $teal-lighten-1;
 	}
 }
 
 .btn:active,
 .btn-large:active{
-		background-color: color('light-blue', 'darken-3');
+		background-color: $light-blue-darken-3;
 		box-shadow: $shadow-inset;
 	}
 
@@ -123,7 +123,7 @@ button.title{
 	&.active,
 	&.active:hover{
 		box-shadow: none;
-		background-color: color('light-blue', 'darken-3');
+		background-color: $light-blue-darken-3;
 		color: $white;
 
 		i.material-icons{
@@ -137,14 +137,14 @@ button.title{
 }
 
 .btn.submit{
-	background-color: color('teal', 'lighten-1');
+	background-color: $teal-lighten-1;
 
 	&:hover{
-		background-color: color('teal', 'lighten-2');
+		background-color: $teal-lighten-1;
 	}
 
 	&:active{
-		background-color: color('teal', 'lighten-1');
+		background-color: $teal-lighten-1;
 	}
 }
 
@@ -190,7 +190,7 @@ Forms
 	margin: 0;
 	width: 100%;
 	
-	background-color: color('light-blue', 'darken-3');
+	background-color: $light-blue-darken-3;
 	box-shadow: $shadow-outset-large;
 
 	&.centered{

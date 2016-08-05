@@ -10,6 +10,11 @@ $light-grey: #c7c7c7;
 $medium-grey: #8c8c8c;
 $dark-grey: #5a5a5a;
 
+$teal-lighten-2: color('teal', 'lighten-2');
+$teal-lighten-1: color('teal', 'lighten-1');
+$light-blue-darken-3: color('light-blue', 'darken-3');
+$light-blue-darken-2: color('light-blue', 'darken-2');
+
 $border-light: 1px solid $light-grey;
 
 $shadow-inset: inset 0 0 7px rgba(0, 0, 0, 0.25);
@@ -23,4 +28,4 @@ $action-buttons-gap: 0.6rem;
 $item-card-height: 4.2rem;
 $item-card-padding:0.5rem;
 
-$dropzone-border: 10px solid color('light-blue', 'darken-3');
+$dropzone-border: 10px solid $light-blue-darken-3;

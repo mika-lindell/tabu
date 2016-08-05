@@ -670,16 +670,24 @@
 
     ChromeAPI.data = null;
 
-    function ChromeAPI(api, dataType, limit) {
+    function ChromeAPI(dataType, limit) {
       if (dataType == null) {
         dataType = 'topSites';
       }
       if (limit == null) {
         limit = 16;
       }
-      this.api = api;
       this.limit = limit;
       this.dataType = dataType;
+      if (dataType === 'topSites') {
+        this.api = chrome.topSites.get;
+      } else if (dataType === 'latestBookmarks') {
+        this.api = chrome.bookmarks.getRecent;
+      } else if (dataType === 'recentlyClosed') {
+        this.api = chrome.sessions.getRecentlyClosed;
+      } else if (dataType === 'otherDevices') {
+        this.api = chrome.sessions.getDevices;
+      }
     }
 
     ChromeAPI.prototype.fetch = function(api) {
@@ -1391,6 +1399,7 @@
       }
       if (target === null && ev.target === root.DOMElement) {
         last = root.lastChild();
+        console.log(last.title, last.left(), '<', ev.clientX, 'and', last.top(), '<', ev.clientY);
         if (root.draggedItem.element.DOMElement !== last.DOMElement && last.left() < ev.clientX && last.top() < ev.clientY) {
           console.log('dragOverHandler: Append');
           root.append(root.draggedItem.element);
@@ -2267,10 +2276,10 @@
       		 *
        */
       root = this;
-      this.topSites = new ChromeAPI(chrome.topSites.get);
-      this.latestBookmarks = new ChromeAPI(chrome.bookmarks.getRecent, 'latestBookmarks');
-      this.recentlyClosed = new ChromeAPI(chrome.sessions.getRecentlyClosed, 'recentlyClosed');
-      this.otherDevices = new ChromeAPI(chrome.sessions.getDevices, 'otherDevices');
+      this.topSites = new ChromeAPI('topSites');
+      this.latestBookmarks = new ChromeAPI('latestBookmarks');
+      this.recentlyClosed = new ChromeAPI('recentlyClosed');
+      this.otherDevices = new ChromeAPI('otherDevices');
       this.topSites.done = function() {
         var list, loader;
         loader = new Loader;

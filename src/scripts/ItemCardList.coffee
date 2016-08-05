@@ -452,6 +452,8 @@ class ItemCardList extends HTMLElement
 
 			last = root.lastChild()
 			
+			console.log last.title, last.left(), '<', ev.clientX, 'and', last.top(), '<', ev.clientY
+
 			if root.draggedItem.element.DOMElement isnt last.DOMElement and last.left() < ev.clientX and last.top() < ev.clientY
 				# Insert as last item if dragging: 
 				# - over empty space at the end of list

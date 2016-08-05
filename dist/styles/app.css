@@ -6627,7 +6627,7 @@ button.title {
 .btn.submit, .submit.btn-large {
   background-color: #26a69a; }
   .btn.submit:hover, .submit.btn-large:hover {
-    background-color: #4db6ac; }
+    background-color: #26a69a; }
   .btn.submit:active, .submit.btn-large:active {
     background-color: #26a69a; }
 
@@ -6777,7 +6777,7 @@ ul[data-list-editable] .drag-handle {
   position: relative;
   height: 4.2rem;
   list-style-type: none;
-  margin: 0.5rem 0; }
+  margin: 0; }
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
   .item-card.empty .item-card-empty {
