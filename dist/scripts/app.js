@@ -876,14 +876,11 @@
 
     ItemCard.prototype.setTitle = function(title) {
       this.title = title;
-      if (this.title.trim().replace(/\s/g, '') === '') {
-        this.title = url.hostname;
-      }
       return this.elements.labelTitle.text(title);
     };
 
     ItemCard.prototype.setUrl = function(url) {
-      var dirty;
+      var badgeLabel, dirty, hostname;
       dirty = new Url(url);
       if (dirty.hostname === window.location.hostname && dirty.protocol === 'chrome-extension:') {
         this.url = new Url('http://' + url);
@@ -892,9 +889,16 @@
       }
       this.color = new HexColor(this.url);
       this.elements.link.attr('href', this.url.href);
-      this.elements.badge.text(this.url.withoutPrefix().substring(0, 2));
+      if (this.url.hostname === '') {
+        badgeLabel = this.url.href.substring(0, 2);
+        hostname = this.url.href;
+      } else {
+        badgeLabel = this.url.withoutPrefix().substring(0, 2);
+        hostname = this.url.hostname;
+      }
+      this.elements.badge.text(badgeLabel);
       this.elements.badge.css('backgroundColor', this.color.getWithMaxBrightness(this.color.url, 0.5));
-      return this.elements.labelUrl.text(this.url.hostname);
+      return this.elements.labelUrl.text(hostname);
     };
 
     dragStartHandler = function(ev, root) {

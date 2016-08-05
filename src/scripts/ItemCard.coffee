@@ -96,7 +96,8 @@ class ItemCard extends HTMLElement
 
 	setTitle: (title)->
 		@title = title
-		if @title.trim().replace(/\s/g, '') is '' then @title = url.hostname
+
+		
 		@elements.labelTitle.text(title)
 
 	setUrl: (url)->
@@ -112,10 +113,17 @@ class ItemCard extends HTMLElement
 
 		@elements.link.attr('href', @url.href)
 
-		@elements.badge.text(@url.withoutPrefix().substring(0, 2) )
+		if @url.hostname is ''
+			badgeLabel = @url.href.substring(0, 2)
+			hostname = @url.href
+		else
+			badgeLabel = @url.withoutPrefix().substring(0, 2)
+			hostname = @url.hostname
+
+		@elements.badge.text(badgeLabel)
 		@elements.badge.css('backgroundColor', @color.getWithMaxBrightness(@color.url, 0.5))
 
-		@elements.labelUrl.text(@url.hostname)
+		@elements.labelUrl.text(hostname)
 
 	dragStartHandler = (ev, root)->
 
