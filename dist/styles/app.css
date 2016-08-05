@@ -6883,7 +6883,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 @media only screen and (min-width: 1500px) {
   .item-card-label-container {
     width: 74%; } }
-@media only screen and (min-width: 1900px) {
+@media only screen and (min-width: 2000px) {
   html {
     font-size: 17px; }
 

@@ -39,10 +39,11 @@ class ChromeAPI
 				data = root.flatten(result)
 			else if root.dataType is 'recentHistory'
 				data = root.unique(result, 'url', 'title')
+				data = data.slice(0, root.limit) # Limit the amount of data stored
 			else
 				data = result
 
-			root.data = data.slice(0, root.limit) # Limit the amount of data stored
+			root.data = data
 			root.status = 'ready'
 			root.done()
 
@@ -86,11 +87,24 @@ class ChromeAPI
 
 		if root.dataType is 'otherDevices'
 
+			# Get counts for total items
+			devicesCount = source.length
+			# deviceTotals = new Array()
+			# total = 0
+
+			# for item in source
+			# 	count = item.sessions[0].window.tabs.length
+			# 	deviceTotals.push count
+			# 	total += count
+
+			# console.log devicesCount, total, deviceTotals
+
 			for item, i in source
 
 				result.push({ 'heading': item.deviceName }) # Add the device as heading
 
-				for tab in item.sessions[0].window.tabs
+				for tab, i in item.sessions[0].window.tabs
+					if i is Math.round(root.limit / devicesCount) then break
 					addToResult tab.title, tab.url, result  # Add tabs from this session
 
 		else if root.dataType is 'recentlyClosed'

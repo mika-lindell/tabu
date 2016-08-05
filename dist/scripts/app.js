@@ -693,10 +693,11 @@
           data = root.flatten(result);
         } else if (root.dataType === 'recentHistory') {
           data = root.unique(result, 'url', 'title');
+          data = data.slice(0, root.limit);
         } else {
           data = result;
         }
-        root.data = data.slice(0, root.limit);
+        root.data = data;
         root.status = 'ready';
         root.done();
         return console.log("ChromeAPI: Ok, got " + root.dataType + " ->", root.data);
@@ -717,7 +718,7 @@
     ChromeAPI.prototype.done = function() {};
 
     ChromeAPI.prototype.flatten = function(source) {
-      var addToResult, i, item, j, k, l, len, len1, len2, len3, m, ref, ref1, result, root, tab;
+      var addToResult, devicesCount, i, item, j, k, l, len, len1, len2, len3, m, ref, ref1, result, root, tab;
       root = this;
       result = [];
       addToResult = function(title, url, result) {
@@ -729,14 +730,18 @@
         }
       };
       if (root.dataType === 'otherDevices') {
+        devicesCount = source.length;
         for (i = j = 0, len = source.length; j < len; i = ++j) {
           item = source[i];
           result.push({
             'heading': item.deviceName
           });
           ref = item.sessions[0].window.tabs;
-          for (k = 0, len1 = ref.length; k < len1; k++) {
-            tab = ref[k];
+          for (i = k = 0, len1 = ref.length; k < len1; i = ++k) {
+            tab = ref[i];
+            if (i === Math.round(root.limit / devicesCount)) {
+              break;
+            }
             addToResult(tab.title, tab.url, result);
           }
         }
