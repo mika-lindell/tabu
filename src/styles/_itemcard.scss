@@ -65,7 +65,7 @@ Item card styles
 		width: 250px;
 		color: color('green', 'darken-4');
 		background-color: color('green', 'lighten-5');
-		border-color: color('green', 'darken-3');	
+		border-color: color('green', 'base');	
 
 		&::before{
 			content: 'edit';
@@ -83,7 +83,7 @@ Item card styles
 		width: 120px;
 		color: color('red', 'darken-4');
 		background-color: color('red', 'lighten-5');
-		border-color: color('red', 'darken-3');
+		border-color: color('red', 'lighten-2');
 
 		&::before{
 			content: 'delete_forever';
