@@ -730,7 +730,7 @@
       root = this;
       result = [];
       addToResult = function(title, url, result) {
-        if (url.indexOf('chrome://') === -1) {
+        if (url.indexOf('chrome://') === -1 && url.indexOf('file://') === -1) {
           return result.push({
             'title': title,
             'url': url
@@ -1403,7 +1403,6 @@
       }
       if (target === null && ev.target === root.DOMElement) {
         last = root.lastChild();
-        console.log(last.title, last.left(), '<', ev.clientX, 'and', last.top(), '<', ev.clientY);
         if (root.draggedItem.element.DOMElement !== last.DOMElement && last.left() < ev.clientX && last.top() < ev.clientY) {
           console.log('dragOverHandler: Append');
           root.append(root.draggedItem.element);

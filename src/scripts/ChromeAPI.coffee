@@ -90,7 +90,7 @@ class ChromeAPI
 
 		# Adds item to array to be returned
 		addToResult = (title, url, result)->
-			if url.indexOf('chrome://') is -1 # Exclude system urls
+			if url.indexOf('chrome://') is -1 and url.indexOf('file://') is -1 # Exclude system urls and files (local resources not allowed by chrome)
 				result.push({ 
 					'title': title
 					'url': url 
