@@ -6479,16 +6479,17 @@ Animations
 
 @keyframes highlight {
   0% {
-    transform: rotateX(0deg); }
-  30% {
-    transform: rotateX(90deg); }
-  70% {
-    transform: rotateX(90deg); }
+    transform: scale(1, 1); }
+  50% {
+    transform: scale(1.1, 1.1);
+    box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FFF;
+    z-index: 1; }
   100% {
-    transform: rotateX(0deg); } }
+    transform: scale(1, 1); } }
 .anim-highlight {
   animation-name: highlight;
-  animation-duration: 0.8s;
+  animation-duration: 0.9s;
   transform-origin: 50 0; }
 
 .transitions, #visibility-on,
