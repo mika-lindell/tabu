@@ -298,7 +298,7 @@ class ItemCardList extends HTMLElement
 					item.element.removeClass('empty')
 				else if action is 'editLink'
 					userInput.removeClass('centered')
-
+				
 				item.element.setTitle(fields[0].element.value())
 				item.element.setUrl(fields[1].element.value())
 
