@@ -827,13 +827,20 @@
       }
       body.append(container);
       cleanup = function() {
-        container.removeClass('anim-toast-in');
-        container.addClass('anim-toast-out');
-        container = null;
-        return setTimeout(function() {
-          return body.removeChild(container);
-        }, 500);
+        if (container != null) {
+          container.removeClass('anim-toast-in');
+          container.addClass('anim-toast-out');
+          return setTimeout(function() {
+            body.removeChild(container);
+            return container = null;
+          }, 500);
+        }
       };
+      if (container != null) {
+        setTimeout(function() {
+          return cleanup();
+        }, duration * 1000);
+      }
     }
 
     return Toast;

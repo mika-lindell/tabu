@@ -33,17 +33,19 @@ class Toast
 		body.append container
 
 		cleanup = ()->
-			container.removeClass 'anim-toast-in'
-			container.addClass 'anim-toast-out'
-			container = null
+			if container?
+				
+				container.removeClass 'anim-toast-in'
+				container.addClass 'anim-toast-out'
 
-			setTimeout ()->
-				body.removeChild container
-			, 500
+				setTimeout ()->
+					body.removeChild container
+					container = null
+				, 500
 
 		# Outro and cleanup if not hidden yet by user interaction
-		# if container?
-		# 	setTimeout ()->
-		# 		cleanup()
-		# 	, duration * 1000
+		if container?
+			setTimeout ()->
+				cleanup()
+			, duration * 1000
 
