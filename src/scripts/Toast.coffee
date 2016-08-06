@@ -23,20 +23,27 @@ class Toast
 				icon.text buttonIcon
 				button.append icon
 
-			button.on('click', buttonCallback)
+			button.on('click', ()->
+				cleanup()
+				buttonCallback()
+			)
+
 			container.append button
 
 		body.append container
 
-		# Outro and cleanup
-		setTimeout ()->
-
+		cleanup = ()->
 			container.removeClass 'anim-toast-in'
 			container.addClass 'anim-toast-out'
+			container = null
 
 			setTimeout ()->
 				body.removeChild container
 			, 500
 
-		, duration * 1000
+		# Outro and cleanup if not hidden yet by user interaction
+		if container?
+			setTimeout ()->
+				cleanup()
+			, duration * 1000
 

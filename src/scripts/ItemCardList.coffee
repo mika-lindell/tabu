@@ -186,18 +186,28 @@ class ItemCardList extends HTMLElement
 			item.element = new ItemCard(@, item, title, url)
 
 		if position is 'last'
+
 			item.element.index = @items.length
 			@items.push item
 			@append item.element
-		else
-			# Shift the index of all elements
-			for i of @items
-				@items[i].element.index++
+
+		else if  position is 'first'
 
 			item.element.index = 0
 			@items.unshift item
 			@prepend item.element
+			@updateNewItemPosition null, 0
+			
+		else # assume it is numeric position
+		
+			if position >= @items.length
+				@append item.element
+			else
+				@insert(item.element, @items[position].element)
 
+			@items.splice(position, 0, item)
+			@updateNewItemPosition null, position
+			
 		@ifTheListHasNoItems()
 		return item
 
@@ -222,16 +232,17 @@ class ItemCardList extends HTMLElement
 	removeItem: (item)->
 
 		root = @
-		index = @getIndexOf(item)
 
-		if index isnt -1
-			root.removeChild(item.element)
-			@items.splice(index, 1)
-			@updateNewItemPosition(null)
-			@ifTheListHasNoItems()
-			new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
-				console.log 'undo'
-			)
+		@removeChild(item.element)
+		@items.splice(item.element.index, 1)
+		@updateNewItemPosition(null, 0)
+		@ifTheListHasNoItems()
+		root.save()
+
+		new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
+			root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
+			root.save()
+		)
 
 	getIndexOf: (item)->
 		return @items.indexOf(item)
@@ -298,7 +309,7 @@ class ItemCardList extends HTMLElement
 					item.element.removeClass('empty')
 				else if action is 'editLink'
 					userInput.removeClass('centered')
-				
+
 				item.element.setTitle(fields[0].element.value())
 				item.element.setUrl(fields[1].element.value())
 
@@ -356,12 +367,12 @@ class ItemCardList extends HTMLElement
 		for i of @items
 			@items[i].element.index = i
 
-		# log = new Array()
+		log = new Array()
 
-		# for i of @items
-		# 	log.push "#{@items[i].element.index}: #{@items[i].element.title}"
+		for i of @items
+			log.push "#{@items[i].element.index}: #{@items[i].element.title}"
 
-		# console.log 'updateNewItemPosition', log
+		console.log 'updateNewItemPosition', log
 
 	acceptFromOutsideSource: (ev)->
 
@@ -400,8 +411,9 @@ class ItemCardList extends HTMLElement
 			@ghost.element.css('top', ev.clientY + 'px')
 
 	deleteGhost: ()->
-		@body.removeChild(@ghost.element)
-		@ghost.element = null
+		if @ghost.element?
+			@body.removeChild(@ghost.element)
+			@ghost.element = null
 
 	initDragOverEffect = (element)->
 

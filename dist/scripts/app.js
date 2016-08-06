@@ -789,7 +789,7 @@
 
   Toast = (function() {
     function Toast(msg, buttonLabel, buttonIcon, buttonCallback, duration) {
-      var body, button, container, icon;
+      var body, button, cleanup, container, icon;
       if (buttonLabel == null) {
         buttonLabel = null;
       }
@@ -819,17 +819,26 @@
           icon.text(buttonIcon);
           button.append(icon);
         }
-        button.on('click', buttonCallback);
+        button.on('click', function() {
+          cleanup();
+          return buttonCallback();
+        });
         container.append(button);
       }
       body.append(container);
-      setTimeout(function() {
+      cleanup = function() {
         container.removeClass('anim-toast-in');
         container.addClass('anim-toast-out');
+        container = null;
         return setTimeout(function() {
           return body.removeChild(container);
         }, 500);
-      }, duration * 1000);
+      };
+      if (container != null) {
+        setTimeout(function() {
+          return cleanup();
+        }, duration * 1000);
+      }
     }
 
     return Toast;
@@ -1171,7 +1180,7 @@
     };
 
     ItemCardList.prototype.addItem = function(title, url, position, save) {
-      var i, item;
+      var item;
       if (title == null) {
         title = null;
       }
@@ -1197,13 +1206,19 @@
         item.element.index = this.items.length;
         this.items.push(item);
         this.append(item.element);
-      } else {
-        for (i in this.items) {
-          this.items[i].element.index++;
-        }
+      } else if (position === 'first') {
         item.element.index = 0;
         this.items.unshift(item);
         this.prepend(item.element);
+        this.updateNewItemPosition(null, 0);
+      } else {
+        if (position >= this.items.length) {
+          this.append(item.element);
+        } else {
+          this.insert(item.element, this.items[position].element);
+        }
+        this.items.splice(position, 0, item);
+        this.updateNewItemPosition(null, position);
       }
       this.ifTheListHasNoItems();
       return item;
@@ -1227,18 +1242,17 @@
     };
 
     ItemCardList.prototype.removeItem = function(item) {
-      var index, root;
+      var root;
       root = this;
-      index = this.getIndexOf(item);
-      if (index !== -1) {
-        root.removeChild(item.element);
-        this.items.splice(index, 1);
-        this.updateNewItemPosition(null);
-        this.ifTheListHasNoItems();
-        return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
-          return console.log('undo');
-        });
-      }
+      this.removeChild(item.element);
+      this.items.splice(item.element.index, 1);
+      this.updateNewItemPosition(null, 0);
+      this.ifTheListHasNoItems();
+      root.save();
+      return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
+        root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
+        return root.save();
+      });
     };
 
     ItemCardList.prototype.getIndexOf = function(item) {
@@ -1364,16 +1378,19 @@
     };
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
-      var i, results;
+      var i, log;
       if (item != null) {
         this.items.splice(item.element.index, 1);
         this.items.splice(newIndex, 0, item);
       }
-      results = [];
       for (i in this.items) {
-        results.push(this.items[i].element.index = i);
+        this.items[i].element.index = i;
       }
-      return results;
+      log = new Array();
+      for (i in this.items) {
+        log.push(this.items[i].element.index + ": " + this.items[i].element.title);
+      }
+      return console.log('updateNewItemPosition', log);
     };
 
     ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
@@ -1410,8 +1427,10 @@
     };
 
     ItemCardList.prototype.deleteGhost = function() {
-      this.body.removeChild(this.ghost.element);
-      return this.ghost.element = null;
+      if (this.ghost.element != null) {
+        this.body.removeChild(this.ghost.element);
+        return this.ghost.element = null;
+      }
     };
 
     initDragOverEffect = function(element) {

@@ -6311,7 +6311,7 @@ Layers
 .layer-front, .item-card-list, .item-card.empty {
   z-index: 1; }
 
-.layer-context-menu, .user-input, .edit-actions {
+.layer-context-menu, .toast, .user-input {
   z-index: 99; }
 
 .layer-loader, #loader {
@@ -6326,7 +6326,7 @@ Layers
 .layer-overlay {
   z-index: 499; }
 
-.layer-dialog, .toast {
+.layer-dialog, .edit-actions {
   z-index: 599; }
 
 /***
@@ -6480,9 +6480,9 @@ Animations
 @keyframes highlight {
   0% {
     transform: rotateX(0deg); }
-  20% {
+  30% {
     transform: rotateX(90deg); }
-  80% {
+  70% {
     transform: rotateX(90deg); }
   100% {
     transform: rotateX(0deg); } }
@@ -6757,7 +6757,7 @@ Item card styles
     width: 250px;
     color: #1B5E20;
     background-color: #E8F5E9;
-    border-color: #4CAF50; }
+    border-color: #81C784; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
     .edit-actions .edit-actions-edit.drag-over {
@@ -6767,7 +6767,7 @@ Item card styles
     width: 120px;
     color: #B71C1C;
     background-color: #FFEBEE;
-    border-color: #E57373; }
+    border-color: #EF9A9A; }
     .edit-actions .edit-actions-delete::before {
       content: 'delete_forever'; }
     .edit-actions .edit-actions-delete.drag-over {

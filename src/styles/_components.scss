@@ -14,7 +14,7 @@ Toast
 	box-shadow: $shadow-outset-large;
 	transition: none;
 
-	@extend .layer-dialog;
+	@extend .layer-context-menu;
 
 	.btn{
 		font-size: 1rem;
