@@ -6579,7 +6579,8 @@ Toast
   transition: none; }
   .toast .btn, .toast .btn-large {
     font-size: 1rem;
-    font-weight: 400; }
+    font-weight: 400;
+    margin-left: 1rem; }
 
 /***
 
@@ -6777,7 +6778,7 @@ Item card styles
       background-color: #C62828; }
 
 .item-card-list {
-  min-height: 4.7rem;
+  min-height: 4.75rem;
   position: relative; }
 
 .drag-handle {

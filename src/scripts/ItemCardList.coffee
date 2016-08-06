@@ -59,7 +59,7 @@ class ItemCardList extends HTMLElement
 		icon.addClass('left')
 		icon.text('sentiment_neutral')
 		
-		@noItems.text(empty)
+		@noItems.html(empty.replace(' ', '&nbsp;'))
 		@noItems.append(icon)
 
 	create: ()->
@@ -240,7 +240,7 @@ class ItemCardList extends HTMLElement
 		root.save()
 
 		if allowUndo
-			new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
+			new Toast("Deleted <strong>#{item.element.title}</strong>", 'Undo', ()->
 				root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
 			)
@@ -311,10 +311,10 @@ class ItemCardList extends HTMLElement
 
 				if action is 'addLink'
 					item.element.removeClass('empty')
-					# new Toast "Added '#{item.element.title}'.", null, null, null, 2
+					# new Toast "Added '#{item.element.title}'.", null, null, 2
 				else if action is 'editLink'
 					userInput.removeClass('centered')
-					# new Toast "Updated '#{item.element.title}'.", null, null, null, 2
+					# new Toast "Updated '#{item.element.title}'.", null, null, 2
 
 
 
@@ -593,7 +593,7 @@ class ItemCardList extends HTMLElement
 		ev.dataTransfer.dropEffect = "none"
 
 		# Make sure the placeholder items are removed when dragging from outside source and focus leaves editable list
-		if root.acceptFromOutsideSource(ev)
+		if root.acceptFromOutsideSource(ev) and root.draggedItem?
 			root.removeItem(root.draggedItem)
 			root.removeClass('drag-in-progress')
 			root.draggedItem = null				

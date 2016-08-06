@@ -788,13 +788,10 @@
   })();
 
   Toast = (function() {
-    function Toast(msg, buttonLabel, buttonIcon, buttonCallback, duration) {
-      var body, button, cleanup, container, icon;
+    function Toast(msg, buttonLabel, buttonCallback, duration) {
+      var body, button, cleanup, container;
       if (buttonLabel == null) {
         buttonLabel = null;
-      }
-      if (buttonIcon == null) {
-        buttonIcon = null;
       }
       if (buttonCallback == null) {
         buttonCallback = null;
@@ -806,19 +803,11 @@
       body = new HTMLElement('body');
       container.addClass('toast');
       container.addClass('anim-toast-in');
-      container.text(msg);
+      container.html(msg.replace(' ', '&nbsp;'));
       if ((buttonLabel != null) && (buttonCallback != null)) {
         button = new HTMLElement('button');
         button.addClass('btn');
         button.text(buttonLabel);
-        if (buttonIcon != null) {
-          console.log(buttonIcon);
-          icon = new HTMLElement('i');
-          icon.addClass('material-icons');
-          icon.addClass('left');
-          icon.text(buttonIcon);
-          button.append(icon);
-        }
         button.on('click', function() {
           cleanup();
           return buttonCallback();
@@ -1081,7 +1070,7 @@
       icon.addClass('material-icons');
       icon.addClass('left');
       icon.text('sentiment_neutral');
-      this.noItems.text(empty);
+      this.noItems.html(empty.replace(' ', '&nbsp;'));
       this.noItems.append(icon);
     }
 
@@ -1255,7 +1244,7 @@
       this.ifTheListHasNoItems();
       root.save();
       if (allowUndo) {
-        return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
+        return new Toast("Deleted <strong>" + item.element.title + "</strong>", 'Undo', function() {
           root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
           return root.save();
         });
@@ -1579,7 +1568,7 @@
     bodyDragOverHandler = function(ev, root) {
       ev.preventDefault();
       ev.dataTransfer.dropEffect = "none";
-      if (root.acceptFromOutsideSource(ev)) {
+      if (root.acceptFromOutsideSource(ev) && (root.draggedItem != null)) {
         root.removeItem(root.draggedItem);
         root.removeClass('drag-in-progress');
         return root.draggedItem = null;

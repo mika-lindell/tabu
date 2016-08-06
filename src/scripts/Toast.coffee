@@ -1,6 +1,6 @@
 class Toast
 
-	constructor: (msg, buttonLabel = null, buttonIcon = null, buttonCallback = null,  duration = 5.0)->
+	constructor: (msg, buttonLabel = null, buttonCallback = null,  duration = 5.0)->
 
 		container = new HTMLElement('div')
 		body = new HTMLElement('body')
@@ -8,20 +8,20 @@ class Toast
 
 		container.addClass 'toast'
 		container.addClass 'anim-toast-in'
-		container.text msg
+		container.html msg.replace(' ', '&nbsp;')
 
 		if buttonLabel? and buttonCallback?
 			button = new HTMLElement('button')
 			button.addClass 'btn'
 			button.text	buttonLabel
 
-			if buttonIcon?
-				console.log  buttonIcon
-				icon = new HTMLElement('i')
-				icon.addClass 'material-icons'
-				icon.addClass 'left'
-				icon.text buttonIcon
-				button.append icon
+			# if buttonIcon?
+			# 	console.log  buttonIcon
+			# 	icon = new HTMLElement('i')
+			# 	icon.addClass 'material-icons'
+			# 	icon.addClass 'left'
+			# 	icon.text buttonIcon
+			# 	button.append icon
 
 			button.on('click', ()->
 				cleanup()
@@ -34,7 +34,7 @@ class Toast
 
 		cleanup = ()->
 			if container?
-				
+
 				container.removeClass 'anim-toast-in'
 				container.addClass 'anim-toast-out'
 
