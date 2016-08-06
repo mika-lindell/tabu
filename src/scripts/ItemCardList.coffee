@@ -199,7 +199,7 @@ class ItemCardList extends HTMLElement
 			@updateNewItemPosition null, 0
 			
 		else # assume it is numeric position
-		
+
 			if position >= @items.length
 				@append item.element
 			else
@@ -229,7 +229,7 @@ class ItemCardList extends HTMLElement
 
 		@storage.setList(@baseId, saveThis)
 
-	removeItem: (item)->
+	removeItem: (item, allowUndo = false)->
 
 		root = @
 
@@ -239,10 +239,11 @@ class ItemCardList extends HTMLElement
 		@ifTheListHasNoItems()
 		root.save()
 
-		new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
-			root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
-			root.save()
-		)
+		if allowUndo
+			new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
+				root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
+				root.save()
+			)
 
 	getIndexOf: (item)->
 		return @items.indexOf(item)
@@ -302,16 +303,20 @@ class ItemCardList extends HTMLElement
 
 			userInput.done = (fields)->
 
+				item.element.setTitle(fields[0].element.value())
+				item.element.setUrl(fields[1].element.value())
+
 				root.removeClass('edit-in-progress')
 				item.element.removeClass('editing')
 
 				if action is 'addLink'
 					item.element.removeClass('empty')
+					# new Toast "Added '#{item.element.title}'.", null, null, null, 2
 				else if action is 'editLink'
 					userInput.removeClass('centered')
+					# new Toast "Updated '#{item.element.title}'.", null, null, null, 2
 
-				item.element.setTitle(fields[0].element.value())
-				item.element.setUrl(fields[1].element.value())
+
 
 				item.element.attr('draggable', 'true')
 
@@ -576,7 +581,7 @@ class ItemCardList extends HTMLElement
 
 		ev.dataTransfer.dropEffect = "move"
 
-		root.removeItem(root.draggedItem)
+		root.removeItem(root.draggedItem, true)
 
 		dragDropCleanUp(root)
 

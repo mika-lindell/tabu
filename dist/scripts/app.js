@@ -834,11 +834,6 @@
           return body.removeChild(container);
         }, 500);
       };
-      if (container != null) {
-        setTimeout(function() {
-          return cleanup();
-        }, duration * 1000);
-      }
     }
 
     return Toast;
@@ -1241,18 +1236,23 @@
       return this.storage.setList(this.baseId, saveThis);
     };
 
-    ItemCardList.prototype.removeItem = function(item) {
+    ItemCardList.prototype.removeItem = function(item, allowUndo) {
       var root;
+      if (allowUndo == null) {
+        allowUndo = false;
+      }
       root = this;
       this.removeChild(item.element);
       this.items.splice(item.element.index, 1);
       this.updateNewItemPosition(null, 0);
       this.ifTheListHasNoItems();
       root.save();
-      return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
-        root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
-        return root.save();
-      });
+      if (allowUndo) {
+        return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
+          root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
+          return root.save();
+        });
+      }
     };
 
     ItemCardList.prototype.getIndexOf = function(item) {
@@ -1320,6 +1320,8 @@
         item.element.removeClass('dragged');
         item.element.attr('draggable', 'false');
         userInput.done = function(fields) {
+          item.element.setTitle(fields[0].element.value());
+          item.element.setUrl(fields[1].element.value());
           root.removeClass('edit-in-progress');
           item.element.removeClass('editing');
           if (action === 'addLink') {
@@ -1327,8 +1329,6 @@
           } else if (action === 'editLink') {
             userInput.removeClass('centered');
           }
-          item.element.setTitle(fields[0].element.value());
-          item.element.setUrl(fields[1].element.value());
           item.element.attr('draggable', 'true');
           item.element.addClass('anim-highlight');
           setTimeout(function() {
@@ -1564,7 +1564,7 @@
       ev.preventDefault();
       ev.stopPropagation();
       ev.dataTransfer.dropEffect = "move";
-      root.removeItem(root.draggedItem);
+      root.removeItem(root.draggedItem, true);
       dragDropCleanUp(root);
       return root.save();
     };

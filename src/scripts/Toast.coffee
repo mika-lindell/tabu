@@ -42,8 +42,8 @@ class Toast
 			, 500
 
 		# Outro and cleanup if not hidden yet by user interaction
-		if container?
-			setTimeout ()->
-				cleanup()
-			, duration * 1000
+		# if container?
+		# 	setTimeout ()->
+		# 		cleanup()
+		# 	, duration * 1000
 
