@@ -109,10 +109,10 @@ Animations
 
 @keyframes slide-out{
 	0%{
-		transform: scale(1, 1) translate(0px, 0px);
+		transform: scale(1, 1) translateY(0px);
 	}	
 	100%{
-		transform: scale(1, 0) translate(0px, -80px);
+		transform: scale(1, 0) translateY(-80px);
 	}	
 }
 
@@ -121,6 +121,36 @@ Animations
 	animation-name: slide-out;
   animation-duration: 0.2s;
   transform-origin: 0 0;
+}
+
+@keyframes toast-in{
+	0%{
+		transform: scale(1, 0) translateX(-50%);
+	}	
+	100%{
+		transform: scale(1, 1) translateX(-50%);
+	}
+}
+
+@keyframes toast-out{
+	0%{
+		transform: scale(1, 1) translateX(-50%) translateY(0px);
+	}	
+	100%{
+		transform: scale(1, 0) translateX(-50%) translateY(-80px);
+	}		
+}
+
+.anim-toast-in, .anim-toast-out{
+	animation-fill-mode: forwards;
+  animation-duration: 0.3s;
+  transform-origin: 0 0;
+}
+.anim-toast-in{
+	animation-name: toast-in;
+}
+.anim-toast-out{
+	animation-name: toast-out;
 }
 
 @keyframes highlight{

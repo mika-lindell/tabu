@@ -59,6 +59,7 @@ module.exports = function(grunt) {
               'src/**/HexColor.coffee',
               'src/**/HTMLElement.coffee',
               'src/**/ChromeAPI.coffee',
+              'src/**/Toast.coffee',
               'src/**/ItemCard.coffee',
               'src/**/ItemCardHeading.coffee',
               'src/**/ItemCardList.coffee',

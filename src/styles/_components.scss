@@ -1,5 +1,28 @@
 /***
 
+Toast
+
+***/
+
+.toast{
+	top: 0;
+	position: fixed;
+	margin-top: -0.1rem;
+	left: 50%;
+	min-width: 100px;
+	transform: translateX(-50%);
+	box-shadow: $shadow-outset-large;
+	transition: none;
+
+	@extend .layer-dialog;
+
+	.btn{
+		font-size: 1rem;
+	}
+}
+
+/***
+
 Dropdown
 
 ***/

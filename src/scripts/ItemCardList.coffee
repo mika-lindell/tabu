@@ -229,6 +229,9 @@ class ItemCardList extends HTMLElement
 			@items.splice(index, 1)
 			@updateNewItemPosition(null)
 			@ifTheListHasNoItems()
+			new Toast("'#{item.element.title}' was deleted.", 'Undo', 'undo', ()->
+				console.log 'undo'
+			)
 
 	getIndexOf: (item)->
 		return @items.indexOf(item)
@@ -397,7 +400,7 @@ class ItemCardList extends HTMLElement
 			@ghost.element.css('top', ev.clientY + 'px')
 
 	deleteGhost: ()->
-		@ghost.element.removeFromDOM()
+		@body.removeChild(@ghost.element)
 		@ghost.element = null
 
 	initDragOverEffect = (element)->

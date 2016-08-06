@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Actions, Animation, App, ChromeAPI, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toolbars, Url, UserInput, Visibility,
+  var $newTab, Actions, Animation, App, ChromeAPI, Dropdown, HTMLElement, Helpers, HexColor, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toast, Toolbars, Url, UserInput, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -787,6 +787,55 @@
 
   })();
 
+  Toast = (function() {
+    function Toast(msg, buttonLabel, buttonIcon, buttonCallback, duration) {
+      var body, button, container, icon;
+      if (buttonLabel == null) {
+        buttonLabel = null;
+      }
+      if (buttonIcon == null) {
+        buttonIcon = null;
+      }
+      if (buttonCallback == null) {
+        buttonCallback = null;
+      }
+      if (duration == null) {
+        duration = 5.0;
+      }
+      container = new HTMLElement('div');
+      body = new HTMLElement('body');
+      container.addClass('toast');
+      container.addClass('anim-toast-in');
+      container.text(msg);
+      if ((buttonLabel != null) && (buttonCallback != null)) {
+        button = new HTMLElement('button');
+        button.addClass('btn');
+        button.text(buttonLabel);
+        if (buttonIcon != null) {
+          console.log(buttonIcon);
+          icon = new HTMLElement('i');
+          icon.addClass('material-icons');
+          icon.addClass('left');
+          icon.text(buttonIcon);
+          button.append(icon);
+        }
+        button.on('click', buttonCallback);
+        container.append(button);
+      }
+      body.append(container);
+      setTimeout(function() {
+        container.removeClass('anim-toast-in');
+        container.addClass('anim-toast-out');
+        return setTimeout(function() {
+          return body.removeChild(container);
+        }, 500);
+      }, duration * 1000);
+    }
+
+    return Toast;
+
+  })();
+
   ItemCard = (function(superClass) {
     var dragStartHandler;
 
@@ -1185,7 +1234,10 @@
         root.removeChild(item.element);
         this.items.splice(index, 1);
         this.updateNewItemPosition(null);
-        return this.ifTheListHasNoItems();
+        this.ifTheListHasNoItems();
+        return new Toast("'" + item.element.title + "' was deleted.", 'Undo', 'undo', function() {
+          return console.log('undo');
+        });
       }
     };
 
@@ -1358,7 +1410,7 @@
     };
 
     ItemCardList.prototype.deleteGhost = function() {
-      this.ghost.element.removeFromDOM();
+      this.body.removeChild(this.ghost.element);
       return this.ghost.element = null;
     };
 
@@ -1848,7 +1900,7 @@
       }
       this.duration = duration;
       this.animate.css('transition', "all " + this.duration + "s");
-      this.animate.css('animation-duration', this.duration + "s");
+      this.animate.css('animationDuration', this.duration + "s");
       return this;
     }
 

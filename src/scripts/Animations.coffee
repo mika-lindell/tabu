@@ -15,7 +15,7 @@ class Animation
 		@duration = duration
 
 		@animate.css('transition', "all #{@duration}s")
-		@animate.css('animation-duration',  "#{@duration}s")
+		@animate.css('animationDuration',  "#{@duration}s")
 
 		return @
 

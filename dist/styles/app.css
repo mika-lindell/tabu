@@ -6326,7 +6326,7 @@ Layers
 .layer-overlay {
   z-index: 499; }
 
-.layer-dialog {
+.layer-dialog, .toast {
   z-index: 599; }
 
 /***
@@ -6447,14 +6447,35 @@ Animations
 
 @keyframes slide-out {
   0% {
-    transform: scale(1, 1) translate(0px, 0px); }
+    transform: scale(1, 1) translateY(0px); }
   100% {
-    transform: scale(1, 0) translate(0px, -80px); } }
+    transform: scale(1, 0) translateY(-80px); } }
 .anim-slide-out {
   animation-fill-mode: forwards;
   animation-name: slide-out;
   animation-duration: 0.2s;
   transform-origin: 0 0; }
+
+@keyframes toast-in {
+  0% {
+    transform: scale(1, 0) translateX(-50%); }
+  100% {
+    transform: scale(1, 1) translateX(-50%); } }
+@keyframes toast-out {
+  0% {
+    transform: scale(1, 1) translateX(-50%) translateY(0px); }
+  100% {
+    transform: scale(1, 0) translateX(-50%) translateY(-80px); } }
+.anim-toast-in, .anim-toast-out {
+  animation-fill-mode: forwards;
+  animation-duration: 0.3s;
+  transform-origin: 0 0; }
+
+.anim-toast-in {
+  animation-name: toast-in; }
+
+.anim-toast-out {
+  animation-name: toast-out; }
 
 @keyframes highlight {
   0% {
@@ -6539,6 +6560,23 @@ body {
 
 footer {
   border-top: 1px solid #c7c7c7; }
+
+/***
+
+Toast
+
+***/
+.toast {
+  top: 0;
+  position: fixed;
+  margin-top: -0.1rem;
+  left: 50%;
+  min-width: 100px;
+  transform: translateX(-50%);
+  box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: none; }
+  .toast .btn, .toast .btn-large {
+    font-size: 1rem; }
 
 /***
 
