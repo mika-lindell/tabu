@@ -1244,7 +1244,7 @@
       this.ifTheListHasNoItems();
       root.save();
       if (allowUndo) {
-        return new Toast("Deleted <strong>" + item.element.title + "</strong>", 'Undo', function() {
+        return new Toast("<strong>" + item.element.title + "</strong>&nbsp;deleted.", 'Undo', function() {
           root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
           return root.save();
         });
@@ -1326,10 +1326,7 @@
             userInput.removeClass('centered');
           }
           item.element.attr('draggable', 'true');
-          item.element.addClass('anim-highlight');
-          setTimeout(function() {
-            return item.element.removeClass('anim-highlight');
-          }, 2000);
+          new Animation(item.element, 1).highlight();
           root.save();
           return userInput.hide();
         };
@@ -1904,6 +1901,8 @@
 
     Animation.duration;
 
+    Animation.animParams;
+
     function Animation(animate, duration) {
       if (duration == null) {
         duration = 0.3;
@@ -1914,20 +1913,74 @@
         this.animate = new HTMLElement(animate);
       }
       this.duration = duration;
-      this.animate.css('transition', "all " + this.duration + "s");
-      this.animate.css('animationDuration', this.duration + "s");
+      this.animParams = {
+        origTransition: this.animate.css('transition'),
+        origAnimDuration: this.animate.css('animationDuration'),
+        transition: "all " + this.duration + "s",
+        animDuration: this.duration + "s"
+      };
+      console.log(this.animParams);
       return this;
     }
+
+    Animation.prototype.beforeAnimation = function(animation, transition) {
+      if (animation == null) {
+        animation = true;
+      }
+      if (transition == null) {
+        transition = true;
+      }
+      if (animation) {
+        this.animate.css('animationDuration', this.animParams.animDuration);
+      }
+      if (transition) {
+        return this.animate.css('transition', this.animParams.transition);
+      }
+    };
+
+    Animation.prototype.afterAnimation = function(animation, transition) {
+      if (animation == null) {
+        animation = true;
+      }
+      if (transition == null) {
+        transition = true;
+      }
+      if (animation) {
+        this.animate.css('animationDuration', this.animParams.origAnimDuration);
+      }
+      if (transition) {
+        return this.animate.css('transition', this.animParams.origTransition);
+      }
+    };
+
+    Animation.prototype.highlight = function() {
+      var cleanUp, container, root;
+      root = this;
+      container = this.animate;
+      root.beforeAnimation(true, false);
+      container.addClass('anim-highlight');
+      cleanUp = function() {
+        container.removeClass('anim-highlight');
+        container.css('animationDuration', root.animParams.origAnimDuration);
+        root.afterAnimation(true, false);
+        return root.done();
+      };
+      return setTimeout(cleanUp, this.duration * 1000);
+    };
 
     Animation.prototype.slideIn = function() {
       var cleanUp, container, root;
       root = this;
       container = this.animate;
+      root.beforeAnimation;
+      container.css('animationDuration', root.animParams.animDuration);
       container.addClass('anim-slide-in');
       container.show();
       container.css('opacity', '1');
       cleanUp = function() {
         container.removeClass('anim-slide-in');
+        container.css('animationDuration', root.animParams.origAnimDuration);
+        root.afterAnimation;
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1937,11 +1990,14 @@
       var cleanUp, container, root;
       root = this;
       container = this.animate;
+      root.beforeAnimation;
+      container.css('animationDuration', root.animParams.animDuration);
       container.css('opacity', '0');
       container.addClass('anim-slide-out');
       cleanUp = function() {
         container.hide();
         container.removeClass('anim-slide-out');
+        root.afterAnimation;
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1954,6 +2010,7 @@
       }
       root = this;
       container = this.animate;
+      root.beforeAnimation(false, true);
       container.css('overflow', 'hidden');
       if (to == null) {
         to = container.height();
@@ -1969,6 +2026,7 @@
       cleanUp = function() {
         container.css('overflow', 'visible');
         container.css('height', 'auto');
+        root.afterAnimation(false, true);
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -1981,6 +2039,7 @@
       }
       root = this;
       container = this.animate;
+      root.beforeAnimation(false, true);
       if (to == null) {
         to = container.width();
       }
@@ -1993,6 +2052,7 @@
       };
       setTimeout(play, 0);
       cleanUp = function() {
+        root.afterAnimation(false, true);
         return root.done();
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -2006,12 +2066,14 @@
       root = this;
       container = this.animate;
       if (!instant) {
+        root.beforeAnimation(true, false);
         container.removeClass('outro');
         container.addClass('intro');
       }
       container.show();
       cleanUp = function() {
         container.removeClass('intro');
+        root.afterAnimation(true, false);
         return root.done();
       };
       if (!instant) {
@@ -2029,13 +2091,15 @@
       root = this;
       container = this.animate;
       if (!instant) {
+        root.beforeAnimation(true, false);
         container.removeClass('intro');
         container.addClass('outro');
       }
       cleanUp = function() {
         container.hide();
         container.removeClass('outro');
-        return root.done.call();
+        root.afterAnimation(true, false);
+        return root.done();
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);

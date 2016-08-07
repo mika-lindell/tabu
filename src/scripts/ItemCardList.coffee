@@ -240,7 +240,7 @@ class ItemCardList extends HTMLElement
 		root.save()
 
 		if allowUndo
-			new Toast("Deleted <strong>#{item.element.title}</strong>", 'Undo', ()->
+			new Toast("<strong>#{item.element.title}</strong>&nbsp;deleted.", 'Undo', ()->
 				root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
 			)
@@ -316,15 +316,9 @@ class ItemCardList extends HTMLElement
 					userInput.removeClass('centered')
 					# new Toast "Updated '#{item.element.title}'.", null, null, 2
 
-
-
 				item.element.attr('draggable', 'true')
 
-				item.element.addClass('anim-highlight')
-
-				setTimeout(()->
-					item.element.removeClass('anim-highlight')
-				, 2000)
+				new Animation(item.element, 1).highlight()
 
 				root.save()
 				userInput.hide()

@@ -4,6 +4,7 @@ class Animation
 	
 	@animate
 	@duration # Duration of animations
+	@animParams
 
 	constructor: (animate, duration = 0.3)->
 
@@ -14,22 +15,55 @@ class Animation
 
 		@duration = duration
 
-		@animate.css('transition', "all #{@duration}s")
-		@animate.css('animationDuration',  "#{@duration}s")
+		@animParams =
+			origTransition: @animate.css('transition')
+			origAnimDuration: @animate.css('animationDuration') 
+			transition: "all #{@duration}s"
+			animDuration: "#{@duration}s"
+
+		console.log @animParams	
 
 		return @
+
+	beforeAnimation: (animation = true, transition = true)->
+		if animation then @animate.css('animationDuration',  @animParams.animDuration)
+		if transition then @animate.css('transition',  @animParams.transition)
+
+	afterAnimation: (animation = true, transition = true)->
+		if animation then @animate.css('animationDuration',  @animParams.origAnimDuration)
+		if transition then @animate.css('transition',  @animParams.origTransition)
+
+	highlight: ()->
+
+		root = @
+		container = @animate
+
+		root.beforeAnimation true, false
+		container.addClass('anim-highlight')
+
+		cleanUp = ()->
+			container.removeClass('anim-highlight')
+			container.css('animationDuration',  root.animParams.origAnimDuration)
+			root.afterAnimation true, false
+			root.done()
+
+		setTimeout(cleanUp, @duration * 1000)
 
 	slideIn: ()->
 
 		root = @
 		container = @animate
 
+		root.beforeAnimation
+		container.css('animationDuration',  root.animParams.animDuration)
 		container.addClass('anim-slide-in')
 		container.show()
 		container.css('opacity', '1')
 
 		cleanUp = ()->
 			container.removeClass('anim-slide-in')
+			container.css('animationDuration',  root.animParams.origAnimDuration)
+			root.afterAnimation
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -39,12 +73,15 @@ class Animation
 		root = @
 		container = @animate
 
+		root.beforeAnimation
+		container.css('animationDuration',  root.animParams.animDuration)
 		container.css('opacity', '0')
 		container.addClass('anim-slide-out')
 		
 		cleanUp = ()->
 			container.hide()
 			container.removeClass('anim-slide-out')
+			root.afterAnimation
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -54,6 +91,7 @@ class Animation
 		root = @
 		container = @animate
 
+		root.beforeAnimation false, true
 		container.css('overflow', 'hidden')
 
 		if not to?
@@ -72,6 +110,7 @@ class Animation
 		cleanUp = ()->
 			container.css('overflow', 'visible')
 			container.css('height', 'auto')
+			root.afterAnimation false, true
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -80,6 +119,8 @@ class Animation
 		
 		root = @
 		container = @animate
+
+		root.beforeAnimation false, true
 
 		if not to?
 			to = container.width()
@@ -95,6 +136,7 @@ class Animation
 		setTimeout(play, 0)
 		
 		cleanUp = ()->
+			root.afterAnimation false, true
 			root.done()
 
 		setTimeout(cleanUp, @duration * 1000)
@@ -110,6 +152,7 @@ class Animation
 		container = @animate
 
 		if not instant
+			root.beforeAnimation true, false
 			container.removeClass('outro')
 			container.addClass('intro')
 
@@ -117,6 +160,7 @@ class Animation
 
 		cleanUp = ()->
 			container.removeClass('intro')
+			root.afterAnimation true, false
 			root.done()
 
 		if not instant
@@ -136,13 +180,15 @@ class Animation
 		container = @animate
 
 		if not instant
+			root.beforeAnimation true, false
 			container.removeClass('intro')
 			container.addClass('outro')
 
 		cleanUp = ()->
 			container.hide()
 			container.removeClass('outro')
-			root.done.call()
+			root.afterAnimation true, false
+			root.done()
 
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
