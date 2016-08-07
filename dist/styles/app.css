@@ -6576,7 +6576,8 @@ Toast
   min-width: 100px;
   transform: translateX(-50%);
   box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: none; }
+  transition: none;
+  opacity: 0.98; }
   .toast .btn, .toast .btn-large {
     font-size: 1rem;
     font-weight: 400;

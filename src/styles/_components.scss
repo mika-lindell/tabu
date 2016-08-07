@@ -13,6 +13,7 @@ Toast
 	transform: translateX(-50%);
 	box-shadow: $shadow-outset-large;
 	transition: none;
+	opacity: 0.98;
 
 	@extend .layer-context-menu;
 

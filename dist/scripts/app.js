@@ -1245,8 +1245,10 @@
       root.save();
       if (allowUndo) {
         return new Toast("<strong>" + item.element.title + "</strong>&nbsp;deleted.", 'Undo', function() {
-          root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
-          return root.save();
+          var result;
+          result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
+          root.save();
+          return new Animation(result.element, 1).highlight();
         });
       }
     };

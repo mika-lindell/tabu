@@ -241,8 +241,9 @@ class ItemCardList extends HTMLElement
 
 		if allowUndo
 			new Toast("<strong>#{item.element.title}</strong>&nbsp;deleted.", 'Undo', ()->
-				root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
+				result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
+				new Animation(result.element, 1).highlight()
 			)
 
 	getIndexOf: (item)->
