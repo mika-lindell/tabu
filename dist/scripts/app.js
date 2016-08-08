@@ -2653,7 +2653,7 @@
       };
       this.storage.getList('speed-dial', function(data) {
         var list;
-        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Start by adding a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />");
+        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />");
         list.enableEditing();
         list.setOrientation('horizontal');
         return list.create();

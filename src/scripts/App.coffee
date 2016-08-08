@@ -78,7 +78,7 @@ class App
 		# Speed dial is stored in the cloud storage and hence retrieved via storage API
 		@storage.getList('speed-dial', (data)->
 
-			list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Start by adding a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />") # Create new list class
+			list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />") # Create new list class
 			list.enableEditing()
 			list.setOrientation 'horizontal'
 			list.create() # Add items to the list	

@@ -6882,7 +6882,7 @@ li.item-card-heading {
   padding-right: 1.5rem;
   padding-left: 0.5rem;
   width: 100%;
-  max-width: 350px;
+  max-width: 320px;
   margin-top: 1rem; }
   .no-items i {
     height: 100px;
@@ -6897,7 +6897,7 @@ li.item-card-heading {
   .no-items img {
     position: absolute;
     bottom: 8px;
-    right: -85px; }
+    right: -105px; }
 
 /***
 
