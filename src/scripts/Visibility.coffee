@@ -10,6 +10,8 @@ class Visibility
 	@animation # Holds reference to class, which controls animations.
 	@storage # Holds refrence to storage interface this class will be using.	
 
+	@executing # Whether or not we are running operation at the moment
+
 	# Is executed when new class instance is created.
 	#
 	# @param [boolean] Sets whether all elements are visible or hidden at after this class has been initialized
@@ -28,15 +30,17 @@ class Visibility
 
 		@storage = new Storage
 
+		@executing = false
+
 		getSavedStatus = (data)->
 
 			if data.settingVisible? # if not undefined or null
 
 				# Get the saved status - should we display elements?
-				root.enabled = data.settingVisible
+				setting = data.settingVisible
 
 				# Enable the intro animation to start or hide elements (without animations)!
-				if root.enabled
+				if setting
 
 					root.enable()
 
@@ -70,14 +74,20 @@ class Visibility
 
 		root = @
 
+		if @executing then return
+		@executing = true
+
+		@animation.content.done = ()->
+			root.executing = false
+
 		@animation.content.intro(instant)
 
 		@enabler.css('opacity', 0)
 		@disabler.css('opacity', 1)
 
 		@animation.button.animateWidth(40, 110)
-
 		@enabled = true
+
 		console.log "Visibility: On"
 		@storage.setVisible(@enabled)
 
@@ -89,14 +99,20 @@ class Visibility
 
 		root = @
 
+		if @executing then return
+		@executing = true
+
+		@animation.content.done = ()->
+			root.executing = false
+
 		@animation.content.outro(instant)
 
 		@enabler.css('opacity', 1)
 		@disabler.css('opacity', 0)
 
 		@animation.button.animateWidth(110, 40)
-
 		@enabled = false
+
 		console.log "Visibility: Off"
 		@storage.setVisible(@enabled)
 

@@ -21,8 +21,6 @@ class Animation
 			transition: "all #{@duration}s"
 			animDuration: "#{@duration}s"
 
-		console.log @animParams	
-
 		return @
 
 	beforeAnimation: (animation = true, transition = true)->

@@ -1280,6 +1280,7 @@
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
       this.noItems.addClass('no-items');
+      this.noItems.attr('draggable', 'false');
       this.noItems.html(empty.replace(' ', '&nbsp;'));
     }
 
@@ -2130,7 +2131,6 @@
         transition: "all " + this.duration + "s",
         animDuration: this.duration + "s"
       };
-      console.log(this.animParams);
       return this;
     }
 
@@ -2369,6 +2369,8 @@
 
     Visibility.storage;
 
+    Visibility.executing;
+
     function Visibility(controller, enabler, disabler) {
       var getSavedStatus, root, toggleStatus;
       if (controller == null) {
@@ -2389,10 +2391,12 @@
         button: new Animation(this.controller)
       };
       this.storage = new Storage;
+      this.executing = false;
       getSavedStatus = function(data) {
+        var setting;
         if (data.settingVisible != null) {
-          root.enabled = data.settingVisible;
-          if (root.enabled) {
+          setting = data.settingVisible;
+          if (setting) {
             return root.enable();
           } else {
             return root.disable(true);
@@ -2418,6 +2422,13 @@
         instant = false;
       }
       root = this;
+      if (this.executing) {
+        return;
+      }
+      this.executing = true;
+      this.animation.content.done = function() {
+        return root.executing = false;
+      };
       this.animation.content.intro(instant);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
@@ -2433,6 +2444,13 @@
         instant = false;
       }
       root = this;
+      if (this.executing) {
+        return;
+      }
+      this.executing = true;
+      this.animation.content.done = function() {
+        return root.executing = false;
+      };
       this.animation.content.outro(instant);
       this.enabler.css('opacity', 1);
       this.disabler.css('opacity', 0);
@@ -2638,22 +2656,22 @@
       };
       this.latestBookmarks.done = function() {
         var list;
-        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty.</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.");
+        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.");
         return list.create();
       };
       this.recentlyClosed.done = function() {
         var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty.</strong><br>Usually here is a list of websites you've closed since you started this session.");
+        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since you started this session.");
         return list.create();
       };
       this.otherDevices.done = function() {
         var list;
-        list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty.</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.");
+        list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.");
         return list.create();
       };
       this.storage.getList('speed-dial', function(data) {
         var list;
-        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />");
+        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />");
         list.enableEditing();
         list.setOrientation('horizontal');
         return list.create();

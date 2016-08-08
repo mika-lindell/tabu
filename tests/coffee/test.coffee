@@ -41,7 +41,7 @@ module.exports =
 	###
 
 	'it should have section headings': (browser)->
-		browser.pause(5000000)
+		browser.pause(500)
 		browser.expect.element("#top-sites").to.be.present
 		browser.expect.element("#top-sites").text.to.contain('Top Sites')
 

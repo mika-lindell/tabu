@@ -54,6 +54,7 @@ class ItemCardList extends HTMLElement
 		@attr('id', "#{ @baseId }-list")
 
 		@noItems.addClass('no-items')
+		@noItems.attr('draggable', 'false')
 		# icon = new HTMLElement('i')
 		# icon.addClass('material-icons')
 		# icon.addClass('left')
