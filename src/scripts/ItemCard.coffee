@@ -109,7 +109,7 @@ class ItemCard extends HTMLElement
 		else
 			@url = dirty
 
-		@color = new HexColor(@url)
+		@color = new ColorPalette().fromUrl(@url)
 
 		@elements.link.attr('href', @url.href)
 
@@ -121,7 +121,7 @@ class ItemCard extends HTMLElement
 			hostname = @url.hostname
 
 		@elements.badge.text(badgeLabel)
-		@elements.badge.css('backgroundColor', @color.getWithMaxBrightness(@color.url, 0.5))
+		@elements.badge.css('backgroundColor', @color)
 
 		@elements.labelUrl.text(hostname)
 
