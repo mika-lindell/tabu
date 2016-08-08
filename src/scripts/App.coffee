@@ -54,7 +54,7 @@ class App
 
 		@latestBookmarks.done = ()->
 
-			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, 'It seems you have no bookmarks.')
+			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty.</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.")
 			list.create()
 
 		# @recentHistory.done = ()->
@@ -66,19 +66,19 @@ class App
 
 		@recentlyClosed.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.recentlyClosed.data)
+			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty.</strong><br>Usually here is a list of websites you've closed since you started this session.")
 			list.create()
 
 		@otherDevices.done = ()->
 			
-			list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.')
+			list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty.</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.")
 			list.create()
 
 		# Get all the data after preparations are done
 		# Speed dial is stored in the cloud storage and hence retrieved via storage API
 		@storage.getList('speed-dial', (data)->
 
-			list = new ItemCardList('#speed-dial', data, 'No links yet.') # Create new list class
+			list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Start by adding a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />") # Create new list class
 			list.enableEditing()
 			list.setOrientation 'horizontal'
 			list.create() # Add items to the list	

@@ -444,13 +444,13 @@
           g: 85,
           b: 72
         }, {
-          r: 0,
-          g: 0,
-          b: 0
+          r: 33,
+          g: 33,
+          b: 33
         }, {
-          r: 158,
-          g: 158,
-          b: 158
+          r: 117,
+          g: 117,
+          b: 117
         }
       ];
       return instance;
@@ -1250,7 +1250,7 @@
     ItemCardList.body;
 
     function ItemCardList(container, data, empty) {
-      var icon, root;
+      var root;
       if (empty == null) {
         empty = "I looked, but I couldn't find any.";
       }
@@ -1280,12 +1280,7 @@
       this.addClass('item-card-list');
       this.attr('id', this.baseId + "-list");
       this.noItems.addClass('no-items');
-      icon = new HTMLElement('i');
-      icon.addClass('material-icons');
-      icon.addClass('left');
-      icon.text('sentiment_neutral');
       this.noItems.html(empty.replace(' ', '&nbsp;'));
-      this.noItems.append(icon);
     }
 
     ItemCardList.prototype.create = function() {
@@ -2643,22 +2638,22 @@
       };
       this.latestBookmarks.done = function() {
         var list;
-        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, 'It seems you have no bookmarks.');
+        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty.</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.");
         return list.create();
       };
       this.recentlyClosed.done = function() {
         var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data);
+        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty.</strong><br>Usually here is a list of websites you've closed since you started this session.");
         return list.create();
       };
       this.otherDevices.done = function() {
         var list;
-        list = new ItemCardList('#other-devices', root.otherDevices.data, 'Nothing to show here just now.');
+        list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty.</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.");
         return list.create();
       };
       this.storage.getList('speed-dial', function(data) {
         var list;
-        list = new ItemCardList('#speed-dial', data, 'No links yet.');
+        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial.</strong><br/>Get to your favorite websites faster!<br/>Start by adding a link via menu above.<img src='styles/assets/onboarding/arrow_menu_above.png' />");
         list.enableEditing();
         list.setOrientation('horizontal');
         return list.create();

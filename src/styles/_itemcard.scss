@@ -234,7 +234,7 @@ a.item-card-link{
 	margin-right: 0.6rem;
 	width: 3.0rem;
 	height: 3.0rem;
-	opacity: 0.75;
+	opacity: 0.85;
   line-height: 3.1rem;
   border-radius: 2px;
   color: $white;
@@ -281,14 +281,31 @@ li.item-card-heading{
 	position: absolute;
 	padding-right: 1.5rem;
 	padding-left: 0.5rem;
+	width: 100%;
+	max-width: 350px;
+	margin-top: 1rem;
 
 	@extend .animated;
 	@extend .color-dark-grey;
 
-	.headline{
-		display: inline-block;
-		margin-bottom: 1rem;
-
-		@extend .font-size-large;
+	i{
+		height: 100px;
+    position: absolute;
+    left: -1.7rem;
 	}
+
+	strong{
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.6rem;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+	}
+
+	img{
+    position: absolute;
+		bottom: 8px;
+    right: -85px;
+  }
+
 }

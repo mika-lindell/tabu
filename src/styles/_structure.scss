@@ -64,6 +64,7 @@ Structure
 
 body{
 	overflow-y: scroll; // This keeps the scrollbars always visible, so you don't get repositioning when toggling the visibility of elements
+	overflow-x: hidden;
 }
 
 .section-heading{
@@ -93,4 +94,5 @@ body{
 
 footer{
 	border-top: $border-light;
+	margin-top: 3rem;
 }

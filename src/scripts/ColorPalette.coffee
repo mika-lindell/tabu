@@ -276,14 +276,14 @@ class ColorPalette
 			}
 			# GREY & BLACK
 			{
-			r: 0
-			g: 0
-			b: 0
+			r: 33
+			g: 33
+			b: 33
 			}
 			{
-			r: 158
-			g: 158
-			b: 158
+			r: 117
+			g: 117
+			b: 117
 			}
 		]
 

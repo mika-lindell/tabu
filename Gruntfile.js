@@ -56,7 +56,7 @@ module.exports = function(grunt) {
               'src/**/Throttle.coffee',
               'src/**/Url.coffee',
               'src/**/Storage.coffee',
-              'src/**/HexColor.coffee',
+              'src/**/ColorPalette.coffee',
               'src/**/HTMLElement.coffee',
               'src/**/ChromeAPI.coffee',
               'src/**/Toast.coffee',

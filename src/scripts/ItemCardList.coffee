@@ -54,13 +54,13 @@ class ItemCardList extends HTMLElement
 		@attr('id', "#{ @baseId }-list")
 
 		@noItems.addClass('no-items')
-		icon = new HTMLElement('i')
-		icon.addClass('material-icons')
-		icon.addClass('left')
-		icon.text('sentiment_neutral')
+		# icon = new HTMLElement('i')
+		# icon.addClass('material-icons')
+		# icon.addClass('left')
+		# icon.text('sentiment_neutral')
 		
 		@noItems.html(empty.replace(' ', '&nbsp;'))
-		@noItems.append(icon)
+		# @noItems.prepend(icon)
 
 	create: ()->
 
