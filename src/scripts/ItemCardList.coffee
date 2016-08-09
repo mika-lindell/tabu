@@ -368,18 +368,19 @@ class ItemCardList extends HTMLElement
 		for i of @items
 			@items[i].element.index = i
 
-		log = new Array()
+		# log = new Array()
 
-		for i of @items
-			log.push "#{@items[i].element.index}: #{@items[i].element.title}"
+		# for i of @items
+		# 	log.push "#{@items[i].element.index}: #{@items[i].element.title}"
 
-		console.log 'updateNewItemPosition', log
+		# console.log 'updateNewItemPosition', log
 
 	acceptFromOutsideSource: (ev)->
 
 		if ev.dataTransfer.types.indexOf('text/plain') isnt -1 or 
 		ev.dataTransfer.types.indexOf('text/html') isnt -1 or
-		ev.dataTransfer.types.indexOf('text/uri-list') isnt -1
+		ev.dataTransfer.types.indexOf('text/uri-list') isnt -1 or
+		ev.dataTransfer.types.indexOf('text/json') isnt -1
 
 			return true
 		else
@@ -509,13 +510,23 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 
-		title = ev.dataTransfer.getData('text')
-		url = ev.dataTransfer.getData('text/uri-list')
+		data =
+			title: null
+			url: null
+
+		if ev.dataTransfer.types.indexOf('text/json') isnt -1
+			data = JSON.parse(ev.dataTransfer.getData('text/json'))
+
+		if data.title? and data.url?
+			title = data.title
+			url = data.url
+		else
+			title = ev.dataTransfer.getData('text')
+			url = ev.dataTransfer.getData('text/uri-list')
 
 		if title is '' then title = null
 		if url is '' then url = null
-		if url? then title = null
-
+		
 		if title? or url?
 			root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
 

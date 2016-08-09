@@ -59,7 +59,9 @@ class ItemCard extends HTMLElement
 			@elements.dragHandle.addClass('drag-handle')
 
 		else
-			@elements.link.on('dragstart', ()->
+			@elements.link.on('dragstart', (ev)->
+				ev.dataTransfer.setData('text/json', JSON.stringify({title: root.title, url: root.url.href}))
+				console.log  ev.dataTransfer.getData('text/json')
 				return
 			)
 

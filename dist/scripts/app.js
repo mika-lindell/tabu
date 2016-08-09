@@ -1110,7 +1110,13 @@
         this.elements.dragHandle.html('..<br>..<br>..<br>..');
         this.elements.dragHandle.addClass('drag-handle');
       } else {
-        this.elements.link.on('dragstart', function() {});
+        this.elements.link.on('dragstart', function(ev) {
+          ev.dataTransfer.setData('text/json', JSON.stringify({
+            title: root.title,
+            url: root.url.href
+          }));
+          console.log(ev.dataTransfer.getData('text/json'));
+        });
       }
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
@@ -1589,23 +1595,20 @@
     };
 
     ItemCardList.prototype.updateNewItemPosition = function(item, newIndex) {
-      var i, log;
+      var i, results;
       if (item != null) {
         this.items.splice(item.element.index, 1);
         this.items.splice(newIndex, 0, item);
       }
+      results = [];
       for (i in this.items) {
-        this.items[i].element.index = i;
+        results.push(this.items[i].element.index = i);
       }
-      log = new Array();
-      for (i in this.items) {
-        log.push(this.items[i].element.index + ": " + this.items[i].element.title);
-      }
-      return console.log('updateNewItemPosition', log);
+      return results;
     };
 
     ItemCardList.prototype.acceptFromOutsideSource = function(ev) {
-      if (ev.dataTransfer.types.indexOf('text/plain') !== -1 || ev.dataTransfer.types.indexOf('text/html') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1) {
+      if (ev.dataTransfer.types.indexOf('text/plain') !== -1 || ev.dataTransfer.types.indexOf('text/html') !== -1 || ev.dataTransfer.types.indexOf('text/uri-list') !== -1 || ev.dataTransfer.types.indexOf('text/json') !== -1) {
         return true;
       } else {
         return false;
@@ -1715,19 +1718,28 @@
     };
 
     dropHandler = function(ev, root) {
-      var title, url;
+      var data, title, url;
       ev.preventDefault();
       ev.stopPropagation();
-      title = ev.dataTransfer.getData('text');
-      url = ev.dataTransfer.getData('text/uri-list');
+      data = {
+        title: null,
+        url: null
+      };
+      if (ev.dataTransfer.types.indexOf('text/json') !== -1) {
+        data = JSON.parse(ev.dataTransfer.getData('text/json'));
+      }
+      if ((data.title != null) && (data.url != null)) {
+        title = data.title;
+        url = data.url;
+      } else {
+        title = ev.dataTransfer.getData('text');
+        url = ev.dataTransfer.getData('text/uri-list');
+      }
       if (title === '') {
         title = null;
       }
       if (url === '') {
         url = null;
-      }
-      if (url != null) {
-        title = null;
       }
       if ((title != null) || (url != null)) {
         root.showUserInputForItem(root.draggedItem, 'addLink', title, url);
