@@ -1106,16 +1106,14 @@
       this.elements.link = new HTMLElement('a');
       if (this.containingList.editable) {
         this.elements.link.attr('draggable', 'false');
+        this.elements.dragHandle = new HTMLElement('i');
+        this.elements.dragHandle.html('..<br>..<br>..<br>..');
+        this.elements.dragHandle.addClass('drag-handle');
       } else {
-        this.elements.link.on('dragstart', function(ev) {
-          return console.log(ev.dataTransfer.getData("text/uri-list"));
-        });
+        this.elements.link.on('dragstart', function() {});
       }
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
-      this.elements.dragHandle = new HTMLElement('i');
-      this.elements.dragHandle.html('..<br>..<br>..<br>..');
-      this.elements.dragHandle.addClass('drag-handle');
       this.elements.badge = new HTMLElement('span');
       this.elements.badge.text('NE');
       this.elements.badge.addClass('item-card-badge');
@@ -1135,7 +1133,9 @@
       if (url != null) {
         this.setUrl(url);
       }
-      this.elements.link.append(this.elements.dragHandle);
+      if (this.containingList.editable) {
+        this.elements.link.append(this.elements.dragHandle);
+      }
       this.elements.link.append(this.elements.badge);
       this.elements.labelContainer.append(this.elements.labelTitle);
       this.elements.labelContainer.append(this.elements.lineBreak);
@@ -1147,7 +1147,7 @@
 
     ItemCard.prototype.setTitle = function(title) {
       this.title = title;
-      return this.elements.labelTitle.text(title);
+      return this.elements.labelTitle.text(' ' + title + ' ');
     };
 
     ItemCard.prototype.setUrl = function(url) {
@@ -1164,7 +1164,7 @@
         badgeLabel = this.url.href.substring(0, 2);
         hostname = this.url.href;
       } else {
-        badgeLabel = this.url.withoutPrefix().substring(0, 2);
+        badgeLabel = this.url.withoutPrefix().substring(0, 2).toUpperCase();
         hostname = this.url.hostname;
       }
       this.elements.badge.text(badgeLabel);

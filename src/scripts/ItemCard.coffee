@@ -53,18 +53,18 @@ class ItemCard extends HTMLElement
 		if @containingList.editable
 			# Disable DnD for links to remove its default DnD behavior
 			@elements.link.attr('draggable', 'false')
-		else
-			@elements.link.on('dragstart', (ev)->
-				console.log ev.dataTransfer.getData("text/uri-list");
 
+			@elements.dragHandle = new HTMLElement('i')
+			@elements.dragHandle.html('..<br>..<br>..<br>..')
+			@elements.dragHandle.addClass('drag-handle')
+
+		else
+			@elements.link.on('dragstart', ()->
+				return
 			)
 
 		@elements.link.addClass('item-card-link')
 		@elements.link.attr('id', @id + '-link')
-
-		@elements.dragHandle = new HTMLElement('i')
-		@elements.dragHandle.html('..<br>..<br>..<br>..')
-		@elements.dragHandle.addClass('drag-handle')
 
 		@elements.badge = new HTMLElement('span')
 		@elements.badge.text('NE')
@@ -91,7 +91,9 @@ class ItemCard extends HTMLElement
 		if url?
 			@setUrl(url)
 
-		@elements.link.append(@elements.dragHandle)
+		if @containingList.editable
+			@elements.link.append(@elements.dragHandle)
+
 		@elements.link.append(@elements.badge)
 
 		@elements.labelContainer.append(@elements.labelTitle)
@@ -107,7 +109,7 @@ class ItemCard extends HTMLElement
 		@title = title
 
 		
-		@elements.labelTitle.text(title)
+		@elements.labelTitle.text(' ' + title + ' ')
 
 	setUrl: (url)->
 
@@ -126,7 +128,7 @@ class ItemCard extends HTMLElement
 			badgeLabel = @url.href.substring(0, 2)
 			hostname = @url.href
 		else
-			badgeLabel = @url.withoutPrefix().substring(0, 2)
+			badgeLabel = @url.withoutPrefix().substring(0, 2).toUpperCase()
 			hostname = @url.hostname
 
 		@elements.badge.text(badgeLabel)
