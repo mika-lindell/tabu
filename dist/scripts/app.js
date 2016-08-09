@@ -1104,7 +1104,13 @@
         });
       }
       this.elements.link = new HTMLElement('a');
-      this.elements.link.attr('draggable', 'false');
+      if (this.containingList.editable) {
+        this.elements.link.attr('draggable', 'false');
+      } else {
+        this.elements.link.on('dragstart', function(ev) {
+          return console.log(ev.dataTransfer.getData("text/uri-list"));
+        });
+      }
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
       this.elements.dragHandle = new HTMLElement('i');

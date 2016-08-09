@@ -48,8 +48,17 @@ class ItemCard extends HTMLElement
 
 		@elements.link = new HTMLElement('a')
 		
-		# Disable DnD for links to remove its default DnD behavior
-		@elements.link.attr('draggable', 'false') 
+		# By default links from the list can be dragged
+		# This must be disabled if other forms of DnD are present a.k.a the list is editable
+		if @containingList.editable
+			# Disable DnD for links to remove its default DnD behavior
+			@elements.link.attr('draggable', 'false')
+		else
+			@elements.link.on('dragstart', (ev)->
+				console.log ev.dataTransfer.getData("text/uri-list");
+
+			)
+
 		@elements.link.addClass('item-card-link')
 		@elements.link.attr('id', @id + '-link')
 
