@@ -1732,7 +1732,7 @@
         title = data.title;
         url = data.url;
       } else {
-        title = ev.dataTransfer.getData('text');
+        title = null;
         url = ev.dataTransfer.getData('text/uri-list');
       }
       if (title === '') {
