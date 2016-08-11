@@ -41,7 +41,8 @@ class Animation
 
 		root.beforeAnimation()
 		container.addClass(cssClass)
-		if display? then container.show(display)
+
+		if display isnt false then container.show(display)
 		if withOpacity then container.css('opacity', '1')
 
 		cleanUp = ()->
@@ -69,7 +70,7 @@ class Animation
 
 	highlight: ()->
 
-		@animationIn 'anim-highlight', null, false
+		@animationIn 'anim-highlight', false, false
 
 		# root = @
 		# container = @animate

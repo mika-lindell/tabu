@@ -69,7 +69,7 @@ class UserInput extends HTMLElement
 		field.element.attr('name', name)
 		field.element.attr('type', type)
 		if required then field.element.attr('required', '')
-		field.element.attr('tabindex', @fields.length + 1)
+		field.element.attr('tabindex', @fields.lenght)
 
 		if label?
 			field.label = new HTMLElement('label')
@@ -102,7 +102,7 @@ class UserInput extends HTMLElement
 		@actions.ok = new HTMLElement('input')
 
 		@actions.cancel.attr('type', 'button')
-		@actions.cancel.attr('tabindex', @fields.count + 2)
+		@actions.cancel.attr('tabindex', @fields.lenght)
 		@actions.cancel.value(abort)
 		@actions.cancel.addClass('btn')
 		@actions.cancel.addClass('cancel')
@@ -112,7 +112,7 @@ class UserInput extends HTMLElement
 		)
 
 		@actions.ok.attr('type', 'submit')
-		@actions.ok.attr('tabindex', @fields.count + 1)
+		@actions.ok.attr('tabindex', @fields.lenght)
 		@actions.ok.value(confirm)
 		@actions.ok.addClass('btn')
 		@actions.ok.addClass('submit')

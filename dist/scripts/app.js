@@ -1866,7 +1866,7 @@
       if (required) {
         field.element.attr('required', '');
       }
-      field.element.attr('tabindex', this.fields.length + 1);
+      field.element.attr('tabindex', this.fields.lenght);
       if (label != null) {
         field.label = new HTMLElement('label');
         field.label.attr('for', name);
@@ -1909,7 +1909,7 @@
       this.actions.cancel = new HTMLElement('input');
       this.actions.ok = new HTMLElement('input');
       this.actions.cancel.attr('type', 'button');
-      this.actions.cancel.attr('tabindex', this.fields.count + 2);
+      this.actions.cancel.attr('tabindex', this.fields.lenght);
       this.actions.cancel.value(abort);
       this.actions.cancel.addClass('btn');
       this.actions.cancel.addClass('cancel');
@@ -1917,7 +1917,7 @@
         return root.onAbort();
       });
       this.actions.ok.attr('type', 'submit');
-      this.actions.ok.attr('tabindex', this.fields.count + 1);
+      this.actions.ok.attr('tabindex', this.fields.lenght);
       this.actions.ok.value(confirm);
       this.actions.ok.addClass('btn');
       this.actions.ok.addClass('submit');
@@ -2173,7 +2173,7 @@
       container = this.animate;
       root.beforeAnimation();
       container.addClass(cssClass);
-      if (display != null) {
+      if (display !== false) {
         container.show(display);
       }
       if (withOpacity) {
@@ -2213,7 +2213,7 @@
     };
 
     Animation.prototype.highlight = function() {
-      return this.animationIn('anim-highlight', null, false);
+      return this.animationIn('anim-highlight', false, false);
     };
 
     Animation.prototype.moveIn = function(display) {
