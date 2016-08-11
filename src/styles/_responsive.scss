@@ -1,12 +1,12 @@
 
 /***
 
-Responsive - breakpoints are the same as Materialize.css uses
+Responsive
 
 ***/
 
 
-@media only screen and (min-width: 600px){
+@media only screen and (min-width: 700px){
 
 	.container-large{
 		width: 90%;
@@ -28,7 +28,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 
 }
 
-@media only screen and (min-width: 992px){
+@media only screen and (min-width: 1100px){
 	
 	#actions button{
 
@@ -58,7 +58,7 @@ Responsive - breakpoints are the same as Materialize.css uses
 
 }
 
-@media only screen and (min-width: 1200px){
+@media only screen and (min-width: 1400px){
 	.item-card-label-container{
 		width: 65%; // For truncate to work (with text-overflow: ellipsis;)
 	}
