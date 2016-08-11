@@ -13,15 +13,17 @@ class HTMLElement
 	#
 	constructor: (element)->
 	  # TODO: Check if element? is defined and if not, then raise error
-	  
 		if element instanceof Element # Wrap the passed element
 			@DOMElement = element
-		else if element.charAt? and element.charAt(0) is '#' # Use the passed id to wrap an element
-			@DOMElement = document.getElementById(element.substr(1))
-		else if element is 'body' # Use the passed id to wrap an element
-			@DOMElement = document.getElementsByTagName(element)[0]
-		else # Create new element to be wrapped
-			@DOMElement = document.createElement(element)
+		if element instanceof String or typeof element is 'string'
+			if element.charAt? and element.charAt(0) is '#' # Use the passed id to wrap an element
+				@DOMElement = document.getElementById(element.substr(1))
+			else if element is 'body' # Use the passed id to wrap an element
+				@DOMElement = document.getElementsByTagName(element)[0]
+			else # Create new element to be wrapped
+				@DOMElement = document.createElement(element)
+
+		return @
 
 	# Gets/sets the text inside an element
 	#

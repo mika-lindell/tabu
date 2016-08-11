@@ -97,4 +97,12 @@ class App
 			document.title = title
 		)
 
+		about = new Dialog()
+		about.setTitle('About this extension')
+		about.addButton('Close', ()->
+			about.hideDialog()
+		)
+		about.loadContent('about')
+		about.bindTo(new HTMLElement('#about'))
+
 		console.log "App: I'm ready <3"

@@ -73,24 +73,6 @@ Animations
   animation-duration: 1.5s;
 }
 
-@keyframes twist{
-
-	0%{
-		opacity: 0;
-		transform: rotate(180deg) scale(3,3);
-		box-shadow: none;
-	}	
-
-	100%{
-		opacity: 1;
-	}
-}
-
-.anim-twist{
-	animation-name: twist;
-  animation-duration: 0.5s;
-}
-
 @keyframes slide-in{
 	0%{
 		transform: scale(1, 0.2);
@@ -166,21 +148,6 @@ Animations
 	100%{
 		transform: scale(1, 1);
 	}	
-	// 0%{
-	// 	transform: rotateX(0deg);
-	// }	
-
-	// 30%{
-	// 	transform: rotateX(90deg);
-	// }
-
-	// 70%{
-	// 	transform: rotateX(90deg);
-	// }
-
-	// 100%{
-	// 	transform: rotateX(0deg);
-	// }
 }
 
 .anim-highlight{

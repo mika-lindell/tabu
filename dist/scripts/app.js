@@ -1,5 +1,5 @@
 (function() {
-  var $newTab, Actions, Animation, App, ChromeAPI, ColorPalette, Dropdown, HTMLElement, Helpers, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toast, Toolbars, Url, UserInput, Visibility,
+  var $newTab, Actions, Animation, App, ChromeAPI, ColorPalette, Dialog, Dropdown, HTMLElement, Helpers, ItemCard, ItemCardHeading, ItemCardList, Loader, Storage, Throttle, Toast, Toolbars, Url, UserInput, Visibility,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -256,10 +256,6 @@
           g: 115,
           b: 115
         }, {
-          r: 239,
-          g: 83,
-          b: 80
-        }, {
           r: 244,
           g: 67,
           b: 54
@@ -267,10 +263,6 @@
           r: 240,
           g: 98,
           b: 146
-        }, {
-          r: 236,
-          g: 64,
-          b: 122
         }, {
           r: 230,
           g: 30,
@@ -280,10 +272,6 @@
           g: 104,
           b: 200
         }, {
-          r: 171,
-          g: 71,
-          b: 188
-        }, {
           r: 156,
           g: 39,
           b: 176
@@ -292,33 +280,13 @@
           g: 117,
           b: 205
         }, {
-          r: 126,
-          g: 87,
-          b: 194
-        }, {
           r: 103,
           g: 58,
           b: 183
         }, {
-          r: 121,
-          g: 134,
-          b: 203
-        }, {
-          r: 92,
-          g: 107,
-          b: 192
-        }, {
-          r: 63,
-          g: 81,
-          b: 181
-        }, {
           r: 100,
           g: 181,
           b: 246
-        }, {
-          r: 66,
-          g: 165,
-          b: 245
         }, {
           r: 33,
           g: 150,
@@ -328,10 +296,6 @@
           g: 195,
           b: 247
         }, {
-          r: 41,
-          g: 182,
-          b: 246
-        }, {
           r: 3,
           g: 169,
           b: 244
@@ -339,10 +303,6 @@
           r: 77,
           g: 208,
           b: 225
-        }, {
-          r: 38,
-          g: 198,
-          b: 218
         }, {
           r: 0,
           g: 188,
@@ -352,10 +312,6 @@
           g: 199,
           b: 132
         }, {
-          r: 102,
-          g: 187,
-          b: 106
-        }, {
           r: 76,
           g: 175,
           b: 80
@@ -363,10 +319,6 @@
           r: 156,
           g: 204,
           b: 101
-        }, {
-          r: 139,
-          g: 195,
-          b: 74
         }, {
           r: 124,
           g: 179,
@@ -376,10 +328,6 @@
           g: 202,
           b: 51
         }, {
-          r: 175,
-          g: 180,
-          b: 43
-        }, {
           r: 158,
           g: 157,
           b: 36
@@ -387,10 +335,6 @@
           r: 251,
           g: 192,
           b: 45
-        }, {
-          r: 249,
-          g: 168,
-          b: 37
         }, {
           r: 245,
           g: 127,
@@ -401,20 +345,12 @@
           b: 7
         }, {
           r: 255,
-          g: 179,
-          b: 0
-        }, {
-          r: 255,
           g: 160,
           b: 0
         }, {
           r: 255,
           g: 183,
           b: 77
-        }, {
-          r: 255,
-          g: 167,
-          b: 38
         }, {
           r: 255,
           g: 152,
@@ -425,10 +361,6 @@
           b: 101
         }, {
           r: 255,
-          g: 112,
-          b: 67
-        }, {
-          r: 255,
           g: 87,
           b: 34
         }, {
@@ -436,21 +368,9 @@
           g: 136,
           b: 127
         }, {
-          r: 141,
-          g: 110,
-          b: 99
-        }, {
           r: 121,
           g: 85,
           b: 72
-        }, {
-          r: 33,
-          g: 33,
-          b: 33
-        }, {
-          r: 117,
-          g: 117,
-          b: 117
         }
       ];
       return instance;
@@ -547,13 +467,17 @@
     function HTMLElement(element) {
       if (element instanceof Element) {
         this.DOMElement = element;
-      } else if ((element.charAt != null) && element.charAt(0) === '#') {
-        this.DOMElement = document.getElementById(element.substr(1));
-      } else if (element === 'body') {
-        this.DOMElement = document.getElementsByTagName(element)[0];
-      } else {
-        this.DOMElement = document.createElement(element);
       }
+      if (element instanceof String || typeof element === 'string') {
+        if ((element.charAt != null) && element.charAt(0) === '#') {
+          this.DOMElement = document.getElementById(element.substr(1));
+        } else if (element === 'body') {
+          this.DOMElement = document.getElementsByTagName(element)[0];
+        } else {
+          this.DOMElement = document.createElement(element);
+        }
+      }
+      return this;
     }
 
     HTMLElement.prototype.parent = function() {
@@ -1049,6 +973,124 @@
     return Toast;
 
   })();
+
+  Dialog = (function(superClass) {
+    extend(Dialog, superClass);
+
+    Dialog.elements;
+
+    Dialog.buttons;
+
+    Dialog.body;
+
+    Dialog.animation;
+
+    Dialog.done;
+
+    function Dialog() {
+      var root;
+      Dialog.__super__.constructor.call(this, 'div');
+      root = this;
+      this.elements = {
+        overlay: new HTMLElement('div'),
+        cardContainer: new HTMLElement('div'),
+        cardContentContainer: new HTMLElement('div'),
+        cardContentTitle: new HTMLElement('span'),
+        cardContent: new HTMLElement('p'),
+        cardContentAction: new HTMLElement('div')
+      };
+      this.buttons = new Array();
+      this.body = new HTMLElement('body');
+      this.animation = new Animation(this.elements.cardContainer);
+      this.done = null;
+      this.addClass('dialog-container');
+      this.elements.overlay.addClass('dialog-overlay');
+      this.elements.cardContainer.addClass('card');
+      this.elements.cardContainer.addClass('dialog');
+      this.elements.cardContainer.addClass('animate');
+      this.elements.cardContentContainer.addClass('card-content');
+      this.elements.cardContentTitle.addClass('card-title');
+      this.elements.cardContentAction.addClass('card-action');
+      this.elements.overlay.on('click', function() {
+        return root.hideDialog();
+      });
+      this.elements.cardContainer.append(this.elements.cardContentContainer);
+      this.elements.cardContentContainer.append(this.elements.cardContentTitle);
+      this.elements.cardContentContainer.append(this.elements.cardContent);
+      this.elements.cardContainer.append(this.elements.cardContentAction);
+      this.append(this.elements.overlay);
+      this.append(this.elements.cardContainer);
+      this.body.append(this);
+      return this;
+    }
+
+    Dialog.prototype.bindTo = function(element) {
+      var root;
+      root = this;
+      return element.on('click', function() {
+        return root.showDialog();
+      });
+    };
+
+    Dialog.prototype.setTitle = function(title) {
+      return this.elements.cardContentTitle.text(title);
+    };
+
+    Dialog.prototype.setContent = function(content) {
+      return this.elements.cardContent.html(content);
+    };
+
+    Dialog.prototype.addButton = function(label, callback) {
+      var button;
+      button = new HTMLElement('button');
+      button.text(label);
+      button.addClass('btn');
+      button.on('click', callback);
+      this.elements.cardContentAction.append(button);
+      this.buttons.push(button);
+      return button;
+    };
+
+    Dialog.prototype.loadContent = function(template) {
+      var root, xhttp;
+      root = this;
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function(response) {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+          root.elements.cardContent.html(xhttp.response);
+          if (root.done != null) {
+            return root.done();
+          }
+        }
+      };
+      xhttp.open("GET", "/partials/_" + template + ".html", true);
+      return xhttp.send();
+    };
+
+    Dialog.prototype.showDialog = function() {
+      var root;
+      root = this;
+      root.show('flex');
+      this.animation.done = null;
+      this.animation.moveIn();
+      return setTimeout(function() {
+        return root.css('opacity', '1');
+      }, 0);
+    };
+
+    Dialog.prototype.hideDialog = function() {
+      var root;
+      root = this;
+      this.animation.done = function() {
+        return root.hide();
+      };
+      root.css('opacity', '0');
+      return this.animation.moveOut();
+    };
+
+    return Dialog;
+
+  })(HTMLElement);
 
   ItemCard = (function(superClass) {
     var dragStartHandler;
@@ -2133,6 +2175,8 @@
 
     Animation.animParams;
 
+    Animation.done;
+
     function Animation(animate, duration) {
       if (duration == null) {
         duration = 0.3;
@@ -2149,6 +2193,7 @@
         transition: "all " + this.duration + "s",
         animDuration: this.duration + "s"
       };
+      this.done = null;
       return this;
     }
 
@@ -2182,54 +2227,81 @@
       }
     };
 
-    Animation.prototype.highlight = function() {
+    Animation.prototype.animationIn = function(cssClass, display, withOpacity) {
       var cleanUp, container, root;
+      if (display == null) {
+        display = 'block';
+      }
+      if (withOpacity == null) {
+        withOpacity = true;
+      }
       root = this;
       container = this.animate;
-      root.beforeAnimation(true, false);
-      container.addClass('anim-highlight');
+      root.beforeAnimation();
+      container.addClass(cssClass);
+      if (display != null) {
+        container.show(display);
+      }
+      if (withOpacity) {
+        container.css('opacity', '1');
+      }
       cleanUp = function() {
-        container.removeClass('anim-highlight');
-        container.css('animationDuration', root.animParams.origAnimDuration);
-        root.afterAnimation(true, false);
-        return root.done();
+        container.removeClass(cssClass);
+        root.afterAnimation();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.slideIn = function() {
+    Animation.prototype.animationOut = function(cssClass, withOpacity) {
       var cleanUp, container, root;
+      if (withOpacity == null) {
+        withOpacity = true;
+      }
       root = this;
       container = this.animate;
-      root.beforeAnimation;
-      container.css('animationDuration', root.animParams.animDuration);
-      container.addClass('anim-slide-in');
-      container.show();
-      container.css('opacity', '1');
+      root.beforeAnimation();
+      if (withOpacity) {
+        container.css('opacity', '0');
+      }
+      container.addClass(cssClass);
       cleanUp = function() {
-        container.removeClass('anim-slide-in');
-        container.css('animationDuration', root.animParams.origAnimDuration);
-        root.afterAnimation;
-        return root.done();
+        container.hide();
+        container.removeClass(cssClass);
+        root.afterAnimation();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       return setTimeout(cleanUp, this.duration * 1000);
+    };
+
+    Animation.prototype.highlight = function() {
+      return this.animationIn('anim-highlight', null, false);
+    };
+
+    Animation.prototype.moveIn = function(display) {
+      if (display == null) {
+        display = 'block';
+      }
+      return this.animationIn('anim-move-in', display);
+    };
+
+    Animation.prototype.moveOut = function() {
+      return this.animationOut('anim-move-out');
+    };
+
+    Animation.prototype.slideIn = function(display) {
+      if (display == null) {
+        display = 'block';
+      }
+      return this.animationIn('anim-slide-in', display);
     };
 
     Animation.prototype.slideOut = function() {
-      var cleanUp, container, root;
-      root = this;
-      container = this.animate;
-      root.beforeAnimation;
-      container.css('animationDuration', root.animParams.animDuration);
-      container.css('opacity', '0');
-      container.addClass('anim-slide-out');
-      cleanUp = function() {
-        container.hide();
-        container.removeClass('anim-slide-out');
-        root.afterAnimation;
-        return root.done();
-      };
-      return setTimeout(cleanUp, this.duration * 1000);
+      return this.animationOut('anim-slide-out');
     };
 
     Animation.prototype.animateHeight = function(from, to) {
@@ -2256,7 +2328,9 @@
         container.css('overflow', 'visible');
         container.css('height', 'auto');
         root.afterAnimation(false, true);
-        return root.done();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
@@ -2282,7 +2356,9 @@
       setTimeout(play, 0);
       cleanUp = function() {
         root.afterAnimation(false, true);
-        return root.done();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
@@ -2303,7 +2379,9 @@
       cleanUp = function() {
         container.removeClass('intro');
         root.afterAnimation(true, false);
-        return root.done();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);
@@ -2328,7 +2406,9 @@
         container.hide();
         container.removeClass('outro');
         root.afterAnimation(true, false);
-        return root.done();
+        if (root.done != null) {
+          return root.done();
+        }
       };
       if (!instant) {
         return setTimeout(cleanUp, this.duration * 1000);
@@ -2645,7 +2725,7 @@
     App.otherDevices;
 
     function App() {
-      var root;
+      var about, root;
       console.log("App: I'm warming up...");
       this.visibility = new Visibility();
       this.toolbars = new Toolbars();
@@ -2701,6 +2781,13 @@
       this.helpers.getLocalisedTitle(function(title) {
         return document.title = title;
       });
+      about = new Dialog();
+      about.setTitle('About this extension');
+      about.addButton('Close', function() {
+        return about.hideDialog();
+      });
+      about.loadContent('about');
+      about.bindTo(new HTMLElement('#about'));
       console.log("App: I'm ready <3");
     }
 
