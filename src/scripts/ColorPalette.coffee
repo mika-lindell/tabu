@@ -18,273 +18,82 @@ class ColorPalette
 		@palette = [
 			# RED
 			{
-				r: 229
-				g: 115
-				b: 115
-			}
-			# {
-			# 	r: 239
-			# 	g: 83
-			# 	b: 80
-			# }
-			{
 				r: 244
 				g: 67
 				b: 54
 			}
-			# PINK
+			# PINK	
 			{
-				r: 240
-				g: 98
-				b: 146
-			}
-			# {
-			# 	r: 236
-			# 	g: 64
-			# 	b: 122
-			# }
-			{
-				r: 230
+				r: 233
 				g: 30
 				b: 99
 			}
 			# PURPLE
 			{
-				r: 186
-				g: 104
-				b: 200
-			}
-			# {
-			# 	r: 171
-			# 	g: 71
-			# 	b: 188
-			# }
-			{
 				r: 156
 				g: 39
 				b: 176
 			}
-			# DEEP-PURPLE
-			{
-				r: 149
-				g: 117
-				b: 205
-			}
-			# {
-			# 	r: 126
-			# 	g: 87
-			# 	b: 194
-			# }
-			{
-				r: 103
-				g: 58
-				b: 183
-			}
-			# INDIGO
-			# {
-			# 	r: 121
-			# 	g: 134
-			# 	b: 203
-			# }
-			# {
-			# 	r: 92
-			# 	g: 107
-			# 	b: 192
-			# }
-			# {
-			# 	r: 63
-			# 	g: 81
-			# 	b: 181
-			# }
 			# BLUE
-			{
-				r: 100
-				g: 181
-				b: 246
-			}
-			# {
-			# 	r: 66
-			# 	g: 165
-			# 	b: 245
-			# }
 			{
 				r: 33
 				g: 150
 				b: 243
 			}
-			# LIGHT BLUE
-			{
-				r: 79
-				g: 195
-				b: 247
-			}
-			# {
-			# 	r: 41
-			# 	g: 182
-			# 	b: 246
-			# }
-			{
-				r: 3
-				g: 169
-				b: 244
-			}
 			# CYAN
-			{
-				r: 77
-				g: 208
-				b: 225
-			}
-			# {
-			# 	r: 38
-			# 	g: 198
-			# 	b: 218
-			# }
 			{
 				r: 0
 				g: 188
 				b: 212
 			}
-			# GREEN
+			# TEAL
 			{
-				r: 129
-				g: 199
-				b: 132
+				r: 0
+				g: 150
+				b: 136
 			}
-			# {
-			# 	r: 102
-			# 	g: 187
-			# 	b: 106
-			# }
+			# GREEN
 			{
 				r: 76
 				g: 175
 				b: 80
 			}
-			# LIGHT GREEN
-			{
-				r: 156
-				g: 204
-				b: 101
-			}
-			# {
-			# 	r: 139
-			# 	g: 195
-			# 	b: 74
-			# }
-			{
-				r: 124
-				g: 179
-				b: 66
-			}
-			# LIME
-
-			{
-				r: 192
-				g: 202
-				b: 51
-			}
-			# {
-			# 	r: 175
-			# 	g: 180
-			# 	b: 43
-			# }
-			{
-				r: 158
-				g: 157
-				b: 36
-			}
-			# YELLOW
-			{
-				r: 251
-				g: 192
-				b: 45
-			}
-			# {
-			# 	r: 249
-			# 	g: 168
-			# 	b: 37
-			# }
-			{
-				r: 245
-				g: 127
-				b: 23
-			}
-			# AMBER
-			{
-				r: 255
-				g: 193
-				b: 7
-			}
-			# {
-			# 	r: 255
-			# 	g: 179
-			# 	b: 0
-			# }
-			{
-				r: 255
-				g: 160
-				b: 0
-			}
-
 			# ORANGE
-			{
-				r: 255
-				g: 183
-				b: 77
-			}
-			# {
-			# 	r: 255
-			# 	g: 167
-			# 	b: 38
-			# }
 			{
 				r: 255
 				g: 152
 				b: 0
 			}
-			# DEEP ORANGE
+			# BROWN
 			{
-				r: 255
-				g: 138
-				b: 101
+				r: 121
+				g: 85
+				b: 72
 			}
-			# {
-			# 	r: 255
-			# 	g: 112
-			# 	b: 67
-			# }
+			# DEEP ORANGE
 			{
 				r: 255
 				g: 87
 				b: 34
 			}
-			# BROWN
+			# INDIGO
 			{
-				r: 161
-				g: 136
-				b: 127
+				r: 63
+				g: 81
+				b: 181
 			}
-			# {
-			# 	r: 141
-			# 	g: 110
-			# 	b: 99
-			# }
+			# DEEP PURPLE
 			{
-			r: 121
-			g: 85
-			b: 72
+				r: 103
+				g: 58
+				b: 183
 			}
-			# GREY & BLACK
-			# {
-			# r: 33
-			# g: 33
-			# b: 33
-			# }
-			# {
-			# r: 117
-			# g: 117
-			# b: 117
-			# }
+			# LIGHT GREEN DARKEN 4
+			{
+				r: 51
+				g: 105
+				b: 30
+			}
 		]
 
 		return instance
@@ -319,6 +128,7 @@ class ColorPalette
 				mappedColor = @palette[i]
 			i++
 
+		if typeof mappedColor is 'undefined' then mappedColor = @palette[0]
 		return mappedColor
 
 	hexToRgb: (hex) ->
