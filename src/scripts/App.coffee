@@ -66,7 +66,7 @@ class App
 
 		@recentlyClosed.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since you started this session.")
+			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of this session.")
 			list.create()
 
 		@otherDevices.done = ()->
@@ -98,7 +98,7 @@ class App
 		)
 
 		about = new Dialog()
-		about.setTitle('About this extension')
+		about.setTitle('About TABU')
 		about.addButton('Close', ()->
 			about.hideDialog()
 		)

@@ -931,7 +931,7 @@
         cardContainer: new HTMLElement('div'),
         cardContentContainer: new HTMLElement('div'),
         cardContentTitle: new HTMLElement('span'),
-        cardContent: new HTMLElement('p'),
+        cardContent: new HTMLElement('div'),
         cardContentAction: new HTMLElement('div')
       };
       this.buttons = new Array();
@@ -942,7 +942,6 @@
       this.elements.overlay.addClass('dialog-overlay');
       this.elements.cardContainer.addClass('card');
       this.elements.cardContainer.addClass('dialog');
-      this.elements.cardContainer.addClass('animate');
       this.elements.cardContentContainer.addClass('card-content');
       this.elements.cardContentTitle.addClass('card-title');
       this.elements.cardContentAction.addClass('card-action');
@@ -2694,7 +2693,7 @@
       };
       this.recentlyClosed.done = function() {
         var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since you started this session.");
+        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of this session.");
         return list.create();
       };
       this.otherDevices.done = function() {
@@ -2717,7 +2716,7 @@
         return document.title = title;
       });
       about = new Dialog();
-      about.setTitle('About this extension');
+      about.setTitle('About TABU');
       about.addButton('Close', function() {
         return about.hideDialog();
       });

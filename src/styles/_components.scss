@@ -31,8 +31,15 @@ Dialog
 	background-color: $white;
 	opacity: 1;
 
+  max-height: 90%;
+  overflow-y: scroll;
+
 	@extend .layer-dialog;
 	@extend .valign;
+
+	p{
+		max-width: 600px;
+	}
 
 	.card-action{
 		text-align: right;

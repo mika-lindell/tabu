@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "NewTab",
-  "version": "0.01",
+  "name": "TABU",
+  "version": "0.5.0",
   "minimum_chrome_version": "37",
   "permissions": [
           "storage",

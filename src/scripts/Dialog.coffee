@@ -17,7 +17,7 @@ class Dialog extends HTMLElement
 			cardContainer: new HTMLElement('div')
 			cardContentContainer: new HTMLElement('div')
 			cardContentTitle: new HTMLElement('span')
-			cardContent: new HTMLElement('p')
+			cardContent: new HTMLElement('div')
 			cardContentAction: new HTMLElement('div')
 
 		@buttons = new Array()
@@ -30,7 +30,6 @@ class Dialog extends HTMLElement
 		@elements.overlay.addClass 'dialog-overlay'
 		@elements.cardContainer.addClass 'card'
 		@elements.cardContainer.addClass 'dialog'
-		@elements.cardContainer.addClass 'animate'
 		@elements.cardContentContainer.addClass 'card-content'
 		@elements.cardContentTitle.addClass 'card-title'
 		@elements.cardContentAction.addClass 'card-action'
@@ -46,8 +45,6 @@ class Dialog extends HTMLElement
 
 		@append @elements.overlay
 		@append @elements.cardContainer
-
-		# @css('opacity', '0')
 
 		@body.append @
 
@@ -92,17 +89,25 @@ class Dialog extends HTMLElement
 		xhttp.send();
 
 	showDialog: ()->
+
 		root = @
+
 		root.show('flex')
+
 		@animation.done = null
 		@animation.moveIn()
+
 		setTimeout(()->
 			root.css('opacity', '1')
 		, 0)
 
 	hideDialog: ()->
+
 		root = @
+
 		@animation.done = ()->
 			root.hide()
+
 		root.css('opacity', '0')
+
 		@animation.moveOut()

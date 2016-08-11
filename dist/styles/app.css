@@ -6200,6 +6200,9 @@ input[type="text"] {
 .card-content {
   line-height: initial; }
 
+.card .card-content p {
+  margin-bottom: 1rem; }
+
 .card-title {
   margin-bottom: 1rem;
   display: block; }
@@ -6265,7 +6268,7 @@ Font for logo
 ***/
 @font-face {
   font-family: 'Logo';
-  src: url(./assets/chewy/NineteenOhFive.woff2) format("woff2"); }
+  src: url(./assets/logo/NineteenOhFive.woff2) format("woff2"); }
 .logo-font, .logo {
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
@@ -6292,6 +6295,7 @@ Some special text styles
 .logo {
   font-family: 'Logo';
   font-size: 2.5rem;
+  line-height: 1em;
   margin-bottom: 0;
   cursor: default; }
   .logo.logo-small {
@@ -6577,7 +6581,11 @@ Dialog
   max-width: 800px;
   margin: auto;
   background-color: #FFF;
-  opacity: 1; }
+  opacity: 1;
+  max-height: 90%;
+  overflow-y: scroll; }
+  .dialog p {
+    max-width: 600px; }
   .dialog .card-action {
     text-align: right; }
 
@@ -6874,7 +6882,7 @@ a.item-card-link {
   margin-right: 0.6rem;
   width: 3.0rem;
   height: 3.0rem;
-  opacity: 0.5;
+  opacity: 0.7;
   line-height: 3.1rem;
   border-radius: 2px;
   color: #FFF; }

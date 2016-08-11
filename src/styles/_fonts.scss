@@ -57,7 +57,7 @@ Font for logo
 
 @font-face{
 	font-family: 'Logo';
-  src: url(./assets/chewy/NineteenOhFive.woff2) format('woff2')
+  src: url(./assets/logo/NineteenOhFive.woff2) format('woff2')
 }
 
 .logo-font{
@@ -92,6 +92,7 @@ Some special text styles
 .logo{
   font-family: 'Logo';
   font-size: 2.5rem;
+  line-height: 1em;
   margin-bottom: 0;
   cursor: default;
 
