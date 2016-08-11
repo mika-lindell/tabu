@@ -6368,6 +6368,9 @@ Helpers
 .color-white {
   color: #FFF; }
 
+.cursor-pointer {
+  cursor: pointer; }
+
 .overlay, noscript, #loader, .dialog-container {
   position: fixed;
   height: 100%;
