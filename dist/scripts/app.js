@@ -705,6 +705,10 @@
       }
     };
 
+    HTMLElement.prototype.position = function() {
+      return this.DOMElement.getBoundingClientRect();
+    };
+
     HTMLElement.prototype.clone = function() {
       return new HTMLElement(this.DOMElement.cloneNode(true));
     };
@@ -1612,7 +1616,7 @@
         x = ev.clientX - this.ghost.initialX;
         y = ev.clientY - this.ghost.initialY;
         this.ghost.element.css('left', ev.clientX + 20 + 'px');
-        return this.ghost.element.css('top', ev.clientY + 'px');
+        return this.ghost.element.css('top', ev.clientY + 20 + 'px');
       }
     };
 
@@ -1647,7 +1651,7 @@
     };
 
     dragOverHandler = function(ev, root) {
-      var changed, item, last, target;
+      var changed, item, last, rect, target;
       ev.preventDefault();
       ev.stopPropagation();
       if (root.userInput.active) {
@@ -1666,8 +1670,9 @@
       }
       if (target === null && ev.target === root.DOMElement) {
         last = root.lastChild();
-        if (root.draggedItem.element.DOMElement !== last.DOMElement && last.left() < ev.clientX && last.top() < ev.clientY) {
-          console.log('dragOverHandler: Append');
+        rect = last.position();
+        if (root.draggedItem.element.DOMElement !== last.DOMElement && rect.left < ev.clientX && rect.top < ev.clientY) {
+          console.log('dragOverHandler: Append, empty space');
           root.append(root.draggedItem.element);
           changed = true;
         }

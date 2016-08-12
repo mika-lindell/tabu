@@ -266,6 +266,9 @@ class HTMLElement
 		if display is 'none' then @hide()
 		return if unit? then "#{height}px" else height
 
+	position: ()->
+		return @DOMElement.getBoundingClientRect()
+
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))
 
