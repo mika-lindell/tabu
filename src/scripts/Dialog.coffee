@@ -34,6 +34,8 @@ class Dialog extends HTMLElement
 		@elements.cardContentTitle.addClass 'card-title'
 		@elements.cardContentAction.addClass 'card-action'
 
+		# @elements.cardContent.css 'overflowY', 'scroll'
+
 		@elements.overlay.on('click', ()->
 			root.hideDialog()
 		)
@@ -45,6 +47,21 @@ class Dialog extends HTMLElement
 
 		@append @elements.overlay
 		@append @elements.cardContainer
+
+		# window.addEventListener('resize', ()->
+
+		# 	rect = root.elements.cardContent.rect()
+		# 	cntHeight = root.elements.cardContainer.height()
+
+		# 	console.log rect.height, cntHeight
+
+		# 	if rect.height + root.elements.cardContentAction.height() + root.elements.cardContent.top() > cntHeight
+		# 		height = cntHeight - root.elements.cardContentAction.height() - root.elements.cardContent.top()
+		# 		root.elements.cardContent.css('height', "#{height}px")
+		# 	else
+		# 		root.elements.cardContent.css('height', "auto")
+
+		# , 100)
 
 		@body.append @
 

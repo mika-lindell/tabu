@@ -468,7 +468,7 @@ class ItemCardList extends HTMLElement
 		if target is null and ev.target is root.DOMElement
 
 			last = root.lastChild()
-			rect = last.position() # Get the absolute position relative to document, not to the offset, as we are comparing to mouse coords 
+			rect = last.rect() # Get the absolute position relative to document, not to the offset, as we are comparing to mouse coords 
 
 			if root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY
 				# Insert as last item if dragging: 

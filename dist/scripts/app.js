@@ -705,7 +705,7 @@
       }
     };
 
-    HTMLElement.prototype.position = function() {
+    HTMLElement.prototype.rect = function() {
       return this.DOMElement.getBoundingClientRect();
     };
 
@@ -1670,7 +1670,7 @@
       }
       if (target === null && ev.target === root.DOMElement) {
         last = root.lastChild();
-        rect = last.position();
+        rect = last.rect();
         if (root.draggedItem.element.DOMElement !== last.DOMElement && rect.left < ev.clientX && rect.top < ev.clientY) {
           console.log('dragOverHandler: Append, empty space');
           root.append(root.draggedItem.element);
