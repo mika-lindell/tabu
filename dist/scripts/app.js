@@ -2703,7 +2703,7 @@
       };
       this.recentlyClosed.done = function() {
         var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of this session.");
+        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.");
         return list.create();
       };
       this.otherDevices.done = function() {

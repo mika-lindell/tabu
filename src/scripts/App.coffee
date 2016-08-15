@@ -66,7 +66,7 @@ class App
 
 		@recentlyClosed.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of this session.")
+			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.")
 			list.create()
 
 		@otherDevices.done = ()->
