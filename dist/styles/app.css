@@ -6532,7 +6532,8 @@ Structure
 ***/
 body {
   overflow-y: scroll;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  min-width: 450px; }
 
 .section-heading {
   display: inline-block;
@@ -6622,15 +6623,23 @@ Toast
   position: fixed;
   margin-top: -0.1rem;
   left: 50%;
-  min-width: 100px;
+  min-width: 400px;
+  max-width: 80%;
   transform: translateX(-50%);
   box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: none;
   opacity: 0.98; }
+  .toast .toast-content {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .toast .btn, .toast .btn-large {
     font-size: 1rem;
     font-weight: 400;
-    margin-left: 1rem; }
+    margin-left: 1rem;
+    min-width: 4rem;
+    white-space: nowrap; }
 
 /***
 

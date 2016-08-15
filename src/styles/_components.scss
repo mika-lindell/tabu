@@ -90,11 +90,19 @@ Toast
 	position: fixed;
 	margin-top: -0.1rem;
 	left: 50%;
-	min-width: 100px;
+	min-width: 400px;
+	max-width: 80%;
 	transform: translateX(-50%);
 	box-shadow: $shadow-outset-large;
 	transition: none;
 	opacity: 0.98;
+
+	.toast-content{
+		display: inline-block;
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	}
 
 	@extend .layer-context-menu;
 
@@ -102,6 +110,8 @@ Toast
 		font-size: 1rem;
 		font-weight: 400;
 		margin-left: 1rem;
+		min-width: 4rem;
+		white-space: nowrap;
 	}
 }
 

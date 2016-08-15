@@ -241,7 +241,7 @@ class ItemCardList extends HTMLElement
 		root.save()
 
 		if allowUndo
-			new Toast("<strong>#{item.element.title}</strong>&nbsp;deleted.", 'Undo', ()->
+			new Toast("Deleted&nbsp;<strong>#{item.element.title}</strong>.", 'Undo', ()->
 				result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
 				new Animation(result.element, 1).highlight()
@@ -396,6 +396,10 @@ class ItemCardList extends HTMLElement
 
 			@ghost.element.css('left', ev.clientX + 20  + 'px')
 			@ghost.element.css('top', ev.clientY + 'px')
+
+			# Make sure animations or transitions doesn't sffect the ghost
+			@ghost.element.css('transition', 'none')
+			@ghost.element.css('animation', 'none')
 
 			@ghost.initialX = ev.clientX
 			@ghost.initialY = ev.clientY

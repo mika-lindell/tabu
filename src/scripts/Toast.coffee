@@ -3,12 +3,15 @@ class Toast
 	constructor: (msg, buttonLabel = null, buttonCallback = null,  duration = 5.0)->
 
 		container = new HTMLElement('div')
+		content = new HTMLElement('span')
 		body = new HTMLElement('body')
 		# animation = new Animation(container)
 
 		container.addClass 'toast'
 		container.addClass 'anim-toast-in'
-		container.html msg.replace(' ', '&nbsp;')
+
+		content.addClass 'toast-content'
+		content.html msg.replace(' ', '&nbsp;')
 
 		if buttonLabel? and buttonCallback?
 			button = new HTMLElement('button')
@@ -28,6 +31,7 @@ class Toast
 				buttonCallback()
 			)
 
+			container.append content
 			container.append button
 
 		body.append container

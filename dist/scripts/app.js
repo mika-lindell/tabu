@@ -866,7 +866,7 @@
 
   Toast = (function() {
     function Toast(msg, buttonLabel, buttonCallback, duration) {
-      var body, button, cleanup, container;
+      var body, button, cleanup, container, content;
       if (buttonLabel == null) {
         buttonLabel = null;
       }
@@ -877,10 +877,12 @@
         duration = 5.0;
       }
       container = new HTMLElement('div');
+      content = new HTMLElement('span');
       body = new HTMLElement('body');
       container.addClass('toast');
       container.addClass('anim-toast-in');
-      container.html(msg.replace(' ', '&nbsp;'));
+      content.addClass('toast-content');
+      content.html(msg.replace(' ', '&nbsp;'));
       if ((buttonLabel != null) && (buttonCallback != null)) {
         button = new HTMLElement('button');
         button.addClass('btn');
@@ -889,6 +891,7 @@
           cleanup();
           return buttonCallback();
         });
+        container.append(content);
         container.append(button);
       }
       body.append(container);
@@ -1446,7 +1449,7 @@
       this.ifTheListHasNoItems();
       root.save();
       if (allowUndo) {
-        return new Toast("<strong>" + item.element.title + "</strong>&nbsp;deleted.", 'Undo', function() {
+        return new Toast("Deleted&nbsp;<strong>" + item.element.title + "</strong>.", 'Undo', function() {
           var result;
           result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
           root.save();
@@ -1603,6 +1606,8 @@
         this.ghost.element.css('width', from.width('px'));
         this.ghost.element.css('left', ev.clientX + 20 + 'px');
         this.ghost.element.css('top', ev.clientY + 'px');
+        this.ghost.element.css('transition', 'none');
+        this.ghost.element.css('animation', 'none');
         this.ghost.initialX = ev.clientX;
         this.ghost.initialY = ev.clientY;
         this.updateGhost(ev);
