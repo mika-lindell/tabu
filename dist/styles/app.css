@@ -6266,13 +6266,6 @@ nav i.material-icons,
 Font for logo
 
 ***/
-@font-face {
-  font-family: 'Logo';
-  src: url(./assets/logo/NineteenOhFive.woff2) format("woff2"); }
-.logo-font, .logo {
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased; }
-
 /***
 
 Font sizes
@@ -6293,13 +6286,17 @@ Some special text styles
 
 ***/
 .logo {
-  font-family: 'Logo';
-  font-size: 2.5rem;
-  line-height: 1em;
-  margin-bottom: 0;
-  cursor: default; }
-  .logo.logo-small {
-    font-size: 1.5rem; }
+  font-family: 'Roboto';
+  font-size: 1.4rem;
+  line-height: 4.5rem;
+  margin: 1rem auto;
+  cursor: default;
+  color: white;
+  background-color: #1B84C3;
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  font-weight: 300; }
 
 /***
 
@@ -6588,6 +6585,28 @@ Dialog
   opacity: 1;
   max-height: 90%;
   overflow-y: scroll; }
+  .dialog::-webkit-scrollbar {
+    width: 10px;
+    height: 10px; }
+  .dialog::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px; }
+  .dialog::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 0px; }
+  .dialog::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8; }
+  .dialog::-webkit-scrollbar-thumb:active {
+    background: #a8a8a8; }
+  .dialog::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0px; }
+  .dialog::-webkit-scrollbar-track:hover {
+    background: #f1f1f1; }
+  .dialog::-webkit-scrollbar-track:active {
+    background: #f1f1f1; }
+  .dialog::-webkit-scrollbar-corner {
+    background: transparent; }
   .dialog p {
     max-width: 600px; }
   .dialog .card-action {

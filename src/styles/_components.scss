@@ -37,6 +37,38 @@ Dialog
 	@extend .layer-dialog;
 	@extend .valign;
 
+	&::-webkit-scrollbar {
+	  width: 10px;
+	  height: 10px;
+	}
+	&::-webkit-scrollbar-button {
+	  width: 0px;
+	  height: 0px;
+	}
+	&::-webkit-scrollbar-thumb {
+	  background: #c1c1c1;
+	  border-radius: 0px;
+	}
+	&::-webkit-scrollbar-thumb:hover {
+	  background: #a8a8a8 ;
+	}
+	&::-webkit-scrollbar-thumb:active {
+	  background: #a8a8a8 ;
+	}
+	&::-webkit-scrollbar-track {
+	  background: #f1f1f1;
+	  border-radius: 0px;
+	}
+	&::-webkit-scrollbar-track:hover {
+	  background: #f1f1f1 ;
+	}
+	&::-webkit-scrollbar-track:active {
+	  background: #f1f1f1 ;
+	}
+	&::-webkit-scrollbar-corner {
+	  background: transparent;
+	}
+
 	p{
 		max-width: 600px;
 	}

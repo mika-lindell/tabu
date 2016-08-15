@@ -55,15 +55,15 @@ Font for logo
 
 ***/
 
-@font-face{
-	font-family: 'Logo';
-  src: url(./assets/logo/NineteenOhFive.woff2) format('woff2')
-}
+// @font-face{
+// 	font-family: 'Logo';
+//   src: url(./assets/logo/NineteenOhFive.woff2) format('woff2')
+// }
 
-.logo-font{
-	-webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-}
+// .logo-font{
+// 	-webkit-font-feature-settings: 'liga';
+//   -webkit-font-smoothing: antialiased;
+// }
 
 /***
 
@@ -90,15 +90,15 @@ Some special text styles
 ***/
 
 .logo{
-  font-family: 'Logo';
-  font-size: 2.5rem;
-  line-height: 1em;
-  margin-bottom: 0;
-  cursor: default;
-
-  &.logo-small{
-    font-size: 1.5rem;
-  }
-
-  @extend .logo-font;
+    font-family: 'Roboto';
+    font-size: 1.4rem;
+    line-height: 4.5rem;
+    margin: 1rem auto;
+    cursor: default;
+    color: white;
+    background-color: #1B84C3;
+    border-radius: 50%;
+    width: 4.5rem;
+    height: 4.5rem;
+    font-weight: 300;
 }

@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     // Linting
     jshint: {
-      files: ['Gruntfile.js'],
+      files: ['Gruntfile.js', './dist/manifest.json'],
     },
 
     // Haml compiler, requires Ruby with HAML to be installed.
