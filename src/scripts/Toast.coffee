@@ -1,11 +1,10 @@
 class Toast
 
-	constructor: (msg, buttonLabel = null, buttonCallback = null,  duration = 5.0)->
+	constructor: (msg, iconName = null, buttonLabel = null, buttonCallback = null,  duration = 5.0)->
 
 		container = new HTMLElement('div')
 		content = new HTMLElement('span')
 		body = new HTMLElement('body')
-		# animation = new Animation(container)
 
 		container.addClass 'toast'
 		container.addClass 'anim-toast-in'
@@ -18,13 +17,12 @@ class Toast
 			button.addClass 'btn'
 			button.text	buttonLabel
 
-			# if buttonIcon?
-			# 	console.log  buttonIcon
-			# 	icon = new HTMLElement('i')
-			# 	icon.addClass 'material-icons'
-			# 	icon.addClass 'left'
-			# 	icon.text buttonIcon
-			# 	button.append icon
+			if iconName?
+				icon = new HTMLElement('i')
+				icon.addClass 'material-icons'
+				icon.addClass 'left'
+				icon.text iconName
+				container.append icon
 
 			button.on('click', ()->
 				cleanup()

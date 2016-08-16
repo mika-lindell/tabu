@@ -865,8 +865,11 @@
   })();
 
   Toast = (function() {
-    function Toast(msg, buttonLabel, buttonCallback, duration) {
-      var body, button, cleanup, container, content;
+    function Toast(msg, iconName, buttonLabel, buttonCallback, duration) {
+      var body, button, cleanup, container, content, icon;
+      if (iconName == null) {
+        iconName = null;
+      }
       if (buttonLabel == null) {
         buttonLabel = null;
       }
@@ -887,6 +890,13 @@
         button = new HTMLElement('button');
         button.addClass('btn');
         button.text(buttonLabel);
+        if (iconName != null) {
+          icon = new HTMLElement('i');
+          icon.addClass('material-icons');
+          icon.addClass('left');
+          icon.text(iconName);
+          container.append(icon);
+        }
         button.on('click', function() {
           cleanup();
           return buttonCallback();
@@ -1449,7 +1459,7 @@
       this.ifTheListHasNoItems();
       root.save();
       if (allowUndo) {
-        return new Toast("Deleted&nbsp;<strong>" + item.element.title + "</strong>.", 'Undo', function() {
+        return new Toast("Deleted <strong>" + item.element.title + "</strong>", 'delete_forever', 'Undo', function() {
           var result;
           result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
           root.save();

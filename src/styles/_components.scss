@@ -99,9 +99,14 @@ Toast
 
 	.toast-content{
 		display: inline-block;
+		font-size: 1rem;
 	  white-space: nowrap;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
+	  max-width: 400px;
+	  strong{
+	  	margin: 0 0.2rem;
+	  }
 	}
 
 	@extend .layer-context-menu;

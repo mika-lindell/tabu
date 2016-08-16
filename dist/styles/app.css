@@ -6631,9 +6631,13 @@ Toast
   opacity: 0.98; }
   .toast .toast-content {
     display: inline-block;
+    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    max-width: 400px; }
+    .toast .toast-content strong {
+      margin: 0 0.2rem; }
   .toast .btn, .toast .btn-large {
     font-size: 1rem;
     font-weight: 400;

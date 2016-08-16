@@ -102,21 +102,13 @@ class ChromeAPI
 
 			# Get counts for total items
 			devicesCount = source.length
-			# deviceTotals = new Array()
-			# total = 0
-
-			# for item in source
-			# 	count = item.sessions[0].window.tabs.length
-			# 	deviceTotals.push count
-			# 	total += count
-
-			# console.log devicesCount, total, deviceTotals
 
 			for item, i in source
 
 				result.push({ 'heading': item.deviceName }) # Add the device as heading
 
 				for tab, i in item.sessions[0].window.tabs
+					# Make sure all items aren't from one device, if there are sessions from multiple devices
 					if i is Math.round(root.limit / devicesCount) then break
 					addToResult tab.title, tab.url, result  # Add tabs from this session
 
