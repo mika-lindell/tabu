@@ -106,3 +106,12 @@ Helpers
 	}
 
 }
+
+a[target="_blank"]::after{
+	
+	content: "open_in_new";
+  font-size: 1rem;
+  vertical-align: text-bottom;
+
+	@extend .material-icons;
+}

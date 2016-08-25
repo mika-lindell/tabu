@@ -2597,7 +2597,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons, .edit-actions li::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -4352,11 +4352,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6232,7 +6232,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: url(./assets/material-design-icons/material_icons.woff2) format("woff2"); }
-.material-icons, .edit-actions li::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6291,7 +6291,7 @@ Some special text styles
   line-height: 4.5rem;
   margin: 1rem auto;
   cursor: default;
-  color: white;
+  color: white !important;
   background-color: #1B84C3;
   border-radius: 50%;
   width: 4.5rem;
@@ -6376,6 +6376,11 @@ Helpers
   left: 0; }
   .overlay .valign, noscript .valign, #loader .valign, .dialog-container .valign, .overlay .dialog, noscript .dialog, #loader .dialog, .dialog-container .dialog {
     width: 100%; }
+
+a[target="_blank"]::after {
+  content: "open_in_new";
+  font-size: 1rem;
+  vertical-align: text-bottom; }
 
 /***
 
@@ -6613,7 +6618,9 @@ Dialog
   .dialog::-webkit-scrollbar-corner {
     background: transparent; }
   .dialog p {
-    max-width: 600px; }
+    max-width: 350px;
+    margin-left: auto !important;
+    margin-right: auto !important; }
   .dialog .card-action {
     text-align: right; }
 

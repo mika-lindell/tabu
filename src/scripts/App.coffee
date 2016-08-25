@@ -98,7 +98,7 @@ class App
 		)
 
 		about = new Dialog()
-		about.setTitle('About TABU')
+		about.setTitle('')
 		about.addButton('Close', ()->
 			about.hideDialog()
 		)

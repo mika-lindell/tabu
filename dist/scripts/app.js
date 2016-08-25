@@ -2737,7 +2737,7 @@
         return document.title = title;
       });
       about = new Dialog();
-      about.setTitle('About TABU');
+      about.setTitle('');
       about.addButton('Close', function() {
         return about.hideDialog();
       });
