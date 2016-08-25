@@ -204,7 +204,7 @@ module.exports = {
   },
   'visibility toggle-button should be in "turn off"-mode': function(browser) {
     browser.expect.element("#visibility-off").to.be.present;
-    browser.expect.element("#visibility-off").text.to.contain('HIDE ALL');
+    browser.expect.element("#visibility-off").text.to.contain('BLANK PAGE');
     return browser.expect.element("#visibility-off").to.be.visible;
   },
   'visibility toggle-button should have visibility_off-icon': function(browser) {
