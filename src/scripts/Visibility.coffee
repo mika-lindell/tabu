@@ -85,7 +85,7 @@ class Visibility
 		@enabler.css('opacity', 0)
 		@disabler.css('opacity', 1)
 
-		@animation.button.animateWidth(40, 110)
+		@animation.button.animateWidth(40, 130)
 		@enabled = true
 
 		console.log "Visibility: On"
