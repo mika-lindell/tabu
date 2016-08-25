@@ -135,6 +135,7 @@ class ItemCard extends HTMLElement
 
 		@elements.badge.text(badgeLabel)
 		@elements.badge.css('backgroundColor', @color)
+		# if @color.opponent then @elements.badge.css('color', @color.opponent)
 
 		@elements.labelUrl.text(hostname)
 

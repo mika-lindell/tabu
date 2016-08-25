@@ -370,7 +370,7 @@
     };
 
     ColorPalette.prototype.fromString = function(string) {
-      var colour, hash, i, rgb, x;
+      var colour, hash, hex, i, rgb, x;
       i = 0;
       hash = 0;
       while (i < string.length) {
@@ -387,7 +387,8 @@
       	  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
        */
       rgb = this.mapColorToPalette(colour);
-      return this.rgbToHex(rgb.r, rgb.g, rgb.b);
+      hex = this.rgbToHex(rgb.r, rgb.g, rgb.b);
+      return hex;
     };
 
     return ColorPalette;
@@ -2484,7 +2485,7 @@
       this.animation.content.intro(instant);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
-      this.animation.button.animateWidth(40, 110);
+      this.animation.button.animateWidth(40, 130);
       this.enabled = true;
       console.log("Visibility: On");
       return this.storage.setVisible(this.enabled);

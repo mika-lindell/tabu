@@ -16,7 +16,7 @@ class ColorPalette
 			return instance
 
 		@palette = [
-			# RED
+		# RED
 			{
 				r: 244
 				g: 67
@@ -94,6 +94,7 @@ class ColorPalette
 				g: 105
 				b: 30
 			}
+
 		]
 
 		return instance
@@ -171,7 +172,7 @@ class ColorPalette
 	#
 	# @param [String] the string to be converted
 	#
-	# @return [String] color hexadecimal format
+	# @return [Object] color hexadecimal format
 	#
 	fromString: (string)->
 
@@ -192,7 +193,9 @@ class ColorPalette
 	  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
 		###
 		rgb = @mapColorToPalette(colour)
-		return @rgbToHex(rgb.r, rgb.g, rgb.b)
+		hex = @rgbToHex(rgb.r, rgb.g, rgb.b)
+
+		return hex
 
 	# # Works, kind of. Not exactly as it should tho -> the max value affects in funny ways
 	# getWithMaxBrightness: (hexCode, max)->
@@ -218,7 +221,7 @@ class ColorPalette
 
 
 	# #https://www.sitepoint.com/javascript-generate-lighter-darker-color/
-	# setLuminance = (hexCode, lum) ->
+	# darken = (hexCode, lum) ->
 	#   # validate hexCode string
 	#   hexCode = String(hexCode).replace(/[^0-9a-f]/gi, '')
 	#   if hexCode.length < 6

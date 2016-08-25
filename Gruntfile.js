@@ -144,7 +144,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd:'node_modules/materialize-css/dist/font/',
-            src: ['**'],
+            src: ['*/*.woff2'],
             dest: './dist/styles/assets/'
           },
         ],

@@ -68,6 +68,10 @@ body{
 	min-width: 450px;
 }
 
+.section-separator{
+	border-bottom: $border-light;
+}
+
 .section-heading{
 	display: inline-block;
 	margin-right: 1rem;
@@ -96,5 +100,6 @@ body{
 
 footer{
 	border-top: $border-light;
-	margin: 3rem;
+	margin-top: 3rem;
+	padding: 2rem 0;
 }

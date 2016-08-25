@@ -282,7 +282,7 @@ li.item-card-heading{
 	padding-right: 1.5rem;
 	padding-left: 0.5rem;
 	width: 100%;
-	max-width: 320px;
+	max-width: 400px;
 	margin-top: 1rem;
 
 	@extend .animated;
@@ -303,9 +303,9 @@ li.item-card-heading{
 	}
 
 	img{
-    position: absolute;
-		bottom: 8px;
-    right: -105px;
+		position: absolute;
+		top: -90px;
+		right: -70px;
   }
 
 }

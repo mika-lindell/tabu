@@ -6535,6 +6535,9 @@ body {
   overflow-x: hidden;
   min-width: 450px; }
 
+.section-separator {
+  border-bottom: 1px solid #c7c7c7; }
+
 .section-heading {
   display: inline-block;
   margin-right: 1rem;
@@ -6558,7 +6561,8 @@ body {
 
 footer {
   border-top: 1px solid #c7c7c7;
-  margin: 3rem; }
+  margin-top: 3rem;
+  padding: 2rem 0; }
 
 /***
 
@@ -6941,7 +6945,7 @@ li.item-card-heading {
   padding-right: 1.5rem;
   padding-left: 0.5rem;
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   margin-top: 1rem; }
   .no-items i {
     height: 100px;
@@ -6955,8 +6959,8 @@ li.item-card-heading {
     display: inline-block; }
   .no-items img {
     position: absolute;
-    bottom: 8px;
-    right: -105px; }
+    top: -90px;
+    right: -70px; }
 
 /***
 
