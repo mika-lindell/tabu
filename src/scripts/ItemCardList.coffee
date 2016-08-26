@@ -284,7 +284,7 @@ class ItemCardList extends HTMLElement
 
 			if title?
 				userInput.fields[0].element.value(title)
-				# userInput.fields[0].element.DOMElement.select()
+				userInput.fields[0].element.DOMElement.select()
 
 			if url?
 				userInput.fields[1].element.value(url)

@@ -1517,6 +1517,7 @@
         }
         if (title != null) {
           userInput.fields[0].element.value(title);
+          userInput.fields[0].element.DOMElement.select();
         }
         if (url != null) {
           userInput.fields[1].element.value(url);
@@ -1734,7 +1735,9 @@
         title = temp.withoutPrefix();
         url = temp.href;
       }
-      root.showUserInputForItem(root.draggedItem, 'addLink', title, url);
+      if (url !== window.location.href) {
+        root.showUserInputForItem(root.draggedItem, 'addLink', title, url);
+      }
       root.draggedItem = null;
       return console.log('dropHandler', title, url);
     };
