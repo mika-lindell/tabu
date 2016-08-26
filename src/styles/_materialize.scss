@@ -19,11 +19,11 @@ $roboto-font-path: "./assets/roboto/";
 $navbar-height: 50px;
 $navbar-height-mobile: 50px;
 $navbar-font-color: #5a5a5a;
-$button-background-focus: #1B84C3;
-$button-raised-background: #1B84C3;
-$button-raised-background-hover: color('light-blue', 'darken-2');
+$button-background-focus: color('blue', 'darken-1');
+$button-raised-background:color('blue', 'darken-1');
+$button-raised-background-hover: color('blue', 'base');
 $dropdown-color: #5a5a5a;
-$input-focus-color: color('light-blue', 'lighten-1');
+$input-focus-color: color('light-blue', 'base');
 
 // Reset
 @import "../../node_modules/materialize-css/sass/components/normalize";
