@@ -531,7 +531,9 @@ class ItemCardList extends HTMLElement
 			title = temp.withoutPrefix()
 			url = temp.href
 		
-		root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
+
+		if url isnt window.location.href
+			root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
 
 		root.draggedItem = null
 
