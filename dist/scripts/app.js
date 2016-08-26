@@ -90,6 +90,7 @@
       this.search = parser.search;
       this.hash = parser.hash;
       parser = null;
+      return this;
     }
 
     Url.prototype.withoutPrefix = function() {
@@ -1715,7 +1716,7 @@
     };
 
     dropHandler = function(ev, root) {
-      var data, title, url;
+      var data, temp, title, url;
       ev.preventDefault();
       ev.stopPropagation();
       data = {
@@ -1729,18 +1730,11 @@
         title = data.title;
         url = data.url;
       } else {
-        title = null;
-        url = ev.dataTransfer.getData('text/uri-list');
+        temp = new Url(ev.dataTransfer.getData('text/uri-list'));
+        title = temp.withoutPrefix();
+        url = temp.href;
       }
-      if (title === '') {
-        title = null;
-      }
-      if (url === '') {
-        url = null;
-      }
-      if ((title != null) || (url != null)) {
-        root.showUserInputForItem(root.draggedItem, 'addLink', title, url);
-      }
+      root.showUserInputForItem(root.draggedItem, 'addLink', title, url);
       root.draggedItem = null;
       return console.log('dropHandler', title, url);
     };

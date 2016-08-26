@@ -22,6 +22,7 @@ class Url
 		@hash = parser.hash
 
 		parser = null
+		return @
 
 	withoutPrefix: ()->
 		# This will remove www. & m. prefixes from url, but will keep subdomains.

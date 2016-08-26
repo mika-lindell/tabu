@@ -284,6 +284,7 @@ class ItemCardList extends HTMLElement
 
 			if title?
 				userInput.fields[0].element.value(title)
+				# userInput.fields[0].element.DOMElement.select()
 
 			if url?
 				userInput.fields[1].element.value(url)
@@ -526,14 +527,11 @@ class ItemCardList extends HTMLElement
 			title = data.title
 			url = data.url
 		else
-			title = null
-			url = ev.dataTransfer.getData('text/uri-list')
-
-		if title is '' then title = null
-		if url is '' then url = null
+			temp = new Url(ev.dataTransfer.getData('text/uri-list'))
+			title = temp.withoutPrefix()
+			url = temp.href
 		
-		if title? or url?
-			root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
+		root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
 
 		root.draggedItem = null
 
