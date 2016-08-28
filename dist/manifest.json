@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "TABU",
-  "description": "A new tab -page that wants you to get to your favorite websites faster.",
-  "version": "0.5.0.1",
+  "name": "TABU – The New Tab Page",
+  "description": "Less is more – we focus on what you need to do to start surfing – not to show you the news or weather.",
+  "version": "0.5.0.3",
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",
