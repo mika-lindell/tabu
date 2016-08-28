@@ -37,7 +37,9 @@ class ItemCardList extends HTMLElement
 		@editActions =
 			container: null
 			edit: null
+			separator: null
 			delete: null
+
 		@userInput = 
 			link: null
 
@@ -122,12 +124,17 @@ class ItemCardList extends HTMLElement
 		@editActions.edit.text('Edit')
 		initDragOverEffect @editActions.edit
 
+		@editActions.separator = new HTMLElement('li')
+		@editActions.separator.addClass('edit-actions-separator')
+		@editActions.separator.text('Or')
+
 		@editActions.delete = new HTMLElement('li')
 		@editActions.delete.addClass('edit-actions-delete')
-		@editActions.delete.text('Delete')
+		@editActions.delete.text('Remove')
 		initDragOverEffect @editActions.delete
 
 		@editActions.container.append @editActions.edit
+		@editActions.container.append @editActions.separator
 		@editActions.container.append @editActions.delete
 		
 		@editActions.container.on('dragover', ()->
@@ -241,7 +248,7 @@ class ItemCardList extends HTMLElement
 		root.save()
 
 		if allowUndo
-			new Toast("Deleted <strong>#{item.element.title}</strong>", 'delete_forever' ,'Undo', ()->
+			new Toast("The link has been removed.", null ,'Undo', ()->
 				result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
 				new Animation(result.element, 1).highlight()

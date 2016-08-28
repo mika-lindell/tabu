@@ -6183,12 +6183,6 @@ select {
 nav {
   box-shadow: none; }
 
-i.left {
-  margin-right: 10px; }
-
-i.right {
-  margin-left: 10px; }
-
 input[type="url"],
 input[type="text"] {
   background-color: #FFF;
@@ -6632,6 +6626,7 @@ Toast
 .toast {
   top: 0;
   position: fixed;
+  background-color: #404040;
   margin-top: -0.1rem;
   left: 50%;
   max-width: 80%;
@@ -6653,7 +6648,9 @@ Toast
     font-weight: 400;
     margin-left: 1rem;
     min-width: 4rem;
-    white-space: nowrap; }
+    white-space: nowrap;
+    color: #a1c2fa;
+    padding: 0; }
 
 /***
 
@@ -6687,12 +6684,15 @@ Dropdown
 Button styles
 
 ***/
+.btn .material-icons, .btn-large .material-icons, .btn a[target="_blank"]::after, .btn-large a[target="_blank"]::after, .btn .edit-actions li::before, .edit-actions .btn li::before, .btn-large .edit-actions li::before, .edit-actions .btn-large li::before {
+  vertical-align: bottom; }
+
 .btn.teal, .teal.btn-large {
   background-color: #26a69a; }
   .btn.teal:hover, .teal.btn-large:hover {
     background-color: #4db6ac; }
   .btn.teal:active, .teal.btn-large:active {
-    background-color: #26a69a; }
+    background-color: #4db6ac; }
 
 .btn:active, .btn-large:active,
 .btn-large:active {
@@ -6752,13 +6752,8 @@ button.title {
 
 #actions button {
   margin-bottom: 0.6rem;
-  width: 47%; }
-  #actions button:first-child {
-    margin-left: 0;
-    margin-right: 0.6rem; }
-  #actions button:last-child {
-    margin-right: 0;
-    margin-left: 0.6rem; }
+  width: 47%;
+  margin-right: 0.6rem; }
 
 #go-incognito i.material-icons {
   font-size: 1.35rem; }
@@ -6799,7 +6794,7 @@ Item card styles
   position: fixed;
   top: 0;
   left: 50%;
-  width: 400px;
+  width: 445px;
   margin-top: 0;
   margin-left: -200px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -6812,10 +6807,11 @@ Item card styles
     content: 'Drop Here To';
     display: block;
     text-align: center;
-    padding: 0.6rem;
+    padding: 1.2rem;
     background-color: #1E88E5;
     color: white;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    font-weight: 300; }
   .edit-actions li {
     display: inline-block;
     text-align: center;
@@ -6823,32 +6819,32 @@ Item card styles
     line-height: 70px;
     border-radius: 2px;
     border: 2px dashed transparent; }
-    .edit-actions li:nth-child(odd) {
-      margin-right: 10px; }
+    .edit-actions li:nth-child(2) {
+      margin: 0 10px; }
     .edit-actions li::before {
       margin-right: 0.5rem;
       margin-top: -0.2rem;
       vertical-align: middle; }
+  .edit-actions .edit-actions-separator {
+    color: #FFF;
+    font-weight: 300; }
+  .edit-actions .edit-actions-edit,
+  .edit-actions .edit-actions-delete {
+    color: #FFF;
+    background-color: #1E88E5;
+    border-color: #FFF;
+    font-weight: 500; }
+    .edit-actions .edit-actions-edit.drag-over,
+    .edit-actions .edit-actions-delete.drag-over {
+      background-color: #26a69a; }
   .edit-actions .edit-actions-edit {
-    width: 250px;
-    color: #1B5E20;
-    background-color: #E8F5E9;
-    border-color: #81C784; }
+    width: 250px; }
     .edit-actions .edit-actions-edit::before {
       content: 'edit'; }
-    .edit-actions .edit-actions-edit.drag-over {
-      color: #FFF;
-      background-color: #2E7D32; }
   .edit-actions .edit-actions-delete {
-    width: 120px;
-    color: #B71C1C;
-    background-color: #FFEBEE;
-    border-color: #EF9A9A; }
+    width: 130px; }
     .edit-actions .edit-actions-delete::before {
       content: 'delete_forever'; }
-    .edit-actions .edit-actions-delete.drag-over {
-      color: #FFF;
-      background-color: #C62828; }
 
 .item-card-list {
   min-height: 4.75rem;
@@ -6979,7 +6975,7 @@ Responsive
     width: 90%; }
 
   #actions button {
-    width: 40%; }
+    width: 39%; }
 
   .item-card-label-container {
     width: 66%; }

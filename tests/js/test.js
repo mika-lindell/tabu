@@ -7,7 +7,7 @@ module.exports = {
    */
   before: function(browser) {
     browser.url('chrome://newtab');
-    browser.expect.element("#app").to.be.present.after(500);
+    browser.expect.element("#app").to.be.present.after(1000);
     return browser.pause(500);
   },
   after: function(browser) {
@@ -192,7 +192,7 @@ module.exports = {
 
   /*	
   	 *
-  	 * VISIBILITY OFF & NAVBAR
+  	 * NAVBAR
   	 *
    */
   'it should have navbar': function(browser) {
@@ -202,6 +202,12 @@ module.exports = {
     browser.expect.element("#visibility-toggle").to.be.present;
     return browser.expect.element("#visibility-toggle").to.be.visible;
   },
+
+  /*	
+  	 *
+  	 * VISIBILITY OFF
+  	 *
+   */
   'visibility toggle-button should be in "turn off"-mode': function(browser) {
     browser.expect.element("#visibility-off").to.be.present;
     browser.expect.element("#visibility-off").text.to.contain('BLANK PAGE');
@@ -342,6 +348,27 @@ module.exports = {
 
   /*	
   	 *
+  	 * ACTION BUTTONS: APPS
+  	 *
+   */
+  'it should have button to open incognito-window': function(browser) {
+    browser.expect.element("#go-incognito").to.be.present;
+    return browser.expect.element("#go-incognito").text.to.contain('APPS');
+  },
+  'incognito-button should have correct-icon': function(browser) {
+    browser.expect.element("#go-incognito > i.material-icons").to.be.present;
+    return browser.expect.element("#go-incognito > i.material-icons").text.to.equal('apps');
+  },
+  'clicking apps-button should take to apps-page': function(browser) {
+    browser.click("#apps");
+    browser.expect.element(".apps-page").to.be.present.after(500);
+    browser.back();
+    browser.expect.element('#app').to.be.present.after(500);
+    return browser.pause(500);
+  },
+
+  /*	
+  	 *
   	 * ACTION BUTTONS: INCOGNITO
   	 *
    */
@@ -440,12 +467,9 @@ module.exports = {
     return browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable');
   },
   'Top sites, recent bookmarks, recently closed and other devices should not have visual cue about drag and drop': function(browser) {
-    browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present;
-    browser.expect.element('#top-sites-0-link > i.drag-handle').not.to.be.visible;
-    browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present;
-    browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').not.to.be.visible;
-    browser.expect.element('#recently-closed-0-link > i.drag-handle').to.be.present;
-    return browser.expect.element('#recently-closed-0-link > i.drag-handle').not.to.be.visible;
+    browser.expect.element('#top-sites-0-link > i.drag-handle').not.to.be.present;
+    browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').not.to.be.present;
+    return browser.expect.element('#recently-closed-0-link > i.drag-handle').not.to.be.present;
   },
 
   /*

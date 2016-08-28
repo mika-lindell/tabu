@@ -90,6 +90,7 @@ Toast
 .toast{
 	top: 0;
 	position: fixed;
+	background-color: #404040;
 	margin-top: -0.1rem;
 	left: 50%;
 	max-width: 80%;
@@ -118,6 +119,8 @@ Toast
 		margin-left: 1rem;
 		min-width: 4rem;
 		white-space: nowrap;
+		color: #a1c2fa;
+		padding: 0;
 	}
 }
 
@@ -175,21 +178,25 @@ Button styles
 
 ***/
 
+.btn .material-icons{
+	vertical-align: bottom;
+}
+
 .btn.teal{
-	background-color: $teal-lighten-1;
+	background-color: $color-secondary;
 
 	&:hover{
-		background-color: $teal-lighten-2;
+		background-color: $color-secondary-lighten;
 	}
 
 	&:active{
-		background-color: $teal-lighten-1;
+		background-color: $color-secondary-lighten;
 	}
 }
 
 .btn:active,
 .btn-large:active{
-		background-color: $light-blue-darken-3;
+		background-color: $color-primary;
 		box-shadow: $shadow-inset;
 	}
 
@@ -246,7 +253,7 @@ button.title{
 	&.active,
 	&.active:hover{
 		box-shadow: none;
-		background-color: $light-blue-darken-3;
+		background-color: $color-primary;
 		color: $white;
 
 		i.material-icons{
@@ -260,14 +267,14 @@ button.title{
 }
 
 .btn.submit{
-	background-color: $teal-lighten-1;
+	background-color: $color-secondary;
 
 	&:hover{
-		background-color: $teal-lighten-1;
+		background-color: $color-secondary;
 	}
 
 	&:active{
-		background-color: $teal-lighten-1;
+		background-color: $color-secondary;
 	}
 }
 
@@ -281,15 +288,7 @@ button.title{
 	margin-bottom: $action-buttons-gap;
 	width: 47%;
 
-	&:first-child{
-		margin-left: 0;
-		margin-right: $action-buttons-gap;
-	}
-
-	&:last-child{
-		margin-right: 0;
-		margin-left: $action-buttons-gap;
-	}
+	margin-right: $action-buttons-gap;
 }
 
 #go-incognito i.material-icons{
@@ -313,7 +312,7 @@ Forms
 	margin: 0;
 	width: 100%;
 	
-	background-color: $light-blue-darken-3;
+	background-color: $color-primary;
 	box-shadow: $shadow-outset-large;
 
 	&.centered{

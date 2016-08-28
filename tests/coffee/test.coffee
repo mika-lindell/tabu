@@ -9,7 +9,7 @@ module.exports =
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without
-		browser.expect.element("#app").to.be.present.after(500)
+		browser.expect.element("#app").to.be.present.after(1000)
 		browser.pause(500)
 
 	after: (browser)->
@@ -231,7 +231,7 @@ module.exports =
 
 	###	
 	#
-	# VISIBILITY OFF & NAVBAR
+	# NAVBAR
 	#
 	###
 
@@ -241,6 +241,12 @@ module.exports =
 	'navbar should have visibility toggle-button': (browser)->
 		browser.expect.element("#visibility-toggle").to.be.present
 		browser.expect.element("#visibility-toggle").to.be.visible
+
+	###	
+	#
+	# VISIBILITY OFF
+	#
+	###
 
 	'visibility toggle-button should be in "turn off"-mode': (browser)->
 		browser.expect.element("#visibility-off").to.be.present
@@ -388,6 +394,28 @@ module.exports =
 
 	###	
 	#
+	# ACTION BUTTONS: APPS
+	#
+	###
+
+	'it should have button to open incognito-window': (browser)->
+		browser.expect.element("#go-incognito").to.be.present
+		browser.expect.element("#go-incognito").text.to.contain('APPS')
+
+	'incognito-button should have correct-icon': (browser)->
+		browser.expect.element("#go-incognito > i.material-icons").to.be.present
+		browser.expect.element("#go-incognito > i.material-icons").text.to.equal('apps')
+
+	'clicking apps-button should take to apps-page': (browser)->	
+		browser.click("#apps")
+		browser.expect.element(".apps-page").to.be.present.after(500)
+
+		browser.back()
+		browser.expect.element('#app').to.be.present.after(500)
+		browser.pause(500) # Give the extension some time to load JS
+
+	###	
+	#
 	# ACTION BUTTONS: INCOGNITO
 	#
 	###
@@ -504,14 +532,11 @@ module.exports =
 		browser.expect.element("#other-devices-list").not.to.have.attribute('data-list-editable')
 
 	'Top sites, recent bookmarks, recently closed and other devices should not have visual cue about drag and drop': (browser)->
-		browser.expect.element('#top-sites-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#top-sites-0-link > i.drag-handle').not.to.be.visible
+		browser.expect.element('#top-sites-0-link > i.drag-handle').not.to.be.present
 	
-		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').not.to.be.visible
+		browser.expect.element('#latest-bookmarks-0-link > i.drag-handle').not.to.be.present
 
-		browser.expect.element('#recently-closed-0-link > i.drag-handle').to.be.present
-		browser.expect.element('#recently-closed-0-link > i.drag-handle').not.to.be.visible
+		browser.expect.element('#recently-closed-0-link > i.drag-handle').not.to.be.present
 
 
 	###

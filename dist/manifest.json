@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TABU",
-  "description": "The new tab page for Chrome",
+  "description": "A new tab -page that wants you to get to your favorite websites faster.",
   "version": "0.5.0.1",
   "icons": { 
     "16": "icon16.png",

@@ -15,6 +15,7 @@ class Toast
 		if buttonLabel? and buttonCallback?
 			button = new HTMLElement('button')
 			button.addClass 'btn'
+			button.addClass 'btn-link'
 			button.text	buttonLabel
 
 			if iconName?

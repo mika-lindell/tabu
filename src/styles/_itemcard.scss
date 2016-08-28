@@ -10,7 +10,7 @@ Item card styles
 	position: fixed;
 	top: 0;
 	left: 50%;
-	width: 400px;
+	width: 445px;
 	margin-top: 0;
 	margin-left: -200px;
 	box-shadow: $shadow-outset-small;
@@ -18,21 +18,20 @@ Item card styles
 	overflow: hidden;
 	border: $dropzone-border;
   border-top: none;
-  background-color: $light-blue-darken-3;
+  background-color: $color-primary;
 
 	@extend .layer-dialog;
 	@extend .hoverable;
-
-
 
 	&::before{
 		content: 'Drop Here To';
     display: block;
     text-align: center;
-    padding: 0.6rem;
-    background-color: $light-blue-darken-3;
+    padding: 1.2rem;
+    background-color: $color-primary;
     color: white;
     text-transform: uppercase;
+     font-weight: 300;
 	}
 
 	li{
@@ -46,8 +45,8 @@ Item card styles
 		@extend .uppercase;
 		@extend .transitions;
 
-		&:nth-child(odd){
-			margin-right: 10px;
+		&:nth-child(2){
+			margin: 0 10px;
 		}
 
 		&::before{
@@ -60,39 +59,59 @@ Item card styles
 
 	}
 
+	.edit-actions-separator{
+		color: $white;
+		font-weight: 300;
+	}
+
+	.edit-actions-edit,
+	.edit-actions-delete{
+		color: $white;
+		background-color: $color-primary;
+		border-color: $white;	
+		font-weight: 500;
+
+		&.drag-over{
+			// color: $color-primary;
+			background-color: $color-secondary;
+			// border-color: $color-primary;	
+		}
+
+	}
+
 	.edit-actions-edit{
 
 		width: 250px;
-		color: color('green', 'darken-4');
-		background-color: color('green', 'lighten-5');
-		border-color: color('green', 'lighten-2');	
+		// color: color('green', 'darken-4');
+		// background-color: color('green', 'lighten-5');
+		// border-color: color('green', 'lighten-2');	
 
 		&::before{
 			content: 'edit';
 		}
 
-		&.drag-over{
-			color: $white;
-			background-color: color('green', 'darken-3');
+		// &.drag-over{
+		// 	color: $white;
+		// 	background-color: color('green', 'darken-3');
 
-		}
+		// }
 
 	}
 
 	.edit-actions-delete{
-		width: 120px;
-		color: color('red', 'darken-4');
-		background-color: color('red', 'lighten-5');
-		border-color: color('red', 'lighten-3');
+		width: 130px;
+		// color: color('red', 'darken-4');
+		// background-color: color('red', 'lighten-5');
+		// border-color: color('red', 'lighten-3');
 
 		&::before{
 			content: 'delete_forever';
 		}
 
-		&.drag-over{
-			color: $white;
-			background-color: color('red', 'darken-3');
-		}
+		// &.drag-over{
+		// 	color: $white;
+		// 	background-color: color('red', 'darken-3');
+		// }
 
 	}
 

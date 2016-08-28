@@ -891,6 +891,7 @@
       if ((buttonLabel != null) && (buttonCallback != null)) {
         button = new HTMLElement('button');
         button.addClass('btn');
+        button.addClass('btn-link');
         button.text(buttonLabel);
         if (iconName != null) {
           icon = new HTMLElement('i');
@@ -1271,6 +1272,7 @@
       this.editActions = {
         container: null,
         edit: null,
+        separator: null,
         "delete": null
       };
       this.userInput = {
@@ -1336,11 +1338,15 @@
       this.editActions.edit.addClass('edit-actions-edit');
       this.editActions.edit.text('Edit');
       initDragOverEffect(this.editActions.edit);
+      this.editActions.separator = new HTMLElement('li');
+      this.editActions.separator.addClass('edit-actions-separator');
+      this.editActions.separator.text('Or');
       this.editActions["delete"] = new HTMLElement('li');
       this.editActions["delete"].addClass('edit-actions-delete');
-      this.editActions["delete"].text('Delete');
+      this.editActions["delete"].text('Remove');
       initDragOverEffect(this.editActions["delete"]);
       this.editActions.container.append(this.editActions.edit);
+      this.editActions.container.append(this.editActions.separator);
       this.editActions.container.append(this.editActions["delete"]);
       this.editActions.container.on('dragover', function() {
         return actionsDragOverHandler(event, root);
@@ -1461,7 +1467,7 @@
       this.ifTheListHasNoItems();
       root.save();
       if (allowUndo) {
-        return new Toast("Deleted <strong>" + item.element.title + "</strong>", 'delete_forever', 'Undo', function() {
+        return new Toast("The link has been removed.", null, 'Undo', function() {
           var result;
           result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex);
           root.save();
@@ -2606,9 +2612,11 @@
 
     Actions.downloads;
 
+    Actions.apps;
+
     Actions.incognito;
 
-    function Actions(bookmarks, history, downloads, incognito) {
+    function Actions(bookmarks, history, downloads, apps, incognito) {
       if (bookmarks == null) {
         bookmarks = '#view-bookmarks';
       }
@@ -2617,6 +2625,9 @@
       }
       if (downloads == null) {
         downloads = '#view-downloads';
+      }
+      if (apps == null) {
+        apps = '#apps';
       }
       if (incognito == null) {
         incognito = '#go-incognito';
@@ -2642,6 +2653,12 @@
     Actions.prototype.viewDownloads = function() {
       return chrome.tabs.update({
         url: 'chrome://downloads/'
+      });
+    };
+
+    Actions.prototype.viewApps = function() {
+      return chrome.tabs.update({
+        url: 'chrome://apps/'
       });
     };
 
