@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
   "name": "TABU – The New Tab Page",
+  "short_name": "TABU",
   "description": "Less is more – we focus on what you need to do to start surfing – not to show you the news or weather.",
-  "version": "0.5.0.3",
+  "version": "0.5.0.4",
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",
