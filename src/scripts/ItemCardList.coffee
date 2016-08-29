@@ -213,7 +213,7 @@ class ItemCardList extends HTMLElement
 		@ifTheListHasNoItems()
 		return item
 
-	addItem: (title = null, url = null, position = 'last', save = true, showToast = false)->
+	addItem: (title = null, url = null, position = 'last', showToast = false)->
 
 		item = 
 			element: null
@@ -654,8 +654,9 @@ class ItemCardList extends HTMLElement
 
 		data = root.parseDropData(ev)
 		
-		root.addItem(data.title, data.url, 'first', true, true)
-
+		root.addItem(data.title, data.url, 'first', true)
+		root.save()
+		
 		dragDropCleanUp(root)
 
 		console.log 'addDropHandler', data.title, data.url

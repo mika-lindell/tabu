@@ -1422,7 +1422,7 @@
       return item;
     };
 
-    ItemCardList.prototype.addItem = function(title, url, position, save, showToast) {
+    ItemCardList.prototype.addItem = function(title, url, position, showToast) {
       var item;
       if (title == null) {
         title = null;
@@ -1432,9 +1432,6 @@
       }
       if (position == null) {
         position = 'last';
-      }
-      if (save == null) {
-        save = true;
       }
       if (showToast == null) {
         showToast = false;
@@ -1842,7 +1839,8 @@
       ev.preventDefault();
       ev.stopPropagation();
       data = root.parseDropData(ev);
-      root.addItem(data.title, data.url, 'first', true, true);
+      root.addItem(data.title, data.url, 'first', true);
+      root.save();
       dragDropCleanUp(root);
       return console.log('addDropHandler', data.title, data.url);
     };
