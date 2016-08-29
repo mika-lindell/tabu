@@ -1,7 +1,7 @@
 # Generate list of itemCards from given data
 #
 class ItemCardList extends HTMLElement
-	
+
 	@baseId
 	
 	@items
@@ -40,6 +40,7 @@ class ItemCardList extends HTMLElement
 			separator: null
 			delete: null
 			add: null
+			isActive: false
 
 		@userInput = 
 			link: null
@@ -112,6 +113,10 @@ class ItemCardList extends HTMLElement
 			bodyDragStartHandler(event, root)
 		)
 
+		@body.on('dragenter', ()->
+			bodyDragEnterHandler(event, root)
+		)
+
 		@body.on('dragover', ()->
 			bodyDragOverHandler(event, root)
 		)
@@ -152,7 +157,7 @@ class ItemCardList extends HTMLElement
 		@editActions.container.append @editActions.delete
 		@editActions.container.append @editActions.add
 		
-		@editActions.container.on('dragover', ()->
+		@editActions.edit.on('dragover', ()->
 			actionsDragOverHandler(event, root)
 		)
 
@@ -160,10 +165,17 @@ class ItemCardList extends HTMLElement
 			editDropHandler(event, root)
 		)
 
+		@editActions.delete.on('dragover', ()->
+			actionsDragOverHandler(event, root)
+		)
+
 		@editActions.delete.on('drop', ()->
 			deleteDropHandler(event, root)
 		)
 
+		@editActions.add.on('dragover', ()->
+			actionsDragOverHandler(event, root, 'copyLink')
+		)
 		@editActions.add.on('drop', ()->
 			addDropHandler(event, root)
 		)
@@ -191,9 +203,11 @@ class ItemCardList extends HTMLElement
 			@editActions.add.hide()
 
 		new Animation(@editActions.container, 0.2).slideIn()
+		@editActions.isActive = true
 
 	hideEditActions: ()->
 		new Animation(@editActions.container, 0.2).slideOut()
+		@editActions.isActive = false
 
 	addHeading: (title, position = 'last')->
 
@@ -249,7 +263,11 @@ class ItemCardList extends HTMLElement
 			
 		@ifTheListHasNoItems()
 
-		if showToast then new Toast("1 link was added to Speed Dial.", null)
+		if showToast 
+			temp = new Toolbars()
+			new Toast("1 link was added to Speed Dial.", null, 'View', ()->
+				temp.speedDial(temp)
+			)
 		return item
 
 	save: ()->
@@ -501,7 +519,7 @@ class ItemCardList extends HTMLElement
 		ev.stopPropagation()
 
 		# Disable all DnD if currently have add link dialog open
-		if root.userInput.active 
+		if root.userInput.link.active 
 			ev.dataTransfer.dropEffect = "none"
 		else
 			ev.dataTransfer.dropEffect = "copyLink"
@@ -514,7 +532,7 @@ class ItemCardList extends HTMLElement
 		ev.stopPropagation()
 
 		# Disable all DnD if currently have add link dialog open
-		if root.userInput.active then return
+		if root.userInput.link.active then return
 
 		target = root.getItemForElement(ev.target.closest('li'))
 		changed = false
@@ -603,11 +621,12 @@ class ItemCardList extends HTMLElement
 
 		root.save()
 
-	actionsDragOverHandler = (ev, root)->
+	actionsDragOverHandler = (ev, root, effect="move")->
 
 		ev.preventDefault()
 		ev.stopPropagation()
-		ev.dataTransfer.dropEffect = "move"
+
+		ev.dataTransfer.dropEffect = effect
 		root.updateGhost(ev)
 
 	editDropHandler = (ev, root)->
@@ -652,6 +671,8 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 
+		ev.dataTransfer.dropEffect = "copyLink"
+
 		data = root.parseDropData(ev)
 		
 		root.addItem(data.title, data.url, 'first', true)
@@ -663,7 +684,7 @@ class ItemCardList extends HTMLElement
 
 	bodyDragStartHandler = (ev, root)->
 		if root.container.css('display') is 'none'
-			if not root.userInput.active then root.showEditActions('add')
+			if not root.editActions.isActive  then root.showEditActions('add')
 
 	bodyDragOverHandler = (ev, root)->
 
@@ -677,6 +698,12 @@ class ItemCardList extends HTMLElement
 			root.draggedItem = null				
 		else
 			root.updateGhost(ev)
+
+	bodyDragEnterHandler = (ev, root)->
+		# In case of this DnD-operation is going on while Speed Dial is hidden and coming from outside source
+		if root.acceptFromOutsideSource(ev) and root.container.css('display') is 'none'
+
+			if not root.editActions.isActive then root.showEditActions('add') # Show edit actions to add item to Speed dial
 
 	bodyDragEndHandler = (ev, root)->
 		if root.container.css('display') is 'none'

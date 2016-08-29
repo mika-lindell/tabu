@@ -1229,7 +1229,7 @@
   })(HTMLElement);
 
   ItemCardList = (function(superClass) {
-    var actionsDragOverHandler, addDropHandler, bodyDragEndHandler, bodyDragOverHandler, bodyDragStartHandler, deleteDropHandler, dragDropCleanUp, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler, initDragOverEffect;
+    var actionsDragOverHandler, addDropHandler, bodyDragEndHandler, bodyDragEnterHandler, bodyDragOverHandler, bodyDragStartHandler, deleteDropHandler, dragDropCleanUp, dragEndHandler, dragOverHandler, dragOverUpdateCursor, dropHandler, editDropHandler, initDragOverEffect;
 
     extend(ItemCardList, superClass);
 
@@ -1274,7 +1274,8 @@
         edit: null,
         separator: null,
         "delete": null,
-        add: null
+        add: null,
+        isActive: false
       };
       this.userInput = {
         link: null
@@ -1329,6 +1330,9 @@
       this.body.on('dragstart', function() {
         return bodyDragStartHandler(event, root);
       });
+      this.body.on('dragenter', function() {
+        return bodyDragEnterHandler(event, root);
+      });
       this.body.on('dragover', function() {
         return bodyDragOverHandler(event, root);
       });
@@ -1360,14 +1364,20 @@
       this.editActions.container.append(this.editActions.separator);
       this.editActions.container.append(this.editActions["delete"]);
       this.editActions.container.append(this.editActions.add);
-      this.editActions.container.on('dragover', function() {
+      this.editActions.edit.on('dragover', function() {
         return actionsDragOverHandler(event, root);
       });
       this.editActions.edit.on('drop', function() {
         return editDropHandler(event, root);
       });
+      this.editActions["delete"].on('dragover', function() {
+        return actionsDragOverHandler(event, root);
+      });
       this.editActions["delete"].on('drop', function() {
         return deleteDropHandler(event, root);
+      });
+      this.editActions.add.on('dragover', function() {
+        return actionsDragOverHandler(event, root, 'copyLink');
       });
       this.editActions.add.on('drop', function() {
         return addDropHandler(event, root);
@@ -1394,11 +1404,13 @@
         this.editActions["delete"].show('inline-block');
         this.editActions.add.hide();
       }
-      return new Animation(this.editActions.container, 0.2).slideIn();
+      new Animation(this.editActions.container, 0.2).slideIn();
+      return this.editActions.isActive = true;
     };
 
     ItemCardList.prototype.hideEditActions = function() {
-      return new Animation(this.editActions.container, 0.2).slideOut();
+      new Animation(this.editActions.container, 0.2).slideOut();
+      return this.editActions.isActive = false;
     };
 
     ItemCardList.prototype.addHeading = function(title, position) {
@@ -1423,7 +1435,7 @@
     };
 
     ItemCardList.prototype.addItem = function(title, url, position, showToast) {
-      var item;
+      var item, temp;
       if (title == null) {
         title = null;
       }
@@ -1465,7 +1477,10 @@
       }
       this.ifTheListHasNoItems();
       if (showToast) {
-        new Toast("1 link was added to Speed Dial.", null);
+        temp = new Toolbars();
+        new Toast("1 link was added to Speed Dial.", null, 'View', function() {
+          return temp.speedDial(temp);
+        });
       }
       return item;
     };
@@ -1721,7 +1736,7 @@
     dragOverUpdateCursor = function(ev, root) {
       ev.preventDefault();
       ev.stopPropagation();
-      if (root.userInput.active) {
+      if (root.userInput.link.active) {
         ev.dataTransfer.dropEffect = "none";
       } else {
         ev.dataTransfer.dropEffect = "copyLink";
@@ -1733,7 +1748,7 @@
       var changed, item, last, rect, target;
       ev.preventDefault();
       ev.stopPropagation();
-      if (root.userInput.active) {
+      if (root.userInput.link.active) {
         return;
       }
       target = root.getItemForElement(ev.target.closest('li'));
@@ -1801,10 +1816,13 @@
       return root.save();
     };
 
-    actionsDragOverHandler = function(ev, root) {
+    actionsDragOverHandler = function(ev, root, effect) {
+      if (effect == null) {
+        effect = "move";
+      }
       ev.preventDefault();
       ev.stopPropagation();
-      ev.dataTransfer.dropEffect = "move";
+      ev.dataTransfer.dropEffect = effect;
       return root.updateGhost(ev);
     };
 
@@ -1838,6 +1856,7 @@
       var data;
       ev.preventDefault();
       ev.stopPropagation();
+      ev.dataTransfer.dropEffect = "copyLink";
       data = root.parseDropData(ev);
       root.addItem(data.title, data.url, 'first', true);
       root.save();
@@ -1847,7 +1866,7 @@
 
     bodyDragStartHandler = function(ev, root) {
       if (root.container.css('display') === 'none') {
-        if (!root.userInput.active) {
+        if (!root.editActions.isActive) {
           return root.showEditActions('add');
         }
       }
@@ -1862,6 +1881,14 @@
         return root.draggedItem = null;
       } else {
         return root.updateGhost(ev);
+      }
+    };
+
+    bodyDragEnterHandler = function(ev, root) {
+      if (root.acceptFromOutsideSource(ev) && root.container.css('display') === 'none') {
+        if (!root.editActions.isActive) {
+          return root.showEditActions('add');
+        }
       }
     };
 
@@ -2588,6 +2615,8 @@
   })();
 
   Toolbars = (function() {
+    var instance;
+
     Toolbars.speedDialContainer;
 
     Toolbars.topSitesContainer;
@@ -2598,8 +2627,15 @@
 
     Toolbars.storage;
 
+    instance = null;
+
     function Toolbars() {
       var getSavedStatus, root, speedDialSelect, topSitesSelect;
+      if (!instance) {
+        instance = this;
+      } else {
+        return instance;
+      }
       this.speedDialContainer = new HTMLElement('#speed-dial');
       this.topSitesContainer = new HTMLElement('#top-sites');
       speedDialSelect = new Dropdown('#speed-dial-select');

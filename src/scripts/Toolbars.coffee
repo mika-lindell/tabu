@@ -8,7 +8,14 @@ class Toolbars
 
 	@storage
 
+	instance = null
+
 	constructor: ()->
+		# Make this a singleton
+		if not instance
+			instance = this
+		else
+			return instance
 
 		@speedDialContainer = new HTMLElement('#speed-dial')
 		@topSitesContainer = new HTMLElement('#top-sites')
