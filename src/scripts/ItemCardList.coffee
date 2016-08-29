@@ -39,6 +39,7 @@ class ItemCardList extends HTMLElement
 			edit: null
 			separator: null
 			delete: null
+			add: null
 
 		@userInput = 
 			link: null
@@ -107,8 +108,16 @@ class ItemCardList extends HTMLElement
 		# So that the DnD ghost is updated outside the containing element
 		@body = new HTMLElement('body')
 
+		@body.on('dragstart', ()->
+			bodyDragStartHandler(event, root)
+		)
+
 		@body.on('dragover', ()->
 			bodyDragOverHandler(event, root)
+		)
+
+		@body.on('dragend', ()->
+			bodyDragEndHandler(event, root)
 		)
 
 		@userInput.link = new UserInput('user-input-add-link', '')
@@ -133,9 +142,15 @@ class ItemCardList extends HTMLElement
 		@editActions.delete.text('Remove')
 		initDragOverEffect @editActions.delete
 
+		@editActions.add = new HTMLElement('li')
+		@editActions.add.addClass('edit-actions-add')
+		@editActions.add.text('Add To Speed Dial')
+		initDragOverEffect @editActions.add
+
 		@editActions.container.append @editActions.edit
 		@editActions.container.append @editActions.separator
 		@editActions.container.append @editActions.delete
+		@editActions.container.append @editActions.add
 		
 		@editActions.container.on('dragover', ()->
 			actionsDragOverHandler(event, root)
@@ -149,6 +164,10 @@ class ItemCardList extends HTMLElement
 			deleteDropHandler(event, root)
 		)
 
+		@editActions.add.on('drop', ()->
+			addDropHandler(event, root)
+		)
+
 		@body.append @editActions.container
 
 		new HTMLElement('#menu-add-link').on('click', (ev)-> 
@@ -158,7 +177,19 @@ class ItemCardList extends HTMLElement
 		@attr('data-list-editable', '')
 
 
-	showEditActions: ()->
+	showEditActions: (mode = 'edit')->
+
+		if mode is 'add'
+			@editActions.edit.hide()
+			@editActions.separator.hide()
+			@editActions.delete.hide()
+			@editActions.add.show('inline-block')
+		else
+			@editActions.edit.show('inline-block')
+			@editActions.separator.show('inline-block')
+			@editActions.delete.show('inline-block')
+			@editActions.add.hide()
+
 		new Animation(@editActions.container, 0.2).slideIn()
 
 	hideEditActions: ()->
@@ -182,7 +213,7 @@ class ItemCardList extends HTMLElement
 		@ifTheListHasNoItems()
 		return item
 
-	addItem: (title = null, url = null, position = 'last', save = true)->
+	addItem: (title = null, url = null, position = 'last', save = true, showToast = false)->
 
 		item = 
 			element: null
@@ -217,6 +248,8 @@ class ItemCardList extends HTMLElement
 			@updateNewItemPosition null, position
 			
 		@ifTheListHasNoItems()
+
+		if showToast then new Toast("1 link was added to Speed Dial.", null)
 		return item
 
 	save: ()->
@@ -248,7 +281,7 @@ class ItemCardList extends HTMLElement
 		root.save()
 
 		if allowUndo
-			new Toast("The link has been removed.", null ,'Undo', ()->
+			new Toast("1 link was removed from Speed Dial.", null ,'Undo', ()->
 				result = root.addItem(item.element.title, item.element.url.href, item.element.origIndex)
 				root.save()
 				new Animation(result.element, 1).highlight()
@@ -394,6 +427,25 @@ class ItemCardList extends HTMLElement
 		else
 			return false
 
+	parseDropData: (ev)->
+
+		droppedData =
+			title: null
+			url: null
+
+		if ev.dataTransfer.types.indexOf('text/json') isnt -1
+			droppedData = JSON.parse(ev.dataTransfer.getData('text/json'))
+
+		if droppedData.title? and droppedData.url?
+			title = droppedData.title
+			url = droppedData.url
+		else
+			temp = new Url(ev.dataTransfer.getData('text/uri-list'))
+			title = temp.withoutPrefix()
+			url = temp.href
+
+		return {title: title, url: url}
+
 	createGhost: (ev, from)->
 
 		if from?
@@ -482,7 +534,10 @@ class ItemCardList extends HTMLElement
 			last = root.lastChild()
 			rect = last.rect() # Get the absolute position relative to document, not to the offset, as we are comparing to mouse coords 
 
-			if root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY
+			console.log (rect.top + rect.height) > ev.clientY, root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY and (rect.top + rect.height) > ev.clientY
+
+			# Here we calculate if the position of the dragged item is on the list, but not over any list item
+			if root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY and (rect.top + rect.height) > ev.clientY
 				# Insert as last item if dragging: 
 				# - over empty space at the end of list
 				console.log 'dragOverHandler: Append, empty space'
@@ -523,28 +578,14 @@ class ItemCardList extends HTMLElement
 		ev.preventDefault()
 		ev.stopPropagation()
 
-		data =
-			title: null
-			url: null
-
-		if ev.dataTransfer.types.indexOf('text/json') isnt -1
-			data = JSON.parse(ev.dataTransfer.getData('text/json'))
-
-		if data.title? and data.url?
-			title = data.title
-			url = data.url
-		else
-			temp = new Url(ev.dataTransfer.getData('text/uri-list'))
-			title = temp.withoutPrefix()
-			url = temp.href
+		data = root.parseDropData(ev)
 		
+		if data.url isnt window.location.href
+			root.showUserInputForItem(root.draggedItem, 'addLink', data.title, data.url)
 
-		if url isnt window.location.href
-			root.showUserInputForItem(root.draggedItem, 'addLink', title, url)
+		dragDropCleanUp(root)
 
-		root.draggedItem = null
-
-		console.log 'dropHandler', title, url
+		console.log 'dropHandler', data.title, data.url
 
 
 	dragEndHandler = (ev, root)->
@@ -605,7 +646,24 @@ class ItemCardList extends HTMLElement
 		dragDropCleanUp(root)
 
 		root.save()
+	
+	addDropHandler = (ev, root)->
+
+		ev.preventDefault()
+		ev.stopPropagation()
+
+		data = root.parseDropData(ev)
 		
+		root.addItem(data.title, data.url, 'first', true, true)
+
+		dragDropCleanUp(root)
+
+		console.log 'addDropHandler', data.title, data.url
+
+	bodyDragStartHandler = (ev, root)->
+		if root.container.css('display') is 'none'
+			if not root.userInput.active then root.showEditActions('add')
+
 	bodyDragOverHandler = (ev, root)->
 
 		ev.preventDefault()
@@ -618,6 +676,10 @@ class ItemCardList extends HTMLElement
 			root.draggedItem = null				
 		else
 			root.updateGhost(ev)
+
+	bodyDragEndHandler = (ev, root)->
+		if root.container.css('display') is 'none'
+			root.hideEditActions()
 
 	dragDropCleanUp = (root)->
 

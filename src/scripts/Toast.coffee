@@ -12,25 +12,26 @@ class Toast
 		content.addClass 'toast-content'
 		content.html msg.replace(' ', '&nbsp;')
 
+		if iconName?
+			icon = new HTMLElement('i')
+			icon.addClass 'material-icons'
+			icon.addClass 'left'
+			icon.text iconName
+			container.append icon
+
+		container.append content
+
 		if buttonLabel? and buttonCallback?
 			button = new HTMLElement('button')
 			button.addClass 'btn'
 			button.addClass 'btn-link'
 			button.text	buttonLabel
 
-			if iconName?
-				icon = new HTMLElement('i')
-				icon.addClass 'material-icons'
-				icon.addClass 'left'
-				icon.text iconName
-				container.append icon
-
 			button.on('click', ()->
 				cleanup()
 				buttonCallback()
 			)
 
-			container.append content
 			container.append button
 
 		body.append container
