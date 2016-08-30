@@ -2,6 +2,7 @@ class Toolbars
 
 	@speedDialContainer
 	@topSitesContainer
+	@contentContainer
 
 	@speedDialSelect
 	@topSitesSelect
@@ -19,9 +20,12 @@ class Toolbars
 
 		@speedDialContainer = new HTMLElement('#speed-dial')
 		@topSitesContainer = new HTMLElement('#top-sites')
+
+		@contentContainer = new HTMLElement('#content-container')
+		@storage = new Storage
+
 		speedDialSelect = new Dropdown('#speed-dial-select')
 		topSitesSelect = new Dropdown('#top-sites-select')
-		@storage = new Storage
 
 		root = @
 
@@ -55,13 +59,14 @@ class Toolbars
 
 		@storage.getView(getSavedStatus) 
 
-	speedDial: (root, instant = false)->
+	speedDial: (root, instant = false, done = null)->
 
 		if instant
 			root.speedDialContainer.show()
 			root.topSitesContainer.hide()
+			if done? then done()
 		else
-			root.animateTransition(root.topSitesContainer, root.speedDialContainer)
+			root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, done)
 
 		root.storage.setView('speedDial')
 
@@ -71,18 +76,38 @@ class Toolbars
 			root.speedDialContainer.hide()
 			root.topSitesContainer.show()
 		else
-			root.animateTransition(root.speedDialContainer, root.topSitesContainer)
+			root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer)
 
 		root.storage.setView('topSites')
 
-	animateTransition: (from, to)->
-		outro = new Animation(from)
-		intro = new Animation(to)
+	animateTransition: (from, to, container, done = null)->
 
-		oldHeight = outro.animate.height()
+		console.log container
 
-		outro.done = ()->
-			intro.animateHeight(oldHeight)
-			intro.intro()
+		anim = new Animation(container)
 
-		outro.outro(true)
+		complete = ()->
+			from.hide()
+			to.show()
+			anim.intro()
+			if done? then done()
+
+		anim.outro(false, complete)
+
+
+
+		# outro = new Animation(from)
+		# intro = new Animation(to)
+
+		# rest = new Animation(@secondaryContainer)
+
+		# oldHeight = outro.animate.height()
+
+		# done = ()->
+		# 	intro.animateHeight(oldHeight, null, done)
+		# 	intro.intro()
+		# 	rest.intro()
+		
+		# outro.outro(false, done)
+		# rest.outro()
+

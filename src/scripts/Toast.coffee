@@ -1,6 +1,11 @@
 class Toast
 
+	instance = null
+
 	constructor: (msg, iconName = null, buttonLabel = null, buttonCallback = null,  duration = 5.0)->
+
+		if not instance?
+			instance = this
 
 		container = new HTMLElement('div')
 		content = new HTMLElement('span')
@@ -34,9 +39,8 @@ class Toast
 
 			container.append button
 
-		body.append container
-
 		cleanup = ()->
+			# Do cleanup unless already hidden
 			if container?
 
 				container.removeClass 'anim-toast-in'
@@ -47,9 +51,10 @@ class Toast
 					container = null
 				, 500
 
-		# Outro and cleanup if not hidden yet by user interaction
-		if container?
-			setTimeout ()->
-				cleanup()
-			, duration * 1000
+		body.append container
+
+		# Time the cleanup
+		setTimeout ()->
+			cleanup()
+		, duration * 1000
 

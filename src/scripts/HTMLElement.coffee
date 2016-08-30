@@ -257,7 +257,7 @@ class HTMLElement
 
 		if display is 'none' then @show()
 		width = @DOMElement.offsetWidth
-		if display is 'none' then @hide()
+		if display is 'none' then @show()
 		return if unit? then "#{width}px" else width
 
 	height: (unit = null)->
@@ -270,7 +270,36 @@ class HTMLElement
 		return if unit? then "#{height}px" else height
 
 	rect: ()->
-		return @DOMElement.getBoundingClientRect()
+
+		display = @css('display')
+
+		if display is 'none' then @show()
+		rect = @DOMElement.getBoundingClientRect()
+		if display is 'none' then @show()
+		return rect
+
+	scrollToMe: (offset = 0, duration = 0.2) ->
+
+		rect = @rect()
+		final = @top()
+
+		animationDuration = duration * 1000
+		frameDuration = 10
+		currentFrame = 0
+		totalFrames = Math.round(animationDuration / frameDuration)
+		perFrame = Math.round(rect.top / totalFrames)
+
+		tick = ()->
+
+			if currentFrame < totalFrames
+				window.scrollTo(0, window.scrollY + perFrame)
+				currentFrame++
+				setTimeout(tick, frameDuration)
+			else
+				# If it's last frame scroll to final position (per frame movement is approximate)
+				window.scrollTo(0, final + offset)
+
+		tick()
 
 	clone: ()->
 		return new HTMLElement(@DOMElement.cloneNode(true))

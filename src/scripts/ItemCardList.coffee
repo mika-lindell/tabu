@@ -234,6 +234,8 @@ class ItemCardList extends HTMLElement
 
 	addItem: (title = null, url = null, position = 'last', showToast = false)->
 
+		root = @
+
 		item = 
 			element: null
 			type: 'link'
@@ -269,10 +271,19 @@ class ItemCardList extends HTMLElement
 		@ifTheListHasNoItems()
 
 		if showToast 
-			temp = new Toolbars()
+			toolbar = new Toolbars()
 			new Toast("1 link was added to Speed Dial.", null, 'View', ()->
-				temp.speedDial(temp)
+				# Switch to speed dial if needed
+				if root.container.css('display') is 'none'
+					toolbar.speedDial(toolbar, false, ()->
+						window.scrollTo(0,0)
+					)
+				else
+					# Scroll to top of the Speed dial
+					root.scrollToMe(-100)
+				
 			)
+
 		return item
 
 	save: ()->
@@ -710,7 +721,7 @@ class ItemCardList extends HTMLElement
 
 	bodyDragEnterHandler = (ev, root)->
 		# In case of this DnD-operation is going on while Speed Dial is hidden and coming from outside source
-		if root.acceptFromOutsideSource(ev) && not root.isInViewport(100)
+		if root.acceptFromOutsideSource(ev) #&& not root.isInViewport(150)
 
 			if not root.editActions.isActive then root.showEditActions('add') # Show edit actions to add item to Speed dial
 

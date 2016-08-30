@@ -687,7 +687,7 @@
       }
       width = this.DOMElement.offsetWidth;
       if (display === 'none') {
-        this.hide();
+        this.show();
       }
       if (unit != null) {
         return width + "px";
@@ -717,7 +717,43 @@
     };
 
     HTMLElement.prototype.rect = function() {
-      return this.DOMElement.getBoundingClientRect();
+      var display, rect;
+      display = this.css('display');
+      if (display === 'none') {
+        this.show();
+      }
+      rect = this.DOMElement.getBoundingClientRect();
+      if (display === 'none') {
+        this.show();
+      }
+      return rect;
+    };
+
+    HTMLElement.prototype.scrollToMe = function(offset, duration) {
+      var animationDuration, currentFrame, final, frameDuration, perFrame, rect, tick, totalFrames;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (duration == null) {
+        duration = 0.2;
+      }
+      rect = this.rect();
+      final = this.top();
+      animationDuration = duration * 1000;
+      frameDuration = 10;
+      currentFrame = 0;
+      totalFrames = Math.round(animationDuration / frameDuration);
+      perFrame = Math.round(rect.top / totalFrames);
+      tick = function() {
+        if (currentFrame < totalFrames) {
+          window.scrollTo(0, window.scrollY + perFrame);
+          currentFrame++;
+          return setTimeout(tick, frameDuration);
+        } else {
+          return window.scrollTo(0, final + offset);
+        }
+      };
+      return tick();
     };
 
     HTMLElement.prototype.clone = function() {
@@ -876,6 +912,10 @@
   })();
 
   Toast = (function() {
+    var instance;
+
+    instance = null;
+
     function Toast(msg, iconName, buttonLabel, buttonCallback, duration) {
       var body, button, cleanup, container, content, icon;
       if (iconName == null) {
@@ -889,6 +929,9 @@
       }
       if (duration == null) {
         duration = 5.0;
+      }
+      if (instance == null) {
+        instance = this;
       }
       container = new HTMLElement('div');
       content = new HTMLElement('span');
@@ -916,7 +959,6 @@
         });
         container.append(button);
       }
-      body.append(container);
       cleanup = function() {
         if (container != null) {
           container.removeClass('anim-toast-in');
@@ -927,11 +969,10 @@
           }, 500);
         }
       };
-      if (container != null) {
-        setTimeout(function() {
-          return cleanup();
-        }, duration * 1000);
-      }
+      body.append(container);
+      setTimeout(function() {
+        return cleanup();
+      }, duration * 1000);
     }
 
     return Toast;
@@ -1034,7 +1075,6 @@
       var root;
       root = this;
       root.show('flex');
-      this.animation.done = null;
       this.animation.moveIn();
       return setTimeout(function() {
         return root.css('opacity', '1');
@@ -1042,13 +1082,13 @@
     };
 
     Dialog.prototype.hideDialog = function() {
-      var root;
+      var done, root;
       root = this;
-      this.animation.done = function() {
+      done = function() {
         return root.hide();
       };
       root.css('opacity', '0');
-      return this.animation.moveOut();
+      return this.animation.moveOut(done);
     };
 
     return Dialog;
@@ -1449,7 +1489,7 @@
     };
 
     ItemCardList.prototype.addItem = function(title, url, position, showToast) {
-      var item, temp;
+      var item, root, toolbar;
       if (title == null) {
         title = null;
       }
@@ -1462,6 +1502,7 @@
       if (showToast == null) {
         showToast = false;
       }
+      root = this;
       item = {
         element: null,
         type: 'link'
@@ -1491,9 +1532,15 @@
       }
       this.ifTheListHasNoItems();
       if (showToast) {
-        temp = new Toolbars();
+        toolbar = new Toolbars();
         new Toast("1 link was added to Speed Dial.", null, 'View', function() {
-          return temp.speedDial(temp);
+          if (root.container.css('display') === 'none') {
+            return toolbar.speedDial(toolbar, false, function() {
+              return window.scrollTo(0, 0);
+            });
+          } else {
+            return root.scrollToMe(-100);
+          }
         });
       }
       return item;
@@ -1901,7 +1948,7 @@
     };
 
     bodyDragEnterHandler = function(ev, root) {
-      if (root.acceptFromOutsideSource(ev) && !root.isInViewport(100)) {
+      if (root.acceptFromOutsideSource(ev)) {
         if (!root.editActions.isActive) {
           return root.showEditActions('add');
         }
@@ -2241,8 +2288,6 @@
 
     Animation.animParams;
 
-    Animation.done;
-
     function Animation(animate, duration) {
       if (duration == null) {
         duration = 0.3;
@@ -2293,8 +2338,11 @@
       }
     };
 
-    Animation.prototype.animationIn = function(cssClass, display, withOpacity) {
+    Animation.prototype.animationIn = function(cssClass, done, display, withOpacity) {
       var cleanUp, container, root;
+      if (done == null) {
+        done = null;
+      }
       if (display == null) {
         display = 'block';
       }
@@ -2314,15 +2362,18 @@
       cleanUp = function() {
         container.removeClass(cssClass);
         root.afterAnimation();
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.animationOut = function(cssClass, withOpacity) {
+    Animation.prototype.animationOut = function(cssClass, done, withOpacity) {
       var cleanUp, container, root;
+      if (done == null) {
+        done = null;
+      }
       if (withOpacity == null) {
         withOpacity = true;
       }
@@ -2337,8 +2388,8 @@
         container.hide();
         container.removeClass(cssClass);
         root.afterAnimation();
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       return setTimeout(cleanUp, this.duration * 1000);
@@ -2348,38 +2399,53 @@
       return this.animationIn('anim-highlight', false, false);
     };
 
-    Animation.prototype.moveIn = function(display) {
+    Animation.prototype.moveIn = function(done, display) {
+      if (done == null) {
+        done = null;
+      }
       if (display == null) {
         display = 'block';
       }
       return this.animationIn('anim-move-in', display);
     };
 
-    Animation.prototype.moveOut = function() {
-      return this.animationOut('anim-move-out');
+    Animation.prototype.moveOut = function(done) {
+      if (done == null) {
+        done = null;
+      }
+      return this.animationOut('anim-move-out', done);
     };
 
-    Animation.prototype.slideIn = function(display) {
+    Animation.prototype.slideIn = function(done, display) {
+      if (done == null) {
+        done = null;
+      }
       if (display == null) {
         display = 'block';
       }
-      return this.animationIn('anim-slide-in', display);
+      return this.animationIn('anim-slide-in', done, display);
     };
 
-    Animation.prototype.slideOut = function() {
-      return this.animationOut('anim-slide-out');
+    Animation.prototype.slideOut = function(done) {
+      if (done == null) {
+        done = null;
+      }
+      return this.animationOut('anim-slide-out', done);
     };
 
-    Animation.prototype.animateHeight = function(from, to) {
+    Animation.prototype.animateHeight = function(from, to, done) {
       var cleanUp, container, play, root;
       if (to == null) {
         to = null;
+      }
+      if (done == null) {
+        done = null;
       }
       root = this;
       container = this.animate;
       root.beforeAnimation(false, true);
       container.css('overflow', 'hidden');
-      if (to == null) {
+      if ((to == null) || to === -1) {
         to = container.height();
       }
       if (from == null) {
@@ -2394,17 +2460,20 @@
         container.css('overflow', 'visible');
         container.css('height', 'auto');
         root.afterAnimation(false, true);
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.animateWidth = function(from, to) {
+    Animation.prototype.animateWidth = function(from, to, done) {
       var cleanUp, container, play, root;
       if (to == null) {
         to = null;
+      }
+      if (done == null) {
+        done = null;
       }
       root = this;
       container = this.animate;
@@ -2422,17 +2491,20 @@
       setTimeout(play, 0);
       cleanUp = function() {
         root.afterAnimation(false, true);
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
-    Animation.prototype.intro = function(instant) {
+    Animation.prototype.intro = function(instant, done) {
       var cleanUp, container, root;
       if (instant == null) {
         instant = false;
+      }
+      if (done == null) {
+        done = null;
       }
       root = this;
       container = this.animate;
@@ -2445,8 +2517,8 @@
       cleanUp = function() {
         container.removeClass('intro');
         root.afterAnimation(true, false);
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       if (!instant) {
@@ -2456,10 +2528,13 @@
       }
     };
 
-    Animation.prototype.outro = function(instant) {
+    Animation.prototype.outro = function(instant, done) {
       var cleanUp, container, root;
       if (instant == null) {
         instant = false;
+      }
+      if (done == null) {
+        done = null;
       }
       root = this;
       container = this.animate;
@@ -2472,8 +2547,8 @@
         container.hide();
         container.removeClass('outro');
         root.afterAnimation(true, false);
-        if (root.done != null) {
-          return root.done();
+        if (done != null) {
+          return done();
         }
       };
       if (!instant) {
@@ -2581,7 +2656,7 @@
     }
 
     Visibility.prototype.enable = function(instant) {
-      var root;
+      var done, root;
       if (instant == null) {
         instant = false;
       }
@@ -2590,10 +2665,10 @@
         return;
       }
       this.executing = true;
-      this.animation.content.done = function() {
+      done = function() {
         return root.executing = false;
       };
-      this.animation.content.intro(instant);
+      this.animation.content.intro(instant, done);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
       this.animation.button.animateWidth(40, 130);
@@ -2603,7 +2678,7 @@
     };
 
     Visibility.prototype.disable = function(instant) {
-      var root;
+      var done, root;
       if (instant == null) {
         instant = false;
       }
@@ -2612,10 +2687,10 @@
         return;
       }
       this.executing = true;
-      this.animation.content.done = function() {
+      done = function() {
         return root.executing = false;
       };
-      this.animation.content.outro(instant);
+      this.animation.content.outro(instant, done);
       this.enabler.css('opacity', 1);
       this.disabler.css('opacity', 0);
       this.animation.button.animateWidth(110, 40);
@@ -2635,6 +2710,8 @@
 
     Toolbars.topSitesContainer;
 
+    Toolbars.contentContainer;
+
     Toolbars.speedDialSelect;
 
     Toolbars.topSitesSelect;
@@ -2652,9 +2729,10 @@
       }
       this.speedDialContainer = new HTMLElement('#speed-dial');
       this.topSitesContainer = new HTMLElement('#top-sites');
+      this.contentContainer = new HTMLElement('#content-container');
+      this.storage = new Storage;
       speedDialSelect = new Dropdown('#speed-dial-select');
       topSitesSelect = new Dropdown('#top-sites-select');
-      this.storage = new Storage;
       root = this;
       speedDialSelect.addItem('Switch to Top Sites', 'menu-top-sites', function() {
         return root.topSites(root);
@@ -2680,15 +2758,21 @@
       this.storage.getView(getSavedStatus);
     }
 
-    Toolbars.prototype.speedDial = function(root, instant) {
+    Toolbars.prototype.speedDial = function(root, instant, done) {
       if (instant == null) {
         instant = false;
+      }
+      if (done == null) {
+        done = null;
       }
       if (instant) {
         root.speedDialContainer.show();
         root.topSitesContainer.hide();
+        if (done != null) {
+          done();
+        }
       } else {
-        root.animateTransition(root.topSitesContainer, root.speedDialContainer);
+        root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, done);
       }
       return root.storage.setView('speedDial');
     };
@@ -2701,21 +2785,27 @@
         root.speedDialContainer.hide();
         root.topSitesContainer.show();
       } else {
-        root.animateTransition(root.speedDialContainer, root.topSitesContainer);
+        root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer);
       }
       return root.storage.setView('topSites');
     };
 
-    Toolbars.prototype.animateTransition = function(from, to) {
-      var intro, oldHeight, outro;
-      outro = new Animation(from);
-      intro = new Animation(to);
-      oldHeight = outro.animate.height();
-      outro.done = function() {
-        intro.animateHeight(oldHeight);
-        return intro.intro();
+    Toolbars.prototype.animateTransition = function(from, to, container, done) {
+      var anim, complete;
+      if (done == null) {
+        done = null;
+      }
+      console.log(container);
+      anim = new Animation(container);
+      complete = function() {
+        from.hide();
+        to.show();
+        anim.intro();
+        if (done != null) {
+          return done();
+        }
       };
-      return outro.outro(true);
+      return anim.outro(false, complete);
     };
 
     return Toolbars;

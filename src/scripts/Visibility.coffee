@@ -77,10 +77,10 @@ class Visibility
 		if @executing then return
 		@executing = true
 
-		@animation.content.done = ()->
+		done = ()->
 			root.executing = false
 
-		@animation.content.intro(instant)
+		@animation.content.intro(instant, done)
 
 		@enabler.css('opacity', 0)
 		@disabler.css('opacity', 1)
@@ -102,10 +102,10 @@ class Visibility
 		if @executing then return
 		@executing = true
 
-		@animation.content.done = ()->
+		done = ()->
 			root.executing = false
 
-		@animation.content.outro(instant)
+		@animation.content.outro(instant, done)
 
 		@enabler.css('opacity', 1)
 		@disabler.css('opacity', 0)

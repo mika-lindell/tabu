@@ -94,7 +94,6 @@ class Dialog extends HTMLElement
 
 		root.show('flex')
 
-		@animation.done = null
 		@animation.moveIn()
 
 		setTimeout(()->
@@ -105,9 +104,9 @@ class Dialog extends HTMLElement
 
 		root = @
 
-		@animation.done = ()->
+		done = ()->
 			root.hide()
 
 		root.css('opacity', '0')
 
-		@animation.moveOut()
+		@animation.moveOut(done)

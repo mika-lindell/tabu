@@ -5,7 +5,6 @@ class Animation
 	@animate
 	@duration # Duration of animations
 	@animParams
-	@done 
 
 	constructor: (animate, duration = 0.3)->
 
@@ -34,7 +33,7 @@ class Animation
 		if animation then @animate.css('animationDuration',  @animParams.origAnimDuration)
 		if transition then @animate.css('transition',  @animParams.origTransition)
 
-	animationIn: (cssClass, display = 'block', withOpacity = true)->
+	animationIn: (cssClass, done = null, display = 'block', withOpacity = true)->
 
 		root = @
 		container = @animate
@@ -48,11 +47,11 @@ class Animation
 		cleanUp = ()->
 			container.removeClass(cssClass)
 			root.afterAnimation()
-			if root.done? then root.done()
-
+			if done? then done()
+			
 		setTimeout(cleanUp, @duration * 1000)
 
-	animationOut: (cssClass, withOpacity = true)->
+	animationOut: (cssClass, done = null, withOpacity = true)->
 		root = @
 		container = @animate
 
@@ -64,8 +63,8 @@ class Animation
 			container.hide()
 			container.removeClass(cssClass)
 			root.afterAnimation()
-			if root.done? then root.done()
-
+			if done? then done()
+			
 		setTimeout(cleanUp, @duration * 1000)
 
 	highlight: ()->
@@ -86,7 +85,7 @@ class Animation
 
 		# setTimeout(cleanUp, @duration * 1000)
 
-	moveIn: (display = 'block')->
+	moveIn: (done = null, display = 'block')->
 
 		@animationIn 'anim-move-in', display
 
@@ -107,9 +106,9 @@ class Animation
 
 		# setTimeout(cleanUp, @duration * 1000)
 
-	moveOut: ()->
+	moveOut: (done = null)->
 
-		@animationOut 'anim-move-out'
+		@animationOut 'anim-move-out', done
 
 		# root = @
 		# container = @animate
@@ -127,9 +126,9 @@ class Animation
 
 		# setTimeout(cleanUp, @duration * 1000)
 
-	slideIn: (display = 'block')->
+	slideIn: (done = null, display = 'block')->
 
-		@animationIn 'anim-slide-in', display
+		@animationIn 'anim-slide-in', done, display
 		# root = @
 		# container = @animate
 
@@ -147,9 +146,9 @@ class Animation
 
 		# setTimeout(cleanUp, @duration * 1000)
 
-	slideOut: ()->
+	slideOut: (done = null)->
 
-		@animationOut 'anim-slide-out'
+		@animationOut 'anim-slide-out', done
 
 		# root = @
 		# container = @animate
@@ -167,7 +166,7 @@ class Animation
 
 		# setTimeout(cleanUp, @duration * 1000)
 
-	animateHeight: (from, to = null)->
+	animateHeight: (from, to = null, done = null)->
 
 		root = @
 		container = @animate
@@ -175,7 +174,7 @@ class Animation
 		root.beforeAnimation false, true
 		container.css('overflow', 'hidden')
 
-		if not to?
+		if not to? or to is -1
 			to = container.height()
 
 		if not from?
@@ -192,11 +191,11 @@ class Animation
 			container.css('overflow', 'visible')
 			container.css('height', 'auto')
 			root.afterAnimation false, true
-			if root.done? then root.done()
-
+			if done? then done()
+			
 		setTimeout(cleanUp, @duration * 1000)
 
-	animateWidth: (from, to = null)->
+	animateWidth: (from, to = null, done = null)->
 		
 		root = @
 		container = @animate
@@ -218,7 +217,7 @@ class Animation
 		
 		cleanUp = ()->
 			root.afterAnimation false, true
-			if root.done? then root.done()
+			if done? then done()
 
 		setTimeout(cleanUp, @duration * 1000)
 
@@ -227,7 +226,7 @@ class Animation
 	#
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
-	intro: (instant = false)->
+	intro: (instant = false, done = null)->
 
 		root = @
 		container = @animate
@@ -242,8 +241,8 @@ class Animation
 		cleanUp = ()->
 			container.removeClass('intro')
 			root.afterAnimation true, false
-			if root.done? then root.done()
-
+			if done? then done()
+			
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
 		else
@@ -255,7 +254,7 @@ class Animation
 	#
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
-	outro: (instant = false)->
+	outro: (instant = false, done = null)->
 
 		root = @
 		container = @animate
@@ -269,7 +268,8 @@ class Animation
 			container.hide()
 			container.removeClass('outro')
 			root.afterAnimation true, false
-			if root.done? then root.done()
+			if done? then done()
+			
 
 		if not instant
 			setTimeout(cleanUp, @duration * 1000)
