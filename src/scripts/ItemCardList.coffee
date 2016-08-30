@@ -120,7 +120,12 @@ class ItemCardList extends HTMLElement
 		@body.on('dragover', ()->
 			bodyDragOverHandler(event, root)
 		)
-
+		@body.on('dragleave', ()->
+			# So on OS level DnD the dragend doesn't fire - just enter and leave -events
+			# Hence we have to do this to test if the dragleave was caused by the drag operation ending
+			if event.clientX is 0 and event.clientY is 0 and event.screenX is 0 and event.screenY is 0
+				bodyDragEndHandler(event, root)
+		)
 		@body.on('dragend', ()->
 			bodyDragEndHandler(event, root)
 		)
@@ -537,6 +542,15 @@ class ItemCardList extends HTMLElement
 		target = root.getItemForElement(ev.target.closest('li'))
 		changed = false
 
+		# Get the absolute position relative to document, not to the offset, 
+		# as we are comparing to mouse coords 
+		last = root.lastChild()
+		rect = last.rect() 
+
+		# This will remove the 'Add Here' -placeholder starting from wrong position 
+		# and snapping to right place (ugly) when dragging from below the list
+		if rect.bottom < ev.clientY then return
+
 		if not root.draggedItem?
 
 			if root.acceptFromOutsideSource(ev)
@@ -548,11 +562,6 @@ class ItemCardList extends HTMLElement
 				root.addClass('drag-in-progress')
 
 		if target is null and ev.target is root.DOMElement
-
-			last = root.lastChild()
-			rect = last.rect() # Get the absolute position relative to document, not to the offset, as we are comparing to mouse coords 
-
-			console.log (rect.top + rect.height) > ev.clientY, root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY and (rect.top + rect.height) > ev.clientY
 
 			# Here we calculate if the position of the dragged item is on the list, but not over any list item
 			if root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY and (rect.top + rect.height) > ev.clientY
@@ -701,13 +710,12 @@ class ItemCardList extends HTMLElement
 
 	bodyDragEnterHandler = (ev, root)->
 		# In case of this DnD-operation is going on while Speed Dial is hidden and coming from outside source
-		if root.acceptFromOutsideSource(ev) and root.container.css('display') is 'none'
+		if root.acceptFromOutsideSource(ev) && not root.isInViewport(100)
 
 			if not root.editActions.isActive then root.showEditActions('add') # Show edit actions to add item to Speed dial
 
 	bodyDragEndHandler = (ev, root)->
-		if root.container.css('display') is 'none'
-			root.hideEditActions()
+		root.hideEditActions()
 
 	dragDropCleanUp = (root)->
 

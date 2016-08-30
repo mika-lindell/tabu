@@ -85,7 +85,7 @@ class ItemCard extends HTMLElement
 
 		@elements.empty = new HTMLElement('div')
 		@elements.empty.addClass('item-card-empty')
-		@elements.empty.text('Add New Link')
+		@elements.empty.text('Add Here')
 
 		if title?
 			@setTitle(title)

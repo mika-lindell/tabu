@@ -161,9 +161,19 @@ ul[data-list-editable]{
 	height: $item-card-height;
   line-height: $item-card-height;
   overflow: hidden;
+  font-weight: 500;
 
-	@extend .font-size-large;
+	@extend .uppercase;
 	@extend .color-white;
+
+	&::before{
+		content: 'add';
+		margin-right: 0.5rem;
+		margin-top: -0.2rem;
+  	vertical-align: middle;
+
+		@extend .material-icons;
+	}
 
 }
 

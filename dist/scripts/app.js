@@ -641,6 +641,15 @@
       return this.DOMElement.childElementCount;
     };
 
+    HTMLElement.prototype.isInViewport = function(treshold) {
+      var rect;
+      if (treshold == null) {
+        treshold = 0;
+      }
+      rect = this.rect();
+      return rect.bottom > 0 + treshold && rect.right > 0 + treshold;
+    };
+
     HTMLElement.prototype.top = function(unit) {
       var top;
       if (unit == null) {
@@ -1128,7 +1137,7 @@
       this.elements.labelUrl.addClass('item-card-label-secondary');
       this.elements.empty = new HTMLElement('div');
       this.elements.empty.addClass('item-card-empty');
-      this.elements.empty.text('Add New Link');
+      this.elements.empty.text('Add Here');
       if (title != null) {
         this.setTitle(title);
       }
@@ -1335,6 +1344,11 @@
       });
       this.body.on('dragover', function() {
         return bodyDragOverHandler(event, root);
+      });
+      this.body.on('dragleave', function() {
+        if (event.clientX === 0 && event.clientY === 0 && event.screenX === 0 && event.screenY === 0) {
+          return bodyDragEndHandler(event, root);
+        }
       });
       this.body.on('dragend', function() {
         return bodyDragEndHandler(event, root);
@@ -1753,6 +1767,11 @@
       }
       target = root.getItemForElement(ev.target.closest('li'));
       changed = false;
+      last = root.lastChild();
+      rect = last.rect();
+      if (rect.bottom < ev.clientY) {
+        return;
+      }
       if (root.draggedItem == null) {
         if (root.acceptFromOutsideSource(ev)) {
           item = root.addItem('Add Link', 'New');
@@ -1763,9 +1782,6 @@
         }
       }
       if (target === null && ev.target === root.DOMElement) {
-        last = root.lastChild();
-        rect = last.rect();
-        console.log((rect.top + rect.height) > ev.clientY, root.draggedItem.element.DOMElement !== last.DOMElement && rect.left < ev.clientX && rect.top < ev.clientY && (rect.top + rect.height) > ev.clientY);
         if (root.draggedItem.element.DOMElement !== last.DOMElement && rect.left < ev.clientX && rect.top < ev.clientY && (rect.top + rect.height) > ev.clientY) {
           console.log('dragOverHandler: Append, empty space');
           root.append(root.draggedItem.element);
@@ -1885,7 +1901,7 @@
     };
 
     bodyDragEnterHandler = function(ev, root) {
-      if (root.acceptFromOutsideSource(ev) && root.container.css('display') === 'none') {
+      if (root.acceptFromOutsideSource(ev) && !root.isInViewport(100)) {
         if (!root.editActions.isActive) {
           return root.showEditActions('add');
         }
@@ -1893,9 +1909,7 @@
     };
 
     bodyDragEndHandler = function(ev, root) {
-      if (root.container.css('display') === 'none') {
-        return root.hideEditActions();
-      }
+      return root.hideEditActions();
     };
 
     dragDropCleanUp = function(root) {

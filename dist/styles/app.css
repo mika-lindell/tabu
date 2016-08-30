@@ -2185,7 +2185,8 @@ video.responsive-video {
   color: rgba(255, 255, 255, 0.7); }
   .breadcrumb i,
   .breadcrumb [class^="mdi-"], .breadcrumb [class*="mdi-"],
-  .breadcrumb i.material-icons {
+  .breadcrumb i.material-icons,
+  .breadcrumb i.item-card-empty::before {
     display: inline-block;
     float: left;
     font-size: 24px; }
@@ -2597,7 +2598,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons, a[target="_blank"]::after, .edit-actions li::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before, .item-card-empty::before {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -3049,7 +3050,8 @@ nav {
     color: #5a5a5a; }
   nav i,
   nav [class^="mdi-"], nav [class*="mdi-"],
-  nav i.material-icons {
+  nav i.material-icons,
+  nav i.item-card-empty::before {
     display: block;
     font-size: 2rem;
     height: 50px;
@@ -3977,7 +3979,7 @@ a.waves-effect .waves-ripple {
     height: 32px;
     width: 32px;
     border-radius: 50%; }
-  .chip i.material-icons {
+  .chip i.material-icons, .chip i.item-card-empty::before {
     cursor: pointer;
     float: right;
     font-size: 16px;
@@ -4352,11 +4354,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before, .input-field input[type=search]:focus ~ .item-card-empty::before {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before, .input-field input[type=search] ~ .item-card-empty::before {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6226,7 +6228,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: url(./assets/material-design-icons/material_icons.woff2) format("woff2"); }
-.material-icons, a[target="_blank"]::after, .edit-actions li::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before, .item-card-empty::before {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6241,18 +6243,21 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
-i.material-icons.bugged {
+i.material-icons.bugged, i.bugged.item-card-empty::before {
   max-width: 1.1em;
   overflow: hidden; }
 
-nav i.material-icons,
-.section-toolbar i.material-icons {
+nav i.material-icons, nav i.item-card-empty::before,
+.section-toolbar i.material-icons,
+.section-toolbar i.item-card-empty::before {
   font-size: 1.5rem; }
-  nav i.material-icons.left,
-  .section-toolbar i.material-icons.left {
+  nav i.material-icons.left, nav i.left.item-card-empty::before,
+  .section-toolbar i.material-icons.left,
+  .section-toolbar i.left.item-card-empty::before {
     margin-right: 5px; }
-  nav i.material-icons.right,
-  .section-toolbar i.material-icons.right {
+  nav i.material-icons.right, nav i.right.item-card-empty::before,
+  .section-toolbar i.material-icons.right,
+  .section-toolbar i.right.item-card-empty::before {
     margin-left: 0px; }
 
 /***
@@ -6271,7 +6276,7 @@ Font sizes
 .font-size-regular {
   font-size: 1.0rem; }
 
-.font-size-large, .item-card-empty {
+.font-size-large {
   font-size: 1.3rem; }
 
 /***
@@ -6344,7 +6349,7 @@ Helpers
 .bolder, .item-card-badge {
   font-weight: 600; }
 
-.uppercase, button.btn-toolbar, .edit-actions li, .item-card-badge {
+.uppercase, button.btn-toolbar, .edit-actions li, .item-card-empty, .item-card-badge {
   text-transform: uppercase; }
 
 .color-black, button.title, a.item-card-link {
@@ -6687,7 +6692,7 @@ Dropdown
 Button styles
 
 ***/
-.btn .material-icons, .btn-large .material-icons, .btn a[target="_blank"]::after, .btn-large a[target="_blank"]::after, .btn .edit-actions li::before, .edit-actions .btn li::before, .btn-large .edit-actions li::before, .edit-actions .btn-large li::before {
+.btn .material-icons, .btn-large .material-icons, .btn a[target="_blank"]::after, .btn-large a[target="_blank"]::after, .btn .edit-actions li::before, .edit-actions .btn li::before, .btn-large .edit-actions li::before, .edit-actions .btn-large li::before, .btn .item-card-empty::before, .btn-large .item-card-empty::before {
   vertical-align: bottom; }
 
 .btn.teal, .teal.btn-large {
@@ -6711,7 +6716,7 @@ button.btn-toolbar {
   overflow: hidden; }
   button.btn-toolbar:hover, button.btn-toolbar:focus {
     background-color: #FFF; }
-  button.btn-toolbar i.material-icons {
+  button.btn-toolbar i.material-icons, button.btn-toolbar i.item-card-empty::before {
     position: absolute;
     left: 9px;
     top: 0px;
@@ -6737,9 +6742,9 @@ button.title {
     box-shadow: none;
     background-color: #1E88E5;
     color: #FFF; }
-    button.title.active i.material-icons, button.title.active:hover i.material-icons {
+    button.title.active i.material-icons, button.title.active i.item-card-empty::before, button.title.active:hover i.material-icons, button.title.active:hover i.item-card-empty::before {
       opacity: 0; }
-  button.title i.material-icons {
+  button.title i.material-icons, button.title i.item-card-empty::before {
     font-size: inherit; }
 
 .btn.submit, .submit.btn-large {
@@ -6758,7 +6763,7 @@ button.title {
   width: 47%;
   margin-right: 0.6rem; }
 
-#go-incognito i.material-icons {
+#go-incognito i.material-icons, #go-incognito i.item-card-empty::before {
   font-size: 1.35rem; }
 
 /***
@@ -6890,7 +6895,13 @@ ul[data-list-editable] .drag-handle {
   text-align: center;
   height: 4rem;
   line-height: 4rem;
-  overflow: hidden; }
+  overflow: hidden;
+  font-weight: 500; }
+  .item-card-empty::before {
+    content: 'add';
+    margin-right: 0.5rem;
+    margin-top: -0.2rem;
+    vertical-align: middle; }
 
 .item-card {
   border: 2px dashed transparent;

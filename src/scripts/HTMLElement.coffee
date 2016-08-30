@@ -236,9 +236,12 @@ class HTMLElement
 		else
 			return @DOMElement.removeChild(element.DOMElement)
 
-
 	childCount: ()->
 		return @DOMElement.childElementCount
+
+	isInViewport: (treshold = 0)->
+		rect = @rect()
+		rect.bottom > 0 + treshold and rect.right > 0 + treshold
 
 	top: (unit = null)->
 		top = @DOMElement.offsetTop
