@@ -350,21 +350,6 @@ module.exports = {
   	 * ACTION BUTTONS: APPS
   	 *
    */
-  'it should have button to open incognito-window': function(browser) {
-    browser.expect.element("#go-incognito").to.be.present;
-    return browser.expect.element("#go-incognito").text.to.contain('APPS');
-  },
-  'incognito-button should have correct-icon': function(browser) {
-    browser.expect.element("#go-incognito > i.material-icons").to.be.present;
-    return browser.expect.element("#go-incognito > i.material-icons").text.to.equal('apps');
-  },
-  'clicking apps-button should take to apps-page': function(browser) {
-    browser.click("#apps");
-    browser.expect.element(".apps-page").to.be.present.after(500);
-    browser.back();
-    browser.expect.element('#app').to.be.present.after(500);
-    return browser.pause(500);
-  },
 
   /*	
   	 *

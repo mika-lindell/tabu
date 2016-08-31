@@ -192,16 +192,7 @@ ul[data-list-editable]{
 	// When item card has no content
 	&.empty{
 
-		// Show the ålaceholder message
-		.item-card-empty{
-			display: block;
-		}
-		// Hide rest of the content
-		a{
-			display: none;
-		}
-		
-		@extend .layer-front;
+
 	}
 }
 
@@ -223,6 +214,18 @@ ul[data-list-editable]{
 			box-shadow: none;
 		  background-color: $color-primary;
 		  outline: 2px solid $color-primary;
+			@extend .layer-front;
+
+			// Show the placeholder message
+			.item-card-empty{
+				display: block;
+			}
+		
+			// Hide rest of the content
+			a{
+				display: none;
+			}
+
 		}
 	}
 }

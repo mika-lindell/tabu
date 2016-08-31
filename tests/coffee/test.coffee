@@ -398,21 +398,21 @@ module.exports =
 	#
 	###
 
-	'it should have button to open incognito-window': (browser)->
-		browser.expect.element("#go-incognito").to.be.present
-		browser.expect.element("#go-incognito").text.to.contain('APPS')
+	# 'it should have button to open incognito-window': (browser)->
+	# 	browser.expect.element("#go-incognito").to.be.present
+	# 	browser.expect.element("#go-incognito").text.to.contain('APPS')
 
-	'incognito-button should have correct-icon': (browser)->
-		browser.expect.element("#go-incognito > i.material-icons").to.be.present
-		browser.expect.element("#go-incognito > i.material-icons").text.to.equal('apps')
+	# 'incognito-button should have correct-icon': (browser)->
+	# 	browser.expect.element("#go-incognito > i.material-icons").to.be.present
+	# 	browser.expect.element("#go-incognito > i.material-icons").text.to.equal('apps')
 
-	'clicking apps-button should take to apps-page': (browser)->	
-		browser.click("#apps")
-		browser.expect.element(".apps-page").to.be.present.after(500)
+	# 'clicking apps-button should take to apps-page': (browser)->	
+	# 	browser.click("#apps")
+	# 	browser.expect.element(".apps-page").to.be.present.after(500)
 
-		browser.back()
-		browser.expect.element('#app').to.be.present.after(500)
-		browser.pause(500) # Give the extension some time to load JS
+	# 	browser.back()
+	# 	browser.expect.element('#app').to.be.present.after(500)
+	# 	browser.pause(500) # Give the extension some time to load JS
 
 	###	
 	#

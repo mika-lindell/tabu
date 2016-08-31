@@ -1172,9 +1172,11 @@
       this.elements.labelContainer.addClass('item-card-label-container');
       this.elements.labelTitle = new HTMLElement('span');
       this.elements.labelTitle.addClass('item-card-label');
+      this.setTitle('Empty');
       this.elements.lineBreak = new HTMLElement('br');
       this.elements.labelUrl = new HTMLElement('span');
       this.elements.labelUrl.addClass('item-card-label-secondary');
+      this.setUrl('Empty');
       this.elements.empty = new HTMLElement('div');
       this.elements.empty.addClass('item-card-empty');
       this.elements.empty.text('Add Here');
@@ -1198,6 +1200,7 @@
 
     ItemCard.prototype.setTitle = function(title) {
       this.title = title;
+      console.log(title);
       return this.elements.labelTitle.text(' ' + title + ' ');
     };
 
@@ -1657,10 +1660,10 @@
             userInput.hide();
             toastComplete = function() {
               if (item.element.rect().top < 0) {
-                item.element.scrollToMe(-100, 0);
+                item.element.scrollToMe(-100);
                 return setTimeout(function() {
                   return new Animation(item.element, 1).highlight();
-                }, 250);
+                }, 400);
               } else {
                 return new Animation(item.element, 1).highlight();
               }

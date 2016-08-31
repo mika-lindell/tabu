@@ -3,7 +3,7 @@
   "name": "TABU – The New Tab Page",
   "short_name": "TABU",
   "description": "Less is more – we focus on what you need to do to get things done – the news or weather isn't a priority!",
-  "version": "0.5.0.9",
+  "version": "0.5.1.0",
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",

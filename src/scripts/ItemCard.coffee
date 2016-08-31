@@ -77,11 +77,13 @@ class ItemCard extends HTMLElement
 
 		@elements.labelTitle = new HTMLElement('span')
 		@elements.labelTitle.addClass('item-card-label')
+		@setTitle('Empty')
 
 		@elements.lineBreak = new HTMLElement('br')
 
 		@elements.labelUrl = new HTMLElement('span')
 		@elements.labelUrl.addClass('item-card-label-secondary')
+		@setUrl('Empty')
 
 		@elements.empty = new HTMLElement('div')
 		@elements.empty.addClass('item-card-empty')
@@ -109,7 +111,7 @@ class ItemCard extends HTMLElement
 
 	setTitle: (title)->
 		@title = title
-
+		console.log title
 		
 		@elements.labelTitle.text(' ' + title + ' ')
 

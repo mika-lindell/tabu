@@ -392,10 +392,10 @@ class ItemCardList extends HTMLElement
 					toastComplete = ()->
 						if item.element.rect().top < 0 
 							# Scroll to top of the Speed dial
-								item.element.scrollToMe(-100, 0)
+								item.element.scrollToMe(-100)
 								setTimeout(()->
 									new Animation(item.element, 1).highlight()
-								, 250)
+								, 400)
 						else
 							new Animation(item.element, 1).highlight()
 
