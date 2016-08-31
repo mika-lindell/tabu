@@ -41,7 +41,7 @@ class Animation
 		root.beforeAnimation()
 		container.addClass(cssClass)
 
-		if display isnt false then container.show(display)
+		if display then container.css('display', display)
 		if withOpacity then container.css('opacity', '1')
 
 		cleanUp = ()->
@@ -60,7 +60,7 @@ class Animation
 		container.addClass(cssClass)
 		
 		cleanUp = ()->
-			container.hide()
+			container.css('display', 'none')
 			container.removeClass(cssClass)
 			root.afterAnimation()
 			if done? then done()
@@ -69,7 +69,7 @@ class Animation
 
 	highlight: ()->
 
-		@animationIn 'anim-highlight', false, false
+		@animationIn 'anim-highlight', null, false, false
 
 		# root = @
 		# container = @animate
@@ -86,8 +86,7 @@ class Animation
 		# setTimeout(cleanUp, @duration * 1000)
 
 	moveIn: (done = null, display = 'block')->
-
-		@animationIn 'anim-move-in', display
+		@animationIn 'anim-move-in', done, display
 
 		# root = @
 		# container = @animate

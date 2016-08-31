@@ -1438,7 +1438,7 @@
       });
       this.body.append(this.editActions.container);
       new HTMLElement('#menu-add-link').on('click', function(ev) {
-        return root.addItemByUserInput(root);
+        return root.addItemByUserInput(root, null, 'addLink', true, true);
       });
       return this.attr('data-list-editable', '');
     };
@@ -1488,8 +1488,8 @@
       return item;
     };
 
-    ItemCardList.prototype.addItem = function(title, url, position, showToast) {
-      var item, root, toolbar;
+    ItemCardList.prototype.addItem = function(title, url, position) {
+      var item, root;
       if (title == null) {
         title = null;
       }
@@ -1498,9 +1498,6 @@
       }
       if (position == null) {
         position = 'last';
-      }
-      if (showToast == null) {
-        showToast = false;
       }
       root = this;
       item = {
@@ -1531,18 +1528,6 @@
         this.updateNewItemPosition(null, position);
       }
       this.ifTheListHasNoItems();
-      if (showToast) {
-        toolbar = new Toolbars();
-        new Toast("1 link was added to Speed Dial.", null, 'View', function() {
-          if (root.container.css('display') === 'none') {
-            return toolbar.speedDial(toolbar, false, function() {
-              return window.scrollTo(0, 0);
-            });
-          } else {
-            return root.scrollToMe(-100);
-          }
-        });
-      }
       return item;
     };
 
@@ -1600,18 +1585,19 @@
       return null;
     };
 
-    ItemCardList.prototype.addItemByUserInput = function(root) {
-      var empty;
-      if (root.userInput.link.active === false) {
-        empty = root.addItem(null, null, 'first');
-        return root.showUserInputForItem(empty);
+    ItemCardList.prototype.addItemByUserInput = function(root, item, action, inputControls, onElement, title, url) {
+      var userInput;
+      if (item == null) {
+        item = null;
       }
-    };
-
-    ItemCardList.prototype.showUserInputForItem = function(item, action, title, url) {
-      var root, userInput;
       if (action == null) {
         action = 'addLink';
+      }
+      if (inputControls == null) {
+        inputControls = false;
+      }
+      if (onElement == null) {
+        onElement = false;
       }
       if (title == null) {
         title = null;
@@ -1619,63 +1605,94 @@
       if (url == null) {
         url = null;
       }
-      root = this;
-      userInput = this.userInput.link;
-      if (userInput != null) {
-        if (action === 'addLink') {
-          userInput.setTitle('Add Link');
-          userInput.setOkLabel('Add Link');
-        } else if (action === 'editLink') {
-          userInput.setTitle('Edit Link');
-          userInput.setOkLabel('Save');
+      if (root.userInput.link.active === false) {
+        if (item == null) {
+          item = root.addItem(null, null, 'first');
         }
-        if (title != null) {
-          userInput.fields[0].element.value(title);
-          userInput.fields[0].element.DOMElement.select();
-        }
-        if (url != null) {
-          userInput.fields[1].element.value(url);
-        }
-        if (action === 'editLink') {
-          userInput.addClass('centered');
-          root.body.append(userInput);
-        } else {
-          item.element.append(userInput);
-        }
-        if (action === 'addLink') {
-          item.element.addClass('empty');
-        }
-        root.addClass('edit-in-progress');
-        item.element.addClass('editing');
-        item.element.removeClass('dragged');
-        item.element.attr('draggable', 'false');
-        userInput.done = function(fields) {
-          item.element.setTitle(fields[0].element.value());
-          item.element.setUrl(fields[1].element.value());
-          root.removeClass('edit-in-progress');
-          item.element.removeClass('editing');
+        userInput = root.userInput.link;
+        if (userInput != null) {
           if (action === 'addLink') {
-            item.element.removeClass('empty');
+            userInput.setTitle('Add Link');
+            userInput.setOkLabel('Add Link');
           } else if (action === 'editLink') {
-            userInput.removeClass('centered');
+            userInput.setTitle('Edit Link');
+            userInput.setOkLabel('Save');
           }
-          item.element.attr('draggable', 'true');
-          new Animation(item.element, 1).highlight();
-          root.save();
-          return userInput.hide();
-        };
-        userInput.abort = function() {
-          userInput.hide();
-          root.removeClass('edit-in-progress');
-          item.element.removeClass('editing');
+          if (title != null) {
+            userInput.fields[0].element.value(title);
+            userInput.fields[0].element.DOMElement.select();
+          }
+          if (url != null) {
+            userInput.fields[1].element.value(url);
+          }
+          if (!onElement) {
+            userInput.css('position', 'fixed');
+            userInput.addClass('centered');
+            root.body.append(userInput);
+          } else {
+            userInput.css('position', 'absolute');
+            item.element.append(userInput);
+          }
           if (action === 'addLink') {
-            return root.removeItem(item);
-          } else if (action === 'editLink') {
+            item.element.addClass('empty');
+          }
+          root.addClass('edit-in-progress');
+          item.element.addClass('editing');
+          item.element.removeClass('dragged');
+          item.element.attr('draggable', 'false');
+          userInput.done = function(fields) {
+            var toastComplete, toolbar;
+            item.element.setTitle(fields[0].element.value());
+            item.element.setUrl(fields[1].element.value());
+            root.removeClass('edit-in-progress');
+            item.element.removeClass('editing');
+            if (action === 'addLink') {
+              item.element.removeClass('empty');
+            } else if (action === 'editLink') {
+              userInput.removeClass('centered');
+            }
             item.element.attr('draggable', 'true');
-            return userInput.removeClass('centered');
+            new Animation(item.element, 1).highlight();
+            root.save();
+            userInput.hide();
+            toastComplete = function() {
+              if (item.element.rect().top < 0) {
+                item.element.scrollToMe(-100, 0);
+                return setTimeout(function() {
+                  return new Animation(item.element, 1).highlight();
+                }, 250);
+              } else {
+                return new Animation(item.element, 1).highlight();
+              }
+            };
+            toolbar = new Toolbars();
+            return new Toast("1 link was added to Speed Dial.", null, 'View', function() {
+              if (root.container.css('display') === 'none') {
+                return toolbar.speedDial(toolbar, false, function() {
+                  return toastComplete();
+                });
+              } else {
+                return toastComplete();
+              }
+            });
+          };
+          userInput.abort = function() {
+            userInput.hide();
+            root.removeClass('edit-in-progress');
+            item.element.removeClass('editing');
+            if (action === 'addLink') {
+              return root.removeItem(item);
+            } else if (action === 'editLink') {
+              item.element.attr('draggable', 'true');
+              return userInput.removeClass('centered');
+            }
+          };
+          if (inputControls) {
+            return userInput.show();
+          } else {
+            return userInput.done(userInput.fields);
           }
-        };
-        return userInput.show();
+        }
       }
     };
 
@@ -1726,11 +1743,12 @@
     };
 
     ItemCardList.prototype.parseDropData = function(ev) {
-      var droppedData, temp, title, url;
+      var autoFilled, droppedData, temp, title, url;
       droppedData = {
         title: null,
         url: null
       };
+      autoFilled = false;
       if (ev.dataTransfer.types.indexOf('text/json') !== -1) {
         droppedData = JSON.parse(ev.dataTransfer.getData('text/json'));
       }
@@ -1741,10 +1759,12 @@
         temp = new Url(ev.dataTransfer.getData('text/uri-list'));
         title = temp.withoutPrefix();
         url = temp.href;
+        autoFilled = true;
       }
       return {
         title: title,
-        url: url
+        href: url,
+        autoFilled: autoFilled
       };
     };
 
@@ -1861,11 +1881,11 @@
       ev.preventDefault();
       ev.stopPropagation();
       data = root.parseDropData(ev);
-      if (data.url !== window.location.href) {
-        root.showUserInputForItem(root.draggedItem, 'addLink', data.title, data.url);
+      if (data.href !== window.location.href) {
+        root.addItemByUserInput(root, root.draggedItem, 'addLink', true, true, data.title, data.href);
       }
       dragDropCleanUp(root);
-      return console.log('dropHandler', data.title, data.url);
+      return console.log('dropHandler', data.title, data.href);
     };
 
     dragEndHandler = function(ev, root) {
@@ -1902,7 +1922,7 @@
         root.insert(root.draggedItem.element, root.items[origIndex].element, 'after');
       }
       root.updateNewItemPosition(root.draggedItem, origIndex);
-      return root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href);
+      return root.addItemByUserInput(root, root.draggedItem, 'editLink', true, false, root.draggedItem.element.title, root.draggedItem.element.url.href);
     };
 
     deleteDropHandler = function(ev, root) {
@@ -1921,10 +1941,9 @@
       ev.stopPropagation();
       ev.dataTransfer.dropEffect = "copyLink";
       data = root.parseDropData(ev);
-      root.addItem(data.title, data.url, 'first', true);
-      root.save();
       dragDropCleanUp(root);
-      return console.log('addDropHandler', data.title, data.url);
+      root.addItemByUserInput(root, null, 'addLink', true, false, data.title, data.href);
+      return console.log('addDropHandler', data.title, data.href);
     };
 
     bodyDragStartHandler = function(ev, root) {
@@ -1980,6 +1999,8 @@
 
     UserInput.actions;
 
+    UserInput.animation;
+
     UserInput.fields;
 
     UserInput.done;
@@ -1997,13 +2018,13 @@
         ok: null,
         cancel: null
       };
+      this.animation = new Animation(this);
       this.fields = new Array();
       this.done = function() {};
       this.abort = function() {};
       this.attr('id', id);
       this.addClass('user-input');
       this.addClass('card');
-      this.addClass('anim-slide-in');
       this.content.addClass('card-content');
       this.heading.addClass('card-title');
       this.heading.text(title);
@@ -2114,13 +2135,13 @@
     };
 
     UserInput.prototype.show = function(display) {
-      UserInput.__super__.show.call(this, display);
+      this.animation.slideIn(null, display);
       this.fields[0].element.focus();
       return this.active = true;
     };
 
     UserInput.prototype.hide = function() {
-      UserInput.__super__.hide.call(this);
+      this.animation.slideOut();
       return this.active = false;
     };
 
@@ -2353,8 +2374,8 @@
       container = this.animate;
       root.beforeAnimation();
       container.addClass(cssClass);
-      if (display !== false) {
-        container.show(display);
+      if (display) {
+        container.css('display', display);
       }
       if (withOpacity) {
         container.css('opacity', '1');
@@ -2385,7 +2406,7 @@
       }
       container.addClass(cssClass);
       cleanUp = function() {
-        container.hide();
+        container.css('display', 'none');
         container.removeClass(cssClass);
         root.afterAnimation();
         if (done != null) {
@@ -2396,7 +2417,7 @@
     };
 
     Animation.prototype.highlight = function() {
-      return this.animationIn('anim-highlight', false, false);
+      return this.animationIn('anim-highlight', null, false, false);
     };
 
     Animation.prototype.moveIn = function(done, display) {
@@ -2406,7 +2427,7 @@
       if (display == null) {
         display = 'block';
       }
-      return this.animationIn('anim-move-in', display);
+      return this.animationIn('anim-move-in', done, display);
     };
 
     Animation.prototype.moveOut = function(done) {
@@ -2626,8 +2647,7 @@
       this.enabler = new HTMLElement(enabler);
       this.disabler = new HTMLElement(disabler);
       this.animation = {
-        content: new Animation('#content-container'),
-        button: new Animation(this.controller)
+        content: new Animation('#content-container')
       };
       this.storage = new Storage;
       this.executing = false;
@@ -2671,7 +2691,6 @@
       this.animation.content.intro(instant, done);
       this.enabler.css('opacity', 0);
       this.disabler.css('opacity', 1);
-      this.animation.button.animateWidth(40, 130);
       this.enabled = true;
       console.log("Visibility: On");
       return this.storage.setVisible(this.enabled);
@@ -2693,7 +2712,6 @@
       this.animation.content.outro(instant, done);
       this.enabler.css('opacity', 1);
       this.disabler.css('opacity', 0);
-      this.animation.button.animateWidth(110, 40);
       this.enabled = false;
       console.log("Visibility: Off");
       return this.storage.setVisible(this.enabled);

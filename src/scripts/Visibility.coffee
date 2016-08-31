@@ -26,7 +26,7 @@ class Visibility
 	
 		@animation = 
 			content: new Animation('#content-container')
-			button: new Animation(@controller)
+			# button: new Animation(@controller)
 
 		@storage = new Storage
 
@@ -85,7 +85,7 @@ class Visibility
 		@enabler.css('opacity', 0)
 		@disabler.css('opacity', 1)
 
-		@animation.button.animateWidth(40, 130)
+		# @animation.button.animateWidth(40, 130)
 		@enabled = true
 
 		console.log "Visibility: On"
@@ -110,7 +110,7 @@ class Visibility
 		@enabler.css('opacity', 1)
 		@disabler.css('opacity', 0)
 
-		@animation.button.animateWidth(110, 40)
+		# @animation.button.animateWidth(110, 40)
 		@enabled = false
 
 		console.log "Visibility: Off"

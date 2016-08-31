@@ -188,7 +188,7 @@ class ItemCardList extends HTMLElement
 		@body.append @editActions.container
 
 		new HTMLElement('#menu-add-link').on('click', (ev)-> 
-			root.addItemByUserInput(root)
+			root.addItemByUserInput(root, null, 'addLink', true, true)
 		)
 
 		@attr('data-list-editable', '')
@@ -232,7 +232,7 @@ class ItemCardList extends HTMLElement
 		@ifTheListHasNoItems()
 		return item
 
-	addItem: (title = null, url = null, position = 'last', showToast = false)->
+	addItem: (title = null, url = null, position = 'last')->
 
 		root = @
 
@@ -269,20 +269,6 @@ class ItemCardList extends HTMLElement
 			@updateNewItemPosition null, position
 			
 		@ifTheListHasNoItems()
-
-		if showToast 
-			toolbar = new Toolbars()
-			new Toast("1 link was added to Speed Dial.", null, 'View', ()->
-				# Switch to speed dial if needed
-				if root.container.css('display') is 'none'
-					toolbar.speedDial(toolbar, false, ()->
-						window.scrollTo(0,0)
-					)
-				else
-					# Scroll to top of the Speed dial
-					root.scrollToMe(-100)
-				
-			)
 
 		return item
 
@@ -333,87 +319,115 @@ class ItemCardList extends HTMLElement
 
 		return null
 
-	addItemByUserInput: (root)->
+	addItemByUserInput: (root, item = null, action = 'addLink', inputControls = false, onElement = false, title = null, url = null)->
 
 		# Make sure only one at a time can be added
 		if root.userInput.link.active is false
 
-			empty = root.addItem(null, null, 'first')
+			if not item?
+				item = root.addItem(null, null, 'first')
 
-			root.showUserInputForItem(empty)
+			# root.showUserInputForItem(empty)
 
-	showUserInputForItem: (item, action='addLink', title = null, url = null)->
+			#showUserInputForItem: (item, action='addLink', title = null, url = null)->
 
-		root = @
-		userInput = @userInput.link	
+			# root = @
+			userInput = root.userInput.link	
 
-		if userInput?
-
-			if action is 'addLink'
-				userInput.setTitle('Add Link')
-				userInput.setOkLabel('Add Link')
-			else if action is 'editLink'
-				userInput.setTitle('Edit Link')
-				userInput.setOkLabel('Save')
-
-			if title?
-				userInput.fields[0].element.value(title)
-				userInput.fields[0].element.DOMElement.select()
-
-			if url?
-				userInput.fields[1].element.value(url)
-
-			if action is 'editLink'
-				userInput.addClass('centered')
-				root.body.append(userInput)
-			else
-				item.element.append(userInput)
-			
-			if action is 'addLink'
-				item.element.addClass('empty')
-
-			root.addClass('edit-in-progress')
-			item.element.addClass('editing')
-
-			item.element.removeClass('dragged')
-			item.element.attr('draggable', 'false')		
-
-			userInput.done = (fields)->
-
-				item.element.setTitle(fields[0].element.value())
-				item.element.setUrl(fields[1].element.value())
-
-				root.removeClass('edit-in-progress')
-				item.element.removeClass('editing')
+			if userInput?
 
 				if action is 'addLink'
-					item.element.removeClass('empty')
-					# new Toast "Added '#{item.element.title}'.", null, null, 2
+					userInput.setTitle('Add Link')
+					userInput.setOkLabel('Add Link')
 				else if action is 'editLink'
-					userInput.removeClass('centered')
-					# new Toast "Updated '#{item.element.title}'.", null, null, 2
+					userInput.setTitle('Edit Link')
+					userInput.setOkLabel('Save')
 
-				item.element.attr('draggable', 'true')
+				if title?
+					userInput.fields[0].element.value(title)
+					userInput.fields[0].element.DOMElement.select()
 
-				new Animation(item.element, 1).highlight()
+				if url?
+					userInput.fields[1].element.value(url)
 
-				root.save()
-				userInput.hide()
-
-			userInput.abort = ()->
-
-				userInput.hide()
-
-				root.removeClass('edit-in-progress')
-				item.element.removeClass('editing')
-
+				if not onElement
+					userInput.css('position', 'fixed')
+					userInput.addClass('centered')
+					root.body.append(userInput)
+				else
+					userInput.css('position', 'absolute')
+					item.element.append(userInput)
+				
 				if action is 'addLink'
-					root.removeItem(item)
-				else if action is 'editLink'
+					item.element.addClass('empty')
+
+				root.addClass('edit-in-progress')
+				item.element.addClass('editing')
+
+				item.element.removeClass('dragged')
+				item.element.attr('draggable', 'false')		
+
+				userInput.done = (fields)->
+
+					item.element.setTitle(fields[0].element.value())
+					item.element.setUrl(fields[1].element.value())
+
+					root.removeClass('edit-in-progress')
+					item.element.removeClass('editing')
+
+					if action is 'addLink'
+						item.element.removeClass('empty')
+						# new Toast "Added '#{item.element.title}'.", null, null, 2
+					else if action is 'editLink'
+						userInput.removeClass('centered')
+						# new Toast "Updated '#{item.element.title}'.", null, null, 2
+
 					item.element.attr('draggable', 'true')
-					userInput.removeClass('centered')
 
-			userInput.show()
+					new Animation(item.element, 1).highlight()
+
+					root.save()
+					userInput.hide()
+
+					toastComplete = ()->
+						if item.element.rect().top < 0 
+							# Scroll to top of the Speed dial
+								item.element.scrollToMe(-100, 0)
+								setTimeout(()->
+									new Animation(item.element, 1).highlight()
+								, 250)
+						else
+							new Animation(item.element, 1).highlight()
+
+					toolbar = new Toolbars()
+					new Toast("1 link was added to Speed Dial.", null, 'View', ()->
+						# Switch to speed dial if needed
+						if root.container.css('display') is 'none'
+							toolbar.speedDial(toolbar, false, ()->
+								toastComplete()
+							)
+						else
+							toastComplete()
+					)		
+
+
+				userInput.abort = ()->
+
+					userInput.hide()
+
+					root.removeClass('edit-in-progress')
+					item.element.removeClass('editing')
+
+					if action is 'addLink'
+						root.removeItem(item)
+					else if action is 'editLink'
+						item.element.attr('draggable', 'true')
+						userInput.removeClass('centered')
+
+				if inputControls
+					userInput.show()
+				else
+					userInput.done(userInput.fields)			
 
 	setOrientation: (orientation = 'horizontal')->
 
@@ -467,6 +481,8 @@ class ItemCardList extends HTMLElement
 			title: null
 			url: null
 
+		autoFilled = false
+
 		if ev.dataTransfer.types.indexOf('text/json') isnt -1
 			droppedData = JSON.parse(ev.dataTransfer.getData('text/json'))
 
@@ -477,8 +493,9 @@ class ItemCardList extends HTMLElement
 			temp = new Url(ev.dataTransfer.getData('text/uri-list'))
 			title = temp.withoutPrefix()
 			url = temp.href
+			autoFilled = true
 
-		return {title: title, url: url}
+		return {title: title, href: url, autoFilled: autoFilled}
 
 	createGhost: (ev, from)->
 
@@ -618,12 +635,14 @@ class ItemCardList extends HTMLElement
 
 		data = root.parseDropData(ev)
 		
-		if data.url isnt window.location.href
-			root.showUserInputForItem(root.draggedItem, 'addLink', data.title, data.url)
+		if data.href isnt window.location.href
+			root.addItemByUserInput(root, root.draggedItem, 'addLink', true, true, data.title, data.href)
+			#root.showUserInputForItem(root.draggedItem, 'addLink', data.title, data.url)
+
 
 		dragDropCleanUp(root)
 
-		console.log 'dropHandler', data.title, data.url
+		console.log 'dropHandler', data.title, data.href
 
 
 	dragEndHandler = (ev, root)->
@@ -669,7 +688,7 @@ class ItemCardList extends HTMLElement
 
 		root.updateNewItemPosition(root.draggedItem, origIndex)
 
-		root.showUserInputForItem(root.draggedItem, 'editLink', root.draggedItem.element.title, root.draggedItem.element.url.href)
+		root.addItemByUserInput(root, root.draggedItem, 'editLink', true, false, root.draggedItem.element.title, root.draggedItem.element.url.href)
 
 	deleteDropHandler = (ev, root)->
 
@@ -694,13 +713,14 @@ class ItemCardList extends HTMLElement
 		ev.dataTransfer.dropEffect = "copyLink"
 
 		data = root.parseDropData(ev)
-		
-		root.addItem(data.title, data.url, 'first', true)
-		root.save()
-		
+
 		dragDropCleanUp(root)
 
-		console.log 'addDropHandler', data.title, data.url
+		root.addItemByUserInput(root, null, 'addLink', true, false, data.title, data.href)
+		# root.addItem(data.title, data.url, 'first', true)
+		# root.save()
+
+		console.log 'addDropHandler', data.title, data.href
 
 	bodyDragStartHandler = (ev, root)->
 		if root.container.css('display') is 'none'

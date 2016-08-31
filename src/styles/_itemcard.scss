@@ -109,7 +109,7 @@ Item card styles
 }
 
 .item-card-list{
-	min-height: $item-card-height;
+	min-height: $item-card-height + 0.6rem; // 0.6 to remove somne annoying displacement - this is fix for symptoms, not cause
 	margin: 0;
   position: relative;
 

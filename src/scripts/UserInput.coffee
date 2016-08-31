@@ -6,6 +6,8 @@ class UserInput extends HTMLElement
 	@heading
 	@actions
 
+	@animation
+
 	@fields	
 
 	@done
@@ -24,6 +26,8 @@ class UserInput extends HTMLElement
 			ok: null
 			cancel: null
 
+		@animation = new Animation(@)
+
 		@fields = new Array()
 
 		@done = ()->
@@ -32,7 +36,6 @@ class UserInput extends HTMLElement
 		@attr('id', id)
 		@addClass('user-input')
 		@addClass('card')
-		@addClass('anim-slide-in')
 		
 		@content.addClass('card-content')
 
@@ -129,12 +132,14 @@ class UserInput extends HTMLElement
 		@actions.ok.attr('value', label)
 
 	show: (display)->
-		super(display)
+		# super(display)
+		@animation.slideIn(null, display)
 		@fields[0].element.focus()
 		@active = true
 
 	hide: ()->
-		super()
+		# super()
+		@animation.slideOut()
 		@active = false
 
 	onAbort: ()->
