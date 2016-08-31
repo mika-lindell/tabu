@@ -6449,7 +6449,7 @@ Animations
   0% {
     transform: scale(1, 1) translateY(0px); }
   100% {
-    transform: scale(1, 0) translateY(-80px); } }
+    transform: scale(1, 0) translateY(-50%); } }
 .anim-slide-out {
   animation-fill-mode: forwards;
   animation-name: slide-out;
