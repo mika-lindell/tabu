@@ -356,6 +356,7 @@ class ItemCardList extends HTMLElement
 					root.body.append(userInput)
 				else
 					userInput.css('position', 'absolute')
+					userInput.removeClass('centered')
 					item.element.append(userInput)
 				
 				if action is 'addLink'
@@ -377,10 +378,6 @@ class ItemCardList extends HTMLElement
 
 					if action is 'addLink'
 						item.element.removeClass('empty')
-						# new Toast "Added '#{item.element.title}'.", null, null, 2
-					else if action is 'editLink'
-						userInput.removeClass('centered')
-						# new Toast "Updated '#{item.element.title}'.", null, null, 2
 
 					item.element.attr('draggable', 'true')
 
@@ -422,7 +419,6 @@ class ItemCardList extends HTMLElement
 						root.removeItem(item)
 					else if action is 'editLink'
 						item.element.attr('draggable', 'true')
-						userInput.removeClass('centered')
 
 				if inputControls
 					userInput.show()

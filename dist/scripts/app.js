@@ -1110,8 +1110,6 @@
 
     ItemCard.url;
 
-    ItemCard.color;
-
     ItemCard.index;
 
     ItemCard.origIndex;
@@ -1166,17 +1164,16 @@
       this.elements.link.addClass('item-card-link');
       this.elements.link.attr('id', this.id + '-link');
       this.elements.badge = new HTMLElement('span');
-      this.elements.badge.text('NE');
       this.elements.badge.addClass('item-card-badge');
       this.elements.labelContainer = new HTMLElement('div');
       this.elements.labelContainer.addClass('item-card-label-container');
       this.elements.labelTitle = new HTMLElement('span');
       this.elements.labelTitle.addClass('item-card-label');
-      this.setTitle('Empty');
+      this.setTitle('New');
       this.elements.lineBreak = new HTMLElement('br');
       this.elements.labelUrl = new HTMLElement('span');
       this.elements.labelUrl.addClass('item-card-label-secondary');
-      this.setUrl('Empty');
+      this.setUrl('New');
       this.elements.empty = new HTMLElement('div');
       this.elements.empty.addClass('item-card-empty');
       this.elements.empty.text('Add Here');
@@ -1212,7 +1209,6 @@
       } else {
         this.url = dirty;
       }
-      this.color = new ColorPalette().fromUrl(this.url);
       this.elements.link.attr('href', this.url.href);
       if (this.url.hostname === '') {
         badgeLabel = this.url.href.substring(0, 2);
@@ -1222,7 +1218,6 @@
         hostname = this.url.hostname;
       }
       this.elements.badge.text(badgeLabel);
-      this.elements.badge.css('backgroundColor', this.color);
       return this.elements.labelUrl.text(hostname);
     };
 
@@ -1634,6 +1629,7 @@
             root.body.append(userInput);
           } else {
             userInput.css('position', 'absolute');
+            userInput.removeClass('centered');
             item.element.append(userInput);
           }
           if (action === 'addLink') {
@@ -1651,8 +1647,6 @@
             item.element.removeClass('editing');
             if (action === 'addLink') {
               item.element.removeClass('empty');
-            } else if (action === 'editLink') {
-              userInput.removeClass('centered');
             }
             item.element.attr('draggable', 'true');
             new Animation(item.element, 1).highlight();
@@ -1686,8 +1680,7 @@
             if (action === 'addLink') {
               return root.removeItem(item);
             } else if (action === 'editLink') {
-              item.element.attr('draggable', 'true');
-              return userInput.removeClass('centered');
+              return item.element.attr('draggable', 'true');
             }
           };
           if (inputControls) {

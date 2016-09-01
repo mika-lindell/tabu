@@ -8,7 +8,7 @@ class ItemCard extends HTMLElement
 
 	@title
 	@url
-	@color
+	# @color
 	@index
 	@origIndex
 
@@ -69,7 +69,6 @@ class ItemCard extends HTMLElement
 		@elements.link.attr('id', @id + '-link')
 
 		@elements.badge = new HTMLElement('span')
-		@elements.badge.text('NE')
 		@elements.badge.addClass('item-card-badge')
 
 		@elements.labelContainer = new HTMLElement('div')
@@ -77,13 +76,13 @@ class ItemCard extends HTMLElement
 
 		@elements.labelTitle = new HTMLElement('span')
 		@elements.labelTitle.addClass('item-card-label')
-		@setTitle('Empty')
+		@setTitle('New')
 
 		@elements.lineBreak = new HTMLElement('br')
 
 		@elements.labelUrl = new HTMLElement('span')
 		@elements.labelUrl.addClass('item-card-label-secondary')
-		@setUrl('Empty')
+		@setUrl('New')
 
 		@elements.empty = new HTMLElement('div')
 		@elements.empty.addClass('item-card-empty')
@@ -124,7 +123,7 @@ class ItemCard extends HTMLElement
 		else
 			@url = dirty
 
-		@color = new ColorPalette().fromUrl(@url)
+		# @color = new ColorPalette().fromUrl(@url)
 
 		@elements.link.attr('href', @url.href)
 
@@ -136,7 +135,7 @@ class ItemCard extends HTMLElement
 			hostname = @url.hostname
 
 		@elements.badge.text(badgeLabel)
-		@elements.badge.css('backgroundColor', @color)
+		# @elements.badge.css('backgroundColor', @color)
 		# if @color.opponent then @elements.badge.css('color', @color.opponent)
 
 		@elements.labelUrl.text(hostname)

@@ -6797,6 +6797,21 @@ Forms
 Item card styles
 
 ***/
+#speed-dial .item-card-badge {
+  background-color: #ec407a    !important; }
+
+#top-sites .item-card-badge {
+  background-color: #4CAF50   !important; }
+
+#latest-bookmarks-list .item-card-badge {
+  background-color: #2196f3    !important; }
+
+#recently-closed-list .item-card-badge {
+  background-color: #2196f3    !important; }
+
+#other-devices-list .item-card-badge {
+  background-color: #2196f3    !important; }
+
 .edit-actions {
   display: none;
   position: fixed;
@@ -6947,7 +6962,7 @@ a.item-card-link {
   margin-right: 0.6rem;
   width: 3.0rem;
   height: 3.0rem;
-  opacity: 0.7;
+  opacity: 0.8;
   line-height: 3.1rem;
   border-radius: 2px;
   color: #FFF; }
