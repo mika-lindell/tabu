@@ -1183,21 +1183,20 @@
       if (url != null) {
         this.setUrl(url);
       }
+      if (this.containingList.editable) {
+        this.elements.link.append(this.elements.dragHandle);
+      }
       this.elements.link.append(this.elements.badge);
       this.elements.labelContainer.append(this.elements.labelTitle);
       this.elements.labelContainer.append(this.elements.lineBreak);
       this.elements.labelContainer.append(this.elements.labelUrl);
       this.elements.link.append(this.elements.labelContainer);
-      if (this.containingList.editable) {
-        this.elements.link.append(this.elements.dragHandle);
-      }
       this.append(this.elements.link);
       this.append(this.elements.empty);
     }
 
     ItemCard.prototype.setTitle = function(title) {
       this.title = title;
-      console.log(title);
       return this.elements.labelTitle.text(' ' + title + ' ');
     };
 
@@ -2741,6 +2740,7 @@
       } else {
         return instance;
       }
+      this.shenanigans();
       this.speedDialContainer = new HTMLElement('#speed-dial');
       this.topSitesContainer = new HTMLElement('#top-sites');
       this.contentContainer = new HTMLElement('#content-container');
@@ -2837,6 +2837,28 @@
         mode = 'topSites';
       }
       return this.contentContainer.attr('data-mode', mode);
+    };
+
+    Toolbars.prototype.shenanigans = function() {
+      var currentStep, egg, steps;
+      egg = new HTMLElement('#easter-egg');
+      if (egg.DOMElement == null) {
+        return;
+      }
+      currentStep = 0;
+      steps = ['anim-egg-rectangle', 'anim-egg-flip', 'anim-egg-rotate', 'anim-egg-reset'];
+      return egg.on('click', function() {
+        if (typeof steps[currentStep - 1] !== 'undefined') {
+          egg.removeClass(steps[currentStep - 1]);
+        }
+        if (currentStep === 0) {
+          egg.removeClass(steps[steps.length - 1]);
+        }
+        console.log(steps[currentStep], steps[steps.length - 1]);
+        egg.addClass(steps[currentStep]);
+        currentStep++;
+        return currentStep = currentStep % steps.length;
+      });
     };
 
     return Toolbars;

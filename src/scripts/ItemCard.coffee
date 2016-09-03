@@ -94,7 +94,8 @@ class ItemCard extends HTMLElement
 		if url?
 			@setUrl(url)
 
-
+		if @containingList.editable
+			@elements.link.append(@elements.dragHandle)
 
 		@elements.link.append(@elements.badge)
 
@@ -104,17 +105,14 @@ class ItemCard extends HTMLElement
 
 		@elements.link.append(@elements.labelContainer)
 
-		if @containingList.editable
-			@elements.link.append(@elements.dragHandle)
+
 
 		@append(@elements.link)
 		@append(@elements.empty)
 
 	setTitle: (title)->
-		
+
 		@title = title
-		console.log title
-		
 		@elements.labelTitle.text(' ' + title + ' ')
 
 	setUrl: (url)->

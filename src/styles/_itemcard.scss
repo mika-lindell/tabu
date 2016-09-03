@@ -277,12 +277,12 @@ a.item-card-link{
 	@extend .color-black;
 }
 
-[data-mode='speedDial'] .item-card-badge{
-	background-color: #AB47BC !important;
+[data-mode='topSites'] .item-card-badge{
+	background-color: $color-primary-mode-1;
 }
 
-[data-mode='topSites'] .item-card-badge{
-	background-color: #4CAF50 !important; 
+[data-mode='speedDial'] .item-card-badge{
+	background-color: $color-primary-mode-2; 
 }
 
 .item-card-badge{

@@ -18,6 +18,8 @@ class Toolbars
 		else
 			return instance
 
+		@shenanigans()
+
 		@speedDialContainer = new HTMLElement('#speed-dial')
 		@topSitesContainer = new HTMLElement('#top-sites')
 
@@ -106,3 +108,33 @@ class Toolbars
 
 	setMode: (mode = 'topSites')->
 		@contentContainer.attr('data-mode', mode)
+
+	shenanigans: ()->
+
+		egg = new HTMLElement('#easter-egg')
+
+		if not egg.DOMElement? then return
+
+		currentStep = 0
+
+		steps = [
+			'anim-egg-rectangle'
+			'anim-egg-flip'
+			'anim-egg-rotate'
+			'anim-egg-reset'
+		]
+
+		egg.on('click', ()->
+
+			# Remove previously inserted class
+			if typeof steps[currentStep-1] isnt 'undefined' then egg.removeClass(steps[currentStep-1])			
+			# If we have started from beginning, remove the class that's last in the array if necessary.
+			if currentStep is 0 then egg.removeClass(steps[steps.length-1])
+
+			console.log steps[currentStep], steps[steps.length-1]
+
+			egg.addClass(steps[currentStep])
+
+			currentStep++
+			currentStep = currentStep % steps.length
+		)

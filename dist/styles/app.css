@@ -6497,6 +6497,59 @@ Animations
   animation-duration: 0.9s;
   transform-origin: 50 0; }
 
+@keyframes egg-rectangle {
+  50% {
+    transform: scale(1.2, 1.2); }
+  100% {
+    border-radius: 2px;
+    background-color: #66BB6A; } }
+@keyframes egg-flip {
+  0% {
+    border-radius: 2px;
+    background-color: #66BB6A; }
+  70% {
+    transform: rotate3d(0, 1, 0, 650deg); }
+  100% {
+    transform: rotate3d(0, 1, 0, 720deg);
+    border-radius: 50%;
+    background-color: #26a69a; } }
+@keyframes egg-rotate {
+  0% {
+    transform: rotate(0deg);
+    border-radius: 50%;
+    background-color: #ec407a; }
+  100% {
+    transform: rotate(405deg);
+    border-radius: 2px;
+    background-color: #ec407a; } }
+@keyframes egg-reset {
+  0% {
+    transform: rotate(405deg) rotateX(0deg);
+    border-radius: 2px;
+    background-color: #ec407a; }
+  100% {
+    transform: rotate(0deg) rotateX(1440deg);
+    border-radius: 50%; } }
+.anim-egg-rectangle,
+.anim-egg-rotate,
+.anim-egg-flip,
+.anim-egg-reset {
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-timing-function: ease-out; }
+
+.anim-egg-rectangle {
+  animation-name: egg-rectangle; }
+
+.anim-egg-rotate {
+  animation-name: egg-rotate; }
+
+.anim-egg-flip {
+  animation-name: egg-flip; }
+
+.anim-egg-reset {
+  animation-name: egg-reset; }
+
 .transitions, #visibility-on,
 #visibility-off, .dialog-container, .drag-handle, .item-card,
 .animated,
@@ -6955,11 +7008,11 @@ a.item-card-link {
   border-radius: 2px;
   overflow: hidden; }
 
-[data-mode='speedDial'] .item-card-badge {
-  background-color: #AB47BC !important; }
-
 [data-mode='topSites'] .item-card-badge {
-  background-color: #4CAF50 !important; }
+  background-color: #66BB6A; }
+
+[data-mode='speedDial'] .item-card-badge {
+  background-color: #ec407a; }
 
 .item-card-badge {
   display: inline-block;
