@@ -2748,6 +2748,7 @@
       speedDialSelect = new Dropdown('#speed-dial-select');
       topSitesSelect = new Dropdown('#top-sites-select');
       root = this;
+      this.setMode();
       speedDialSelect.addItem('Switch to Top Sites', 'menu-top-sites', function() {
         return root.topSites(root);
       }, 'compare_arrows');
@@ -2782,11 +2783,15 @@
       if (instant) {
         root.speedDialContainer.show();
         root.topSitesContainer.hide();
+        root.setMode('speedDial');
         if (done != null) {
           done();
         }
       } else {
-        root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, done);
+        root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, function() {
+          root.setMode('speedDial');
+          return done();
+        });
       }
       return root.storage.setView('speedDial');
     };
@@ -2798,8 +2803,11 @@
       if (instant) {
         root.speedDialContainer.hide();
         root.topSitesContainer.show();
+        root.setMode('topSites');
       } else {
-        root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer);
+        root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer, function() {
+          return root.setMode('topSites');
+        });
       }
       return root.storage.setView('topSites');
     };
@@ -2820,6 +2828,13 @@
         }
       };
       return anim.outro(false, complete);
+    };
+
+    Toolbars.prototype.setMode = function(mode) {
+      if (mode == null) {
+        mode = 'topSites';
+      }
+      return this.contentContainer.attr('data-mode', mode);
     };
 
     return Toolbars;

@@ -29,6 +29,8 @@ class Toolbars
 
 		root = @
 
+		@setMode()
+
 		speedDialSelect.addItem('Switch to Top Sites', 'menu-top-sites',()-> 
 			root.topSites(root)
 		, 'compare_arrows')
@@ -64,9 +66,13 @@ class Toolbars
 		if instant
 			root.speedDialContainer.show()
 			root.topSitesContainer.hide()
+			root.setMode('speedDial')
 			if done? then done()
 		else
-			root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, done)
+			root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, ()->
+				root.setMode('speedDial')
+				done()
+			)
 
 		root.storage.setView('speedDial')
 
@@ -75,8 +81,11 @@ class Toolbars
 		if instant
 			root.speedDialContainer.hide()
 			root.topSitesContainer.show()
+			root.setMode('topSites')
 		else
-			root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer)
+			root.animateTransition(root.speedDialContainer, root.topSitesContainer, root.contentContainer, ()->
+				root.setMode('topSites')
+			)
 
 		root.storage.setView('topSites')
 
@@ -95,19 +104,5 @@ class Toolbars
 		anim.outro(false, complete)
 
 
-
-		# outro = new Animation(from)
-		# intro = new Animation(to)
-
-		# rest = new Animation(@secondaryContainer)
-
-		# oldHeight = outro.animate.height()
-
-		# done = ()->
-		# 	intro.animateHeight(oldHeight, null, done)
-		# 	intro.intro()
-		# 	rest.intro()
-		
-		# outro.outro(false, done)
-		# rest.outro()
-
+	setMode: (mode = 'topSites')->
+		@contentContainer.attr('data-mode', mode)

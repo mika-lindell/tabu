@@ -3,25 +3,6 @@
 Item card styles
 
 ***/
-#speed-dial .item-card-badge{
-	background-color: #ec407a    !important;
-}
-
-#top-sites .item-card-badge{
-	background-color: #4CAF50   !important; 
-}
-
-#latest-bookmarks-list .item-card-badge{
-	background-color: #2196f3    !important; 
-}
-
-#recently-closed-list .item-card-badge{
-	background-color: #2196f3    !important; 
-}
-
-#other-devices-list .item-card-badge{
-	background-color: #2196f3    !important; 
-}
 
 .edit-actions{
 	display: none;
@@ -273,6 +254,14 @@ a.item-card-link{
 	overflow: hidden;
 
 	@extend .color-black;
+}
+
+[data-mode='speedDial'] .item-card-badge{
+	background-color: #ec407a    !important;
+}
+
+[data-mode='topSites'] .item-card-badge{
+	background-color: #4CAF50   !important; 
 }
 
 .item-card-badge{
