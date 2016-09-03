@@ -16,9 +16,9 @@ Responsive
 		width: 39%;
 	}	
 
-	.item-card-label-container{
-		width: 66%; // For truncate to work (with text-overflow: ellipsis;)
-	}
+	// .item-card-label-container{
+	// 	width: 66%; // For truncate to work (with text-overflow: ellipsis;)
+	// }
 
 	.horizontal-list li{
 		width: 50%; // 2 items in arow instead of 1 in horiz lists
@@ -48,9 +48,9 @@ Responsive
 		}
 	}	
 
-	.item-card-label-container{
-		width: 69%; // For truncate to work (with text-overflow: ellipsis;)
-	}
+	// .item-card-label-container{
+	// 	width: 69%; // For truncate to work (with text-overflow: ellipsis;)
+	// }
 
 	.horizontal-list li{
 		width: 33%; // 3 items in arow instead of 2 in horiz lists
@@ -59,9 +59,9 @@ Responsive
 }
 
 @media only screen and (min-width: 1400px){
-	.item-card-label-container{
-		width: 65%; // For truncate to work (with text-overflow: ellipsis;)
-	}
+	// .item-card-label-container{
+	// 	width: 65%; // For truncate to work (with text-overflow: ellipsis;)
+	// }
 	.horizontal-list li{
 		width: 25%; // 3 items in arow instead of 2 in horiz lists
 	}
@@ -69,9 +69,9 @@ Responsive
 
 
 @media only screen and (min-width: 1500px){
-	.item-card-label-container{
-		width: 74%; // For truncate to work (with text-overflow: ellipsis;)
-	}
+	// .item-card-label-container{
+	// 	width: 74%; // For truncate to work (with text-overflow: ellipsis;)
+	// }
 }
 
 @media only screen and (min-width: 2000px){

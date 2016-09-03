@@ -131,6 +131,7 @@ Item card styles
   right: 0px;
 
 	@extend .material-icons;
+	@extend .transitions;
 
 }
 
@@ -191,7 +192,7 @@ ul[data-list-editable]{
 	@extend .hoverable;
 
 	&:active{
-		box-shadow: $shadow-inset;
+		box-shadow: none;
 	}
 
 	&:hover{
@@ -212,7 +213,7 @@ ul[data-list-editable]{
 	.item-card.dragged{
 
 		border-color: $color-primary;
-		box-shadow: $shadow-inset;
+		box-shadow: none;
 
 		&.empty{
 			border-color: $white;
@@ -272,8 +273,7 @@ a.item-card-link{
 
 .item-card-badge{
 	display: inline-block;
-	// border-width: 0.4rem;
-	// border-style: solid;
+	position: absolute;
 	margin-right: 0.6rem;
 	width: 3.0rem;
 	height: 3.0rem;
@@ -281,7 +281,7 @@ a.item-card-link{
   line-height: 3.1rem;
   border-radius: 2px;
   color: $white;
-  // text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
+
 
 	@extend .center;
 	@extend .bolder;
@@ -291,7 +291,9 @@ a.item-card-link{
 .item-card-label-container{
 	display: inline-block;
 	vertical-align: middle;
-	width: 80%; // For truncate to work (with text-overflow: ellipsis;)
+
+  width: 75%;
+  margin-left: 50px;
 
 	@extend .truncate;
 }
