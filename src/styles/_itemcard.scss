@@ -196,7 +196,7 @@ ul[data-list-editable]{
 	}
 
 	&:hover{
-		& .drag-handle{
+		.drag-handle{
 			color: $medium-grey;
 		}
 	}
@@ -207,13 +207,22 @@ ul[data-list-editable]{
 
 	.item-card{
 		box-shadow: none;
+
+		.drag-handle{
+			color: $light-grey;
+		}
+
 	}
+
 
 	// the item that is being dragged
 	.item-card.dragged{
 
 		border-color: $color-primary;
-		box-shadow: none;
+
+		&:hover{
+			box-shadow: none;
+		}
 
 		&.empty{
 			border-color: $white;
@@ -233,6 +242,11 @@ ul[data-list-editable]{
 			}
 
 		}
+
+		.drag-handle{
+			color: $medium-grey;
+		}
+
 	}
 }
 
@@ -293,7 +307,7 @@ a.item-card-link{
 	vertical-align: middle;
 
   width: 75%;
-  margin-left: 50px;
+  margin-left: 52px;
 
 	@extend .truncate;
 }

@@ -6920,9 +6920,12 @@ ul[data-list-editable] .drag-handle {
 
 .drag-in-progress .item-card {
   box-shadow: none; }
+  .drag-in-progress .item-card .drag-handle {
+    color: #c7c7c7; }
 .drag-in-progress .item-card.dragged {
-  border-color: #1E88E5;
-  box-shadow: none; }
+  border-color: #1E88E5; }
+  .drag-in-progress .item-card.dragged:hover {
+    box-shadow: none; }
   .drag-in-progress .item-card.dragged.empty {
     border-color: #FFF;
     box-shadow: none;
@@ -6932,6 +6935,8 @@ ul[data-list-editable] .drag-handle {
       display: block; }
     .drag-in-progress .item-card.dragged.empty a {
       display: none; }
+  .drag-in-progress .item-card.dragged .drag-handle {
+    color: #8c8c8c; }
 
 .edit-in-progress .item-card {
   opacity: 0.5; }
@@ -6971,7 +6976,7 @@ a.item-card-link {
   display: inline-block;
   vertical-align: middle;
   width: 75%;
-  margin-left: 50px; }
+  margin-left: 52px; }
 
 .horizontal-list li {
   display: inline-block;

@@ -106,11 +106,12 @@ class ItemCard extends HTMLElement
 
 		if @containingList.editable
 			@elements.link.append(@elements.dragHandle)
-			
+
 		@append(@elements.link)
 		@append(@elements.empty)
 
 	setTitle: (title)->
+		
 		@title = title
 		console.log title
 		
