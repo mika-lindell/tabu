@@ -206,14 +206,25 @@ Animations
 
 @keyframes egg-reset{
 	0%{
-		transform: rotate(405deg) rotateX(0deg);
+		transform: rotate(405deg);
 		border-radius: 2px;
 		background-color: $color-primary-mode-2;
 	}
 
-	100%{
-		transform: rotate(0deg) rotateX(1440deg);
+	10%{
+		transform: rotate(360deg) rotateX(0deg);
 		border-radius: 50%;
+	}
+
+	30%{
+		transform: rotate(360deg) rotateX(0deg);
+		background-color: $color-primary-mode-2;
+
+	}
+
+	100%{
+		transform: rotate(360deg) rotateX(1080deg);
+		
 	}
 }
 
@@ -237,10 +248,12 @@ Animations
 
 .anim-egg-flip{
 	animation-name: egg-flip;
+	animation-duration: 1.4s;
 }
 
 .anim-egg-reset{
 	animation-name: egg-reset;
+	animation-duration: 3s;
 }
 
 

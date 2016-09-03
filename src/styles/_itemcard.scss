@@ -115,48 +115,6 @@ Item card styles
   @extend .layer-front;
 }
 
-.drag-handle{
-	display: none; // Hide by default
-	cursor: move;
-	vertical-align: top;
-	color: $light-grey;
-
-	font-size: 1.6rem;
-	padding-right: 0.5rem;
-	line-height: 3rem;
-	vertical-align: middle;
-	height: 3rem;
-
-	position: absolute;
-  right: 0px;
-
-	@extend .material-icons;
-	@extend .transitions;
-
-}
-
-// DnD ghost element styles
-#ghost{
-
-	transition: none;
-	border: none;
-	background-color: white;
-	opacity: 0.7;
-	box-shadow: $shadow-outset-large;
-
-	@extend .layer-dialog;
-
-	.drag-handle{
-		display: none;
-	}
-
-}
-
-ul[data-list-editable]{
-	.drag-handle{
-		display: inline-block; // Show handle only if drag is enabled
-	}
-}
 
 // The style of empty list placeholder
 .item-card-empty{
@@ -202,6 +160,44 @@ ul[data-list-editable]{
 	}
 }
 
+.drag-handle{
+	display: none; // Hide by default
+	cursor: move;
+	vertical-align: top;
+	color: $light-grey;
+
+	font-size: 1.6rem;
+	padding-right: 0.5rem;
+	line-height: 3rem;
+	vertical-align: middle;
+	height: 3rem;
+
+	position: absolute;
+  left: 2px;
+
+	@extend .material-icons;
+	@extend .transitions;
+
+}
+
+// DnD ghost element styles
+#ghost{
+
+	transition: none;
+	border: none;
+	background-color: white;
+	opacity: 0.7;
+	box-shadow: $shadow-outset-large;
+
+	@extend .layer-dialog;
+
+	.drag-handle{
+		display: none;
+	}
+
+}
+
+
 // Change list style when drag operation is being done
 .drag-in-progress{
 
@@ -213,7 +209,6 @@ ul[data-list-editable]{
 		}
 
 	}
-
 
 	// the item that is being dragged
 	.item-card.dragged{
@@ -288,14 +283,12 @@ a.item-card-link{
 .item-card-badge{
 	display: inline-block;
 	position: absolute;
-	margin-right: 0.6rem;
 	width: 3.0rem;
 	height: 3.0rem;
 	opacity: 0.8;
   line-height: 3.1rem;
   border-radius: 2px;
   color: $white;
-
 
 	@extend .center;
 	@extend .bolder;
@@ -306,8 +299,8 @@ a.item-card-link{
 	display: inline-block;
 	vertical-align: middle;
 
-  width: 75%;
-  margin-left: 52px;
+  width: 100%;
+  padding-left: 52px;
 
 	@extend .truncate;
 }
@@ -317,6 +310,7 @@ a.item-card-link{
 }
 
 .item-card-label-secondary{
+
 	@extend .font-size-small;
 	@extend .color-dark-grey;
 }
@@ -333,6 +327,23 @@ a.item-card-link{
 li.item-card-heading{
 	display: block;
 	margin-left: $section-heading-margin;
+}
+
+// Editable list only
+ul[data-list-editable]{
+
+	.item-card-label-container{
+		padding-left: 75px;
+	}
+	
+	.item-card-badge{
+		left: 30px;
+	}
+
+	.drag-handle{
+		display: inline-block; // Show handle only if drag is enabled
+	}
+	
 }
 
 // To display the 'no items in this list' -message when the list has no items =)
