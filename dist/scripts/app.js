@@ -1150,7 +1150,7 @@
       if (this.containingList.editable) {
         this.elements.link.attr('draggable', 'false');
         this.elements.dragHandle = new HTMLElement('i');
-        this.elements.dragHandle.html('..<br>..<br>..<br>..');
+        this.elements.dragHandle.html('drag_handle');
         this.elements.dragHandle.addClass('drag-handle');
       } else {
         this.elements.link.on('dragstart', function(ev) {
@@ -1183,14 +1183,14 @@
       if (url != null) {
         this.setUrl(url);
       }
-      if (this.containingList.editable) {
-        this.elements.link.append(this.elements.dragHandle);
-      }
       this.elements.link.append(this.elements.badge);
       this.elements.labelContainer.append(this.elements.labelTitle);
       this.elements.labelContainer.append(this.elements.lineBreak);
       this.elements.labelContainer.append(this.elements.labelUrl);
       this.elements.link.append(this.elements.labelContainer);
+      if (this.containingList.editable) {
+        this.elements.link.append(this.elements.dragHandle);
+      }
       this.append(this.elements.link);
       this.append(this.elements.empty);
     }
@@ -2784,13 +2784,15 @@
         root.speedDialContainer.show();
         root.topSitesContainer.hide();
         root.setMode('speedDial');
-        if (done != null) {
+        if (typeof done === 'function') {
           done();
         }
       } else {
         root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, function() {
           root.setMode('speedDial');
-          return done();
+          if (typeof done === 'function') {
+            return done();
+          }
         });
       }
       return root.storage.setView('speedDial');
@@ -2823,7 +2825,7 @@
         from.hide();
         to.show();
         anim.intro();
-        if (done != null) {
+        if (typeof done === 'function') {
           return done();
         }
       };

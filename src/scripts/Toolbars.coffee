@@ -67,11 +67,11 @@ class Toolbars
 			root.speedDialContainer.show()
 			root.topSitesContainer.hide()
 			root.setMode('speedDial')
-			if done? then done()
+			if typeof done is 'function' then done()
 		else
 			root.animateTransition(root.topSitesContainer, root.speedDialContainer, root.contentContainer, ()->
 				root.setMode('speedDial')
-				done()
+				if typeof done is 'function' then done()
 			)
 
 		root.storage.setView('speedDial')
@@ -99,7 +99,7 @@ class Toolbars
 			from.hide()
 			to.show()
 			anim.intro()
-			if done? then done()
+			if typeof done is 'function' then done()
 
 		anim.outro(false, complete)
 

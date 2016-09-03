@@ -2186,6 +2186,7 @@ video.responsive-video {
   .breadcrumb i,
   .breadcrumb [class^="mdi-"], .breadcrumb [class*="mdi-"],
   .breadcrumb i.material-icons,
+  .breadcrumb i.drag-handle,
   .breadcrumb i.item-card-empty::before {
     display: inline-block;
     float: left;
@@ -2598,7 +2599,7 @@ input[type=range] + .thumb {
   padding: 0 !important; }
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons, a[target="_blank"]::after, .edit-actions li::before, .item-card-empty::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before, .drag-handle, .item-card-empty::before {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga'; }
 
@@ -3051,6 +3052,7 @@ nav {
   nav i,
   nav [class^="mdi-"], nav [class*="mdi-"],
   nav i.material-icons,
+  nav i.drag-handle,
   nav i.item-card-empty::before {
     display: block;
     font-size: 2rem;
@@ -3979,7 +3981,7 @@ a.waves-effect .waves-ripple {
     height: 32px;
     width: 32px;
     border-radius: 50%; }
-  .chip i.material-icons, .chip i.item-card-empty::before {
+  .chip i.material-icons, .chip i.drag-handle, .chip i.item-card-empty::before {
     cursor: pointer;
     float: right;
     font-size: 16px;
@@ -4354,11 +4356,11 @@ textarea.materialize-textarea {
     border: 0;
     box-shadow: none;
     color: #444; }
-    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before, .input-field input[type=search]:focus ~ .item-card-empty::before {
+    .input-field input[type=search]:focus + label i, .input-field input[type=search]:focus ~ .mdi-navigation-close, .input-field input[type=search]:focus ~ .material-icons, .input-field input[type=search]:focus ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search]:focus ~ li::before, .edit-actions .input-field input[type=search]:focus ~ li::before, .input-field input[type=search]:focus ~ .drag-handle, .input-field input[type=search]:focus ~ .item-card-empty::before {
       color: #444; }
   .input-field input[type=search] + label {
     left: 1rem; }
-  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before, .input-field input[type=search] ~ .item-card-empty::before {
+  .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons, .input-field input[type=search] ~ a[target="_blank"]::after, .input-field .edit-actions input[type=search] ~ li::before, .edit-actions .input-field input[type=search] ~ li::before, .input-field input[type=search] ~ .drag-handle, .input-field input[type=search] ~ .item-card-empty::before {
     position: absolute;
     top: 0;
     right: 1rem;
@@ -6228,7 +6230,7 @@ Material icons
   font-style: normal;
   font-weight: 400;
   src: url(./assets/material-design-icons/material_icons.woff2) format("woff2"); }
-.material-icons, a[target="_blank"]::after, .edit-actions li::before, .item-card-empty::before {
+.material-icons, a[target="_blank"]::after, .edit-actions li::before, .drag-handle, .item-card-empty::before {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -6243,20 +6245,23 @@ Material icons
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased; }
 
-i.material-icons.bugged, i.bugged.item-card-empty::before {
+i.material-icons.bugged, i.bugged.drag-handle, i.bugged.item-card-empty::before {
   max-width: 1.1em;
   overflow: hidden; }
 
-nav i.material-icons, nav i.item-card-empty::before,
+nav i.material-icons, nav i.drag-handle, nav i.item-card-empty::before,
 .section-toolbar i.material-icons,
+.section-toolbar i.drag-handle,
 .section-toolbar i.item-card-empty::before {
   font-size: 1.5rem; }
-  nav i.material-icons.left, nav i.left.item-card-empty::before,
+  nav i.material-icons.left, nav i.left.drag-handle, nav i.left.item-card-empty::before,
   .section-toolbar i.material-icons.left,
+  .section-toolbar i.left.drag-handle,
   .section-toolbar i.left.item-card-empty::before {
     margin-right: 5px; }
-  nav i.material-icons.right, nav i.right.item-card-empty::before,
+  nav i.material-icons.right, nav i.right.drag-handle, nav i.right.item-card-empty::before,
   .section-toolbar i.material-icons.right,
+  .section-toolbar i.right.drag-handle,
   .section-toolbar i.right.item-card-empty::before {
     margin-left: 0px; }
 
@@ -6326,7 +6331,7 @@ Layers
 .layer-overlay, .dialog-container {
   z-index: 499; }
 
-.layer-dialog, .dialog, .edit-actions {
+.layer-dialog, .dialog, .edit-actions, #ghost {
   z-index: 599; }
 
 /***
@@ -6692,7 +6697,7 @@ Dropdown
 Button styles
 
 ***/
-.btn .material-icons, .btn-large .material-icons, .btn a[target="_blank"]::after, .btn-large a[target="_blank"]::after, .btn .edit-actions li::before, .edit-actions .btn li::before, .btn-large .edit-actions li::before, .edit-actions .btn-large li::before, .btn .item-card-empty::before, .btn-large .item-card-empty::before {
+.btn .material-icons, .btn-large .material-icons, .btn a[target="_blank"]::after, .btn-large a[target="_blank"]::after, .btn .edit-actions li::before, .edit-actions .btn li::before, .btn-large .edit-actions li::before, .edit-actions .btn-large li::before, .btn .drag-handle, .btn-large .drag-handle, .btn .item-card-empty::before, .btn-large .item-card-empty::before {
   vertical-align: bottom; }
 
 .btn.teal, .teal.btn-large {
@@ -6716,7 +6721,7 @@ button.btn-toolbar {
   overflow: hidden; }
   button.btn-toolbar:hover, button.btn-toolbar:focus {
     background-color: #FFF; }
-  button.btn-toolbar i.material-icons, button.btn-toolbar i.item-card-empty::before {
+  button.btn-toolbar i.material-icons, button.btn-toolbar i.drag-handle, button.btn-toolbar i.item-card-empty::before {
     position: absolute;
     left: 9px;
     top: 0px;
@@ -6742,9 +6747,9 @@ button.title {
     box-shadow: none;
     background-color: #1E88E5;
     color: #FFF; }
-    button.title.active i.material-icons, button.title.active i.item-card-empty::before, button.title.active:hover i.material-icons, button.title.active:hover i.item-card-empty::before {
+    button.title.active i.material-icons, button.title.active i.drag-handle, button.title.active i.item-card-empty::before, button.title.active:hover i.material-icons, button.title.active:hover i.drag-handle, button.title.active:hover i.item-card-empty::before {
       opacity: 0; }
-  button.title i.material-icons, button.title i.item-card-empty::before {
+  button.title i.material-icons, button.title i.drag-handle, button.title i.item-card-empty::before {
     font-size: inherit; }
 
 .btn.submit, .submit.btn-large {
@@ -6763,7 +6768,7 @@ button.title {
   width: 47%;
   margin-right: 0.6rem; }
 
-#go-incognito i.material-icons, #go-incognito i.item-card-empty::before {
+#go-incognito i.material-icons, #go-incognito i.drag-handle, #go-incognito i.item-card-empty::before {
   font-size: 1.35rem; }
 
 /***
@@ -6869,20 +6874,21 @@ Item card styles
   display: none;
   cursor: move;
   vertical-align: top;
-  color: #8c8c8c;
+  color: #c7c7c7;
   font-size: 1.6rem;
   padding-right: 0.5rem;
-  line-height: 0.5rem;
+  line-height: 3rem;
   vertical-align: middle;
-  height: 3rem; }
+  height: 3rem;
+  position: absolute;
+  right: 0px; }
 
 #ghost {
   transition: none;
   border: none;
   background-color: white;
   opacity: 0.7;
-  box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  z-index: 9999999999999999999999; }
+  box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
   #ghost .drag-handle {
     display: none; }
 
@@ -6909,6 +6915,8 @@ ul[data-list-editable] .drag-handle {
   list-style-type: none; }
   .item-card:active {
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
+  .item-card:hover .drag-handle {
+    color: #8c8c8c; }
 
 .drag-in-progress .item-card {
   box-shadow: none; }
@@ -6943,10 +6951,10 @@ a.item-card-link {
   overflow: hidden; }
 
 [data-mode='speedDial'] .item-card-badge {
-  background-color: #ec407a    !important; }
+  background-color: #AB47BC !important; }
 
 [data-mode='topSites'] .item-card-badge {
-  background-color: #4CAF50   !important; }
+  background-color: #4CAF50 !important; }
 
 .item-card-badge {
   display: inline-block;
