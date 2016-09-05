@@ -1150,7 +1150,7 @@
       if (this.containingList.editable) {
         this.elements.link.attr('draggable', 'false');
         this.elements.dragHandle = new HTMLElement('i');
-        this.elements.dragHandle.html('drag_handle');
+        this.elements.dragHandle.html('arrow_drop_up<br>arrow_drop_down');
         this.elements.dragHandle.addClass('drag-handle');
       } else {
         this.elements.link.on('dragstart', function(ev) {

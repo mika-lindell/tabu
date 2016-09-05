@@ -55,7 +55,7 @@ class ItemCard extends HTMLElement
 			@elements.link.attr('draggable', 'false')
 
 			@elements.dragHandle = new HTMLElement('i')
-			@elements.dragHandle.html('drag_handle')
+			@elements.dragHandle.html('arrow_drop_up<br>arrow_drop_down')
 			@elements.dragHandle.addClass('drag-handle')
 
 		else

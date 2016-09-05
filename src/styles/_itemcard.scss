@@ -163,14 +163,14 @@ Item card styles
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
-	vertical-align: top;
 	color: $light-grey;
 
+	line-height: 0.7rem;
+	width: 1.8rem;
+	margin-top: 0.8rem;
+	font-size: 1.7rem;
+
 	font-size: 1.6rem;
-	padding-right: 0.5rem;
-	line-height: 3rem;
-	vertical-align: middle;
-	height: 3rem;
 
 	position: absolute;
   left: 2px;
@@ -300,7 +300,7 @@ a.item-card-link{
 	vertical-align: middle;
 
   width: 100%;
-  padding-left: 52px;
+  padding-left: 3.5rem;
 
 	@extend .truncate;
 }
@@ -333,7 +333,7 @@ li.item-card-heading{
 ul[data-list-editable]{
 
 	.item-card-label-container{
-		padding-left: 75px;
+		padding-left: 5rem;
 	}
 	
 	.item-card-badge{

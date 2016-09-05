@@ -6502,11 +6502,11 @@ Animations
     transform: scale(1.2, 1.2); }
   100% {
     border-radius: 2px;
-    background-color: #66BB6A; } }
+    background-color: #ab47bc; } }
 @keyframes egg-flip {
   0% {
     border-radius: 2px;
-    background-color: #66BB6A; }
+    background-color: #ab47bc; }
   70% {
     transform: rotate3d(0, 1, 0, 650deg); }
   100% {
@@ -6517,22 +6517,22 @@ Animations
   0% {
     transform: rotate(0deg);
     border-radius: 50%;
-    background-color: #f06292; }
+    background-color: #ec407a; }
   100% {
     transform: rotate(405deg);
     border-radius: 2px;
-    background-color: #f06292; } }
+    background-color: #ec407a; } }
 @keyframes egg-reset {
   0% {
     transform: rotate(405deg);
     border-radius: 2px;
-    background-color: #f06292; }
+    background-color: #ec407a; }
   10% {
     transform: rotate(360deg) rotateX(0deg);
     border-radius: 50%; }
   30% {
     transform: rotate(360deg) rotateX(0deg);
-    background-color: #f06292; }
+    background-color: #ec407a; }
   100% {
     transform: rotate(360deg) rotateX(1080deg); } }
 .anim-egg-rectangle,
@@ -6956,13 +6956,12 @@ Item card styles
 .drag-handle {
   display: none;
   cursor: move;
-  vertical-align: top;
   color: #c7c7c7;
+  line-height: 0.7rem;
+  width: 1.8rem;
+  margin-top: 0.8rem;
+  font-size: 1.7rem;
   font-size: 1.6rem;
-  padding-right: 0.5rem;
-  line-height: 3rem;
-  vertical-align: middle;
-  height: 3rem;
   position: absolute;
   left: 2px; }
 
@@ -7013,10 +7012,10 @@ a.item-card-link {
   overflow: hidden; }
 
 [data-mode='topSites'] .item-card-badge {
-  background-color: #66BB6A; }
+  background-color: #ab47bc; }
 
 [data-mode='speedDial'] .item-card-badge {
-  background-color: #f06292; }
+  background-color: #ec407a; }
 
 .item-card-badge {
   display: inline-block;
@@ -7032,7 +7031,7 @@ a.item-card-link {
   display: inline-block;
   vertical-align: middle;
   width: 100%;
-  padding-left: 52px; }
+  padding-left: 3.5rem; }
 
 .horizontal-list li {
   display: inline-block;
@@ -7044,7 +7043,7 @@ li.item-card-heading {
   margin-left: 0.7rem; }
 
 ul[data-list-editable] .item-card-label-container {
-  padding-left: 75px; }
+  padding-left: 5rem; }
 ul[data-list-editable] .item-card-badge {
   left: 30px; }
 ul[data-list-editable] .drag-handle {
