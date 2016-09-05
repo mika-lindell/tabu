@@ -151,6 +151,7 @@ Item card styles
 
 	&:active{
 		box-shadow: none;
+		background-color: #f3f3f3;
 	}
 
 	&:hover{
@@ -214,6 +215,7 @@ Item card styles
 	.item-card.dragged{
 
 		border-color: $color-primary;
+		background-color: #f3f3f3;
 
 		&:hover{
 			box-shadow: none;
