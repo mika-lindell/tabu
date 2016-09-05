@@ -6502,11 +6502,11 @@ Animations
     transform: scale(1.2, 1.2); }
   100% {
     border-radius: 2px;
-    background-color: #ab47bc; } }
+    background-color: #00b362; } }
 @keyframes egg-flip {
   0% {
     border-radius: 2px;
-    background-color: #ab47bc; }
+    background-color: #00b362; }
   70% {
     transform: rotate3d(0, 1, 0, 650deg); }
   100% {
@@ -6946,6 +6946,7 @@ Item card styles
 
 .item-card {
   border: 2px dashed transparent;
+  border-radius: 2px;
   position: relative;
   list-style-type: none; }
   .item-card:active {
@@ -6957,7 +6958,7 @@ Item card styles
 .drag-handle {
   display: none;
   cursor: move;
-  color: #64B5F6;
+  color: #BBDEFB;
   line-height: 0.7rem;
   width: 1.8rem;
   margin-top: 0.8rem;
@@ -6978,7 +6979,7 @@ Item card styles
 .drag-in-progress .item-card {
   box-shadow: none; }
   .drag-in-progress .item-card .drag-handle {
-    color: #64B5F6; }
+    color: #BBDEFB; }
 .drag-in-progress .item-card.dragged {
   border-color: #1E88E5;
   background-color: #E3F2FD; }
@@ -7014,7 +7015,7 @@ a.item-card-link {
   overflow: hidden; }
 
 [data-mode='topSites'] .item-card-badge {
-  background-color: #ab47bc; }
+  background-color: #00b362; }
 
 [data-mode='speedDial'] .item-card-badge {
   background-color: #ec407a; }
