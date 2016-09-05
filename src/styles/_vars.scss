@@ -11,6 +11,8 @@ $medium-grey: #8c8c8c;
 $dark-grey: #5a5a5a;
 
 $color-primary: $button-raised-background !default;
+$color-primary-lighten: color("blue", "lighten-2") !default;
+$color-primary-very-light: color("blue", "lighten-5") !default;
 
 $color-primary-mode-1: color("purple", "lighten-1") !default;
 $color-primary-mode-2: color("pink", "lighten-1") !default;

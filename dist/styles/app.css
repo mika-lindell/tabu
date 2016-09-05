@@ -6950,14 +6950,14 @@ Item card styles
   list-style-type: none; }
   .item-card:active {
     box-shadow: none;
-    background-color: #f3f3f3; }
+    background-color: #E3F2FD; }
   .item-card:hover .drag-handle {
-    color: #8c8c8c; }
+    color: #1E88E5; }
 
 .drag-handle {
   display: none;
   cursor: move;
-  color: #c7c7c7;
+  color: #64B5F6;
   line-height: 0.7rem;
   width: 1.8rem;
   margin-top: 0.8rem;
@@ -6978,10 +6978,10 @@ Item card styles
 .drag-in-progress .item-card {
   box-shadow: none; }
   .drag-in-progress .item-card .drag-handle {
-    color: #c7c7c7; }
+    color: #64B5F6; }
 .drag-in-progress .item-card.dragged {
   border-color: #1E88E5;
-  background-color: #f3f3f3; }
+  background-color: #E3F2FD; }
   .drag-in-progress .item-card.dragged:hover {
     box-shadow: none; }
   .drag-in-progress .item-card.dragged.empty {
@@ -6994,7 +6994,7 @@ Item card styles
     .drag-in-progress .item-card.dragged.empty a {
       display: none; }
   .drag-in-progress .item-card.dragged .drag-handle {
-    color: #8c8c8c; }
+    color: #1E88E5; }
 
 .edit-in-progress .item-card {
   opacity: 0.5; }

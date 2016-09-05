@@ -151,12 +151,12 @@ Item card styles
 
 	&:active{
 		box-shadow: none;
-		background-color: #f3f3f3;
+		background-color: $color-primary-very-light;
 	}
 
 	&:hover{
 		.drag-handle{
-			color: $medium-grey;
+			color: $color-primary;
 		}
 	}
 }
@@ -164,7 +164,7 @@ Item card styles
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
-	color: $light-grey;
+	color: $color-primary-lighten;
 
 	line-height: 0.7rem;
 	width: 1.8rem;
@@ -206,7 +206,7 @@ Item card styles
 		box-shadow: none;
 
 		.drag-handle{
-			color: $light-grey;
+			color: $color-primary-lighten;
 		}
 
 	}
@@ -215,7 +215,7 @@ Item card styles
 	.item-card.dragged{
 
 		border-color: $color-primary;
-		background-color: #f3f3f3;
+		background-color: $color-primary-very-light;
 
 		&:hover{
 			box-shadow: none;
@@ -241,7 +241,7 @@ Item card styles
 		}
 
 		.drag-handle{
-			color: $medium-grey;
+			color: $color-primary;
 		}
 
 	}
