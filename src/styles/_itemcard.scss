@@ -165,7 +165,7 @@ Item card styles
 .drag-handle{
 	display: none; // Hide by default
 	cursor: move;
-	color: $color-primary-lighten;
+	color: $light-grey;
 
 	line-height: 0.7rem;
 	width: 1.8rem;
@@ -207,7 +207,7 @@ Item card styles
 		box-shadow: none;
 
 		.drag-handle{
-			color: $color-primary-lighten;
+			color: $light-grey;
 		}
 
 	}

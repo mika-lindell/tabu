@@ -2836,7 +2836,7 @@
       if (mode == null) {
         mode = 'topSites';
       }
-      return this.contentContainer.attr('data-mode', mode);
+      return new HTMLElement('body').attr('data-mode', mode);
     };
 
     Toolbars.prototype.shenanigans = function() {

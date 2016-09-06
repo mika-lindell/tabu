@@ -6958,7 +6958,7 @@ Item card styles
 .drag-handle {
   display: none;
   cursor: move;
-  color: #BBDEFB;
+  color: #c7c7c7;
   line-height: 0.7rem;
   width: 1.8rem;
   margin-top: 0.8rem;
@@ -6979,7 +6979,7 @@ Item card styles
 .drag-in-progress .item-card {
   box-shadow: none; }
   .drag-in-progress .item-card .drag-handle {
-    color: #BBDEFB; }
+    color: #c7c7c7; }
 .drag-in-progress .item-card.dragged {
   border-color: #1E88E5;
   background-color: #E3F2FD; }

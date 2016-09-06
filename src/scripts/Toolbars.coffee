@@ -107,7 +107,7 @@ class Toolbars
 
 
 	setMode: (mode = 'topSites')->
-		@contentContainer.attr('data-mode', mode)
+		new HTMLElement('body').attr('data-mode', mode)
 
 	shenanigans: ()->
 
