@@ -20,7 +20,7 @@ class ChromeAPI
 	# @param [api] The chrome API function to be executed to get the data. E.g. chrome.topSites.get
 	# @param [String] The structure type of this data. Can be topSites, latestBookmarks, recentHistory, otherDevices or recentlyClosed
 	#
-	constructor: (dataType = 'topSites', limit = 16)->
+	constructor: (dataType = 'topSites', limit = 18)->
 
 		@limit = limit
 		@dataType = dataType
@@ -53,7 +53,7 @@ class ChromeAPI
 			else
 				data = result
 
-			if root.dataType is 'recentHistory' or root.dataType is 'recentlyClosed'
+			if root.dataType is 'recentHistory' or root.dataType is 'recentlyClosed' or root.dataType is 'topSites'
 				data = data.slice(0, root.limit) # Limit the amount of data stored
 				
 			root.data = data
