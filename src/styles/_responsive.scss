@@ -62,10 +62,7 @@ Responsive
 	// .item-card-label-container{
 	// 	width: 65%; // For truncate to work (with text-overflow: ellipsis;)
 	// }
-	.horizontal-list li{
-		width: 25%; // 3 items in arow instead of 2 in horiz lists
-	}
-}
+
 
 
 @media only screen and (min-width: 1500px){
@@ -81,4 +78,8 @@ Responsive
 	.container-large{
 		max-width: 1800px;
 	}
+	.horizontal-list li{
+		width: 25%; // 3 items in arow instead of 2 in horiz lists
+	}
+}
 }

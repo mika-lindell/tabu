@@ -799,7 +799,7 @@
         dataType = 'topSites';
       }
       if (limit == null) {
-        limit = 16;
+        limit = 18;
       }
       this.limit = limit;
       this.dataType = dataType;
@@ -828,7 +828,7 @@
         } else {
           data = result;
         }
-        if (root.dataType === 'recentHistory' || root.dataType === 'recentlyClosed') {
+        if (root.dataType === 'recentHistory' || root.dataType === 'recentlyClosed' || root.dataType === 'topSites') {
           data = data.slice(0, root.limit);
         }
         root.data = data;
