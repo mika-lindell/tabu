@@ -6357,7 +6357,7 @@ Helpers
 .uppercase, button.btn-toolbar, .edit-actions li, .item-card-empty, .item-card-badge {
   text-transform: uppercase; }
 
-.color-black, button.title, a.item-card-link {
+.color-black, button.select, a.item-card-link {
   color: #000; }
 
 .color-medium-grey {
@@ -6517,22 +6517,22 @@ Animations
   0% {
     transform: rotate(0deg);
     border-radius: 50%;
-    background-color: #ec407a; }
+    background-color: #ab47bc; }
   100% {
     transform: rotate(405deg);
     border-radius: 2px;
-    background-color: #ec407a; } }
+    background-color: #ab47bc; } }
 @keyframes egg-reset {
   0% {
     transform: rotate(405deg);
     border-radius: 2px;
-    background-color: #ec407a; }
+    background-color: #ab47bc; }
   10% {
     transform: rotate(360deg) rotateX(0deg);
     border-radius: 50%; }
   30% {
     transform: rotate(360deg) rotateX(0deg);
-    background-color: #ec407a; }
+    background-color: #ab47bc; }
   100% {
     transform: rotate(360deg) rotateX(1080deg); } }
 .anim-egg-rectangle,
@@ -6628,8 +6628,11 @@ body {
   max-width: 1500px;
   min-width: 450px; }
 
+.col-no-padding {
+  padding: 0 !important; }
+
 .card-list-column {
-  padding: 0 0.6rem; }
+  padding: 0; }
 
 footer {
   border-top: 1px solid #c7c7c7;
@@ -6788,7 +6791,7 @@ button.btn-toolbar {
     line-height: 36px;
     height: 36px; }
 
-button.title {
+button.select {
   font-size: inherit;
   text-transform: inherit;
   line-height: inherit;
@@ -6801,16 +6804,22 @@ button.title {
   min-width: 220px;
   opacity: 1;
   background-color: #FFF; }
-  button.title:hover, button.title:focus {
+  button.select:hover, button.select:focus {
     background-color: #FFF; }
-  button.title.active, button.title.active:hover {
+  button.select.active, button.select.active:hover {
     box-shadow: none;
     background-color: #1E88E5;
     color: #FFF; }
-    button.title.active i.material-icons, button.title.active i.item-card-empty::before, button.title.active i.drag-handle, button.title.active:hover i.material-icons, button.title.active:hover i.item-card-empty::before, button.title.active:hover i.drag-handle {
+    button.select.active i.material-icons, button.select.active i.item-card-empty::before, button.select.active i.drag-handle, button.select.active:hover i.material-icons, button.select.active:hover i.item-card-empty::before, button.select.active:hover i.drag-handle {
       opacity: 0; }
-  button.title i.material-icons, button.title i.item-card-empty::before, button.title i.drag-handle {
+  button.select i.material-icons, button.select i.item-card-empty::before, button.select i.drag-handle {
     font-size: inherit; }
+
+[data-mode="topSites"] button.select.active, [data-mode="topSites"] button.select.active:hover {
+  background-color: #00b362; }
+
+[data-mode="speedDial"] button.select.active, [data-mode="speedDial"] button.select.active:hover {
+  background-color: #ab47bc; }
 
 .btn.submit, .submit.btn-large {
   background-color: #26a69a; }
@@ -6927,7 +6936,7 @@ Item card styles
 
 .item-card-list {
   min-height: 4.6rem;
-  margin: 0;
+  margin: 0.5rem 0 0 0;
   position: relative; }
 
 .item-card-empty {
@@ -6948,12 +6957,11 @@ Item card styles
   border: 2px dashed transparent;
   border-radius: 2px;
   position: relative;
-  list-style-type: none; }
+  list-style-type: none;
+  padding-right: 2rem; }
   .item-card:active {
     box-shadow: none;
     background-color: #E3F2FD; }
-  .item-card:hover .drag-handle {
-    color: #1E88E5; }
 
 .drag-handle {
   display: none;
@@ -6979,7 +6987,7 @@ Item card styles
 .drag-in-progress .item-card {
   box-shadow: none; }
   .drag-in-progress .item-card .drag-handle {
-    color: #c7c7c7; }
+    color: #c7c7c7 !important; }
 .drag-in-progress .item-card.dragged {
   border-color: #1E88E5;
   background-color: #E3F2FD; }
@@ -6995,7 +7003,7 @@ Item card styles
     .drag-in-progress .item-card.dragged.empty a {
       display: none; }
   .drag-in-progress .item-card.dragged .drag-handle {
-    color: #1E88E5; }
+    color: #1E88E5 !important; }
 
 .edit-in-progress .item-card {
   opacity: 0.5; }
@@ -7018,7 +7026,13 @@ a.item-card-link {
   background-color: #00b362; }
 
 [data-mode='speedDial'] .item-card-badge {
-  background-color: #ec407a; }
+  background-color: #ab47bc; }
+
+[data-mode="topSites"] .item-card:hover .drag-handle {
+  color: #00b362; }
+
+[data-mode="speedDial"] .item-card:hover .drag-handle {
+  color: #ab47bc; }
 
 .item-card-badge {
   display: inline-block;
@@ -7038,7 +7052,6 @@ a.item-card-link {
 
 .horizontal-list li {
   display: inline-block;
-  padding-right: 1rem;
   width: 100%; }
 
 li.item-card-heading {
@@ -7101,7 +7114,7 @@ Responsive
       margin-left: 0.3rem; }
 
   .horizontal-list li {
-    width: 33%; } }
+    width: 33.33333%; } }
 @media only screen and (min-width: 1400px) and (min-width: 2000px) {
   html {
     font-size: 17px; }

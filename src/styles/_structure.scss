@@ -94,8 +94,12 @@ body{
 	min-width: 450px;
 }
 
+.col-no-padding{
+	padding: 0 !important;
+}
+
 .card-list-column{
-	padding: 0 0.6rem;// Needs to add some padding for the hoverable shadow not to clip
+	padding: 0;// Needs to add some padding for the hoverable shadow not to clip
 }
 
 footer{

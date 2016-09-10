@@ -229,7 +229,7 @@ button.btn-toolbar{
 
 }
 
-button.title{
+button.select{
 	font-size: inherit;
 	text-transform: inherit;
 	line-height: inherit;
@@ -263,6 +263,20 @@ button.title{
 
 	i.material-icons{
 		font-size: inherit;
+	}
+}
+
+[data-mode="topSites"] button.select{
+	&.active,
+	&.active:hover{
+		background-color: $color-primary-mode-1;
+	}
+}
+
+[data-mode="speedDial"] button.select{
+	&.active,
+	&.active:hover{
+		background-color: $color-primary-mode-2;
 	}
 }
 
