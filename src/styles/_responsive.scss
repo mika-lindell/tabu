@@ -24,7 +24,10 @@ Responsive
 		width: 50%; // 2 items in arow instead of 1 in horiz lists
 	}
 
-
+	nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+	    height: 65px;
+	    line-height: 65px;
+	}
 
 }
 
