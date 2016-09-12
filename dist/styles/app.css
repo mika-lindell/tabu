@@ -6558,7 +6558,7 @@ Structure
 body {
   overflow-y: scroll;
   overflow-x: hidden;
-  min-width: 590px; }
+  min-width: 650px; }
 
 .section-separator {
   border-bottom: 1px solid #c7c7c7; }
@@ -6729,12 +6729,11 @@ Button styles
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.25); }
 
 .btn-toolbar {
-  padding: 0 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin: 0 0.5rem;
   box-shadow: none;
-  background-color: #FFF;
-  position: relative;
-  overflow: hidden; }
+  background-color: #FFF; }
   .btn-toolbar:hover, .btn-toolbar:focus {
     background-color: #FFF; }
   .btn-toolbar i.material-icons, .btn-toolbar i.item-card-empty::before, .btn-toolbar i.drag-handle {

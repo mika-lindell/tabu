@@ -201,12 +201,11 @@ Button styles
 	}
 
 .btn-toolbar{
-	padding: 0 0.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
 	margin: 0 0.5rem;
 	box-shadow: none;
 	background-color: $white;
-	position: relative;
-	overflow: hidden;
 
 	@extend .font-size-small;
 	@extend .color-dark-grey;
