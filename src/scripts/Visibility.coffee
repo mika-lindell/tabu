@@ -26,7 +26,7 @@ class Visibility
 	
 		@animation = 
 			content: new Animation('#content-container')
-			# button: new Animation(@controller)
+			button: new Animation(@controller)
 
 		@storage = new Storage
 
@@ -42,11 +42,11 @@ class Visibility
 				# Enable the intro animation to start or hide elements (without animations)!
 				if setting
 
-					root.enable()
+					root.enable(false, true)
 
 				else
 
-					root.disable(true)
+					root.disable(true, true)
 					
 			else
 
@@ -70,7 +70,7 @@ class Visibility
 	#
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
-	enable: (instant = false)->
+	enable: (instantIntro = false, instantButton = false)->
 
 		root = @
 
@@ -80,12 +80,15 @@ class Visibility
 		done = ()->
 			root.executing = false
 
-		@animation.content.intro(instant, done)
+		@animation.content.intro(instantIntro, done)
 
-		@enabler.css('opacity', 0)
-		@disabler.css('opacity', 1)
-
+		# @enabler.css('opacity', 0)
+		# @disabler.css('opacity', 1)
 		# @animation.button.animateWidth(40, 130)
+
+		if not instantButton then @animation.button.flip()
+		@enabler.hide()
+		@disabler.show('inline-block')
 		@enabled = true
 
 		console.log "Visibility: On"
@@ -95,7 +98,7 @@ class Visibility
 	#
 	# @param [boolean] Shall we skip the animation and just hide the element?
 	#
-	disable: (instant = false)->
+	disable: (instantOutro = false, instantButton = false)->
 
 		root = @
 
@@ -105,12 +108,15 @@ class Visibility
 		done = ()->
 			root.executing = false
 
-		@animation.content.outro(instant, done)
+		@animation.content.outro(instantOutro, done)
 
-		@enabler.css('opacity', 1)
-		@disabler.css('opacity', 0)
-
+		# @enabler.css('opacity', 1)
+		# @disabler.css('opacity', 0)
 		# @animation.button.animateWidth(110, 40)
+
+		if not instantButton then @animation.button.flip()
+		@enabler.show('inline-block')
+		@disabler.hide()
 		@enabled = false
 
 		console.log "Visibility: Off"

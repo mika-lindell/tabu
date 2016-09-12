@@ -264,26 +264,6 @@ a.item-card-link{
 	@extend .color-black;
 }
 
-[data-mode='topSites'] .item-card-badge{
-	background-color: $color-primary-mode-1;
-}
-
-[data-mode='speedDial'] .item-card-badge{
-	background-color: $color-primary-mode-2; 
-}
-
-[data-mode="topSites"] .item-card:hover{
-	.drag-handle{
-		color: $color-primary-mode-1;
-	}
-}
-
-[data-mode="speedDial"] .item-card:hover{
-	.drag-handle{
-		color: $color-primary-mode-2;
-	}
-}
-
 .item-card-badge{
 	display: inline-block;
 	position: absolute;
@@ -293,10 +273,31 @@ a.item-card-link{
   line-height: 3.1rem;
   border-radius: 2px;
   color: $white;
+  background-color: $color-primary-mode-3;
 
 	@extend .center;
 	@extend .bolder;
 	@extend .uppercase;
+}
+
+#top-sites .item-card-badge{
+	background-color: $color-primary-mode-1;
+}
+
+#speed-dial .item-card-badge{
+	background-color: $color-primary; 
+}
+
+#top-sites .item-card:hover{
+	.drag-handle{
+		color: $color-primary-mode-1;
+	}
+}
+
+#speed-dial .item-card:hover{
+	.drag-handle{
+		color: $color-primary-mode-2;
+	}
 }
 
 .item-card-label-container{

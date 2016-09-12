@@ -200,9 +200,9 @@ Button styles
 		box-shadow: $shadow-inset;
 	}
 
-button.btn-toolbar{
+.btn-toolbar{
 	padding: 0 0.5rem;
-	padding-left: 2.2rem;
+	margin: 0 0.5rem;
 	box-shadow: none;
 	background-color: $white;
 	position: relative;
@@ -217,11 +217,9 @@ button.btn-toolbar{
 		background-color: $white;
 	}
 
-	& i.material-icons{
+	i.material-icons{
 
-  	position: absolute;
-  	left: 9px;
-  	top: 0px;
+		display: inline-block;
 
 		line-height: 36px;
 		height: 36px;
@@ -229,7 +227,7 @@ button.btn-toolbar{
 
 }
 
-button.select{
+.select{
 	font-size: inherit;
 	text-transform: inherit;
 	line-height: inherit;
@@ -297,13 +295,13 @@ button.select{
 	background-color: transparent !important;
 }
 
-#actions button{
+// #actions button{
 
-	margin-bottom: $action-buttons-gap;
-	width: 47%;
+// 	margin-bottom: $action-buttons-gap;
+// 	width: 47%;
 
-	margin-right: $action-buttons-gap;
-}
+// 	margin-right: $action-buttons-gap;
+// }
 
 #go-incognito i.material-icons{
 	font-size: 1.35rem;

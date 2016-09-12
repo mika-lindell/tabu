@@ -67,103 +67,24 @@ class Animation
 			
 		setTimeout(cleanUp, @duration * 1000)
 
+	flip: ()->
+		@animationIn 'anim-flip', null, false, false
+
 	highlight: ()->
-
 		@animationIn 'anim-highlight', null, false, false
-
-		# root = @
-		# container = @animate
-
-		# root.beforeAnimation true, false
-		# container.addClass('anim-highlight')
-
-		# cleanUp = ()->
-		# 	container.removeClass('anim-highlight')
-		# 	container.css('animationDuration',  root.animParams.origAnimDuration)
-		# 	root.afterAnimation true, false
-		# 	root.done()
-
-		# setTimeout(cleanUp, @duration * 1000)
 
 	moveIn: (done = null, display = 'block')->
 		@animationIn 'anim-move-in', done, display
 
-		# root = @
-		# container = @animate
-
-		# root.beforeAnimation
-		# container.css('animationDuration',  root.animParams.animDuration)
-		# container.addClass('anim-move-in')
-		# container.show(display)
-		# container.css('opacity', '1')
-
-		# cleanUp = ()->
-		# 	container.removeClass('anim-move-in')
-		# 	container.css('animationDuration',  root.animParams.origAnimDuration)
-		# 	root.afterAnimation
-		# 	root.done()
-
-		# setTimeout(cleanUp, @duration * 1000)
-
 	moveOut: (done = null)->
-
 		@animationOut 'anim-move-out', done
 
-		# root = @
-		# container = @animate
-
-		# root.beforeAnimation
-		# container.css('animationDuration',  root.animParams.animDuration)
-		# container.css('opacity', '0')
-		# container.addClass('anim-move-out')
-		
-		# cleanUp = ()->
-		# 	container.hide()
-		# 	container.removeClass('anim-move-out')
-		# 	root.afterAnimation
-		# 	root.done()
-
-		# setTimeout(cleanUp, @duration * 1000)
-
 	slideIn: (done = null, display = 'block')->
-
 		@animationIn 'anim-slide-in', done, display
-		# root = @
-		# container = @animate
-
-		# root.beforeAnimation
-		# container.css('animationDuration',  root.animParams.animDuration)
-		# container.addClass('anim-slide-in')
-		# container.show(display)
-		# container.css('opacity', '1')
-
-		# cleanUp = ()->
-		# 	container.removeClass('anim-slide-in')
-		# 	container.css('animationDuration',  root.animParams.origAnimDuration)
-		# 	root.afterAnimation
-		# 	root.done()
-
-		# setTimeout(cleanUp, @duration * 1000)
 
 	slideOut: (done = null)->
-
 		@animationOut 'anim-slide-out', done
 
-		# root = @
-		# container = @animate
-
-		# root.beforeAnimation
-		# container.css('animationDuration',  root.animParams.animDuration)
-		# container.css('opacity', '0')
-		# container.addClass('anim-slide-out')
-		
-		# cleanUp = ()->
-		# 	container.hide()
-		# 	container.removeClass('anim-slide-out')
-		# 	root.afterAnimation
-		# 	root.done()
-
-		# setTimeout(cleanUp, @duration * 1000)
 
 	animateHeight: (from, to = null, done = null)->
 

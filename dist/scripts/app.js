@@ -2411,6 +2411,10 @@
       return setTimeout(cleanUp, this.duration * 1000);
     };
 
+    Animation.prototype.flip = function() {
+      return this.animationIn('anim-flip', null, false, false);
+    };
+
     Animation.prototype.highlight = function() {
       return this.animationIn('anim-highlight', null, false, false);
     };
@@ -2642,7 +2646,8 @@
       this.enabler = new HTMLElement(enabler);
       this.disabler = new HTMLElement(disabler);
       this.animation = {
-        content: new Animation('#content-container')
+        content: new Animation('#content-container'),
+        button: new Animation(this.controller)
       };
       this.storage = new Storage;
       this.executing = false;
@@ -2651,9 +2656,9 @@
         if (data.settingVisible != null) {
           setting = data.settingVisible;
           if (setting) {
-            return root.enable();
+            return root.enable(false, true);
           } else {
-            return root.disable(true);
+            return root.disable(true, true);
           }
         } else {
           return root.enable();
@@ -2670,10 +2675,13 @@
       this.controller.on('click', toggleStatus);
     }
 
-    Visibility.prototype.enable = function(instant) {
+    Visibility.prototype.enable = function(instantIntro, instantButton) {
       var done, root;
-      if (instant == null) {
-        instant = false;
+      if (instantIntro == null) {
+        instantIntro = false;
+      }
+      if (instantButton == null) {
+        instantButton = false;
       }
       root = this;
       if (this.executing) {
@@ -2683,18 +2691,24 @@
       done = function() {
         return root.executing = false;
       };
-      this.animation.content.intro(instant, done);
-      this.enabler.css('opacity', 0);
-      this.disabler.css('opacity', 1);
+      this.animation.content.intro(instantIntro, done);
+      if (!instantButton) {
+        this.animation.button.flip();
+      }
+      this.enabler.hide();
+      this.disabler.show('inline-block');
       this.enabled = true;
       console.log("Visibility: On");
       return this.storage.setVisible(this.enabled);
     };
 
-    Visibility.prototype.disable = function(instant) {
+    Visibility.prototype.disable = function(instantOutro, instantButton) {
       var done, root;
-      if (instant == null) {
-        instant = false;
+      if (instantOutro == null) {
+        instantOutro = false;
+      }
+      if (instantButton == null) {
+        instantButton = false;
       }
       root = this;
       if (this.executing) {
@@ -2704,9 +2718,12 @@
       done = function() {
         return root.executing = false;
       };
-      this.animation.content.outro(instant, done);
-      this.enabler.css('opacity', 1);
-      this.disabler.css('opacity', 0);
+      this.animation.content.outro(instantOutro, done);
+      if (!instantButton) {
+        this.animation.button.flip();
+      }
+      this.enabler.show('inline-block');
+      this.disabler.hide();
       this.enabled = false;
       console.log("Visibility: Off");
       return this.storage.setVisible(this.enabled);
@@ -2740,7 +2757,6 @@
       } else {
         return instance;
       }
-      this.shenanigans();
       this.speedDialContainer = new HTMLElement('#speed-dial');
       this.topSitesContainer = new HTMLElement('#top-sites');
       this.contentContainer = new HTMLElement('#content-container');
@@ -2837,28 +2853,6 @@
         mode = 'topSites';
       }
       return new HTMLElement('body').attr('data-mode', mode);
-    };
-
-    Toolbars.prototype.shenanigans = function() {
-      var currentStep, egg, steps;
-      egg = new HTMLElement('#easter-egg');
-      if (egg.DOMElement == null) {
-        return;
-      }
-      currentStep = 0;
-      steps = ['anim-egg-rectangle', 'anim-egg-flip', 'anim-egg-rotate', 'anim-egg-reset'];
-      return egg.on('click', function() {
-        if (typeof steps[currentStep - 1] !== 'undefined') {
-          egg.removeClass(steps[currentStep - 1]);
-        }
-        if (currentStep === 0) {
-          egg.removeClass(steps[steps.length - 1]);
-        }
-        console.log(steps[currentStep], steps[steps.length - 1]);
-        egg.addClass(steps[currentStep]);
-        currentStep++;
-        return currentStep = currentStep % steps.length;
-      });
     };
 
     return Toolbars;

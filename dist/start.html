@@ -41,15 +41,40 @@
     </div>
     <nav>
       <div class='nav-wrapper white'>
-        <ul class='right'>
+        <ul class='center'>
+          <li>
+            <button class='btn btn-toolbar' id='view-bookmarks'>
+              <i class='material-icons'>star</i>
+              Bookmarks
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='view-history'>
+              <i class='material-icons'>history</i>
+              History
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='view-downloads'>
+              <i class='material-icons'>file_download</i>
+              Downloads
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='go-incognito'>
+              Go Incognito
+              <i class='material-icons'>open_in_new</i>
+            </button>
+          </li>
           <li>
             <button class='btn btn-toolbar' id='visibility-toggle'>
               <span id='visibility-off'>
                 <i class='material-icons'>visibility_off</i>
-                <!-- Blank Page -->
+                <!-- Hide Links -->
               </span>
               <span id='visibility-on'>
                 <i class='material-icons bugged'>visibility_on</i>
+                <!-- Show Links -->
               </span>
             </button>
           </li>
@@ -80,33 +105,26 @@
           </section>
         </div>
       </div>
-      <div class='container-large'>
-        <div class='row section'>
-          <section class='col s12 center col-no-padding'>
-            <div id='actions'>
-              <button class='btn-large animated' id='view-bookmarks'>
-                <i class='material-icons'>star</i>
-                Bookmarks
-              </button>
-              <button class='btn-large animated' id='view-history'>
-                <i class='material-icons'>history</i>
-                History
-              </button>
-              <button class='btn-large animated' id='view-downloads'>
-                <i class='material-icons'>file_download</i>
-                Downloads
-              </button>
-              <!-- %button#apps.btn-large.animated -->
-              <!-- %i.material-icons apps -->
-              <!-- Apps -->
-              <button class='btn-large animated' id='go-incognito'>
-                Go Incognito
-                <i class='material-icons'>open_in_new</i>
-              </button>
-            </div>
-          </section>
-        </div>
-      </div>
+      <!-- .container-large -->
+      <!-- .row.section -->
+      <!-- %section.col.s12.center.col-no-padding -->
+      <!-- #actions -->
+      <!-- %button#view-bookmarks.btn-large.animated -->
+      <!-- %i.material-icons star -->
+      <!-- Bookmarks -->
+      <!-- %button#view-history.btn-large.animated -->
+      <!-- %i.material-icons history -->
+      <!-- History -->
+      <!-- %button#view-downloads.btn-large.animated -->
+      <!-- %i.material-icons file_download -->
+      <!-- Downloads -->
+      <!-- / %button#apps.btn-large.animated -->
+      <!-- / 	%i.material-icons apps -->
+      <!-- / 	Apps -->
+      <!-- %button#go-incognito.btn-large.animated -->
+      <!-- Go Incognito -->
+      <!-- %i.material-icons open_in_new -->
+      <div class='section-separator animated'></div>
       <div class='container-large'>
         <div class='row section'>
           <section class='col s12 m6 l4 col-no-padding transitions'>
@@ -130,7 +148,7 @@
       </div>
       <footer class='animated'>
         <div class='container center-align'>
-          <p class='logo' id='easter-egg'>
+          <p class='logo'>
             TABU
           </p>
           <!-- %p.font-size-small.color-dark-grey -->
@@ -139,7 +157,7 @@
             <a class='cursor-pointer uppercase' id='about'>
               About
             </a>
-            &nbsp;&nbsp;
+            <br>
             <a class='uppercase' href='https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support' id='feedback' target='_blank'>
               Send Feedback
             </a>

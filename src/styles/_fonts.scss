@@ -29,7 +29,7 @@ Material icons
 
 // Some icons are bugged and this will fix it
 i.material-icons.bugged{
-	max-width: 1.1em;
+	max-width: 1em;
   overflow: hidden;
 }
 
@@ -96,9 +96,17 @@ Some special text styles
     margin: 1rem auto;
     cursor: default;
     color: white !important;
-    background-color: #1B84C3;
-    border-radius: 50%;
+    background-color: $color-primary;
+    border-radius: 2px;
     width: 4.5rem;
     height: 4.5rem;
-    font-weight: 300;
+    font-weight: 500;
+}
+
+[data-mode="topSites"] .logo {
+  background-color: $color-primary-mode-1;
+}
+
+[data-mode="speedDial"] .logo {
+  background-color: $color-primary-mode-2;
 }

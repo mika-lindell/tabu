@@ -43,18 +43,18 @@ Menu
 	padding: 0 0.4rem;
 }
 
-#visibility-on,
-#visibility-off{
-	opacity: 0;
+// #visibility-on,
+// #visibility-off{
+// 	opacity: 0;
 
-	white-space: nowrap;
+// 	white-space: nowrap;
 
-  height: 36px;
-  width: 36px;
+//   height: 36px;
+//   width: 36px;
 
-	@extend .transitions;
+// 	@extend .transitions;
 
-}
+// }
 
 /***
 
@@ -65,7 +65,7 @@ Structure
 body{
 	overflow-y: scroll; // This keeps the scrollbars always visible, so you don't get repositioning when toggling the visibility of elements
 	overflow-x: hidden;
-	min-width: 450px;
+	min-width: 590px;
 }
 
 .section-separator{

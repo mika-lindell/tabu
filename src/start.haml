@@ -29,14 +29,31 @@
 						.indeterminate
 		%nav
 			.nav-wrapper.white
-				%ul.right
+				%ul.center
+					%li
+						%button#view-bookmarks.btn.btn-toolbar
+							%i.material-icons star
+							Bookmarks
+					%li
+						%button#view-history.btn.btn-toolbar
+							%i.material-icons history
+							History
+					%li
+						%button#view-downloads.btn.btn-toolbar
+							%i.material-icons file_download
+							Downloads
+					%li
+						%button#go-incognito.btn.btn-toolbar
+							Go Incognito
+							%i.material-icons open_in_new
 					%li
 						%button#visibility-toggle.btn.btn-toolbar
 							%span#visibility-off
 								%i.material-icons visibility_off
-								/ Blank Page
+								/ Hide Links
 							%span#visibility-on
 								%i.material-icons.bugged visibility_on
+								/ Show Links
 					-# %li
 					-# 	%a#settings.font-size-small.color-dark-grey.uppercase(href="#")
 					-# 		%i.material-icons.left settings
@@ -56,26 +73,26 @@
 								%button#top-sites-select.btn.select.animated
 									Top Sites
 									%i.material-icons.right expand_more
-			.container-large
-				.row.section
-					%section.col.s12.center.col-no-padding
-						#actions
-							%button#view-bookmarks.btn-large.animated
-								%i.material-icons star
-								Bookmarks
-							%button#view-history.btn-large.animated
-								%i.material-icons history
-								History
-							%button#view-downloads.btn-large.animated
-								%i.material-icons file_download
-								Downloads
-							/ %button#apps.btn-large.animated
-							/ 	%i.material-icons apps
-							/ 	Apps
-							%button#go-incognito.btn-large.animated
-								Go Incognito
-								%i.material-icons open_in_new
-			
+			/ .container-large
+			/ 	.row.section
+			/ 		%section.col.s12.center.col-no-padding
+			/ 			#actions
+			/ 				%button#view-bookmarks.btn-large.animated
+			/ 					%i.material-icons star
+			/ 					Bookmarks
+			/ 				%button#view-history.btn-large.animated
+			/ 					%i.material-icons history
+			/ 					History
+			/ 				%button#view-downloads.btn-large.animated
+			/ 					%i.material-icons file_download
+			/ 					Downloads
+			/ 				/ %button#apps.btn-large.animated
+			/ 				/ 	%i.material-icons apps
+			/ 				/ 	Apps
+			/ 				%button#go-incognito.btn-large.animated
+			/ 					Go Incognito
+			/ 					%i.material-icons open_in_new
+			.section-separator.animated
 			.container-large
 				.row.section
 					%section.col.s12.m6.l4.col-no-padding.transitions
@@ -92,14 +109,14 @@
 		
 			%footer.animated
 				.container.center-align
-					%p.logo#easter-egg
+					%p.logo
 						TABU
 					/ %p.font-size-small.color-dark-grey
 					/ 	The New Tab page
 					%p.font-size-small
 						%a#about.cursor-pointer.uppercase
 							About
-						&nbsp;&nbsp;
+						%br
 						%a#feedback.uppercase(target="_blank" href="https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support")
 							Send Feedback
 		%script(src="./scripts/app.js")

@@ -156,105 +156,123 @@ Animations
   transform-origin: 50 0;
 }
 
-@keyframes egg-rectangle{
+@keyframes flip{
 	0%{
-
-	}
-
+		transform: rotateX(0deg);
+	}	
 	50%{
-		transform: scale(1.2, 1.2);
-	}
-
+		transform: rotateX(90deg);
+	}	
 	100%{
-		border-radius: 2px;
-		background-color: $color-primary-mode-1;
-	}
+		transform: rotateX(0deg);
+	}	
 }
 
-@keyframes egg-flip{
-
-	0%{
-		border-radius: 2px;
-		background-color: $color-primary-mode-1;
-	}
-
-	70%{
-		transform: rotate3d(0, 1, 0, 650deg);
-	}
-
-	100%{
-		transform: rotate3d(0, 1, 0, 720deg);
-		border-radius: 50%;
-		background-color: $color-secondary;
-	}
+.anim-flip{
+	animation-name: flip;
+  animation-duration: 0.5s;
+  transform-origin: 50 0;
 }
 
-@keyframes egg-rotate{
+// @keyframes egg-rectangle{
+// 	0%{
 
-	0%{
-		transform: rotate(0deg);
-		border-radius: 50%;
-		background-color: $color-primary-mode-2;
-	}
+// 	}
 
-	100%{
-		transform: rotate(405deg);
-		border-radius: 2px;
-		background-color: $color-primary-mode-2;
-	}
-}
+// 	50%{
+// 		transform: scale(1.2, 1.2);
+// 	}
 
-@keyframes egg-reset{
-	0%{
-		transform: rotate(405deg);
-		border-radius: 2px;
-		background-color: $color-primary-mode-2;
-	}
+// 	100%{
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-1;
+// 	}
+// }
 
-	10%{
-		transform: rotate(360deg) rotateX(0deg);
-		border-radius: 50%;
-	}
+// @keyframes egg-flip{
 
-	30%{
-		transform: rotate(360deg) rotateX(0deg);
-		background-color: $color-primary-mode-2;
+// 	0%{
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-1;
+// 	}
 
-	}
+// 	70%{
+// 		transform: rotate3d(0, 1, 0, 650deg);
+// 	}
 
-	100%{
-		transform: rotate(360deg) rotateX(1080deg);
+// 	100%{
+// 		transform: rotate3d(0, 1, 0, 720deg);
+// 		border-radius: 50%;
+// 		background-color: $color-secondary;
+// 	}
+// }
+
+// @keyframes egg-rotate{
+
+// 	0%{
+// 		transform: rotate(0deg);
+// 		border-radius: 50%;
+// 		background-color: $color-primary-mode-2;
+// 	}
+
+// 	100%{
+// 		transform: rotate(405deg);
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-2;
+// 	}
+// }
+
+// @keyframes egg-reset{
+// 	0%{
+// 		transform: rotate(405deg);
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-2;
+// 	}
+
+// 	10%{
+// 		transform: rotate(360deg) rotateX(0deg);
+// 		border-radius: 50%;
+// 	}
+
+// 	30%{
+// 		transform: rotate(360deg) rotateX(0deg);
+// 		background-color: $color-primary-mode-2;
+
+// 	}
+
+// 	100%{
+// 		transform: rotate(360deg) rotateX(1080deg);
 		
-	}
-}
+// 	}
+// }
 
 
-.anim-egg-rectangle,
-.anim-egg-rotate,
-.anim-egg-flip,
-.anim-egg-reset{
-	animation-fill-mode: forwards;
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-}
+// .anim-egg-rectangle,
+// .anim-egg-rotate,
+// .anim-egg-flip,
+// .anim-egg-reset{
+// 	animation-fill-mode: forwards;
+//   animation-duration: 1s;
+//   animation-timing-function: ease-out;
+// }
 
-.anim-egg-rectangle{
-	animation-name: egg-rectangle;
-}
+// .anim-egg-rectangle{
+// 	animation-name: egg-rectangle;
+// }
 
-.anim-egg-rotate{
-	animation-name: egg-rotate;
-}
+// .anim-egg-rotate{
+// 	animation-name: egg-rotate;
+// }
 
-.anim-egg-flip{
-	animation-name: egg-flip;
-	animation-duration: 1.4s;
-}
+// .anim-egg-flip{
+// 	animation-name: egg-flip;
+// 	animation-duration: 1.4s;
+// }
 
-.anim-egg-reset{
-	animation-name: egg-reset;
-	animation-duration: 3s;
-}
+// .anim-egg-reset{
+// 	animation-name: egg-reset;
+// 	animation-duration: 3s;
+// }
 
 
 	

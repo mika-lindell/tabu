@@ -18,7 +18,7 @@ class Toolbars
 		else
 			return instance
 
-		@shenanigans()
+		# @shenanigans()
 
 		@speedDialContainer = new HTMLElement('#speed-dial')
 		@topSitesContainer = new HTMLElement('#top-sites')
@@ -109,32 +109,32 @@ class Toolbars
 	setMode: (mode = 'topSites')->
 		new HTMLElement('body').attr('data-mode', mode)
 
-	shenanigans: ()->
+	# shenanigans: ()->
 
-		egg = new HTMLElement('#easter-egg')
+	# 	egg = new HTMLElement('#easter-egg')
 
-		if not egg.DOMElement? then return
+	# 	if not egg.DOMElement? then return
 
-		currentStep = 0
+	# 	currentStep = 0
 
-		steps = [
-			'anim-egg-rectangle'
-			'anim-egg-flip'
-			'anim-egg-rotate'
-			'anim-egg-reset'
-		]
+	# 	steps = [
+	# 		'anim-egg-rectangle'
+	# 		'anim-egg-flip'
+	# 		'anim-egg-rotate'
+	# 		'anim-egg-reset'
+	# 	]
 
-		egg.on('click', ()->
+	# 	egg.on('click', ()->
 
-			# Remove previously inserted class
-			if typeof steps[currentStep-1] isnt 'undefined' then egg.removeClass(steps[currentStep-1])			
-			# If we have started from beginning, remove the class that's last in the array if necessary.
-			if currentStep is 0 then egg.removeClass(steps[steps.length-1])
+	# 		# Remove previously inserted class
+	# 		if typeof steps[currentStep-1] isnt 'undefined' then egg.removeClass(steps[currentStep-1])			
+	# 		# If we have started from beginning, remove the class that's last in the array if necessary.
+	# 		if currentStep is 0 then egg.removeClass(steps[steps.length-1])
 
-			console.log steps[currentStep], steps[steps.length-1]
+	# 		console.log steps[currentStep], steps[steps.length-1]
 
-			egg.addClass(steps[currentStep])
+	# 		egg.addClass(steps[currentStep])
 
-			currentStep++
-			currentStep = currentStep % steps.length
-		)
+	# 		currentStep++
+	# 		currentStep = currentStep % steps.length
+	# 	)

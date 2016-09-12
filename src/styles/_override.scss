@@ -29,6 +29,13 @@ select{
 
 nav{
 	box-shadow: none;
+
+	ul{
+		li{
+			display: inline-block;
+			float: none;
+		}
+	}
 }
 
 // i.left{
