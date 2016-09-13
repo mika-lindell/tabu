@@ -6322,7 +6322,7 @@ Layers
 .layer-default {
   z-index: 0; }
 
-.layer-front, .item-card-list, .drag-in-progress .item-card.dragged.empty {
+.layer-front, .select, .item-card-list, .drag-in-progress .item-card.dragged.empty {
   z-index: 1; }
 
 .layer-context-menu, .toast, .user-input {
@@ -6753,7 +6753,8 @@ Button styles
   height: auto;
   min-width: 220px;
   opacity: 1;
-  background-color: #FFF; }
+  background-color: #FFF;
+  position: relative; }
   .select:hover, .select:focus {
     background-color: #FFF; }
   .select.active, .select.active:hover {

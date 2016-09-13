@@ -240,6 +240,9 @@ Button styles
 	opacity: 1;
 
 	background-color: $white;
+	position: relative;
+
+	@extend .layer-front;
 	@extend .color-black;
 
 	&:hover,
