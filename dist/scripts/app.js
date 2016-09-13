@@ -1852,7 +1852,7 @@
           root.addClass('drag-in-progress');
         }
       }
-      if (target === null && ev.target === root.DOMElement) {
+      if (target === null && ev.target === root.DOMElement && (last != null)) {
         if (root.draggedItem.element.DOMElement !== last.DOMElement && rect.left < ev.clientX && rect.top < ev.clientY && (rect.top + rect.height) > ev.clientY) {
           console.log('dragOverHandler: Append, empty space');
           root.append(root.draggedItem.element);

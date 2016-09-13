@@ -592,7 +592,7 @@ class ItemCardList extends HTMLElement
 				root.draggedItem.element.addClass('empty')
 				root.addClass('drag-in-progress')
 
-		if target is null and ev.target is root.DOMElement
+		if target is null and ev.target is root.DOMElement and last?
 
 			# Here we calculate if the position of the dragged item is on the list, but not over any list item
 			if root.draggedItem.element.DOMElement isnt last.DOMElement and rect.left < ev.clientX and rect.top < ev.clientY and (rect.top + rect.height) > ev.clientY
