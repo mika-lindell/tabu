@@ -569,11 +569,18 @@ class ItemCardList extends HTMLElement
 		# Get the absolute position relative to document, not to the offset, 
 		# as we are comparing to mouse coords 
 		last = root.lastChild()
-		rect = last.rect() 
-
-		# This will remove the 'Add Here' -placeholder starting from wrong position 
-		# and snapping to right place (ugly) when dragging from below the list
-		if rect.bottom < ev.clientY then return
+		if last?
+			rect = last.rect() 		
+			# This will remove the 'Add Here' -placeholder starting from wrong position 
+			# and snapping to right place (ugly) when dragging from below the list
+			if rect.bottom < ev.clientY then return
+		else
+			# In case of the list has no items
+			rect =
+				top: 0
+				right: 0
+				bottom: 0
+				left: 0
 
 		if not root.draggedItem?
 
