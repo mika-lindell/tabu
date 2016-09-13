@@ -6880,9 +6880,8 @@ Item card styles
       content: 'add'; }
 
 .item-card-list {
-  min-height: 4.6rem;
-  margin: 0.5rem 0 0 0;
-  position: relative; }
+  min-height: 6.6rem;
+  margin: 0.5rem 0 0 0; }
 
 .item-card-empty {
   display: none;
@@ -7016,7 +7015,7 @@ ul[data-list-editable] .drag-handle {
   padding-right: 1.5rem;
   padding-left: 0.5rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   margin-top: 1rem; }
   .no-items i {
     height: 100px;
@@ -7030,8 +7029,8 @@ ul[data-list-editable] .drag-handle {
     display: inline-block; }
   .no-items img {
     position: absolute;
-    top: -90px;
-    right: -70px; }
+    top: -80px;
+    left: 0px; }
 
 /***
 
