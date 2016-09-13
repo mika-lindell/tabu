@@ -1830,9 +1830,18 @@
       target = root.getItemForElement(ev.target.closest('li'));
       changed = false;
       last = root.lastChild();
-      rect = last.rect();
-      if (rect.bottom < ev.clientY) {
-        return;
+      if (last != null) {
+        rect = last.rect();
+        if (rect.bottom < ev.clientY) {
+          return;
+        }
+      } else {
+        rect = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        };
       }
       if (root.draggedItem == null) {
         if (root.acceptFromOutsideSource(ev)) {
@@ -2656,7 +2665,7 @@
         if (data.settingVisible != null) {
           setting = data.settingVisible;
           if (setting) {
-            return root.enable(false, true);
+            return root.enable(true, true);
           } else {
             return root.disable(true, true);
           }

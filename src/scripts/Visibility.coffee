@@ -42,7 +42,7 @@ class Visibility
 				# Enable the intro animation to start or hide elements (without animations)!
 				if setting
 
-					root.enable(false, true)
+					root.enable(true, true)
 
 				else
 
