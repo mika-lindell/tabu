@@ -3,7 +3,7 @@
   "name": "TABU – The New Tab Page",
   "short_name": "TABU",
   "description": "TABU – The New Tab Page has focus on what you need to do to get started – not on the news or weather.",
-  "version": "0.5.2.3",
+  "version": "0.5.2.4",
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",
