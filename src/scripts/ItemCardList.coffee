@@ -582,7 +582,7 @@ class ItemCardList extends HTMLElement
 				bottom: 0
 				left: 0
 
-		if not root.draggedItem?
+		if not root.draggedItem? and last?
 
 			if root.acceptFromOutsideSource(ev)
 

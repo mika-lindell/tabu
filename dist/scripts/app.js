@@ -1843,7 +1843,7 @@
           left: 0
         };
       }
-      if (root.draggedItem == null) {
+      if ((root.draggedItem == null) && (last != null)) {
         if (root.acceptFromOutsideSource(ev)) {
           item = root.addItem('Add Link', 'New');
           root.draggedItem = item;
