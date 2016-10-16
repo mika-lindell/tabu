@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title></title>
+    <link href='styles/app.css' rel='stylesheet'>
+  </head>
+  <body data-app='newTab' id='app'>
+    <noscript>
+      <div class='container'>
+        <h4>I see you have disabled JavaScript :(</h4>
+        <p>
+          That's something I need to get things done.
+          <br>
+          If you don't know how to enable JavaScript
+          <a href='http://www.google.com/search?q=how+to+enable+javascript+in+chrome'>
+            click this link and let Google find it out
+          </a>
+          for you.
+        </p>
+        <p>
+          TABU
+          <br>
+          The New Tab page
+        </p>
+      </div>
+    </noscript>
+    <div class='valign-wrapper' id='loader'>
+      <div class='valign'>
+        <div class='loader-intro center-align'>
+          <p class='logo'>
+            TABU
+          </p>
+          <p class='font-size-small color-dark-grey'>
+            The New Tab page
+          </p>
+          <div class='progress'>
+            <div class='indeterminate'></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <div class='nav-wrapper white'>
+        <ul class='center'>
+          <li>
+            <button class='btn btn-toolbar' id='view-bookmarks'>
+              <i class='material-icons'>star</i>
+              Bookmarks
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='view-history'>
+              <i class='material-icons'>history</i>
+              History
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='view-downloads'>
+              <i class='material-icons'>file_download</i>
+              Downloads
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='go-incognito'>
+              Go Incognito
+              <i class='material-icons'>open_in_new</i>
+            </button>
+          </li>
+          <li>
+            <button class='btn btn-toolbar' id='visibility-toggle'>
+              <span id='visibility-off'>
+                <i class='material-icons'>visibility_off</i>
+                <!-- Hide Links -->
+              </span>
+              <span id='visibility-on'>
+                <i class='material-icons bugged'>visibility_on</i>
+                <!-- Show Links -->
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div id='content-container'>
+      <div class='section-separator animated'></div>
+      <div class='container-large layer-front'>
+        <div class='row section'>
+          <section class='col s12 col-no-padding'>
+            <div class='card-list-column' id='speed-dial'>
+              <h4 class='section-heading'>
+                <button class='btn select animated' id='speed-dial-select'>
+                  Speed Dial
+                  <i class='material-icons right'>expand_more</i>
+                </button>
+              </h4>
+            </div>
+            <div class='card-list-column' id='top-sites'>
+              <h4 class='section-heading'>
+                <button class='btn select animated' id='top-sites-select'>
+                  Top Sites
+                  <i class='material-icons right'>expand_more</i>
+                </button>
+              </h4>
+            </div>
+          </section>
+        </div>
+      </div>
+      <!-- .container-large -->
+      <!-- .row.section -->
+      <!-- %section.col.s12.center.col-no-padding -->
+      <!-- #actions -->
+      <!-- %button#view-bookmarks.btn-large.animated -->
+      <!-- %i.material-icons star -->
+      <!-- Bookmarks -->
+      <!-- %button#view-history.btn-large.animated -->
+      <!-- %i.material-icons history -->
+      <!-- History -->
+      <!-- %button#view-downloads.btn-large.animated -->
+      <!-- %i.material-icons file_download -->
+      <!-- Downloads -->
+      <!-- / %button#apps.btn-large.animated -->
+      <!-- / 	%i.material-icons apps -->
+      <!-- / 	Apps -->
+      <!-- %button#go-incognito.btn-large.animated -->
+      <!-- Go Incognito -->
+      <!-- %i.material-icons open_in_new -->
+      <div class='section-separator animated'></div>
+      <div class='container-large layer-behind'>
+        <div class='row section'>
+          <section class='col s12 m6 l4 col-no-padding transitions'>
+            <div class='card-list-column' id='latest-bookmarks'>
+              <h4 class='section-heading animated'>Latest Bookmarks</h4>
+            </div>
+          </section>
+          <!-- %section.col.s3 -->
+          <!-- #recent-history.card-list-column -->
+          <section class='col s12 m6 l4 col-no-padding transitions'>
+            <div class='card-list-column' id='recently-closed'>
+              <h4 class='section-heading animated'>Recently Closed</h4>
+            </div>
+          </section>
+          <section class='col s12 m6 l4 col-no-padding transitions'>
+            <div class='card-list-column' id='other-devices'>
+              <h4 class='section-heading animated'>Other Devices</h4>
+            </div>
+          </section>
+        </div>
+      </div>
+      <footer class='animated'>
+        <div class='container center-align'>
+          <a class='cursor-pointer uppercase' id='about'>
+            <p class='logo cursor-pointer'>
+              TABU
+            </p>
+          </a>
+          <p class='font-size-small'>
+            <a class='uppercase' href='https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support' id='feedback' target='_blank'>
+              Feedback
+            </a>
+          </p>
+        </div>
+      </footer>
+    </div>
+    <script src='./scripts/app.js'></script>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+/***
+
+Animations
+
+***/
+
+// Will add top-down movement when the element appears
+@keyframes move-in{
+
+	0%{
+		transform: translateY(-50px) rotateX(90deg);
+		opacity: 0;
+	}
+
+	50%{
+		transform: translateY(-25px) rotateX(90deg);
+	}
+
+	100%{
+		transform: translateY(0px) rotateX(0deg);
+		opacity: 1;
+	}
+}
+
+@keyframes move-out{
+
+	0%{
+		transform: translateY(0px) rotateX(0deg);
+		opacity: 1;
+	}	
+
+	50%{
+		transform: translateY(-25px) rotateX(90deg);
+	}
+
+	100%{
+			transform: translateY(-50px) rotateX(90deg);
+			opacity: 0;
+		}
+}
+
+.anim-move-in{
+	animation-fill-mode: forwards;
+	animation-name: move-in;
+  animation-duration: 0.3s;
+}
+
+.anim-move-out{
+	animation-fill-mode: forwards;
+	animation-name: move-out;
+  animation-duration: 0.3s;
+}
+
+// Will add slight delay until the element appears
+@keyframes delay{
+
+	0%{
+		opacity: 0;
+	}
+
+	75%{
+		opacity: 0;
+	}
+
+	100%{
+		opacity: 1;
+	}
+
+}
+
+.anim-delay-1s{
+	animation-name: delay;
+  animation-duration: 1.5s;
+}
+
+@keyframes slide-in{
+	0%{
+		transform: scale(1, 0.2);
+	}	
+	100%{
+		transform: scale(1, 1);
+	}	
+}
+
+.anim-slide-in{
+	animation-fill-mode: forwards;
+	animation-name: slide-in;
+  animation-duration: 0.2s;
+  transform-origin: 0 0;
+}
+
+@keyframes slide-out{
+	0%{
+		transform: scale(1, 1) translateY(0px);
+	}	
+	100%{
+		transform: scale(1, 0) translateY(-50%);
+	}	
+}
+
+.anim-slide-out{
+	animation-fill-mode: forwards;
+	animation-name: slide-out;
+  animation-duration: 0.2s;
+  transform-origin: 0 0;
+}
+
+@keyframes toast-in{
+	0%{
+		transform: scale(1, 0) translateX(-50%);
+	}	
+	100%{
+		transform: scale(1, 1) translateX(-50%);
+	}
+}
+
+@keyframes toast-out{
+	0%{
+		transform: scale(1, 1) translateX(-50%) translateY(0px);
+	}	
+	100%{
+		transform: scale(1, 0) translateX(-50%) translateY(-80px);
+	}		
+}
+
+.anim-toast-in, .anim-toast-out{
+	animation-fill-mode: forwards;
+  animation-duration: 0.3s;
+  transform-origin: 0 0;
+}
+.anim-toast-in{
+	animation-name: toast-in;
+}
+.anim-toast-out{
+	animation-name: toast-out;
+}
+
+@keyframes highlight{
+	0%{
+		transform: scale(1, 1);
+	}	
+	50%{
+		transform: scale(1.1, 1.1);
+		box-shadow: $shadow-outset-large;
+		background-color: $white;
+		z-index: 1;
+	}	
+	100%{
+		transform: scale(1, 1);
+	}	
+}
+
+.anim-highlight{
+	animation-name: highlight;
+  animation-duration: 0.9s;
+  transform-origin: 50 0;
+}
+
+@keyframes flip{
+	0%{
+		transform: rotateX(0deg);
+	}	
+	50%{
+		transform: rotateX(90deg);
+	}	
+	100%{
+		transform: rotateX(0deg);
+	}	
+}
+
+.anim-flip{
+	animation-name: flip;
+  animation-duration: 0.5s;
+  transform-origin: 50 0;
+}
+
+// @keyframes egg-rectangle{
+// 	0%{
+
+// 	}
+
+// 	50%{
+// 		transform: scale(1.2, 1.2);
+// 	}
+
+// 	100%{
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-1;
+// 	}
+// }
+
+// @keyframes egg-flip{
+
+// 	0%{
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-1;
+// 	}
+
+// 	70%{
+// 		transform: rotate3d(0, 1, 0, 650deg);
+// 	}
+
+// 	100%{
+// 		transform: rotate3d(0, 1, 0, 720deg);
+// 		border-radius: 50%;
+// 		background-color: $color-secondary;
+// 	}
+// }
+
+// @keyframes egg-rotate{
+
+// 	0%{
+// 		transform: rotate(0deg);
+// 		border-radius: 50%;
+// 		background-color: $color-primary-mode-2;
+// 	}
+
+// 	100%{
+// 		transform: rotate(405deg);
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-2;
+// 	}
+// }
+
+// @keyframes egg-reset{
+// 	0%{
+// 		transform: rotate(405deg);
+// 		border-radius: 2px;
+// 		background-color: $color-primary-mode-2;
+// 	}
+
+// 	10%{
+// 		transform: rotate(360deg) rotateX(0deg);
+// 		border-radius: 50%;
+// 	}
+
+// 	30%{
+// 		transform: rotate(360deg) rotateX(0deg);
+// 		background-color: $color-primary-mode-2;
+
+// 	}
+
+// 	100%{
+// 		transform: rotate(360deg) rotateX(1080deg);
+		
+// 	}
+// }
+
+
+// .anim-egg-rectangle,
+// .anim-egg-rotate,
+// .anim-egg-flip,
+// .anim-egg-reset{
+// 	animation-fill-mode: forwards;
+//   animation-duration: 1s;
+//   animation-timing-function: ease-out;
+// }
+
+// .anim-egg-rectangle{
+// 	animation-name: egg-rectangle;
+// }
+
+// .anim-egg-rotate{
+// 	animation-name: egg-rotate;
+// }
+
+// .anim-egg-flip{
+// 	animation-name: egg-flip;
+// 	animation-duration: 1.4s;
+// }
+
+// .anim-egg-reset{
+// 	animation-name: egg-reset;
+// 	animation-duration: 3s;
+// }
+
+
+	
+// To animate element movement on media query breakpoints
+.transitions,
+.animated{
+	transition: all 0.2s;
+}
+
+// When under element .outro in hierarchy, outro-animation is played
+.intro .item-card,
+.intro .item-card-heading,
+.intro .animated
+{ 
+	@extend .anim-move-in;
+}
+
+// When under element .outro in hierarchy, outro-animation is played
+.outro .item-card,
+.outro .item-card-heading,
+.outro .animated
+{ 
+	@extend .anim-move-out;
+}

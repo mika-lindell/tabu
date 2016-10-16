@@ -1,0 +1,386 @@
+/***
+
+Item card styles
+
+***/
+
+.edit-actions{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	width: 440px;
+	margin-top: 0;
+	margin-left: -200px;
+	box-shadow: $shadow-outset-small;
+	border-radius: 0 0 2px 2px;
+	overflow: hidden;
+	border: $dropzone-border;
+  border-top: none;
+  background-color: $color-primary;
+
+	@extend .layer-dialog;
+	@extend .hoverable;
+
+	&::before{
+		content: 'Drop Here To';
+    display: block;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    background-color: $color-primary;
+    color: white;
+    text-transform: uppercase;
+     font-weight: 300;
+	}
+
+	li{
+		display: inline-block;
+		text-align: center;
+		height: 70px;
+		line-height: 70px;
+		border-radius: 2px;
+		border: 2px dashed transparent;
+
+		@extend .uppercase;
+
+		&::before{
+			margin-right: 0.5rem;
+			margin-top: -0.2rem;
+    	vertical-align: middle;
+
+			@extend .material-icons;
+		}
+
+	}
+
+	.edit-actions-separator{
+		width: 40px;
+		color: $white;
+		font-weight: 300;
+	}
+
+	.edit-actions-edit,
+	.edit-actions-delete,
+	.edit-actions-add{
+		color: $white;
+		background-color: $color-primary;
+		border-color: $white;	
+		font-weight: 500;
+
+		&.drag-over{
+			// color: $color-primary;
+			background-color: $color-secondary;
+			// border-color: $color-primary;	
+		}
+
+	}
+
+	.edit-actions-edit{
+		width: 190px;
+
+		&::before{
+			content: 'edit';
+		}
+
+
+	}
+
+	.edit-actions-delete{
+		width: 190px;
+
+		&::before{
+			content: 'delete_forever';
+		}
+	}
+
+	.edit-actions-add{
+		width: 100%;
+
+		&::before{
+			content: 'add';
+		}
+	}
+
+}
+
+.item-card-list{
+	min-height: 6.6rem;
+	margin: 0.5rem 0 0 0;
+  // position: relative;
+
+  @extend .layer-front;
+}
+
+// The style of empty list placeholder
+.item-card-empty{
+
+	display: none;
+	width: 100%;
+	text-align: center;
+	height: $item-card-height;
+  line-height: $item-card-height;
+  overflow: hidden;
+  font-weight: 500;
+
+	@extend .uppercase;
+	@extend .color-white;
+
+	&::before{
+		content: 'add';
+		margin-right: 0.5rem;
+		margin-top: -0.2rem;
+  	vertical-align: middle;
+
+		@extend .material-icons;
+	}
+}
+
+.item-card{
+	border: 2px dashed transparent;
+	border-radius: 2px;
+	position: relative;
+	list-style-type: none;
+	padding-right: 2rem;
+
+	@extend .transitions;
+	@extend .hoverable;
+
+	&:active{
+		box-shadow: none;
+		background-color: $color-primary-very-light;
+	}
+}
+
+.drag-handle{
+	display: none; // Hide by default
+	cursor: move;
+	color: $light-grey;
+
+	line-height: 0.7rem;
+	width: 1.8rem;
+	margin-top: 0.8rem;
+	font-size: 1.7rem;
+
+	font-size: 1.6rem;
+
+	position: absolute;
+  left: 2px;
+
+	@extend .material-icons;
+	@extend .transitions;
+}
+
+// DnD ghost element styles
+#ghost{
+
+	transition: none;
+	border: none;
+	background-color: white;
+	opacity: 0.7;
+	box-shadow: $shadow-outset-large;
+
+	@extend .layer-dialog;
+
+	.drag-handle{
+		display: none;
+	}
+
+}
+
+
+// Change list style when drag operation is being done
+.drag-in-progress{
+
+	.item-card{
+		box-shadow: none;
+
+		.drag-handle{
+			color: $light-grey !important;
+		}
+
+	}
+
+	// the item that is being dragged
+	.item-card.dragged{
+
+		border-color: $color-primary;
+		background-color: $color-primary-very-light;
+
+		&:hover{
+			box-shadow: none;
+		}
+
+		&.empty{
+			border-color: $white;
+			box-shadow: none;
+		  background-color: $color-primary;
+		  outline: 2px solid $color-primary;
+			@extend .layer-front;
+
+			// Show the placeholder message
+			.item-card-empty{
+				display: block;
+			}
+		
+			// Hide rest of the content
+			a{
+				display: none;
+			}
+
+		}
+
+		.drag-handle{
+			color: $color-primary !important;
+		}
+
+	}
+}
+
+// Change list style when edit operation is being done
+.edit-in-progress{
+	.item-card{
+		opacity: 0.5;
+	}
+	// the item that is being edited
+	.item-card.editing{
+		opacity: 1;
+		box-shadow: none;
+	}
+}
+
+.item-card-heading,
+.no-items {
+  padding-top: 0.6rem;
+}
+
+a.item-card-link{
+	display: block;
+	height: $item-card-height;
+	padding: $item-card-padding;
+	border-radius: 2px;
+	overflow: hidden;
+
+	@extend .color-black;
+}
+
+.item-card-badge{
+	display: inline-block;
+	position: absolute;
+	width: 3.0rem;
+	height: 3.0rem;
+	opacity: 0.8;
+  line-height: 3.1rem;
+  border-radius: 2px;
+  color: $white;
+  background-color: $color-primary-mode-3;
+
+	@extend .center;
+	@extend .bolder;
+	@extend .uppercase;
+}
+
+#top-sites .item-card-badge{
+	background-color: $color-primary-mode-1;
+}
+
+#speed-dial .item-card-badge{
+	background-color: $color-primary; 
+}
+
+#top-sites .item-card:hover{
+	.drag-handle{
+		color: $color-primary-mode-1;
+	}
+}
+
+#speed-dial .item-card:hover{
+	.drag-handle{
+		color: $color-primary-mode-2;
+	}
+}
+
+.item-card-label-container{
+	display: inline-block;
+	vertical-align: middle;
+
+  width: 100%;
+  padding-left: 3.5rem;
+
+	@extend .truncate;
+}
+
+.item-card-label{
+
+}
+
+.item-card-label-secondary{
+
+	@extend .font-size-small;
+	@extend .color-dark-grey;
+}
+
+// Styles for horizontal lists
+.horizontal-list{
+	li{
+		display: inline-block;
+		// padding-right: 1rem;
+		width: 100%; 
+	}
+}
+
+li.item-card-heading{
+	display: block;
+	margin-left: $section-heading-margin;
+}
+
+// Editable list only
+ul[data-list-editable]{
+
+	.item-card-label-container{
+		padding-left: 5rem;
+	}
+	
+	.item-card-badge{
+		left: 30px;
+	}
+
+	.drag-handle{
+		display: inline-block; // Show handle only if drag is enabled
+	}
+	
+}
+
+// To display the 'no items in this list' -message when the list has no items =)
+.no-items{
+	position: absolute;
+	padding-right: 1.5rem;
+	padding-left: 0.5rem;
+	width: 100%;
+	max-width: 350px;
+	margin-top: 1rem;
+
+	@extend .animated;
+	@extend .color-dark-grey;
+
+	i{
+		height: 100px;
+    position: absolute;
+    left: -1.7rem;
+	}
+
+	strong{
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.6rem;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+	}
+
+	img{
+		position: absolute;
+		top: -80px;
+    left: 0px;
+  }
+
+}

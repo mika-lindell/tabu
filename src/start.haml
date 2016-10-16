@@ -1,0 +1,119 @@
+!!! 5
+%html(lang="en")
+	%head
+		%title
+		%link(href="styles/app.css" rel="stylesheet")
+	%body(data-app="newTab" id="app")
+		%noscript
+			.container
+				%h4 I see you have disabled JavaScript :(
+				%p 
+					That's something I need to get things done.
+					%br
+					If you don't know how to enable JavaScript  
+					%a(href="http://www.google.com/search?q=how+to+enable+javascript+in+chrome")
+						click this link and let Google find it out 
+					for you.
+				%p
+					TABU
+					%br
+					The New Tab page 
+		#loader.valign-wrapper
+			.valign
+				.loader-intro.center-align
+					%p.logo
+						TABU
+					%p.font-size-small.color-dark-grey
+						The New Tab page
+					.progress
+						.indeterminate
+		%nav
+			.nav-wrapper.white
+				%ul.center
+					%li
+						%button#view-bookmarks.btn.btn-toolbar
+							%i.material-icons star
+							Bookmarks
+					%li
+						%button#view-history.btn.btn-toolbar
+							%i.material-icons history
+							History
+					%li
+						%button#view-downloads.btn.btn-toolbar
+							%i.material-icons file_download
+							Downloads
+					%li
+						%button#go-incognito.btn.btn-toolbar
+							Go Incognito
+							%i.material-icons open_in_new
+					%li
+						%button#visibility-toggle.btn.btn-toolbar
+							%span#visibility-off
+								%i.material-icons visibility_off
+								/ Hide Links
+							%span#visibility-on
+								%i.material-icons.bugged visibility_on
+								/ Show Links
+					-# %li
+					-# 	%a#settings.font-size-small.color-dark-grey.uppercase(href="#")
+					-# 		%i.material-icons.left settings
+					-# 		Settings
+		#content-container
+			.section-separator.animated
+			.container-large.layer-front
+				.row.section
+					%section.col.s12.col-no-padding
+						#speed-dial.card-list-column
+							%h4.section-heading 
+								%button#speed-dial-select.btn.select.animated
+									Speed Dial
+									%i.material-icons.right expand_more
+						#top-sites.card-list-column
+							%h4.section-heading 
+								%button#top-sites-select.btn.select.animated
+									Top Sites
+									%i.material-icons.right expand_more
+			/ .container-large
+			/ 	.row.section
+			/ 		%section.col.s12.center.col-no-padding
+			/ 			#actions
+			/ 				%button#view-bookmarks.btn-large.animated
+			/ 					%i.material-icons star
+			/ 					Bookmarks
+			/ 				%button#view-history.btn-large.animated
+			/ 					%i.material-icons history
+			/ 					History
+			/ 				%button#view-downloads.btn-large.animated
+			/ 					%i.material-icons file_download
+			/ 					Downloads
+			/ 				/ %button#apps.btn-large.animated
+			/ 				/ 	%i.material-icons apps
+			/ 				/ 	Apps
+			/ 				%button#go-incognito.btn-large.animated
+			/ 					Go Incognito
+			/ 					%i.material-icons open_in_new
+			.section-separator.animated
+			.container-large.layer-behind
+				.row.section
+					%section.col.s12.m6.l4.col-no-padding.transitions
+						#latest-bookmarks.card-list-column
+							%h4.section-heading.animated Latest Bookmarks
+					/ %section.col.s3
+					/ 	#recent-history.card-list-column
+					%section.col.s12.m6.l4.col-no-padding.transitions
+						#recently-closed.card-list-column
+							%h4.section-heading.animated Recently Closed
+					%section.col.s12.m6.l4.col-no-padding.transitions
+						#other-devices.card-list-column
+							%h4.section-heading.animated Other Devices
+		
+			%footer.animated
+				.container.center-align
+					%a#about.cursor-pointer.uppercase
+						%p.logo.cursor-pointer
+							TABU
+					%p.font-size-small
+						%a#feedback.uppercase(target="_blank" href="https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support")
+							Feedback
+		%script(src="./scripts/app.js")
+	
