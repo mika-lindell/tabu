@@ -6550,6 +6550,10 @@ Menu
 .nav-wrapper {
   padding: 0 0.4rem; }
 
+#visibility-on,
+#visibility-off {
+  display: none; }
+
 /***
 
 Structure
