@@ -2,8 +2,8 @@
   "manifest_version": 2,
   "name": "TABU – The New Tab Page",
   "short_name": "TABU",
-  "description": "TABU – The New Tab Page has focus on what you need to do to get started – not on the news or weather.",
-  "version": "0.5.2.4",
+  "description": "Designed to feel like it's part of Google Chrome™  – TABU looks and runs like it's made for your browser – not on your face, while keeping it simple.",
+  "version": "0.5.2.5",
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",
