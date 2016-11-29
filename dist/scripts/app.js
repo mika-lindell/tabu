@@ -807,7 +807,7 @@
       this.dataType = dataType;
       this.retry = {
         i: 0,
-        max: 0,
+        max: 10,
         delay: 5000
       };
       if (dataType === 'topSites') {
@@ -844,9 +844,10 @@
         if (root.data.length === 0 && root.retry.i < root.retry.max) {
           console.log("ChromeAPI: Got empty array, Retrying to get -> " + root.dataType);
           root.retry.i = root.retry.i + 1;
-          return setTimeout(function() {
+          setTimeout(function() {
             return root.fetch();
           }, root.retry.delay);
+          return root.done();
         } else {
           root.retry.i = 0;
           root.status = 'ready';
@@ -1370,7 +1371,7 @@
         item.element.index = i;
       }
       this.container.append(this);
-      return this.ifTheListHasNoItems();
+      return this.noItemsCheck();
     };
 
     ItemCardList.prototype.enableEditing = function() {
@@ -1499,7 +1500,7 @@
         this.items.unshift(item);
         this.prepend(item.element);
       }
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       return item;
     };
 
@@ -1542,7 +1543,7 @@
         this.items.splice(position, 0, item);
         this.updateNewItemPosition(null, position);
       }
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       return item;
     };
 
@@ -1572,7 +1573,7 @@
       this.removeChild(item.element);
       this.items.splice(item.element.index, 1);
       this.updateNewItemPosition(null, 0);
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       root.save();
       if (allowUndo) {
         return new Toast("1 link was removed from Speed Dial.", null, 'Undo', function() {
@@ -1720,7 +1721,7 @@
       }
     };
 
-    ItemCardList.prototype.ifTheListHasNoItems = function() {
+    ItemCardList.prototype.noItemsCheck = function() {
       var messageVisible;
       messageVisible = this.container.hasChild(this.noItems);
       if (this.items.length === 0) {

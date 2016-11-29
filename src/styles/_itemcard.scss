@@ -105,7 +105,7 @@ Item card styles
 }
 
 .item-card-list{
-	min-height: 6.6rem;
+	// min-height: 6.6rem;
 	margin: 0.5rem 0 0 0;
   // position: relative;
 
@@ -353,7 +353,7 @@ ul[data-list-editable]{
 
 // To display the 'no items in this list' -message when the list has no items =)
 .no-items{
-	position: absolute;
+	position: relative;
 	padding-right: 1.5rem;
 	padding-left: 0.5rem;
 	width: 100%;
@@ -378,9 +378,9 @@ ul[data-list-editable]{
 	}
 
 	img{
-		position: absolute;
-		top: -80px;
-    left: 0px;
+    position: absolute;
+    top: -5.5rem;
+    left: -0.1rem;
   }
 
 }

@@ -7097,7 +7097,6 @@ Item card styles
       content: 'add'; }
 
 .item-card-list {
-  min-height: 6.6rem;
   margin: 0.5rem 0 0 0; }
 
 .item-card-empty {
@@ -7228,7 +7227,7 @@ ul[data-list-editable] .drag-handle {
   display: inline-block; }
 
 .no-items {
-  position: absolute;
+  position: relative;
   padding-right: 1.5rem;
   padding-left: 0.5rem;
   width: 100%;
@@ -7246,8 +7245,8 @@ ul[data-list-editable] .drag-handle {
     display: inline-block; }
   .no-items img {
     position: absolute;
-    top: -80px;
-    left: 0px; }
+    top: -5.5rem;
+    left: -0.1rem; }
 
 /***
 
