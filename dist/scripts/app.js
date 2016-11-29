@@ -790,6 +790,8 @@
 
     ChromeAPI.dataType;
 
+    ChromeAPI.retry;
+
     ChromeAPI.status = 'empty';
 
     ChromeAPI.data = null;
@@ -803,10 +805,17 @@
       }
       this.limit = limit;
       this.dataType = dataType;
+      this.retry = {
+        i: 0,
+        max: 0,
+        delay: 5000
+      };
       if (dataType === 'topSites') {
         this.api = chrome.topSites.get;
       } else if (dataType === 'latestBookmarks') {
         this.api = chrome.bookmarks.getRecent;
+      } else if (dataType === 'recentHistory') {
+        this.api = chrome.history.search;
       } else if (dataType === 'recentlyClosed') {
         this.api = chrome.sessions.getRecentlyClosed;
       } else if (dataType === 'otherDevices') {
@@ -814,11 +823,11 @@
       }
     }
 
-    ChromeAPI.prototype.fetch = function(api) {
+    ChromeAPI.prototype.fetch = function() {
       var getter, params, root;
-      this.status = 'loading';
-      console.log("ChromeAPI: I'm calling to chrome API about " + this.dataType + "...");
       root = this;
+      root.status = 'loading';
+      console.log("ChromeAPI: I'm calling to chrome API about " + this.dataType + "...");
       getter = function(result) {
         var data;
         if (root.dataType === 'otherDevices' || root.dataType === 'recentlyClosed') {
@@ -832,20 +841,29 @@
           data = data.slice(0, root.limit);
         }
         root.data = data;
-        root.status = 'ready';
-        root.done();
-        return console.log("ChromeAPI: Ok, got " + root.dataType + " ->", root.data);
+        if (root.data.length === 0 && root.retry.i < root.retry.max) {
+          console.log("ChromeAPI: Got empty array, Retrying to get -> " + root.dataType);
+          root.retry.i = root.retry.i + 1;
+          return setTimeout(function() {
+            return root.fetch();
+          }, root.retry.delay);
+        } else {
+          root.retry.i = 0;
+          root.status = 'ready';
+          root.done();
+          return console.log("ChromeAPI: Ok, got " + root.dataType + " ->", root.data);
+        }
       };
-      if (this.dataType === 'latestBookmarks') {
-        return this.api(this.limit, getter);
-      } else if (this.dataType === 'recentHistory') {
+      if (root.dataType === 'latestBookmarks') {
+        return root.api(root.limit, getter);
+      } else if (root.dataType === 'recentHistory') {
         params = {
           'text': '',
-          'maxResults': this.limit * 2
+          'maxResults': root.limit * 2
         };
-        return this.api(params, getter);
+        return root.api(params, getter);
       } else {
-        return this.api(getter);
+        return root.api(getter);
       }
     };
 
@@ -2975,6 +2993,7 @@
       this.latestBookmarks = new ChromeAPI('latestBookmarks');
       this.recentlyClosed = new ChromeAPI('recentlyClosed');
       this.otherDevices = new ChromeAPI('otherDevices');
+      this.otherDevices.retry.max = 5;
       this.topSites.done = function() {
         var list, loader;
         loader = new Loader;

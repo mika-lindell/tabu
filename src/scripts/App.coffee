@@ -41,6 +41,11 @@ class App
 		@recentlyClosed = new ChromeAPI('recentlyClosed')
 		@otherDevices = new ChromeAPI('otherDevices')
 
+		# Add retries for getting other devices, as this data isn't often ready when you start Chrome
+		#
+		@otherDevices.retry.max = 5
+
+
 		@topSites.done = ()->
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
@@ -70,7 +75,7 @@ class App
 			list.create()
 
 		@otherDevices.done = ()->
-			
+
 			list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.")
 			list.create()
 
