@@ -207,8 +207,7 @@ module.exports = function(grunt) {
     'haml', 
     'coffee', 
     'sass', 
-    'concurrent:build',
-    'concurrent:test',
+    'concurrent:build'
     ]);
 
 
