@@ -121,29 +121,6 @@ class Dropdown extends HTMLElement
 		@dropdown.append(divider)
 		@items.push(divider)
 
-	# createClickTrap = (root = null)->
-
-	# 	if not root? then root = @
-
-	# 	root.trap = new HTMLElement('div')
-	# 	root.trap.addClass('overlay')
-	# 	root.addClass('layer-dialog')
-		
-	# 	root.trap.on('click', ()->
-	# 		root.toggleDropdown(root)
-	# 	)
-
-	# 	body = new HTMLElement('body')
-	# 	body.append(root.trap)
-
-	# removeClickTrap = (root = null)->
-
-	# 	if not root? then root = @
-
-	# 	root.dropdown.removeClass('layer-dialog')
-	# 	root.trap.removeFromDOM()
-	# 	root.trap = null
-
 
 
 		

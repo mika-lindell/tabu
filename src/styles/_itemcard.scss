@@ -110,6 +110,11 @@ Item card styles
   // position: relative;
 
   @extend .layer-front;
+
+  .progress{
+    margin: 1rem;
+    max-width: 270px;
+  }
 }
 
 // The style of empty list placeholder
@@ -358,7 +363,7 @@ ul[data-list-editable]{
 	padding-left: 0.5rem;
 	width: 100%;
 	max-width: 350px;
-	margin-top: 1rem;
+	margin-top: 0.7rem;
 
 	@extend .animated;
 	@extend .color-dark-grey;

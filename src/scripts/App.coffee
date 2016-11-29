@@ -35,67 +35,96 @@ class App
 
 		root = @
 
-		@topSites = new ChromeAPI('topSites')
-		@latestBookmarks = new ChromeAPI('latestBookmarks')
-		# @recentHistory = new ChromeAPI('recentHistory')
-		@recentlyClosed = new ChromeAPI('recentlyClosed')
-		@otherDevices = new ChromeAPI('otherDevices')
+		@topSites = 
+			list: new ItemCardList('#top-sites', null)
+			data: new ChromeAPI('topSites')
 
-		# Add retries for getting other devices, as this data isn't often ready when you start Chrome
-		#
-		@otherDevices.retry.max = 5
+		@topSites.list.setOrientation 'horizontal'
+
+		@speedDial = 
+			list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />")
+			data: null
+
+		@speedDial.list.enableEditing()
+		@speedDial.list.setOrientation 'horizontal'
+
+		@latestBookmarks = 
+			list: new ItemCardList('#latest-bookmarks', null, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.")
+			data: new ChromeAPI('latestBookmarks')
+
+		# @recentHistory = 
+		# 	list: new ItemCardList('#recent-history', null)
+		# 	data: new ChromeAPI('recentHistory')
+
+		@recentlyClosed = 
+			list: new ItemCardList('#recently-closed', null, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.")
+			data: new ChromeAPI('recentlyClosed')
+
+		@otherDevices = 
+			list: new ItemCardList('#other-devices', null, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.")
+			data: new ChromeAPI('otherDevices')
+
+		# Enable retries for other devices as this data is downloaded at startup and might not be available from get go
+		@otherDevices.data.retry.max = 10
+
+		updateList = (obj, data = null)->
+
+			if data?
+				obj.list.data = data
+			else if obj.data?
+				obj.list.data = obj.data.data
+
+			if obj.data?
+				if obj.data.retry.i is 0
+					obj.list.update()
+
+					# Add animation if loading is delayed
+					if obj.data.retry.tries isnt 0
+								anim = new Animation(obj.list)
+								anim.moveIn()
+			else
+				obj.list.update()
 
 
-		@topSites.done = ()->
+
+		@topSites.data.done = ()->
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
 			
-			list = new ItemCardList('#top-sites', root.topSites.data) # Create new list class
-			list.container.append list # Add list to DOM
-			list.setOrientation 'horizontal'
-			list.create() # Add items to the list
+			updateList(root.topSites)
 
 			loader.hide() # Hide the loader
 
-		@latestBookmarks.done = ()->
+		@latestBookmarks.data.done = ()->
 
-			list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.")
-			list.create()
+			updateList(root.latestBookmarks)
 
 		# @recentHistory.done = ()->
 
-		# 	container = new HTMLElement ('#recent-history')
-		# 	list = new ItemCardList(root.dataStorage.recentHistory, 'recent-history')
-		# 	container.append list
-		# 	list.update()
+		# 	updateList(root.recentHistory)
 
-		@recentlyClosed.done = ()->
+		@recentlyClosed.data.done = ()->
 
-			list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.")
-			list.create()
+			updateList(root.recentlyClosed)
 
-		@otherDevices.done = ()->
+		@otherDevices.data.done = ()->
 
-			list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.")
-			list.create()
+			updateList(root.otherDevices)
 
 		# Get all the data after preparations are done
 		# Speed dial is stored in the cloud storage and hence retrieved via storage API
-		@storage.getList('speed-dial', (data)->
+		@storage.getList('speed-dial', (result)->
 
-			list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />") # Create new list class
-			list.enableEditing()
-			list.setOrientation 'horizontal'
-			list.create() # Add items to the list	
+			updateList(root.speedDial, result)
 
 		)
 
 		# Rest of the data are retrieved via dedicated API calls
-		@topSites.fetch()
-		@otherDevices.fetch()
-		@latestBookmarks.fetch()
-		# @recentHistory.fetch()
-		@recentlyClosed.fetch()
+		@topSites.data.fetch()
+		@otherDevices.data.fetch()
+		@latestBookmarks.data.fetch()
+		# @recentHistory.data.fetch()
+		@recentlyClosed.data.fetch()
 
 		# Use localised version of the title of new tab page
 		@helpers.getLocalisedTitle((title)->

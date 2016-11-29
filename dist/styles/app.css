@@ -6781,8 +6781,8 @@ body {
 
 .section-heading {
   display: inline-block;
-  margin-right: 1rem;
-  margin-left: 0.7rem; }
+  margin-right: 0.5rem;
+  margin-left: 0.5rem; }
 
 .section-toolbar {
   display: inline-block;
@@ -6965,7 +6965,7 @@ Button styles
   text-align: left;
   box-shadow: none;
   padding: 0.5rem 0.5rem;
-  margin-left: -0.7rem;
+  margin-left: -0.5rem;
   height: auto;
   min-width: 220px;
   opacity: 1;
@@ -7098,6 +7098,9 @@ Item card styles
 
 .item-card-list {
   margin: 0.5rem 0 0 0; }
+  .item-card-list .progress {
+    margin: 1rem;
+    max-width: 270px; }
 
 .item-card-empty {
   display: none;
@@ -7217,7 +7220,7 @@ a.item-card-link {
 
 li.item-card-heading {
   display: block;
-  margin-left: 0.7rem; }
+  margin-left: 0.5rem; }
 
 ul[data-list-editable] .item-card-label-container {
   padding-left: 5rem; }
@@ -7232,7 +7235,7 @@ ul[data-list-editable] .drag-handle {
   padding-left: 0.5rem;
   width: 100%;
   max-width: 350px;
-  margin-top: 1rem; }
+  margin-top: 0.7rem; }
   .no-items i {
     height: 100px;
     position: absolute;

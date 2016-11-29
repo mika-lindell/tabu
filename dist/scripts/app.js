@@ -225,11 +225,11 @@
     };
 
     Storage.prototype.setList = function(id, newValue) {
-      var data, obj;
+      var data, obj1;
       data = (
-        obj = {},
-        obj["" + id] = newValue,
-        obj
+        obj1 = {},
+        obj1["" + id] = newValue,
+        obj1
       );
       return this.set(data, 'cloud');
     };
@@ -637,6 +637,15 @@
       }
     };
 
+    HTMLElement.prototype.removeChildren = function() {
+      var results;
+      results = [];
+      while (this.DOMElement.firstChild) {
+        results.push(this.DOMElement.removeChild(this.DOMElement.firstChild));
+      }
+      return results;
+    };
+
     HTMLElement.prototype.childCount = function() {
       return this.DOMElement.childElementCount;
     };
@@ -775,10 +784,6 @@
       return this.DOMElement.focus();
     };
 
-    HTMLElement.prototype.removeFromDOM = function() {
-      return this.DOMElement.outerHTML = '';
-    };
-
     return HTMLElement;
 
   })();
@@ -807,7 +812,8 @@
       this.dataType = dataType;
       this.retry = {
         i: 0,
-        max: 10,
+        tries: 0,
+        max: 0,
         delay: 5000
       };
       if (dataType === 'topSites') {
@@ -844,6 +850,7 @@
         if (root.data.length === 0 && root.retry.i < root.retry.max) {
           console.log("ChromeAPI: Got empty array, Retrying to get -> " + root.dataType);
           root.retry.i = root.retry.i + 1;
+          root.retry.tries = root.retry.i;
           setTimeout(function() {
             return root.fetch();
           }, root.retry.delay);
@@ -1323,7 +1330,7 @@
     ItemCardList.body;
 
     function ItemCardList(container, data, empty) {
-      var root;
+      var progressBar, progressContainer, root;
       if (empty == null) {
         empty = "I looked, but I couldn't find any.";
       }
@@ -1358,10 +1365,19 @@
       this.noItems.addClass('no-items');
       this.noItems.attr('draggable', 'false');
       this.noItems.html(empty.replace(' ', '&nbsp;'));
+      progressContainer = new HTMLElement('p');
+      progressBar = new HTMLElement('p');
+      progressContainer.addClass('progress');
+      progressContainer.addClass('animated');
+      progressBar.addClass('indeterminate');
+      progressContainer.append(progressBar);
+      this.append(progressContainer);
+      this.container.append(this);
     }
 
-    ItemCardList.prototype.create = function() {
+    ItemCardList.prototype.update = function() {
       var i, item;
+      this.removeChildren();
       for (i in this.data) {
         if (this.data[i].heading) {
           item = this.addHeading(this.data[i].heading);
@@ -1370,7 +1386,6 @@
         }
         item.element.index = i;
       }
-      this.container.append(this);
       return this.noItemsCheck();
     };
 
@@ -1723,10 +1738,10 @@
 
     ItemCardList.prototype.noItemsCheck = function() {
       var messageVisible;
-      messageVisible = this.container.hasChild(this.noItems);
+      messageVisible = this.container.hasChild(this.noItems.DOMElement);
       if (this.items.length === 0) {
         if (!messageVisible) {
-          return this.container.insert(this.noItems, this.container.firstChild(), 'after');
+          return this.container.append(this.noItems.DOMElement);
         }
       } else {
         if (messageVisible) {
@@ -2976,7 +2991,7 @@
     App.otherDevices;
 
     function App() {
-      var about, root;
+      var about, root, updateList;
       console.log("App: I'm warming up...");
       this.visibility = new Visibility();
       this.toolbars = new Toolbars();
@@ -2990,46 +3005,74 @@
       		 *
        */
       root = this;
-      this.topSites = new ChromeAPI('topSites');
-      this.latestBookmarks = new ChromeAPI('latestBookmarks');
-      this.recentlyClosed = new ChromeAPI('recentlyClosed');
-      this.otherDevices = new ChromeAPI('otherDevices');
-      this.otherDevices.retry.max = 5;
-      this.topSites.done = function() {
-        var list, loader;
+      this.topSites = {
+        list: new ItemCardList('#top-sites', null),
+        data: new ChromeAPI('topSites')
+      };
+      this.topSites.list.setOrientation('horizontal');
+      this.speedDial = {
+        list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />"),
+        data: null
+      };
+      this.speedDial.list.enableEditing();
+      this.speedDial.list.setOrientation('horizontal');
+      this.latestBookmarks = {
+        list: new ItemCardList('#latest-bookmarks', null, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions."),
+        data: new ChromeAPI('latestBookmarks')
+      };
+      this.recentlyClosed = {
+        list: new ItemCardList('#recently-closed', null, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session."),
+        data: new ChromeAPI('recentlyClosed')
+      };
+      this.otherDevices = {
+        list: new ItemCardList('#other-devices', null, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop."),
+        data: new ChromeAPI('otherDevices')
+      };
+      this.otherDevices.data.retry.max = 10;
+      updateList = function(obj, data) {
+        var anim;
+        if (data == null) {
+          data = null;
+        }
+        if (data != null) {
+          obj.list.data = data;
+        } else if (obj.data != null) {
+          obj.list.data = obj.data.data;
+        }
+        if (obj.data != null) {
+          if (obj.data.retry.i === 0) {
+            obj.list.update();
+            if (obj.data.retry.tries !== 0) {
+              anim = new Animation(obj.list);
+              return anim.moveIn();
+            }
+          }
+        } else {
+          return obj.list.update();
+        }
+      };
+      this.topSites.data.done = function() {
+        var loader;
         loader = new Loader;
-        list = new ItemCardList('#top-sites', root.topSites.data);
-        list.container.append(list);
-        list.setOrientation('horizontal');
-        list.create();
+        updateList(root.topSites);
         return loader.hide();
       };
-      this.latestBookmarks.done = function() {
-        var list;
-        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.");
-        return list.create();
+      this.latestBookmarks.data.done = function() {
+        return updateList(root.latestBookmarks);
       };
-      this.recentlyClosed.done = function() {
-        var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.");
-        return list.create();
+      this.recentlyClosed.data.done = function() {
+        return updateList(root.recentlyClosed);
       };
-      this.otherDevices.done = function() {
-        var list;
-        list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.");
-        return list.create();
+      this.otherDevices.data.done = function() {
+        return updateList(root.otherDevices);
       };
-      this.storage.getList('speed-dial', function(data) {
-        var list;
-        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />");
-        list.enableEditing();
-        list.setOrientation('horizontal');
-        return list.create();
+      this.storage.getList('speed-dial', function(result) {
+        return updateList(root.speedDial, result);
       });
-      this.topSites.fetch();
-      this.otherDevices.fetch();
-      this.latestBookmarks.fetch();
-      this.recentlyClosed.fetch();
+      this.topSites.data.fetch();
+      this.otherDevices.data.fetch();
+      this.latestBookmarks.data.fetch();
+      this.recentlyClosed.data.fetch();
       this.helpers.getLocalisedTitle(function(title) {
         return document.title = title;
       });

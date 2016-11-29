@@ -6,6 +6,8 @@ module.exports =
 	#
 	###
 
+	# TODO: TESTS FOR LOADING SCREEN AND NOJS!!
+
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without

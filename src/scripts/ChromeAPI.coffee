@@ -31,6 +31,7 @@ class ChromeAPI
 		@dataType = dataType
 		@retry = 
 			i: 0
+			tries: 0
 			max: 0
 			delay: 5000
 
@@ -73,11 +74,13 @@ class ChromeAPI
 
 				console.log "ChromeAPI: Got empty array, Retrying to get -> #{root.dataType}"
 				root.retry.i = root.retry.i+1
+				root.retry.tries = root.retry.i
 
 				setTimeout(()->
 					root.fetch()
 				, root.retry.delay)
 				
+				root.done()
 
 			else
 
