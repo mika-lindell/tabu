@@ -65,7 +65,7 @@ class App
 			data: new ChromeAPI('otherDevices')
 
 		# Enable retries for other devices as this data is downloaded at startup and might not be available from get go
-		@otherDevices.data.retry.max = 10
+		@otherDevices.data.retry.max = 5
 
 		updateList = (obj, data = null)->
 
@@ -76,12 +76,13 @@ class App
 
 			if obj.data?
 				if obj.data.retry.i is 0
-					obj.list.update()
-
+					
 					# Add animation if loading is delayed
 					if obj.data.retry.tries isnt 0
-								anim = new Animation(obj.list)
-								anim.moveIn()
+						obj.list.update(true)
+					else
+						obj.list.update()
+
 			else
 				obj.list.update()
 

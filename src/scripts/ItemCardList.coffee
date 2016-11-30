@@ -76,20 +76,36 @@ class ItemCardList extends HTMLElement
 		@container.append @
 
 
-	update: ()->
+	update: (animate = false)->
 		
-		@removeChildren()
+		root = @
 
-		# Add headings and list items
-		for i of @data
-			if @data[i].heading
-				item = @addHeading(@data[i].heading)
-			else
-				item = @addItem(@data[i].title, @data[i].url)
+		anim = new Animation(@)
+		console.log animate
 
-			item.element.index = i
+		done = ()->
+			root.removeChildren()
 
-		@noItemsCheck()
+			# Add headings and list items
+			for i of root.data
+				if root.data[i].heading
+					item = root.addHeading(root.data[i].heading)
+				else
+					item = root.addItem(root.data[i].title, root.data[i].url)
+
+				item.element.index = i
+
+			root.noItemsCheck()
+
+			if animate
+				anim.fadeIn(null, null)
+
+		if animate
+			anim.fadeOut(done)
+		else
+			done()
+
+
 		
 		
 	enableEditing: ->

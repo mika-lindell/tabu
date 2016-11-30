@@ -1375,18 +1375,35 @@
       this.container.append(this);
     }
 
-    ItemCardList.prototype.update = function() {
-      var i, item;
-      this.removeChildren();
-      for (i in this.data) {
-        if (this.data[i].heading) {
-          item = this.addHeading(this.data[i].heading);
-        } else {
-          item = this.addItem(this.data[i].title, this.data[i].url);
-        }
-        item.element.index = i;
+    ItemCardList.prototype.update = function(animate) {
+      var anim, done, root;
+      if (animate == null) {
+        animate = false;
       }
-      return this.noItemsCheck();
+      root = this;
+      anim = new Animation(this);
+      console.log(animate);
+      done = function() {
+        var i, item;
+        root.removeChildren();
+        for (i in root.data) {
+          if (root.data[i].heading) {
+            item = root.addHeading(root.data[i].heading);
+          } else {
+            item = root.addItem(root.data[i].title, root.data[i].url);
+          }
+          item.element.index = i;
+        }
+        root.noItemsCheck();
+        if (animate) {
+          return anim.fadeIn(null, null);
+        }
+      };
+      if (animate) {
+        return anim.fadeOut(done);
+      } else {
+        return done();
+      }
     };
 
     ItemCardList.prototype.enableEditing = function() {
@@ -2496,6 +2513,23 @@
       return this.animationOut('anim-slide-out', done);
     };
 
+    Animation.prototype.fadeIn = function(done, display) {
+      if (done == null) {
+        done = null;
+      }
+      if (display == null) {
+        display = 'block';
+      }
+      return this.animationIn('anim-fade-in', done, display);
+    };
+
+    Animation.prototype.fadeOut = function(done) {
+      if (done == null) {
+        done = null;
+      }
+      return this.animationOut('anim-fade-out', done);
+    };
+
     Animation.prototype.animateHeight = function(from, to, done) {
       var cleanUp, container, play, root;
       if (to == null) {
@@ -3028,9 +3062,8 @@
         list: new ItemCardList('#other-devices', null, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop."),
         data: new ChromeAPI('otherDevices')
       };
-      this.otherDevices.data.retry.max = 10;
+      this.otherDevices.data.retry.max = 5;
       updateList = function(obj, data) {
-        var anim;
         if (data == null) {
           data = null;
         }
@@ -3041,10 +3074,10 @@
         }
         if (obj.data != null) {
           if (obj.data.retry.i === 0) {
-            obj.list.update();
             if (obj.data.retry.tries !== 0) {
-              anim = new Animation(obj.list);
-              return anim.moveIn();
+              return obj.list.update(true);
+            } else {
+              return obj.list.update();
             }
           }
         } else {
