@@ -42,7 +42,7 @@ class App
 		@topSites.list.setOrientation 'horizontal'
 
 		@speedDial = 
-			list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />")
+			list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above or <br/>try Drag & Drop.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />")
 			data: null
 
 		@speedDial.list.enableEditing()
