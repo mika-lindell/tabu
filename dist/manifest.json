@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "TABU - The New Tab Page",
-  "description": "A new tab page designed to feel like it's part of Google Chrome™. Speed dial, blank page with a press of a button and more.",
-  "version": "0.5.2.7",
+  "name": "TABU - New Tab Page",
+  "short_name": "TABU",
+  "description": "Fast & simplistic new tab with speed dial, recommended sites and option for blank page",
+  "version": "0.5.2.8",
 
   "icons": { 
     "16": "icon16.png",
