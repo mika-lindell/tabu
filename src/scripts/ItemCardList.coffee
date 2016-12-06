@@ -62,7 +62,7 @@ class ItemCardList extends HTMLElement
 		# Add text to empty message and remove possible non-breaking spaces
 		@noItems.html(empty.replace(' ', '&nbsp;'))
 
-		progressContainer = new HTMLElement('p')
+		progressContainer = new HTMLElement('li')
 		progressBar = new HTMLElement('p')
 
 		progressContainer.addClass('progress')

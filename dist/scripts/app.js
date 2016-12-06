@@ -1365,7 +1365,7 @@
       this.noItems.addClass('no-items');
       this.noItems.attr('draggable', 'false');
       this.noItems.html(empty.replace(' ', '&nbsp;'));
-      progressContainer = new HTMLElement('p');
+      progressContainer = new HTMLElement('li');
       progressBar = new HTMLElement('p');
       progressContainer.addClass('progress');
       progressContainer.addClass('animated');
