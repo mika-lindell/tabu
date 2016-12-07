@@ -55,9 +55,9 @@ module.exports = {
   },
   'top sites, latest bookmarks, recently closed and other devices should be visible by default': function(browser) {
     browser.expect.element("#top-sites").to.be.visible;
-    browser.expect.element("#latest-bookmarks-list").to.be.visible;
-    browser.expect.element("#recently-closed-list").to.be.visible;
-    return browser.expect.element("#other-devices-list").to.be.visible;
+    browser.expect.element("#latest-bookmarks").to.be.visible;
+    browser.expect.element("#recently-closed").to.be.visible;
+    return browser.expect.element("#other-devices").to.be.visible;
   },
   'speed dial should be hidden by default': function(browser) {
     return browser.expect.element("#speed-dial").not.to.be.visible;
@@ -185,8 +185,11 @@ module.exports = {
   'Other Devices should not have any items': function(browser) {
     return browser.expect.element("#other-devices-0").not.to.be.present;
   },
-  'Other Devices  should have "no-items"-message visible': function(browser) {
-    return browser.expect.element("#other-devices > .no-items").to.be.visible;
+  'Other Devices should have progressbar to indicate the status': function(browser) {
+    return browser.expect.element("#other-devices .progress .indeterminate").to.be.present;
+  },
+  'Other Devices  should have "no-items"-message visible after loading has completed': function(browser) {
+    return browser.expect.element("#other-devices > .no-items").to.be.visible.after(25000);
   },
   'TODO: it should display items from other devices': function(browser) {},
 
@@ -318,7 +321,7 @@ module.exports = {
   },
   'clicking history button should take to history-page': function(browser) {
     browser.click("#view-history");
-    browser.expect.element("#history").to.be.present.after(500);
+    browser.expect.element("#history-app").to.be.present.after(500);
     browser.back();
     browser.expect.element("#app").to.be.present.after(500);
     return browser.pause(500);
@@ -492,15 +495,16 @@ module.exports = {
   	 * SPEED DIAL
   	 *
    */
-  'Choosing switch to speed dial from top sites dropdown menu should display speed dial': function(browser) {
+  'Choosing to switch to speed dial from top sites dropdown menu should display speed dial': function(browser) {
     browser.moveToElement('#top-sites-select', 10, 10);
     browser.mouseButtonDown(1);
     browser.mouseButtonUp(1);
-    browser.pause(500);
-    browser.expect.element("#menu-speed-dial").to.be.visible;
-    browser.click("#menu-speed-dial");
-    browser.expect.element("#speed-dial").to.be.visible;
-    return browser.expect.element("#speed-dial-list").to.be.visible;
+    browser.expect.element("#menu-speed-dial").to.be.visible.after(500);
+    browser.moveToElement('#menu-speed-dial', 10, 10);
+    browser.mouseButtonDown(1);
+    browser.mouseButtonUp(1);
+    browser.expect.element("#speed-dial").to.be.visible.after(500);
+    return browser.expect.element("#speed-dial-list").to.be.present.after(500);
   },
   'Speed dial should be editable': function(browser) {
     browser.pause(500);

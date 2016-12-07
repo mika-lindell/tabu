@@ -161,9 +161,9 @@ class HTMLElement
 	append: (element = null)->
 		if element?
 			if element instanceof HTMLElement
-				return @DOMElement.appendChild(element.DOMElement)
+				@DOMElement.appendChild(element.DOMElement)
 			else
-				return @DOMElement.appendChild(element)
+				@DOMElement.appendChild(element)
 
 	# Add child element before or after specified child
 	#
@@ -235,6 +235,10 @@ class HTMLElement
 			return @DOMElement.removeChild(element)
 		else
 			return @DOMElement.removeChild(element.DOMElement)
+
+	removeChildren: ()->
+		while @DOMElement.firstChild
+  		@DOMElement.removeChild(@DOMElement.firstChild)
 
 	childCount: ()->
 		return @DOMElement.childElementCount
@@ -313,5 +317,3 @@ class HTMLElement
 	focus: ()->
 		@DOMElement.focus()
 
-	removeFromDOM: ()->
-		@DOMElement.outerHTML = ''

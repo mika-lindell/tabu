@@ -225,11 +225,11 @@
     };
 
     Storage.prototype.setList = function(id, newValue) {
-      var data, obj;
+      var data, obj1;
       data = (
-        obj = {},
-        obj["" + id] = newValue,
-        obj
+        obj1 = {},
+        obj1["" + id] = newValue,
+        obj1
       );
       return this.set(data, 'cloud');
     };
@@ -637,6 +637,15 @@
       }
     };
 
+    HTMLElement.prototype.removeChildren = function() {
+      var results;
+      results = [];
+      while (this.DOMElement.firstChild) {
+        results.push(this.DOMElement.removeChild(this.DOMElement.firstChild));
+      }
+      return results;
+    };
+
     HTMLElement.prototype.childCount = function() {
       return this.DOMElement.childElementCount;
     };
@@ -775,10 +784,6 @@
       return this.DOMElement.focus();
     };
 
-    HTMLElement.prototype.removeFromDOM = function() {
-      return this.DOMElement.outerHTML = '';
-    };
-
     return HTMLElement;
 
   })();
@@ -789,6 +794,8 @@
     ChromeAPI.limit;
 
     ChromeAPI.dataType;
+
+    ChromeAPI.retry;
 
     ChromeAPI.status = 'empty';
 
@@ -803,10 +810,18 @@
       }
       this.limit = limit;
       this.dataType = dataType;
+      this.retry = {
+        i: 0,
+        tries: 0,
+        max: 0,
+        delay: 5000
+      };
       if (dataType === 'topSites') {
         this.api = chrome.topSites.get;
       } else if (dataType === 'latestBookmarks') {
         this.api = chrome.bookmarks.getRecent;
+      } else if (dataType === 'recentHistory') {
+        this.api = chrome.history.search;
       } else if (dataType === 'recentlyClosed') {
         this.api = chrome.sessions.getRecentlyClosed;
       } else if (dataType === 'otherDevices') {
@@ -814,11 +829,11 @@
       }
     }
 
-    ChromeAPI.prototype.fetch = function(api) {
+    ChromeAPI.prototype.fetch = function() {
       var getter, params, root;
-      this.status = 'loading';
-      console.log("ChromeAPI: I'm calling to chrome API about " + this.dataType + "...");
       root = this;
+      root.status = 'loading';
+      console.log("ChromeAPI: I'm calling to chrome API about " + this.dataType + "...");
       getter = function(result) {
         var data;
         if (root.dataType === 'otherDevices' || root.dataType === 'recentlyClosed') {
@@ -832,20 +847,31 @@
           data = data.slice(0, root.limit);
         }
         root.data = data;
-        root.status = 'ready';
-        root.done();
-        return console.log("ChromeAPI: Ok, got " + root.dataType + " ->", root.data);
+        if (root.data.length === 0 && root.retry.i < root.retry.max) {
+          console.log("ChromeAPI: Got empty array, Retrying to get -> " + root.dataType);
+          root.retry.i = root.retry.i + 1;
+          root.retry.tries = root.retry.i;
+          setTimeout(function() {
+            return root.fetch();
+          }, root.retry.delay);
+          return root.done();
+        } else {
+          root.retry.i = 0;
+          root.status = 'ready';
+          root.done();
+          return console.log("ChromeAPI: Ok, got " + root.dataType + " ->", root.data);
+        }
       };
-      if (this.dataType === 'latestBookmarks') {
-        return this.api(this.limit, getter);
-      } else if (this.dataType === 'recentHistory') {
+      if (root.dataType === 'latestBookmarks') {
+        return root.api(root.limit, getter);
+      } else if (root.dataType === 'recentHistory') {
         params = {
           'text': '',
-          'maxResults': this.limit * 2
+          'maxResults': root.limit * 2
         };
-        return this.api(params, getter);
+        return root.api(params, getter);
       } else {
-        return this.api(getter);
+        return root.api(getter);
       }
     };
 
@@ -1304,7 +1330,7 @@
     ItemCardList.body;
 
     function ItemCardList(container, data, empty) {
-      var root;
+      var progressBar, progressContainer, root;
       if (empty == null) {
         empty = "I looked, but I couldn't find any.";
       }
@@ -1339,20 +1365,45 @@
       this.noItems.addClass('no-items');
       this.noItems.attr('draggable', 'false');
       this.noItems.html(empty.replace(' ', '&nbsp;'));
+      progressContainer = new HTMLElement('li');
+      progressBar = new HTMLElement('p');
+      progressContainer.addClass('progress');
+      progressContainer.addClass('animated');
+      progressBar.addClass('indeterminate');
+      progressContainer.append(progressBar);
+      this.append(progressContainer);
+      this.container.append(this);
     }
 
-    ItemCardList.prototype.create = function() {
-      var i, item;
-      for (i in this.data) {
-        if (this.data[i].heading) {
-          item = this.addHeading(this.data[i].heading);
-        } else {
-          item = this.addItem(this.data[i].title, this.data[i].url);
-        }
-        item.element.index = i;
+    ItemCardList.prototype.update = function(animate) {
+      var anim, done, root;
+      if (animate == null) {
+        animate = false;
       }
-      this.container.append(this);
-      return this.ifTheListHasNoItems();
+      root = this;
+      anim = new Animation(this);
+      console.log(animate);
+      done = function() {
+        var i, item;
+        root.removeChildren();
+        for (i in root.data) {
+          if (root.data[i].heading) {
+            item = root.addHeading(root.data[i].heading);
+          } else {
+            item = root.addItem(root.data[i].title, root.data[i].url);
+          }
+          item.element.index = i;
+        }
+        root.noItemsCheck();
+        if (animate) {
+          return anim.fadeIn(null, null);
+        }
+      };
+      if (animate) {
+        return anim.fadeOut(done);
+      } else {
+        return done();
+      }
     };
 
     ItemCardList.prototype.enableEditing = function() {
@@ -1481,7 +1532,7 @@
         this.items.unshift(item);
         this.prepend(item.element);
       }
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       return item;
     };
 
@@ -1524,7 +1575,7 @@
         this.items.splice(position, 0, item);
         this.updateNewItemPosition(null, position);
       }
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       return item;
     };
 
@@ -1554,7 +1605,7 @@
       this.removeChild(item.element);
       this.items.splice(item.element.index, 1);
       this.updateNewItemPosition(null, 0);
-      this.ifTheListHasNoItems();
+      this.noItemsCheck();
       root.save();
       if (allowUndo) {
         return new Toast("1 link was removed from Speed Dial.", null, 'Undo', function() {
@@ -1702,12 +1753,12 @@
       }
     };
 
-    ItemCardList.prototype.ifTheListHasNoItems = function() {
+    ItemCardList.prototype.noItemsCheck = function() {
       var messageVisible;
-      messageVisible = this.container.hasChild(this.noItems);
+      messageVisible = this.container.hasChild(this.noItems.DOMElement);
       if (this.items.length === 0) {
         if (!messageVisible) {
-          return this.container.insert(this.noItems, this.container.firstChild(), 'after');
+          return this.container.append(this.noItems.DOMElement);
         }
       } else {
         if (messageVisible) {
@@ -2462,6 +2513,23 @@
       return this.animationOut('anim-slide-out', done);
     };
 
+    Animation.prototype.fadeIn = function(done, display) {
+      if (done == null) {
+        done = null;
+      }
+      if (display == null) {
+        display = 'block';
+      }
+      return this.animationIn('anim-fade-in', done, display);
+    };
+
+    Animation.prototype.fadeOut = function(done) {
+      if (done == null) {
+        done = null;
+      }
+      return this.animationOut('anim-fade-out', done);
+    };
+
     Animation.prototype.animateHeight = function(from, to, done) {
       var cleanUp, container, play, root;
       if (to == null) {
@@ -2957,7 +3025,7 @@
     App.otherDevices;
 
     function App() {
-      var about, root;
+      var about, root, updateList;
       console.log("App: I'm warming up...");
       this.visibility = new Visibility();
       this.toolbars = new Toolbars();
@@ -2971,45 +3039,73 @@
       		 *
        */
       root = this;
-      this.topSites = new ChromeAPI('topSites');
-      this.latestBookmarks = new ChromeAPI('latestBookmarks');
-      this.recentlyClosed = new ChromeAPI('recentlyClosed');
-      this.otherDevices = new ChromeAPI('otherDevices');
-      this.topSites.done = function() {
-        var list, loader;
+      this.topSites = {
+        list: new ItemCardList('#top-sites', null),
+        data: new ChromeAPI('topSites')
+      };
+      this.topSites.list.setOrientation('horizontal');
+      this.speedDial = {
+        list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above or <br/>try Drag & Drop.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />"),
+        data: null
+      };
+      this.speedDial.list.enableEditing();
+      this.speedDial.list.setOrientation('horizontal');
+      this.latestBookmarks = {
+        list: new ItemCardList('#latest-bookmarks', null, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions."),
+        data: new ChromeAPI('latestBookmarks')
+      };
+      this.recentlyClosed = {
+        list: new ItemCardList('#recently-closed', null, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session."),
+        data: new ChromeAPI('recentlyClosed')
+      };
+      this.otherDevices = {
+        list: new ItemCardList('#other-devices', null, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop."),
+        data: new ChromeAPI('otherDevices')
+      };
+      this.otherDevices.data.retry.max = 5;
+      updateList = function(obj, data) {
+        if (data == null) {
+          data = null;
+        }
+        if (data != null) {
+          obj.list.data = data;
+        } else if (obj.data != null) {
+          obj.list.data = obj.data.data;
+        }
+        if (obj.data != null) {
+          if (obj.data.retry.i === 0) {
+            if (obj.data.retry.tries !== 0) {
+              return obj.list.update(true);
+            } else {
+              return obj.list.update();
+            }
+          }
+        } else {
+          return obj.list.update();
+        }
+      };
+      this.topSites.data.done = function() {
+        var loader;
         loader = new Loader;
-        list = new ItemCardList('#top-sites', root.topSites.data);
-        list.container.append(list);
-        list.setOrientation('horizontal');
-        list.create();
+        updateList(root.topSites);
         return loader.hide();
       };
-      this.latestBookmarks.done = function() {
-        var list;
-        list = new ItemCardList('#latest-bookmarks', root.latestBookmarks.data, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.");
-        return list.create();
+      this.latestBookmarks.data.done = function() {
+        return updateList(root.latestBookmarks);
       };
-      this.recentlyClosed.done = function() {
-        var list;
-        list = new ItemCardList('#recently-closed', root.recentlyClosed.data, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.");
-        return list.create();
+      this.recentlyClosed.data.done = function() {
+        return updateList(root.recentlyClosed);
       };
-      this.otherDevices.done = function() {
-        var list;
-        list = new ItemCardList('#other-devices', root.otherDevices.data, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.");
-        return list.create();
+      this.otherDevices.data.done = function() {
+        return updateList(root.otherDevices);
       };
-      this.storage.getList('speed-dial', function(data) {
-        var list;
-        list = new ItemCardList('#speed-dial', data, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />");
-        list.enableEditing();
-        list.setOrientation('horizontal');
-        return list.create();
+      this.storage.getList('speed-dial', function(result) {
+        return updateList(root.speedDial, result);
       });
-      this.topSites.fetch();
-      this.otherDevices.fetch();
-      this.latestBookmarks.fetch();
-      this.recentlyClosed.fetch();
+      this.topSites.data.fetch();
+      this.otherDevices.data.fetch();
+      this.latestBookmarks.data.fetch();
+      this.recentlyClosed.data.fetch();
       this.helpers.getLocalisedTitle(function(title) {
         return document.title = title;
       });

@@ -6,6 +6,8 @@ module.exports =
 	#
 	###
 
+	# TODO: TESTS FOR LOADING SCREEN AND NOJS!!
+
 	before: (browser)->
 
 		browser.url('chrome://newtab') # Won't run without
@@ -66,9 +68,9 @@ module.exports =
 
 	'top sites, latest bookmarks, recently closed and other devices should be visible by default': (browser)->
 		browser.expect.element("#top-sites").to.be.visible
-		browser.expect.element("#latest-bookmarks-list").to.be.visible
-		browser.expect.element("#recently-closed-list").to.be.visible
-		browser.expect.element("#other-devices-list").to.be.visible
+		browser.expect.element("#latest-bookmarks").to.be.visible
+		browser.expect.element("#recently-closed").to.be.visible
+		browser.expect.element("#other-devices").to.be.visible
 
 	'speed dial should be hidden by default': (browser)->
 		browser.expect.element("#speed-dial").not.to.be.visible
@@ -223,8 +225,11 @@ module.exports =
 	'Other Devices should not have any items': (browser)->
 		browser.expect.element("#other-devices-0").not.to.be.present
 
-	'Other Devices  should have "no-items"-message visible': (browser)->
-		browser.expect.element("#other-devices > .no-items").to.be.visible
+	'Other Devices should have progressbar to indicate the status': (browser)->
+		browser.expect.element("#other-devices .progress .indeterminate").to.be.present
+
+	'Other Devices  should have "no-items"-message visible after loading has completed': (browser)->
+		browser.expect.element("#other-devices > .no-items").to.be.visible.after(25000)
 
 	'TODO: it should display items from other devices': (browser)->
 		# TODO: Can't test this properly as I can't generate data and the profile loading is bugged
@@ -364,7 +369,7 @@ module.exports =
 	'clicking history button should take to history-page': (browser)->		
 		
 		browser.click("#view-history")
-		browser.expect.element("#history").to.be.present.after(500)
+		browser.expect.element("#history-app").to.be.present.after(500)
 
 		browser.back()
 		browser.expect.element("#app").to.be.present.after(500)
@@ -466,6 +471,10 @@ module.exports =
 	# DOES LINKS TAKE PEOPLE TO PLACES?	
 	#
 	###
+
+	# 'dnd': (browser)->
+
+	# 	browser.dnd('#top-sites-0', 'top')
 
 	'clicking link in Top Sites should take to correct destination': (browser)->
 
@@ -577,15 +586,16 @@ module.exports =
 	#
 	###
 
-	'Choosing switch to speed dial from top sites dropdown menu should display speed dial': (browser)->
+	'Choosing to switch to speed dial from top sites dropdown menu should display speed dial': (browser)->
 		browser.moveToElement('#top-sites-select', 10, 10)
 		browser.mouseButtonDown(1)
 		browser.mouseButtonUp(1)
-		browser.pause(500)
-		browser.expect.element("#menu-speed-dial").to.be.visible
-		browser.click("#menu-speed-dial")
-		browser.expect.element("#speed-dial").to.be.visible
-		browser.expect.element("#speed-dial-list").to.be.visible
+		browser.expect.element("#menu-speed-dial").to.be.visible.after(500)
+		browser.moveToElement('#menu-speed-dial', 10, 10)
+		browser.mouseButtonDown(1)
+		browser.mouseButtonUp(1)
+		browser.expect.element("#speed-dial").to.be.visible.after(500)
+		browser.expect.element("#speed-dial-list").to.be.present.after(500)
 
 	'Speed dial should be editable': (browser)->
 		browser.pause(500)

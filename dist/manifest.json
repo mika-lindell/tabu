@@ -1,14 +1,17 @@
 {
   "manifest_version": 2,
-  "name": "TABU – The New Tab Page",
+
+  "name": "TABU - New Tab Page",
   "short_name": "TABU",
-  "description": "Designed to feel like it's part of Google Chrome™  – TABU looks and runs like it's made for your browser – not on your face, while keeping it simple.",
-  "version": "0.5.2.5",
+  "description": "Fast & simplistic new tab with speed dial, recommended sites and option for blank page.",
+  "version": "0.5.2.9",
+
   "icons": { 
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png" 
   },
+
   "minimum_chrome_version": "37",
   "permissions": [
           "storage",
@@ -18,6 +21,7 @@
           "topSites",
           "history"
         ],
+
 	"chrome_url_overrides" : {
 	  "newtab": "start.html"
 	}

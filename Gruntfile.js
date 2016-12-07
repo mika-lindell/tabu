@@ -107,9 +107,11 @@ module.exports = function(grunt) {
         jar_version: '2.53.1',
         jar_path: 'lib/selenium-server-standalone-2.53.1.jar',
 
+        // Folders
         src_folders: ['tests/js'],
         output_folder: 'report',
         globals_path: 'tests/js/globals.js', 
+        custom_commands_path: 'tests/js/custom_commands/',
 
         test_settings: {
           default: {
@@ -207,8 +209,7 @@ module.exports = function(grunt) {
     'haml', 
     'coffee', 
     'sass', 
-    'concurrent:build',
-    'concurrent:test',
+    'concurrent:build'
     ]);
 
 

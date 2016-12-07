@@ -59,27 +59,55 @@ class ItemCardList extends HTMLElement
 
 		@noItems.addClass('no-items')
 		@noItems.attr('draggable', 'false')
-		# icon = new HTMLElement('i')
-		# icon.addClass('material-icons')
-		# icon.addClass('left')
-		# icon.text('sentiment_neutral')
-		
+		# Add text to empty message and remove possible non-breaking spaces
 		@noItems.html(empty.replace(' ', '&nbsp;'))
-		# @noItems.prepend(icon)
 
-	create: ()->
+		progressContainer = new HTMLElement('li')
+		progressBar = new HTMLElement('p')
 
-		for i of @data
-			if @data[i].heading
-				item = @addHeading(@data[i].heading)
-			else
-				item = @addItem(@data[i].title, @data[i].url)
+		progressContainer.addClass('progress')
+		progressContainer.addClass('animated')
+		progressBar.addClass('indeterminate')
 
-			item.element.index = i
+		progressContainer.append(progressBar)
+
+		@append(progressContainer)
 
 		@container.append @
-		@ifTheListHasNoItems()
 
+
+	update: (animate = false)->
+		
+		root = @
+
+		anim = new Animation(@)
+		console.log animate
+
+		done = ()->
+			root.removeChildren()
+
+			# Add headings and list items
+			for i of root.data
+				if root.data[i].heading
+					item = root.addHeading(root.data[i].heading)
+				else
+					item = root.addItem(root.data[i].title, root.data[i].url)
+
+				item.element.index = i
+
+			root.noItemsCheck()
+
+			if animate
+				anim.fadeIn(null, null)
+
+		if animate
+			anim.fadeOut(done)
+		else
+			done()
+
+
+		
+		
 	enableEditing: ->
 
 		root = @
@@ -229,7 +257,7 @@ class ItemCardList extends HTMLElement
 			@items.unshift item
 			@prepend item.element
 
-		@ifTheListHasNoItems()
+		@noItemsCheck()
 		return item
 
 	addItem: (title = null, url = null, position = 'last')->
@@ -245,13 +273,13 @@ class ItemCardList extends HTMLElement
 		else
 			item.element = new ItemCard(@, item, title, url)
 
-		if position is 'last'
+		if position is 'last' # if new item is added as last
 
 			item.element.index = @items.length
 			@items.push item
 			@append item.element
 
-		else if  position is 'first'
+		else if  position is 'first' # if new item is added as first
 
 			item.element.index = 0
 			@items.unshift item
@@ -268,7 +296,7 @@ class ItemCardList extends HTMLElement
 			@items.splice(position, 0, item)
 			@updateNewItemPosition null, position
 			
-		@ifTheListHasNoItems()
+		@noItemsCheck()
 
 		return item
 
@@ -297,7 +325,7 @@ class ItemCardList extends HTMLElement
 		@removeChild(item.element)
 		@items.splice(item.element.index, 1)
 		@updateNewItemPosition(null, 0)
-		@ifTheListHasNoItems()
+		@noItemsCheck()
 		root.save()
 
 		if allowUndo
@@ -425,6 +453,8 @@ class ItemCardList extends HTMLElement
 				else
 					userInput.done(userInput.fields)			
 
+	# Set the orientation of the list - must be done before appending
+	#
 	setOrientation: (orientation = 'horizontal')->
 
 		if orientation is 'horizontal'
@@ -432,16 +462,21 @@ class ItemCardList extends HTMLElement
 		else
 			@container.removeClass('horizontal-list')
 
-	ifTheListHasNoItems: ()->
+	noItemsCheck: ()->
 
-		messageVisible = @container.hasChild(@noItems)
+		messageVisible = @container.hasChild(@noItems.DOMElement)
+
+		# for i, child of @container.children()
+		# 	console.log  @noItems.DOMElement.node is child.DOMElement.node, child
 
 		if @items.length is 0
 			if not messageVisible
-				@container.insert(@noItems, @container.firstChild(), 'after')
+				@container.append(@noItems.DOMElement)
 		else
 			if messageVisible then @container.removeChild(@noItems)
 
+	# Update items in list during DnD-operation
+	#
 	updateNewItemPosition: (item, newIndex)->
 
 		if item?
@@ -460,6 +495,8 @@ class ItemCardList extends HTMLElement
 
 		# console.log 'updateNewItemPosition', log
 
+	# To chech if DnD data from another application can be accepted
+	#
 	acceptFromOutsideSource: (ev)->
 
 		if ev.dataTransfer.types.indexOf('text/plain') isnt -1 or 

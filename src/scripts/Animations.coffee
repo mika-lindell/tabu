@@ -85,6 +85,11 @@ class Animation
 	slideOut: (done = null)->
 		@animationOut 'anim-slide-out', done
 
+	fadeIn: (done = null, display = 'block')->
+		@animationIn 'anim-fade-in', done, display
+
+	fadeOut: (done = null)->
+		@animationOut 'anim-fade-out', done
 
 	animateHeight: (from, to = null, done = null)->
 

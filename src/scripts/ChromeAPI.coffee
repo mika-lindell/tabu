@@ -6,6 +6,11 @@ class ChromeAPI
 	@limit
 	@dataType
 
+	# The amount of retries & retry delay for fetching data
+	# no retries by default
+	#
+	@retry
+
 	# Status of the operation.
 	# Can be empty, loading or ready
 	#	
@@ -24,13 +29,18 @@ class ChromeAPI
 
 		@limit = limit
 		@dataType = dataType
+		@retry = 
+			i: 0
+			tries: 0
+			max: 0
+			delay: 5000
 
 		if dataType is 'topSites'
 			@api = chrome.topSites.get
 		else if dataType is 'latestBookmarks'
 			@api = chrome.bookmarks.getRecent
-		# else if dataType is 'recentHistory'
-		# 	@api = chrome.history.search
+		else if dataType is 'recentHistory'
+		 	@api = chrome.history.search
 		else if dataType is 'recentlyClosed'
 			@api = chrome.sessions.getRecentlyClosed
 		else if dataType is 'otherDevices'
@@ -38,11 +48,12 @@ class ChromeAPI
 
 	# Get the data from chrome API
 	#
-	fetch: (api)->
-		@status = 'loading'
-		console.log "ChromeAPI: I'm calling to chrome API about #{@dataType}..."
+	fetch: ()->
 
 		root = @ # Reference the class so we can access it in getter-function
+
+		root.status = 'loading'
+		console.log "ChromeAPI: I'm calling to chrome API about #{@dataType}..."
 
 		getter = (result)->
 
@@ -57,26 +68,50 @@ class ChromeAPI
 				data = data.slice(0, root.limit) # Limit the amount of data stored
 				
 			root.data = data
-			root.status = 'ready'
-			root.done()
 
-			console.log "ChromeAPI: Ok, got #{root.dataType} ->", root.data
+			# Handle retries if empty data is received
+			if root.data.length is 0 and root.retry.i < root.retry.max
 
-		if @dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
+				console.log "ChromeAPI: Got empty array, Retrying to get -> #{root.dataType}"
+				root.retry.i = root.retry.i+1
+				root.retry.tries = root.retry.i
+
+				setTimeout(()->
+					root.fetch()
+				, root.retry.delay)
+				
+				root.done()
+
+			else
+
+				# Reset retry iterator
+				root.retry.i = 0	
+
+				# Set status to ready
+				root.status = 'ready'
+				root.done()
+
+				console.log "ChromeAPI: Ok, got #{root.dataType} ->", root.data
+
+
+
+		if root.dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
 			
-			@api(@limit, getter)
+			root.api(root.limit, getter)
 
-		else if @dataType is 'recentHistory' # If we are getting history, special call is needed
+		else if root.dataType is 'recentHistory' # If we are getting history, special call is needed
 			
+			# params for searching in browser history (no filter)
+			#
 			params =
 				'text': ''
-				'maxResults': @limit * 2
+				'maxResults': root.limit * 2
 
-			@api(params, getter)
+			root.api(params, getter)
 
 		else
 			
-			@api(getter) # Call the api referenced in constructor
+			root.api(getter) # Call the api referenced in constructor
 
 	# The callback evoked when operation status changes to 'ready'
 	#

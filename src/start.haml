@@ -14,17 +14,15 @@
 					%a(href="http://www.google.com/search?q=how+to+enable+javascript+in+chrome")
 						click this link and let Google find it out 
 					for you.
-				%p
+				%p.logo.left
 					TABU
-					%br
-					The New Tab page 
 		#loader.valign-wrapper
 			.valign
 				.loader-intro.center-align
 					%p.logo
 						TABU
-					%p.font-size-small.color-dark-grey
-						The New Tab page
+					/ %p.font-size-small.color-dark-grey
+					/ 	The New Tab page
 					.progress
 						.indeterminate
 		%nav
@@ -86,9 +84,9 @@
 			/ 				%button#view-downloads.btn-large.animated
 			/ 					%i.material-icons file_download
 			/ 					Downloads
-			/ 				/ %button#apps.btn-large.animated
-			/ 				/ 	%i.material-icons apps
-			/ 				/ 	Apps
+			/ / %button#apps.btn-large.animated
+			/ / 	%i.material-icons apps
+			/ / 	Apps
 			/ 				%button#go-incognito.btn-large.animated
 			/ 					Go Incognito
 			/ 					%i.material-icons open_in_new
@@ -112,8 +110,8 @@
 					%a#about.cursor-pointer.uppercase
 						%p.logo.cursor-pointer
 							TABU
-					%p.font-size-small
-						%a#feedback.uppercase(target="_blank" href="https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support")
-							Feedback
+					-# %p.font-size-small
+					-# 	%a#feedback.uppercase(target="_blank" href="https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support")
+					-# 		Feedback
 		%script(src="./scripts/app.js")
 	
