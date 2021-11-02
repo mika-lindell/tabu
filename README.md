@@ -4,8 +4,8 @@
 **Install the extension via Chrome Store:**
 [https://chrome.google.com/webstore/detail/tabu-new-tab-page/foahfjkmbhmabeciibakfmheoocbbpdc](https://chrome.google.com/webstore/detail/tabu-new-tab-page/foahfjkmbhmabeciibakfmheoocbbpdc)
 
-**Development environment requires:**
+**Getting started:**
 
-- NodeJS installed with Npm and Grunt.
- 
-- Ruby installed with Haml, Sass and CoffeeScript.
+- `yarn`
+- `bundle install`
+- `yarn start`

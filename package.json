@@ -1,9 +1,10 @@
 {
   "name": "newtab",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Chrome new tab -page, which focuses on the task at hand, instead of weather and news",
   "main": "index.js",
   "scripts": {
+    "start": "yarn compiler",
     "compiler": "grunt",
     "vendor:update": "copyfiles -f ./node_modules/materialize-css/dist/font/**/* ./dist/styles/assets/"
   },
@@ -19,19 +20,20 @@
   },
   "homepage": "https://github.com/mika-lindell/newtab#readme",
   "devDependencies": {
-    "chromedriver": "^2.25.1",
-    "grunt": "^0.4.5",
-    "grunt-concurrent": "^2.3.1",
-    "grunt-contrib-coffee": "^0.13.0",
+    "chromedriver": "^95.0.0",
+    "grunt": "^1.4.1",
+    "grunt-cli": "^1.4.3",
+    "grunt-concurrent": "^3.0.0",
+    "grunt-contrib-coffee": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-contrib-sass": "^0.9.2",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-force-task": "^2.0.0",
+    "grunt-contrib-jshint": "^3.1.1",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-force-task": "^3.0.0",
     "grunt-haml2html": "^0.3.0",
     "grunt-nightwatch": "^0.5.4",
     "materialize-css": "^0.97.8",
-    "nightwatch": "^0.8.18"
+    "nightwatch": "^1.7.11"
   },
   "dependencies": {}
 }
