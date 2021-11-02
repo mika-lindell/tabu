@@ -195,7 +195,7 @@ Item card styles
 
 
 // Change list style when drag operation is being done
-.drag-in-progress{
+.drag-in-progress {
 
 	.item-card{
 		box-shadow: none;
@@ -314,10 +314,6 @@ a.item-card-link{
   padding-left: 3.5rem;
 
 	@extend .truncate;
-}
-
-.item-card-label{
-
 }
 
 .item-card-label-secondary{

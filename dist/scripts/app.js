@@ -3218,7 +3218,7 @@
           list: new ItemCardList('#latest-bookmarks', null, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions."),
           data: new ChromeAPI('latestBookmarks')
         };
-        // @recentHistory = 
+        // @recentHistory =
         // 	list: new ItemCardList('#recent-history', null)
         // 	data: new ChromeAPI('recentHistory')
         this.recentlyClosed = {
@@ -3239,7 +3239,6 @@
           }
           if (obj.data != null) {
             if (obj.data.retry.i === 0) {
-              
               // Add animation if loading is delayed
               if (obj.data.retry.tries !== 0) {
                 return obj.list.update(true);

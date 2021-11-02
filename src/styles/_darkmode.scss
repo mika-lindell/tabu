@@ -8,9 +8,14 @@ $text-secondary: #a7a7a7;
 @media (prefers-color-scheme: dark) {
   html {
     color: $text;
+    background-color: $background;
   }
 
   body {
+    background-color: $background;
+  }
+
+  #loader {
     background-color: $background;
   }
 
@@ -40,6 +45,25 @@ $text-secondary: #a7a7a7;
     &:focus{
       background-color: $foreground;
     }
+
+    &:active{
+      background-color: $foreground;
+    }
+  }
+
+  #ghost {
+    background-color: $foreground;
+  }
+
+  .drag-in-progress {
+    .item-card.dragged{
+      border-color: $border;
+      background-color: $foreground;
+
+      &.empty {
+        background-color: $foreground;
+      }
+    }
   }
 
   .color-black {
@@ -47,7 +71,7 @@ $text-secondary: #a7a7a7;
   }
 
   .color-dark-grey {
-    color:$text-secondary;
+    color: $text-secondary;
   }
 
   .section-separator{
@@ -58,11 +82,43 @@ $text-secondary: #a7a7a7;
     background-color: $background;
   }
 
+  .user-input {
+    background-color: $background;
+  }
+
+  .card-title {
+    color: $text;
+  }
+
+  .user-input.label {
+    color: $text;
+  }
+
+  input[type="url"], input[type="text"] {
+    color: $text;
+    background-color: $background;
+  }
+
   footer{
     border-top-color: $border;
   }
 
   img {
     filter: brightness(.8) contrast(1.2);
+  }
+
+  @keyframes highlight{
+    0%{
+      transform: scale(1, 1);
+    }
+    50%{
+      transform: scale(1.1, 1.1);
+      box-shadow: $shadow-outset-large;
+      background-color: $background;
+      z-index: 1;
+    }
+    100%{
+      transform: scale(1, 1);
+    }
   }
 }

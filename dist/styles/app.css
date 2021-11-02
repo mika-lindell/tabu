@@ -6407,7 +6407,7 @@ input[type="text"] {
   height: auto;
   padding: 0.5rem;
   box-sizing: border-box;
-  border-radius: 2px; }
+  border-radius: 3px; }
 
 .card-content {
   line-height: initial; }
@@ -6884,7 +6884,8 @@ Dialog
   .dialog p {
     max-width: 350px;
     margin-left: auto !important;
-    margin-right: auto !important; }
+    margin-right: auto !important;
+    line-height: 1.2; }
   .dialog .card-action {
     text-align: right; }
 
@@ -6958,7 +6959,7 @@ Button styles
   vertical-align: bottom; }
 
 .btn.teal, .teal.btn-large {
-  background-color: #26a69a; }
+  background-color: #42A5F5; }
   .btn.teal:hover, .teal.btn-large:hover {
     background-color: #4db6ac; }
   .btn.teal:active, .teal.btn-large:active {
@@ -7014,11 +7015,11 @@ Button styles
   background-color: #1E88E5; }
 
 .btn.submit, .submit.btn-large {
-  background-color: #26a69a; }
+  background-color: #42A5F5; }
   .btn.submit:hover, .submit.btn-large:hover {
-    background-color: #26a69a; }
+    background-color: #42A5F5; }
   .btn.submit:active, .submit.btn-large:active {
-    background-color: #26a69a; }
+    background-color: #42A5F5; }
 
 .btn-link, .user-input .card-action .cancel {
   box-shadow: none !important;
@@ -7107,7 +7108,7 @@ Item card styles
     .edit-actions .edit-actions-edit.drag-over,
     .edit-actions .edit-actions-delete.drag-over,
     .edit-actions .edit-actions-add.drag-over {
-      background-color: #26a69a; }
+      background-color: #42A5F5; }
   .edit-actions .edit-actions-edit {
     width: 190px; }
     .edit-actions .edit-actions-edit::before {
@@ -7316,9 +7317,13 @@ Responsive
     max-width: 1800px; } }
 @media (prefers-color-scheme: dark) {
   html {
-    color: #dddddd; }
+    color: #dddddd;
+    background-color: #36363a; }
 
   body {
+    background-color: #36363a; }
+
+  #loader {
     background-color: #36363a; }
 
   .nav-wrapper {
@@ -7337,6 +7342,17 @@ Responsive
 
   .item-card:hover, .item-card:focus {
     background-color: #202125; }
+  .item-card:active {
+    background-color: #202125; }
+
+  #ghost {
+    background-color: #202125; }
+
+  .drag-in-progress .item-card.dragged {
+    border-color: #56565a;
+    background-color: #202125; }
+    .drag-in-progress .item-card.dragged.empty {
+      background-color: #202125; }
 
   .color-black, .section-heading, .item-card-heading,
   .no-items, a.item-card-link {
@@ -7351,10 +7367,34 @@ Responsive
   .dialog {
     background-color: #36363a; }
 
+  .user-input {
+    background-color: #36363a; }
+
+  .card-title {
+    color: #dddddd; }
+
+  .user-input.label {
+    color: #dddddd; }
+
+  input[type="url"], input[type="text"] {
+    color: #dddddd;
+    background-color: #36363a; }
+
   footer {
     border-top-color: #56565a; }
 
   img {
-    filter: brightness(0.8) contrast(1.2); } }
+    filter: brightness(0.8) contrast(1.2); }
+
+  @keyframes highlight {
+    0% {
+      transform: scale(1, 1); }
+    50% {
+      transform: scale(1.1, 1.1);
+      box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      background-color: #36363a;
+      z-index: 1; }
+    100% {
+      transform: scale(1, 1); } } }
 
 /*# sourceMappingURL=app.css.map */
