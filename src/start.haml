@@ -3,16 +3,17 @@
 	%head
 		%title
 		%link(href="styles/app.css" rel="stylesheet")
+		%meta(name="color-scheme" content="dark light")
 	%body(data-app="newTab" id="app")
 		%noscript
 			.container
 				%h4 I see you have disabled JavaScript :(
-				%p 
+				%p
 					That's something I need to get things done.
 					%br
-					If you don't know how to enable JavaScript  
+					If you don't know how to enable JavaScript
 					%a(href="http://www.google.com/search?q=how+to+enable+javascript+in+chrome")
-						click this link and let Google find it out 
+						click this link and let Google find it out
 					for you.
 				%p.logo.left
 					TABU
@@ -26,7 +27,7 @@
 					.progress
 						.indeterminate
 		%nav
-			.nav-wrapper.white
+			.nav-wrapper
 				%ul.center
 					%li
 						%button#view-bookmarks.btn.btn-toolbar
@@ -62,12 +63,12 @@
 				.row.section
 					%section.col.s12.col-no-padding
 						#speed-dial.card-list-column
-							%h4.section-heading 
+							%h4.section-heading
 								%button#speed-dial-select.btn.select.animated
 									Speed Dial
 									%i.material-icons.right expand_more
 						#top-sites.card-list-column
-							%h4.section-heading 
+							%h4.section-heading
 								%button#top-sites-select.btn.select.animated
 									Top Sites
 									%i.material-icons.right expand_more
@@ -104,7 +105,7 @@
 					%section.col.s12.m6.l4.col-no-padding.transitions
 						#other-devices.card-list-column
 							%h4.section-heading.animated Other Devices
-		
+
 			%footer.animated
 				.container.center-align
 					%a#about.cursor-pointer.uppercase
@@ -114,4 +115,3 @@
 					-# 	%a#feedback.uppercase(target="_blank" href="https://chrome.google.com/webstore/detail/tabu/ocldfnemhllhfpjoanimffapcfiafoaa/support")
 					-# 		Feedback
 		%script(src="./scripts/app.js")
-	

@@ -32,7 +32,7 @@ Dialog
 	opacity: 1;
 
   max-height: 90%;
-  overflow-y: scroll;
+  overflow-y: auto;
 
 	@extend .layer-dialog;
 	@extend .valign;
@@ -243,7 +243,6 @@ Button styles
 	position: relative;
 
 	@extend .layer-front;
-	@extend .color-black;
 
 	&:hover,
 	&:focus{
@@ -325,7 +324,7 @@ Forms
 
 	margin: 0;
 	width: 100%;
-	
+
 	background-color: $color-primary;
 	box-shadow: $shadow-outset-large;
 
