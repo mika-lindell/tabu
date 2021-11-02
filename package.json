@@ -1,6 +1,6 @@
 {
   "name": "newtab",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chrome new tab -page, which focuses on the task at hand, instead of weather and news",
   "main": "index.js",
   "scripts": {
