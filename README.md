@@ -9,3 +9,10 @@
 - `yarn`
 - `bundle install`
 - `yarn start`
+
+**Development environment requires:**
+
+- NodeJS installed with Npm and Grunt.
+ 
+- Ruby installed with Haml, Sass and CoffeeScript.
+
