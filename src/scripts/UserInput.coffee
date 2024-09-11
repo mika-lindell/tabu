@@ -8,7 +8,7 @@ class UserInput extends HTMLElement
 
 	@animation
 
-	@fields	
+	@fields
 
 	@done
 	@abort
@@ -36,13 +36,13 @@ class UserInput extends HTMLElement
 		@attr('id', id)
 		@addClass('user-input')
 		@addClass('card')
-		
+
 		@content.addClass('card-content')
 
 		@heading.addClass('card-title')
 		@heading.text(title)
 
-		@content.append @heading		
+		@content.append @heading
 		@append @content
 
 		@.on('submit', (ev)->
@@ -58,13 +58,13 @@ class UserInput extends HTMLElement
 			if ev.code is 'Escape'
 				root.onAbort()
 		)
-		
+
 
 	addField: (name, type, label = null, value = null, required = true)->
 
 		field =
-		 element: new HTMLElement('input')
-		 container: new HTMLElement('div')
+			element: new HTMLElement('input')
+			container: new HTMLElement('div')
 
 		field.container.addClass('input-field')
 
@@ -146,7 +146,7 @@ class UserInput extends HTMLElement
 		@hide()
 		@abort(@fields)
 		@clearFields()
-		
+
 	onConfirm: ()->
 		@hide()
 		@done(@fields)
@@ -171,5 +171,5 @@ class UserInput extends HTMLElement
 
 		# console.log data, uri
 
-		
+
 

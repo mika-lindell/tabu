@@ -4,12 +4,12 @@
   "name": "TABU - New Tab Page",
   "short_name": "TABU",
   "description": "Fast & simplistic new tab with speed dial, recommended sites and option for blank page.",
-  "version": "0.5.2.9",
+  "version": "1.0.1",
 
-  "icons": { 
+  "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
-    "128": "icon128.png" 
+    "128": "icon128.png"
   },
 
   "minimum_chrome_version": "37",

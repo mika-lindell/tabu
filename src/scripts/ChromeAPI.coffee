@@ -13,7 +13,7 @@ class ChromeAPI
 
 	# Status of the operation.
 	# Can be empty, loading or ready
-	#	
+	#
 	@status = 'empty'
 
 	# Retrieved data is stored in this variable
@@ -29,7 +29,7 @@ class ChromeAPI
 
 		@limit = limit
 		@dataType = dataType
-		@retry = 
+		@retry =
 			i: 0
 			tries: 0
 			max: 0
@@ -40,7 +40,7 @@ class ChromeAPI
 		else if dataType is 'latestBookmarks'
 			@api = chrome.bookmarks.getRecent
 		else if dataType is 'recentHistory'
-		 	@api = chrome.history.search
+			@api = chrome.history.search
 		else if dataType is 'recentlyClosed'
 			@api = chrome.sessions.getRecentlyClosed
 		else if dataType is 'otherDevices'
@@ -66,7 +66,7 @@ class ChromeAPI
 
 			if root.dataType is 'recentHistory' or root.dataType is 'recentlyClosed' or root.dataType is 'topSites'
 				data = data.slice(0, root.limit) # Limit the amount of data stored
-				
+
 			root.data = data
 
 			# Handle retries if empty data is received
@@ -79,13 +79,13 @@ class ChromeAPI
 				setTimeout(()->
 					root.fetch()
 				, root.retry.delay)
-				
+
 				root.done()
 
 			else
 
 				# Reset retry iterator
-				root.retry.i = 0	
+				root.retry.i = 0
 
 				# Set status to ready
 				root.status = 'ready'
@@ -96,11 +96,11 @@ class ChromeAPI
 
 
 		if root.dataType is 'latestBookmarks' # If we are getting bookmarks, use limit here also
-			
+
 			root.api(root.limit, getter)
 
 		else if root.dataType is 'recentHistory' # If we are getting history, special call is needed
-			
+
 			# params for searching in browser history (no filter)
 			#
 			params =
@@ -110,7 +110,7 @@ class ChromeAPI
 			root.api(params, getter)
 
 		else
-			
+
 			root.api(getter) # Call the api referenced in constructor
 
 	# The callback evoked when operation status changes to 'ready'
@@ -128,9 +128,9 @@ class ChromeAPI
 		# Adds item to array to be returned
 		addToResult = (title, url, result)->
 			if url.indexOf('chrome://') is -1 and url.indexOf('file://') is -1 # Exclude system urls and files (local resources not allowed by chrome)
-				result.push({ 
+				result.push({
 					'title': title
-					'url': url 
+					'url': url
 					})
 
 		if root.dataType is 'otherDevices'

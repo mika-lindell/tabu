@@ -18,7 +18,7 @@ $color-primary-mode-1: #00b362;//color("purple", "lighten-1") !default;
 $color-primary-mode-2: $color-primary !default;
 $color-primary-mode-3: color("purple", "lighten-1") !default;
 
-$color-secondary: color('teal', 'lighten-1');
+$color-secondary: color("blue", "lighten-1"); //color('teal', 'lighten-1');
 $color-secondary-lighten: color('teal', 'lighten-2');
 
 $border-light: 1px solid $light-grey;

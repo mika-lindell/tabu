@@ -2,10 +2,10 @@
 #
 #
 class ColorPalette
-	
+
 	instance = null
 	@parser
-	
+
 
 
 	constructor: ()->
@@ -22,7 +22,7 @@ class ColorPalette
 				g: 67
 				b: 54
 			}
-			# PINK	
+			# PINK
 			{
 				r: 233
 				g: 30
@@ -139,13 +139,13 @@ class ColorPalette
 			r + r + g + g + b + b
 		)
 		result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-		if result 
+		if result
 			return {
 				r: parseInt(result[1], 16)
 				g: parseInt(result[2], 16)
-				b: parseInt(result[3], 16) 
+				b: parseInt(result[3], 16)
 			}
-		else 
+		else
 			return null
 
 	rgbToHex: (r, g, b) ->
@@ -157,7 +157,7 @@ class ColorPalette
 	# @param [String] the url to be converted
 	#
 	# @return [String] color hexadecimal format
-	#	
+	#
 	fromUrl: (url)->
 
 		if url instanceof Url
@@ -180,17 +180,17 @@ class ColorPalette
 		i = 0
 		hash = 0
 		while i < string.length
-		  hash = string.charCodeAt(i++) + (hash << 5) - hash
+			hash = string.charCodeAt(i++) + (hash << 5) - hash
 
 		# int/hash to hex
 		x = 0
 		colour = '#'
 		while x < 3
-	  	colour += ('00' + (hash >> x++ * 8 & 0xFF).toString(16)).slice(-2)
+			colour += ('00' + (hash >> x++ * 8 & 0xFF).toString(16)).slice(-2)
 
-	  ###  
-	  for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash)); 
-	  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+		###
+		for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+		for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
 		###
 		rgb = @mapColorToPalette(colour)
 		hex = @rgbToHex(rgb.r, rgb.g, rgb.b)
@@ -202,7 +202,7 @@ class ColorPalette
 
 	# 	from = getBrightness(hexCode)
 
-	# 	change = Math.round((max - from) * 100) / 100 
+	# 	change = Math.round((max - from) * 100) / 100
 
 	# 	if change >= 0
 	# 		return hexCode
@@ -239,4 +239,4 @@ class ColorPalette
 	#     i++
 	#   return rgb
 
-  
+

@@ -9,7 +9,7 @@ class HTMLElement
 
 	# Construct new element.
 	#
-	# @param [mixed] HTML tag name as string to create new element or standard element object to be wrapped. 
+	# @param [mixed] HTML tag name as string to create new element or standard element object to be wrapped.
 	#
 	constructor: (element)->
 	  # TODO: Check if element? is defined and if not, then raise error
@@ -95,7 +95,7 @@ class HTMLElement
 			return @DOMElement.hasAttribute(attrName)
 		else
 			return false
-			
+
 	# Removes an attribute from an element
 	#
 	# @param [String] Attribute to be removed
@@ -123,7 +123,7 @@ class HTMLElement
 	# @param [String] List of classes to be added (separated with space)
 	#
 	addClass: (className = null)->
-		if className? and not @DOMElement.classList.contains(className)		
+		if className? and not @DOMElement.classList.contains(className)
 			@DOMElement.classList.add(className)
 
 	# Remove CSS class from an element
@@ -238,7 +238,7 @@ class HTMLElement
 
 	removeChildren: ()->
 		while @DOMElement.firstChild
-  		@DOMElement.removeChild(@DOMElement.firstChild)
+			@DOMElement.removeChild(@DOMElement.firstChild)
 
 	childCount: ()->
 		return @DOMElement.childElementCount

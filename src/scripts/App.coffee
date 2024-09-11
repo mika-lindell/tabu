@@ -1,13 +1,13 @@
 # Responsible of generating content for this app and keeping it up-to-date
 #
 class App
-	
+
 	@visibility
 	@toolbars
 	@actions
 	@helpers
 	@storage
-	
+
 	@speedDial
 	@topSites
 	@latestBookmarks
@@ -35,32 +35,32 @@ class App
 
 		root = @
 
-		@topSites = 
+		@topSites =
 			list: new ItemCardList('#top-sites', null)
 			data: new ChromeAPI('topSites')
 
 		@topSites.list.setOrientation 'horizontal'
 
-		@speedDial = 
+		@speedDial =
 			list: new ItemCardList('#speed-dial', null, "<strong>No links in your Speed Dial</strong><br/>Get to your favorite websites faster!<br/>Add a link via menu above or <br/>try Drag & Drop.<img draggable='false' src='styles/assets/onboarding/arrow_menu_above.png' />")
 			data: null
 
 		@speedDial.list.enableEditing()
 		@speedDial.list.setOrientation 'horizontal'
 
-		@latestBookmarks = 
+		@latestBookmarks =
 			list: new ItemCardList('#latest-bookmarks', null, "<strong>Empty</strong><br>If you'd have any bookmarks, here would be a list of your most recent additions.")
 			data: new ChromeAPI('latestBookmarks')
 
-		# @recentHistory = 
+		# @recentHistory =
 		# 	list: new ItemCardList('#recent-history', null)
 		# 	data: new ChromeAPI('recentHistory')
 
-		@recentlyClosed = 
+		@recentlyClosed =
 			list: new ItemCardList('#recently-closed', null, "<strong>Empty</strong><br>Usually here is a list of websites you've closed since the start of current session.")
 			data: new ChromeAPI('recentlyClosed')
 
-		@otherDevices = 
+		@otherDevices =
 			list: new ItemCardList('#other-devices', null, "<strong>Empty</strong><br/>A list websites you've visited with your other devices like smartphone, tablet or laptop.")
 			data: new ChromeAPI('otherDevices')
 
@@ -76,7 +76,7 @@ class App
 
 			if obj.data?
 				if obj.data.retry.i is 0
-					
+
 					# Add animation if loading is delayed
 					if obj.data.retry.tries isnt 0
 						obj.list.update(true)
@@ -91,7 +91,7 @@ class App
 		@topSites.data.done = ()->
 
 			loader = new Loader # This is used to hide the loader after first items are complete -> to disable any elements warping around.
-			
+
 			updateList(root.topSites)
 
 			loader.hide() # Hide the loader

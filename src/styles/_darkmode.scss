@@ -1,0 +1,124 @@
+$background: #36363a;
+$border: #56565a;
+$foreground: #202125;
+$text: #dddddd;
+$text-secondary: #a7a7a7;
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color: $text;
+    background-color: $background;
+  }
+
+  body {
+    background-color: $background;
+  }
+
+  #loader {
+    background-color: $background;
+  }
+
+  .nav-wrapper {
+    background-color: $background;
+  }
+
+  .btn-toolbar {
+    background-color: $background;
+    &:hover,
+    &:focus{
+      background-color: $foreground;
+    }
+  }
+
+  .select {
+    color: $text;
+    background-color: $background;
+    &:hover,
+    &:focus{
+      background-color: $foreground;
+    }
+  }
+
+  .item-card {
+    &:hover,
+    &:focus{
+      background-color: $foreground;
+    }
+
+    &:active{
+      background-color: $foreground;
+    }
+  }
+
+  #ghost {
+    background-color: $foreground;
+  }
+
+  .drag-in-progress {
+    .item-card.dragged{
+      border-color: $border;
+      background-color: $foreground;
+
+      &.empty {
+        background-color: $foreground;
+      }
+    }
+  }
+
+  .color-black {
+    color: $text;
+  }
+
+  .color-dark-grey {
+    color: $text-secondary;
+  }
+
+  .section-separator{
+    border-bottom-color: $border;
+  }
+
+  .dialog {
+    background-color: $background;
+  }
+
+  .user-input {
+    background-color: $background;
+  }
+
+  .card-title {
+    color: $text;
+  }
+
+  .user-input.label {
+    color: $text;
+  }
+
+  input[type="url"], input[type="text"] {
+    color: $text;
+    background-color: $background;
+  }
+
+  footer{
+    border-top-color: $border;
+  }
+
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
+
+  @keyframes highlight{
+    0%{
+      transform: scale(1, 1);
+    }
+    50%{
+      transform: scale(1.1, 1.1);
+      box-shadow: $shadow-outset-large;
+      background-color: $background;
+      z-index: 1;
+    }
+    100%{
+      transform: scale(1, 1);
+    }
+  }
+}

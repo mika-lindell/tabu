@@ -27,7 +27,7 @@ Animations
 	0%{
 		transform: translateY(0px) rotateX(0deg);
 		opacity: 1;
-	}	
+	}
 
 	50%{
 		transform: translateY(-25px) rotateX(90deg);
@@ -76,10 +76,10 @@ Animations
 @keyframes slide-in{
 	0%{
 		transform: scale(1, 0.2);
-	}	
+	}
 	100%{
 		transform: scale(1, 1);
-	}	
+	}
 }
 
 .anim-slide-in{
@@ -92,10 +92,10 @@ Animations
 @keyframes slide-out{
 	0%{
 		transform: scale(1, 1) translateY(0px);
-	}	
+	}
 	100%{
 		transform: scale(1, 0) translateY(-50%);
-	}	
+	}
 }
 
 .anim-slide-out{
@@ -108,10 +108,10 @@ Animations
 @keyframes fade-in{
 	0%{
 		opacity: 0;
-	}	
+	}
 	100%{
 		opacity: 1;
-	}	
+	}
 }
 
 .anim-fade-in{
@@ -124,10 +124,10 @@ Animations
 @keyframes fade-out{
 	0%{
 		opacity: 1;
-	}	
+	}
 	100%{
 		opacity: 0;
-	}	
+	}
 }
 
 .anim-fade-out{
@@ -140,7 +140,7 @@ Animations
 @keyframes toast-in{
 	0%{
 		transform: scale(1, 0) translateX(-50%);
-	}	
+	}
 	100%{
 		transform: scale(1, 1) translateX(-50%);
 	}
@@ -149,10 +149,10 @@ Animations
 @keyframes toast-out{
 	0%{
 		transform: scale(1, 1) translateX(-50%) translateY(0px);
-	}	
+	}
 	100%{
 		transform: scale(1, 0) translateX(-50%) translateY(-80px);
-	}		
+	}
 }
 
 .anim-toast-in, .anim-toast-out{
@@ -170,16 +170,16 @@ Animations
 @keyframes highlight{
 	0%{
 		transform: scale(1, 1);
-	}	
+	}
 	50%{
 		transform: scale(1.1, 1.1);
 		box-shadow: $shadow-outset-large;
 		background-color: $white;
 		z-index: 1;
-	}	
+	}
 	100%{
 		transform: scale(1, 1);
-	}	
+	}
 }
 
 .anim-highlight{
@@ -191,13 +191,13 @@ Animations
 @keyframes flip{
 	0%{
 		transform: rotateX(0deg);
-	}	
+	}
 	50%{
 		transform: rotateX(90deg);
-	}	
+	}
 	100%{
 		transform: rotateX(0deg);
-	}	
+	}
 }
 
 .anim-flip{
@@ -274,7 +274,7 @@ Animations
 
 // 	100%{
 // 		transform: rotate(360deg) rotateX(1080deg);
-		
+
 // 	}
 // }
 
@@ -307,7 +307,7 @@ Animations
 // }
 
 
-	
+
 // To animate element movement on media query breakpoints
 .transitions,
 .animated{
@@ -318,7 +318,7 @@ Animations
 .intro .item-card,
 .intro .item-card-heading,
 .intro .animated
-{ 
+{
 	@extend .anim-move-in;
 }
 
@@ -326,6 +326,6 @@ Animations
 .outro .item-card,
 .outro .item-card-heading,
 .outro .animated
-{ 
+{
 	@extend .anim-move-out;
 }
