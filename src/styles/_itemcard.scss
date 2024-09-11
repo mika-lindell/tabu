@@ -65,13 +65,13 @@ Item card styles
 	.edit-actions-add{
 		color: $white;
 		background-color: $color-primary;
-		border-color: $white;	
+		border-color: $white;
 		font-weight: 500;
 
 		&.drag-over{
 			// color: $color-primary;
 			background-color: $color-secondary;
-			// border-color: $color-primary;	
+			// border-color: $color-primary;
 		}
 
 	}
@@ -195,7 +195,7 @@ Item card styles
 
 
 // Change list style when drag operation is being done
-.drag-in-progress{
+.drag-in-progress {
 
 	.item-card{
 		box-shadow: none;
@@ -227,7 +227,7 @@ Item card styles
 			.item-card-empty{
 				display: block;
 			}
-		
+
 			// Hide rest of the content
 			a{
 				display: none;
@@ -257,6 +257,7 @@ Item card styles
 .item-card-heading,
 .no-items {
   padding-top: 0.6rem;
+	@extend .color-black
 }
 
 a.item-card-link{
@@ -290,7 +291,7 @@ a.item-card-link{
 }
 
 #speed-dial .item-card-badge{
-	background-color: $color-primary; 
+	background-color: $color-primary;
 }
 
 #top-sites .item-card:hover{
@@ -315,10 +316,6 @@ a.item-card-link{
 	@extend .truncate;
 }
 
-.item-card-label{
-
-}
-
 .item-card-label-secondary{
 
 	@extend .font-size-small;
@@ -330,7 +327,7 @@ a.item-card-link{
 	li{
 		display: inline-block;
 		// padding-right: 1rem;
-		width: 100%; 
+		width: 100%;
 	}
 }
 
@@ -345,7 +342,7 @@ ul[data-list-editable]{
 	.item-card-label-container{
 		padding-left: 5rem;
 	}
-	
+
 	.item-card-badge{
 		left: 30px;
 	}
@@ -353,7 +350,7 @@ ul[data-list-editable]{
 	.drag-handle{
 		display: inline-block; // Show handle only if drag is enabled
 	}
-	
+
 }
 
 // To display the 'no items in this list' -message when the list has no items =)

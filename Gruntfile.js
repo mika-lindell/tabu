@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     haml: {
       dist: {
         files: [
-          {                         
+          {
             expand: true,       // Enable dynamic expansion.
             cwd: 'src/',        // Src matches are relative to this path.
             src: ['**/*.haml'], // Actual pattern(s) to match.
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
             ext: '.html',       // Dest filepaths will have this extension.
             extDot: 'first'     // Extensions in filenames begin after the first dot
           }
-        ] 
+        ]
       }
     },
 
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: [
-          {                         
+          {
             expand: true,       // Enable dynamic expansion.
             cwd: 'src/',        // Src matches are relative to this path.
             src: ['**/*.scss'], // Actual pattern(s) to match.
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             ext: '.css',       // Dest filepaths will have this extension.
             extDot: 'first'     // Extensions in filenames begin after the first dot
           }
-        ] 
+        ]
       }
     },
 
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         // These are coffeescript classes compiled to one js file.
         // The order in which these are compiled matters, as there are dependencies.
         files: [
-          {                         
+          {
             'dist/scripts/app.js': [
               'src/**/Helpers.coffee',
               'src/**/Throttle.coffee',
@@ -74,9 +74,9 @@ module.exports = function(grunt) {
               'src/**/App.coffee',
               'src/**/Main.coffee'
 
-            ] // concat then compile into single file 
+            ] // concat then compile into single file
           }
-        ] 
+        ]
       },
 
       tests: {
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
                 bare: true
               },
         files: [
-          {                         
+          {
             expand: true,       // Enable dynamic expansion.
             cwd: 'tests/coffee',        // Src matches are relative to this path.
             src: ['**/*.coffee'], // Actual pattern(s) to match.
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
             ext: '.js',       // Dest filepaths will have this extension.
             extDot: 'first'     // Extensions in filenames begin after the first dot
           }
-        ] 
+        ]
       }
     },
 
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
         // Folders
         src_folders: ['tests/js'],
         output_folder: 'report',
-        globals_path: 'tests/js/globals.js', 
+        globals_path: 'tests/js/globals.js',
         custom_commands_path: 'tests/js/custom_commands/',
 
         test_settings: {
@@ -174,7 +174,7 @@ module.exports = function(grunt) {
       nightwatch: {
         files: ['tests/**/*.coffee', 'src/**/*.coffee', 'src/**/*.scss', 'src/**/*.haml'],
         tasks: ['coffee:tests', 'force:nightwatch']
-      }      
+      }
     },
 
     // Make tasks run independently - e.g don't have to wait tests to finish to build coffee or haml etc.
@@ -204,11 +204,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
 
   grunt.registerTask('default', [
-    'copy:assets', 
-    'jshint', 
-    'haml', 
-    'coffee', 
-    'sass', 
+    'copy:assets',
+    'jshint',
+    'haml',
+    'coffee',
+    'sass',
     'concurrent:build'
     ]);
 
